@@ -1,0 +1,258 @@
+/**
+ * Print styles for reveal.js 
+ *
+ * @author Bramus Van Damme
+ */
+
+
+/*********************************************
+ * GLOBAL STYLES
+ *********************************************/
+
+html, body {
+	padding: 0;
+	margin: 0;
+	
+	font-family: Arial, sans-serif;
+	font-size: 12px;
+	font-weight: 200;
+	letter-spacing: -0.02em;
+	
+	color: #555;
+}
+
+/*********************************************
+ * HEADERS
+ *********************************************/
+#reveal h1, 
+#reveal h2, 
+#reveal h3, 
+#reveal h4 {
+	margin: 10px 0 10px 0;
+	color: #000;
+	text-transform: uppercase;
+}
+
+#reveal h1 { font-size: 24px; 	}
+#reveal h2 { font-size: 18px;	}
+#reveal h3 { font-size: 26px;	}
+#reveal h4 { font-size: 14px;	}
+
+
+/*********************************************
+ * DEFAULT ELEMENT STYLES
+ *********************************************/
+
+#reveal .slides section {
+	line-height: 1.2em;
+	font-weight: normal;
+    position: relative;
+}
+
+#reveal strong, 
+#reveal b {
+	font-weight: bold;
+}
+
+#reveal em, 
+#reveal i {
+	font-style: italic;
+}
+
+#reveal ol, 
+#reveal ul {
+	display: block;
+	text-align: left;
+	margin: 0 0 10px 20px;
+}
+
+    #reveal ol ol,
+    #reveal ul ul {
+        font-size: 80%;
+        line-height: 1.4em;
+        margin-left: 20px;
+		margin-bottom: 0;
+    }
+
+#reveal ol {
+	list-style: decimal;
+	list-style-position: inside;
+}
+
+#reveal ul {
+	list-style: disc;
+}
+
+#reveal p {
+	margin-bottom: 10px;
+}
+
+#reveal iframe {
+	display: none;
+}
+
+#reveal blockquote {
+	display: block;
+	position: relative;
+	width: 70%;
+	margin: 5px auto;
+	padding: 5px;
+	
+	font-style: italic;
+}
+	#reveal blockquote:before {
+		content: '“';
+	}
+	#reveal blockquote:after {
+		content: '”';
+	}
+
+#reveal pre {
+	display: block;
+	position: relative;
+	width: 90%;
+	margin: 10px auto;
+
+	text-align: left;
+	font-size: 10px;
+	font-family: monospace;
+	line-height: 1.1em;
+
+	word-wrap: break-word;
+
+	box-shadow: 0px 0px 6px rgba(0,0,0,0.3);
+}
+
+#reveal code {
+	font-family: monospace;
+	letter-spacing: -1px;
+}
+
+#reveal small {
+	font-size: 60%;
+	line-height: 1em;
+	vertical-align: top;
+}
+
+#reveal small * {
+	vertical-align: inherit;
+}
+
+#reveal q {	
+	font-style: italic;
+}
+	#reveal q:before {
+		content: '“';
+	}
+	#reveal q:after {
+		content: '”';
+	}
+
+#reveal a:not(.image) {
+	color: hsl(185, 85%, 50%);
+	text-decoration: underline;
+}
+
+#reveal section img {
+	margin: 30px auto 0;
+	background: rgba(255,255,255,0.12);
+	border: 4px solid #eee;
+	max-width: 80%;
+	height: auto;
+}
+
+#reveal section figure {
+	margin: 30px auto 0;
+	max-width: 80%;
+	height: auto;
+}
+
+#reveal section footer {
+    font-size: 60%;
+    width: 100%;
+    text-align: center;
+}
+
+#reveal section .middle {
+    position: absolute;
+    text-align: center;
+    bottom: 50%;
+    width: 100%;
+}
+
+#reveal #sources section > ul,
+#reveal #sources section > ol,
+#reveal #sources section > p {
+    font-size: 80%;
+	line-height: 1.4;
+}
+
+#reveal input.run {
+	display: none;
+}
+
+#reveal .floatRight {
+	float: right;
+	margin: 0 0 20px 20px;
+}
+
+#reveal figure {
+	display: inline-block;
+}
+
+#reveal figure img {
+	margin: 0;
+	width: 100%;
+}
+
+#reveal figure figcaption {
+	font-size: 11px;
+	width: 100%;
+	line-height: 1;
+	text-align: right;
+	display: block;
+}
+
+/*********************************************
+ * CONTROLS + BACK + IKDOEICT BRANDING + PROGRESS BAR
+ *********************************************/
+
+#reveal .controls, #reveal .back , #reveal #ikdoeict, #reveal .progress {
+	display: none;
+}
+
+
+/*********************************************
+ * SLIDES
+ *********************************************/
+
+#reveal .slides {
+	text-align: center;
+}
+
+#reveal .slides>section {
+	page-break-after: always;
+}
+
+#reveal .slides>section>section {
+	margin: 0 0 20px 0;
+	width: 400px;
+	border: 1px solid #000;
+	min-height: 200px;
+}
+
+/*********************************************
+ * NEON THEME
+ *********************************************/
+
+#reveal.neon a {
+	color: #5de048;
+}
+
+/*********************************************
+ * OVERVIEW
+ *********************************************/
+
+#reveal.overview .slides {
+	display: none;
+}
