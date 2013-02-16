@@ -554,6 +554,8 @@ var Reveal = (function(){
 			if( indexv > 0 ) url += '/' + indexv;
 			
 			window.location.hash = url;
+
+			if (_gaq) _gaq.push(['_trackPageview', window.location.href.replace(window.location.protocol + '//' + window.location.host + '/','')]);
 		}
 	}
 
