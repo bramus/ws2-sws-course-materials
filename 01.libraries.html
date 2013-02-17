@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Webscripting2 &mdash; Serverside Webscripting &mdash; 01.libaries</title>
+
+		<meta name="description" content="Webscripting1 &mdash; Serverside Webscripting &mdash; 01.libaries">
+		<meta name="author" content="Bram(us) Van Damme - ikdoeict.be">
+
+		<link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/main.css" media="screen">
+		<link rel="stylesheet" href="css/print.css" media="print">
+
+		<link rel="stylesheet" href="lib/zenburn.css">
+	</head>
+
+	<body>
+
+		<div id="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+
+				<!-- Title -->
+				<section>
+					<section>
+						<h3 class="inverted">Serverside Webscripting <small>[JLW280]</small></h3>
+						<h1>01.libraries</h1>
+
+						<footer>
+							<em><a href="http://www.ikdoeict.be/">ikdoeict.be</a> &mdash; <a href="mailto:bramus.vandamme@kahosl.be">bramus.vandamme@kahosl.be</a></em>
+						</footer>
+						<script>
+							// Delicously hacky. Look away.
+							if( navigator.userAgent.match( /(iPhone|iPad|iPod|Android)/i ) )
+							document.write( '<p style="color: rgba(0,0,0,0.3); text-shadow: none;">('+'Tap to navigate'+')</p>' );
+						</script>
+					</section>
+				</section>
+
+
+				<!-- Libaries -->
+				<section>
+					<section>
+						<h2>Libraries &amp; Frameworks</h2>
+					</section>
+
+					<section>
+						<h2>Library?</h2>
+						<ul>
+							<li class="fragment">
+								Set of one or more PHP Classes which you can use in your own project
+							</li>
+							<li class="fragment">
+								Provide in one or several functionalities
+								<div class="columns fragment">
+									<div class="column column-12">
+										<ul>
+											<li>Sending e-mail</li>
+											<li>Templating</li>
+											<li>Working with PDF or Word or Excel documents</li>
+											<li>Graphing/Charting</li>
+											<li>Working with Files &amp; Folders</li>
+										</ul>
+									</div>
+									<div class="column column-12">
+										<ul>
+											<li>Caching</li>
+											<li>Data Generation</li>
+											<li>Database Access</li>
+											<li>Validation</li>
+											<li>etc.</li>
+										</ul>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Properties of a library</h2>
+						<ul>
+							<li class="fragment">
+								Core properties
+								<ul>
+									<li class="fragment">Build on top of the existing PHP core functions (or an other library)</li>
+									<li class="fragment">Include it in your own code in order to get it to work</li>
+								</ul>
+							</li>
+							<li class="fragment">
+								Optional properties
+								<ul>
+									<li class="fragment">Split out nicely in several classes for different subfunctionalities</li>
+									<li class="fragment">Standalone</li>
+									<li class="fragment">Independent</li>
+									<li class="fragment">Documentation provided</li>
+									<li class="fragment">Extensible</li>
+									<li class="fragment">PSR-0 Compliant <em>(more on that later)</em></li>
+								</ul>
+							</li>
+						</ul>
+						<footer class="fragment">Tip: you can identify a well-written library if it has most (it not all!) of the optional properties</footer>
+					</section>
+
+					<section>
+						<h2>Example Libraries</h2>
+						<ul>
+							<li class="fragment">
+								Specific Libraries
+								<ul>
+									<li>Sending e-mail: PHPMailer, SwiftMailer, &hellip;</li>
+									<li>Working with PDF files: TCPDF, FPDI, &hellip;</li>
+									<li>Graphing/Charting: pChart, jpGraph, Libchart, &hellip;</li>
+									<li>Office Files: PHPExcel, PHPWord, &hellip;</li>
+									<li>Templating: Twig, &hellip;</li>
+									<li>Database and ORM: Doctrine, &hellip;</li>
+									<li>&hellip; <em>(#lmgtfy)</em></li>
+								</ul>
+							</li>
+							<li class="fragment">
+								General Libraries
+								<ul>
+									<li>Spoon Library</li>
+									<li>The Symfony Components</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Beware though!</h2>
+						<ul>
+							<li class="fragment">
+								Not all codebases are created equally! Lots of cruft out there.
+								<ul>
+									<li>Bad quality</li>
+									<li>No proper abstraction</li>
+									<li>Legacy PHP4 code</li>
+									<li>No documentation</li>
+									<li>&hellip;</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Framework?</h2>
+						<ul>
+							<li class="fragment">
+								Framework &gt; Library
+								<ul>
+									<li class="fragment">Defines a structure to follow</li>
+									<li class="fragment">Your project must follow that structure</li>
+									</li>
+									<li class="fragment">Internally, a framework will most likely contain/use a library</li>
+								</ul>
+							</li>
+							<li class="fragment">
+								Examples
+								<div class="columns fragment">
+									<div class="column column-12">
+										<ul>
+											<li>Zend Framework</li>
+											<li>CakePHP</li>
+											<li>CodeIgniter</li>
+											<li>Laravel</li>
+										</ul>
+									</div>
+									<div class="column column-12">
+										<ul>
+											<li>Symfony</li>
+											<li>YII</li>
+											<li>Silex</li>
+											<li>etc.</li>
+										</ul>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</section>
+				</section>
+
+
+				<!-- Using Libraries -->
+				<section>
+					<section>
+						<h2>Using Libraries</h2>
+					</section>
+				</section>
+
+
+				<!-- Libraries we'll use -->
+				<section>
+					<section>
+						<h2>Libraries we'll use</h2>
+					</section>
+				</section>
+
+				<!-- The END -->
+				<section>
+					<section>
+						<h2>Questions?</h2>
+						<footer>
+							<em><a href="http://www.ikdoeict.be/">ikdoeict.be</a> &mdash; <a href="mailto:bramus.vandamme@kahosl.be">bramus.vandamme@kahosl.be</a></em>
+						</footer>
+					</section>
+				</section>
+
+
+
+				<!-- Sources -->
+				<section id="sources">
+					<section>
+						<h2>Sources</h2>
+						<ul>
+							<li><a href="http://coding.smashingmagazine.com/2011/10/17/getting-started-with-php-templating/">http://coding.smashingmagazine.com/2011/10/17/getting-started-with-php-templating/</a></li>
+							<li><a href="twig.sensiolabs.org/pdf/Twig.pdf">twig.sensiolabs.org/pdf/Twig.pdf</a></li>
+							<li><a href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md">https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md</a></li>
+							<li><a href="http://getcomposer.org/doc/00-intro.md">http://getcomposer.org/doc/00-intro.md</a></li>
+							<li><a href="http://nelm.io/blog/2011/12/composer-part-1-what-why/">http://nelm.io/blog/2011/12/composer-part-1-what-why/</a></li>
+							<li><a href="https://packagist.org/">https://packagist.org/</a></li>
+							<li><a href="https://speakerdeck.com/hhamon/useful-php-libraries">https://speakerdeck.com/hhamon/useful-php-libraries</a></li>
+						</ul>
+					</section>
+				</section>
+
+			</div>
+
+			<!-- The navigational controls UI -->
+			<aside class="controls">
+				<a class="left" href="#">&#x25C4;</a>
+				<a class="right" href="#">&#x25BA;</a>
+				<a class="up" href="#">&#x25B2;</a>
+				<a class="down" href="#">&#x25BC;</a>
+				<span id="revealIndex">/</span>
+			</aside>
+
+			<!-- Index Link -->
+			<aside class="back">
+				<a href="index.html">&larr; Back to index</a>
+			</aside>
+
+			<!-- ikdoeict.be Link -->
+			<a href="http://www.ikdoeict.be/" title="ikdoeict.be" id="ikdoeict">ikdoeict.be</a>
+
+			<!-- Displays presentation progress, max value changes via JS to reflect # of slides -->
+			<div class="progress"><span></span></div>
+
+		</div>
+
+		<script src="js/reveal.js"></script>
+		<script src="lib/highlight.js"></script>
+		<script src="lib/prefixfree.js"></script>
+		<script src="lib/css-snippets.js"></script>
+		<script src="lib/css-edit.js"></script>
+		<script src="lib/incrementable.js"></script>
+		<script src="js/main.js"></script>
+
+	</body>
+</html>

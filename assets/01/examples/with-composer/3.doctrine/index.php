@@ -55,7 +55,7 @@ try {
 // The real deal
 title('Doctrine DBAL<a href="http://www.doctrine-project.org/projects/dbal.html">&#9873;</a>', 1);
 
-	title('Establishing a Databse Connection<a href="https://doctrine-dbal.readthedocs.org/en/latest/reference/configuration.html">&#9873;</a>', 2);
+	title('Establishing a Database Connection<a href="https://doctrine-dbal.readthedocs.org/en/latest/reference/configuration.html">&#9873;</a>', 2);
 
 		codeblock(null, '00.connection', false);
 

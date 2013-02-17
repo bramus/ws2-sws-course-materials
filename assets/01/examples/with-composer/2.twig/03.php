@@ -10,7 +10,7 @@ $twig = new Twig_Environment($loader, array(
 	'auto_reload' => true // set to false in production mode
 ));
 
-// Load in the template and display it
+// Load in the template and display it (shorthand)
 echo $twig->render('03.twig');
 
 // EOF
