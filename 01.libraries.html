@@ -47,15 +47,141 @@
 				<!-- Libaries -->
 				<section>
 					<section>
-						<h2>Libraries?</h2>
+						<h2>Libraries &amp; Frameworks</h2>
 					</section>
-				</section>
 
-
-				<!-- Frameworks -->
-				<section>
 					<section>
-						<h2>Frameworks?</h2>
+						<h2>Library?</h2>
+						<ul>
+							<li class="fragment">
+								Set of one or more PHP Classes which you can use in your own project
+							</li>
+							<li class="fragment">
+								Provide in one or several functionalities
+								<div class="columns fragment">
+									<div class="column column-12">
+										<ul>
+											<li>Sending e-mail</li>
+											<li>Templating</li>
+											<li>Working with PDF or Word or Excel documents</li>
+											<li>Graphing/Charting</li>
+											<li>Working with Files &amp; Folders</li>
+										</ul>
+									</div>
+									<div class="column column-12">
+										<ul>
+											<li>Caching</li>
+											<li>Data Generation</li>
+											<li>Database Access</li>
+											<li>Validation</li>
+											<li>etc.</li>
+										</ul>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Properties of a library</h2>
+						<ul>
+							<li class="fragment">
+								Core properties
+								<ul>
+									<li class="fragment">Build on top of the existing PHP core functions (or an other library)</li>
+									<li class="fragment">Include it in your own code in order to get it to work</li>
+								</ul>
+							</li>
+							<li class="fragment">
+								Optional properties
+								<ul>
+									<li class="fragment">Split out nicely in several classes for different subfunctionalities</li>
+									<li class="fragment">Standalone</li>
+									<li class="fragment">Independent</li>
+									<li class="fragment">Documentation provided</li>
+									<li class="fragment">Extensible</li>
+									<li class="fragment">PSR-0 Compliant <em>(more on that later)</em></li>
+								</ul>
+							</li>
+						</ul>
+						<footer class="fragment">Tip: you can identify a well-written library if it has most (it not all!) of the optional properties</footer>
+					</section>
+
+					<section>
+						<h2>Example Libraries</h2>
+						<ul>
+							<li class="fragment">
+								Specific Libraries
+								<ul>
+									<li>Sending e-mail: PHPMailer, SwiftMailer, &hellip;</li>
+									<li>Working with PDF files: TCPDF, FPDI, &hellip;</li>
+									<li>Graphing/Charting: pChart, jpGraph, Libchart, &hellip;</li>
+									<li>Office Files: PHPExcel, PHPWord, &hellip;</li>
+									<li>Templating: Twig, &hellip;</li>
+									<li>Database and ORM: Doctrine, &hellip;</li>
+									<li>&hellip; <em>(#lmgtfy)</em></li>
+								</ul>
+							</li>
+							<li class="fragment">
+								General Libraries
+								<ul>
+									<li>Spoon Library</li>
+									<li>The Symfony Components</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Beware though!</h2>
+						<ul>
+							<li class="fragment">
+								Not all codebases are created equally! Lots of cruft out there.
+								<ul>
+									<li>Bad quality</li>
+									<li>No proper abstraction</li>
+									<li>Legacy PHP4 code</li>
+									<li>No documentation</li>
+									<li>&hellip;</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Framework?</h2>
+						<ul>
+							<li class="fragment">
+								Framework &gt; Library
+								<ul>
+									<li class="fragment">Defines a structure to follow</li>
+									<li class="fragment">Your project must follow that structure</li>
+									</li>
+									<li class="fragment">Internally, a framework will most likely contain/use a library</li>
+								</ul>
+							</li>
+							<li class="fragment">
+								Examples
+								<div class="columns fragment">
+									<div class="column column-12">
+										<ul>
+											<li>Zend Framework</li>
+											<li>CakePHP</li>
+											<li>CodeIgniter</li>
+											<li>Laravel</li>
+										</ul>
+									</div>
+									<div class="column column-12">
+										<ul>
+											<li>Symfony</li>
+											<li>YII</li>
+											<li>Silex</li>
+											<li>etc.</li>
+										</ul>
+									</div>
+								</div>
+							</li>
+						</ul>
 					</section>
 				</section>
 
