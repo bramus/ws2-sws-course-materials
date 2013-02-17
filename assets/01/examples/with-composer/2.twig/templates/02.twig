@@ -1,0 +1,122 @@
+{# Here we set the title #}
+{% set title = 'Twig Variables, Modifiers, and Control Structures Redux' %}
+<html>
+<head>
+	<title>{{ title }}</title>
+	<style>div { padding-left: 1em; margin-left: 1em; border-left: 0.125em solid #666;}</style>
+</head>
+<body>
+
+	<h1>{{ title }}</h1>
+
+	<h2>Variables</h2>
+	<div>
+		<p>The value of <em>title</em> is <code>{{ title }}</code></p>
+	</div>
+
+	<h2>Filters/Modifiers</h2>
+	<div>
+		<p>@see <a href="http://twig.sensiolabs.org/doc/filters/index.html">http://twig.sensiolabs.org/doc/filters/index.html</a></p>
+		<p>{{ "I like Twig."|replace({'like':'love', 'Twig':'you'}) }}</p>
+		<p>Today: {{ "now"|date("d/m/Y") }}</p>
+		<p>{{ name|upper|reverse }}</p>
+	</div>
+
+	<h2>Control Structures</h2>
+	<div>
+		<h3>Sequences</h3>
+		<div>
+			<p>{% for i in 0..10 %}{{ i }}{% endfor %}</p>
+			<p>{% for letter in 'a'..'z' %}{{ letter }}{% endfor %}</p>
+		</div>
+
+		<h3>For, Redux</h3>
+		<div>
+			<h4>for-else-endfor</h4>
+			<div>
+				<ul>
+				{% for val in myarray %}
+					<li>{{ val }}</li>
+				{% else %}
+					<li>(array is empty)</li>
+				{% endfor %}
+				</ul>
+			</div>
+
+			<h4>extracting the keys:</h4>
+			<div>
+				<ul>
+				{% for k in myarray|keys %}
+					<li>key: {{ k }}</li>
+				{% endfor %}
+				</ul>
+			</div>
+
+			<h4>extracting the keys &amp; values:</h4>
+			<div>
+				<ul>
+				{% for key, val in myarray %}
+					<li>key: {{ key }}, value: {{ val }}</li>
+				{% else %}
+					<li>(no items in the array)</li>
+				{% endfor %}
+				</ul>
+			</div>
+
+			<h4>loopcounters:</h4>
+			<div>
+				<ul>
+				{% for val in myarray %}
+					<li>
+						{{ val }}
+						<ul>
+							<li><code>loop.index</code>: {{ loop.index }}</li>
+							<li><code>loop.index0</code>: {{ loop.index0 }}</li>
+							<li><code>loop.revindex</code>: {{ loop.revindex }}</li>
+							<li><code>loop.revindex0</code>: {{ loop.revindex0 }}</li>
+							<li><code>loop.first</code>: {{ loop.first }}</li>
+							<li><code>loop.last</code>: {{ loop.last }}</li>
+							<li><code>loop.length</code>: {{ loop.length }}</li>
+						</ul>
+					</li>
+				{% endfor %}
+				</ul>
+			</div>
+
+		</div>
+
+		<h3>If, Redux</h3>
+		<div>
+			<h4>element in array</h4>
+			<div>
+				{% if 'John' in ['Bob', 'Dave', 'John', 'Mike'] %}
+					<p>Found John in ['Bob', 'Dave', 'John', 'Mike']</p>
+				{% else %}
+					<p>Didn't find John in ['Bob', 'Dave', 'John', 'Mike']</p>
+				{% endif %}
+			</div>
+
+			<h4>element in array, inversed question</h4>
+			<div>
+				{% if 'John' not in ['Bob', 'Dave', 'John', 'Mike'] %}
+					<p>Didn't find John in ['Bob', 'Dave', 'John', 'Mike']</p>
+				{% else %}
+					<p>Found John in ['Bob', 'Dave', 'John', 'Mike']</p>
+				{% endif %}
+			</div>
+
+		</div>
+	</div>
+
+	<h2>Tests</h2>
+	<div>
+		<p>@see <a href="http://twig.sensiolabs.org/doc/tests/index.html">http://twig.sensiolabs.org/doc/tests/index.html</a></p>
+	</div>
+
+	<h2>Functions</h2>
+	<div>
+		<p>@see <a href="http://twig.sensiolabs.org/doc/functions/index.html">http://twig.sensiolabs.org/doc/functions/index.html</a></p>
+	</div>
+
+</body>
+</html>

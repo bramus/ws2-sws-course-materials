@@ -1,0 +1,21 @@
+<html>
+<head>
+	<title>{{ pageTitle }}</title>
+	<style>
+	{% block pageStyle %}
+		div { padding-left: 1em; margin-left: 1em; border-left: 0.125em solid #666;}
+	{% endblock %}
+	</style>
+</head>
+<body>
+
+	<h1>{{ pageTitle }}</h1>
+	<div>
+		{% block pageContent %}
+		{% endblock %}
+	</div>
+	{% block pageFooter %}
+	<footer>This is the footer</footer>
+	{% endblock %}
+</body>
+</html>

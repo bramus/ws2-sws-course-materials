@@ -1,0 +1,13 @@
+{% extends '03.parent.twig' %}
+
+{% set pageTitle = 'Template Inheritance' %}
+
+{% block pageStyle %}
+	{{ parent() }}
+	footer { text-align: center; padding-top: 2em; }
+{% endblock %}
+
+{% block pageContent %}
+	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quis neque libero, non rutrum nisi. Donec venenatis, nibh in aliquet consectetur, leo tellus elementum libero, at pretium ante enim nec tellus. Sed quis tempor erat.</p>
+	<p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam a urna sit amet augue iaculis fringilla. Nulla semper nulla mauris, at pellentesque mauris. Aenean viverra dictum ullamcorper. Nam eros dui, pellentesque et ultrices vitae, adipiscing feugiat sapien. Pellentesque tincidunt eros eu sem convallis fermentum. Donec dui ante, scelerisque in sollicitudin in, consectetur vel diam.</p>
+{% endblock %}
