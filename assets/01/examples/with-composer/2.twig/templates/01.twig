@@ -1,0 +1,37 @@
+<html>
+<head>
+	<title>Twig Basics</title>
+	<style>div { padding-left: 1em; margin-left: 1em; border-left: 0.125em solid #666;}</style>
+</head>
+<body>
+
+	<h1>Twig Basics, Options and Iterations</h1>
+	<div>
+		<h2>My name</h2>
+		<div>
+			<p>{{ name }}</p>
+		</div>
+
+		<h2>My colleagues</h2>
+		<div>
+			{% for colleague in colleagues %}
+			<h3>{{ colleague.firstname}} {{ colleague.lastname }}</h3>
+			<div>
+				{% if colleague.courses %}
+				<p>You might know him from:</p>
+				<div>
+					<ul>
+						{% for course in colleague.courses %}
+						<li>{{ course }}</li>
+						{% endfor %}
+					</ul>
+				</div>
+				{% else %}
+				<p>(He's not teaching)</p>
+				{% endif %}
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+</body>
+</html>
