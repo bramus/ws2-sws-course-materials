@@ -16,6 +16,18 @@
 		<link rel="stylesheet" href="css/print.css" media="print">
 
 		<link rel="stylesheet" href="lib/zenburn.css">
+
+		<style>
+			#reveal .warning {
+				color: #553d00;
+				background: transparent url('assets/strong.png') repeat 50% 50%;
+				padding: 0.5em;
+			}
+
+			#reveal .warning p {
+				margin-bottom: 0;
+			}
+		</style>
 	</head>
 
 	<body>
@@ -115,7 +127,7 @@
 								<ul>
 									<li>Sending e-mail: PHPMailer, SwiftMailer, &hellip;</li>
 									<li>Working with PDF files: TCPDF, FPDI, &hellip;</li>
-									<li>Graphing/Charting: pChart, jpGraph, Libchart, &hellip;</li>
+									<li>Graphing/Charting: pChart, JpGraph, Libchart, &hellip;</li>
 									<li>Office Files: PHPExcel, PHPWord, &hellip;</li>
 									<li>Templating: Twig, &hellip;</li>
 									<li>Database and ORM: Doctrine, &hellip;</li>
@@ -191,6 +203,98 @@
 					<section>
 						<h2>Using Libraries</h2>
 					</section>
+
+					<section>
+						<h2>1. Kicking it oldskool</h2>
+					</section>
+
+					<section>
+						<h2>Obtaining a library</h2>
+
+						<ol class="fragment">
+							<li>Look up the library on the internet</li>
+							<li>Download it</li>
+							<li>Extract it</li>
+							<li>Put the correct folder somewhere in your project</li>
+							<li>Include the necessary classes</li>
+							<li>Use it</li>
+						</ol>
+					</section>
+
+					<section>
+						<h2>Updating a library</h2>
+						<ol class="fragment">
+							<li>Look up the website of the library again</li>
+							<li>Download the new version</li>
+							<li>Extract it</li>
+							<li>Drop it in your project</li>
+							<li>Cross your fingers and hope all still works (mostly: dependencies)</li>
+						</ol>
+						<footer class="fragment">(If you did keep your code up-to-date that is)</footer>
+					</section>
+
+					<section>
+						<h2>Example: JpGraph (1)</h2>
+
+						<ul>
+							<li class="fragment">
+								Library to create charts
+								<ul>
+									<li>Website: <a href="http://jpgraph.net/">http://jpgraph.net/</a></li>
+									<li>Documentation: <a href="http://jpgraph.net/download/manuals/">http://jpgraph.net/download/manuals/</a></li>
+									<li>Ships with lots of examples in the <code>.zip</code></li>
+								</ul>
+							</li>
+						</ul>
+
+						<div class="fragment warning">
+							<p>Warning: This library is outdated (last release 2010) and is in desperate need of a code refresh! We'll use it to make a few arguments later on.</p>
+						</div>
+
+					</section>
+
+					<section>
+						<h2>Example: JpGraph (2)</h2>
+
+						<pre class="bigger"><code class="language-php" data-overlay-example="assets/01/examples/sans-composer/1.jpgraph/index.php" style="max-height: 380px; overflow: scroll;">&lt;?php
+
+// Include needed classes
+require_once ('jpgraph/jpgraph.php');
+require_once ('jpgraph/jpgraph_pie.php');
+
+// Our data
+$data = array(78, 22);
+
+// Create the Pie Graph
+$graph = new PieGraph(350, 300, 'auto');
+$graph-&gt;SetShadow();
+
+// Set A title for the plot + disable the border
+$graph-&gt;title-&gt;Set(&quot;Percentage of chart which resembles Pac-man&quot;);
+$graph-&gt;SetFrame(false);
+
+// Create the pieplot
+$pieplot = new PiePlot($data);
+$pieplot-&gt;SetCenter(0.5, 0.5);
+$pieplot-&gt;SetStartAngle(39);
+$pieplot-&gt;SetLegends(array('Pac-man', 'Not Pac-Man'));
+
+// Add the pieplot to the graph
+$graph-&gt;Add($pieplot);
+
+// JpGraph Bug: one must add the pieplot before setting colors
+$pieplot-&gt;SetSliceColors(array('#FFFF00','#FF0000'));
+
+// Style the Legend
+$graph-&gt;legend-&gt;SetFrameWeight(0);
+$graph-&gt;legend-&gt;Pos(0.5, 0.90, 'center', 'top');
+$graph-&gt;legend-&gt;SetFillColor('white');
+$graph-&gt;legend-&gt;SetColumns(2);
+
+// Display the graph
+$graph-&gt;Stroke();</code></pre>
+					</section>
+
 				</section>
 
 
