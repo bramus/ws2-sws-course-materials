@@ -651,11 +651,66 @@ if(!$mailer-&gt;send($message, $errors)) {
 				</section>
 
 
-				<!-- Libraries we'll use -->
 				<section>
 					<section>
-						<h2>Libraries we'll use</h2>
+						<h2>Library Close-up: Twig</h2>
+
+						<p><img src="assets/01/splash-twig.jpg" width="580" alt="" /></p>
 					</section>
+
+					<section>
+						<h2>Twig</h2>
+						<ul>
+							<li class="fragment">
+								Library to working with templates
+								<ul>
+									<li>Website: <a href="http://twig.sensiolabs.org/">http://twig.sensiolabs.org/</a></li>
+									<li>Documentation: <a href="http://twig.sensiolabs.org/documentation">http://twig.sensiolabs.org/documentation</a></li>
+									<li>
+										Install via Composer using
+										<pre class="bigger"><code class="language-js dontrun">{
+	&quot;require&quot;: {
+		&quot;twig/twig&quot;: &quot;1.*&quot;
+	}
+}</code></pre>
+									</li>
+								</ul>
+							</li>
+							<li class="fragment">
+								Differs quite a bit from the Template class we know
+								<ul>
+									<li>Fast, Supports caching, Template oriented syntax, Flexible, Extensible</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Demo time!</h2>
+
+						<figure><img src="assets/01/twig.png" alt="" title="" width="580" class="noborder" /></figure>
+
+						<p style="font-size: 75%">Let's take a look at the files in  <code>assets/02/examples/with-composer/2.twig/</code></p>
+
+					</section>
+
+					<section>
+						<h2>Demo Recap</h2>
+
+						<ul>
+							<li><a href="http://twig.sensiolabs.org/doc/api.html#basics">Loading and displaying a template (PHP)</a></li>
+							<li><a href="http://twig.sensiolabs.org/doc/templates.html#synopsis">Displaying variables</a></li>
+							<li><a href="http://twig.sensiolabs.org/doc/templates.html#filters">Template Filters</a> + <a href="http://twig.sensiolabs.org/doc/filters/index.html">List of filters</a> <em>(think modifiers)</em></li>
+							<li><a href="http://twig.sensiolabs.org/doc/templates.html#control-structure">Template Control Structures</a> <em>(think options and iterations)</em></li>
+							<li><a href="http://twig.sensiolabs.org/doc/templates.html#comments">Template Comments</a></li>
+							<li><a href="http://twig.sensiolabs.org/doc/templates.html#template-inheritance">Template Inheritance</a></li>
+							<li><a href="http://twig.sensiolabs.org/doc/templates.html#including-other-templates">Including other templates</a></li>
+						</ul>
+
+						<p class="fragment" style="font-size: 75%">From now on, we'll be using Twig instead of our own Template class :-)</p>
+
+					</section>
+
 				</section>
 
 				<!-- The END -->
