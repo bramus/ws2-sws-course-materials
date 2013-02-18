@@ -504,6 +504,146 @@ class Bar extends Foo { ... } // = extends Ikdoeict\Demo\Foo</code></pre>
 						</ul>
 					</section>
 
+					<section>
+						<h2>III. Out with the old, in with the new: Composer &amp; Packagist</h2>
+					</section>
+
+					<section>
+						<h2>Composer</h2>
+
+						<div class="columns clearfix fragment">
+							<div class="column column-13">
+								<figure><img src="assets/01/logo-composer-transparent.png" width="250" class="noborder" title="Composer" /></figure>
+							</div>
+							<div class="column column-23" style="width: 66.666666%">
+								<blockquote style="width: 100%; margin-top: 1em;">Composer is a tool for dependency management in PHP. It allows you to declare the dependent libraries your project needs and it will install them in your project for you.</blockquote>
+							</div>
+						</div>
+
+						<ul style="clear: left;">
+							<li class="fragment">Freely translated: this tool will save you lots of headaches</li>
+							<li class="fragment">
+								<a href="http://getcomposer.org/">Composer</a> is worthless without <a href="https://packagist.org/">Packagist</a> though:
+								<ul>
+									<li class="fragment">Composer = the command line tool installing the packages</li>
+									<li class="fragment">Packagist = the repository aggregating all installable packages</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Why Composer?</h2>
+
+						<ul>
+							<li class="fragment">
+								Composer is a project specific dependency manager
+								<ul>
+									<li>Packages are installed on a per project basis (<code>vendor</code> subfolder), not system-wide (cfr. PEAR)</li>
+								</ul>
+							</li>
+							<li class="fragment">
+								Composer is clever
+								<ul>
+									<li>Composer finds out which versions of which packages (and which versions of its dependencies) need to be installed, and installs them.</li>
+								</ul>
+							</li>
+							<li class="fragment">
+								Installed packages can be autoloaded
+							</li>
+						</ul>
+						<footer class="fragment">Told you: it saves lots of headaches!</footer>
+					</section>
+
+					<section>
+						<h2>Composer: Installation</h2>
+
+						<ul>
+							<li class="fragment">
+								OS X
+								<pre class="bigger"><code>$ curl -s https://getcomposer.org/installer | php
+$ sudo mv composer.phar /usr/local/bin/composer</code></pre>
+							</li>
+							<li class="fragment">
+								Windows: <a href="https://getcomposer.org/Composer-Setup.exe">Download &amp; Run the installer</a>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Composer: Obtaining packages</h2>
+						<ul>
+							<li class="fragment">
+								Create a file named <code>composer.json</code> in your project root to declare your dependencies in
+								<pre class="bigger"><code class="language-js dontrun">{
+    &quot;require&quot;: {
+        &quot;swiftmailer/swiftmailer&quot;: &quot;4.*&quot;
+    }
+}</code></pre>
+							</li>
+							<li class="fragment">
+								Run <code>composer install</code> to install the dependencies
+								<ul>
+									<li class="fragment">Composer will install the packages in a <code>vendor</code> subfolder</li>
+									<li class="fragment">Composer will also generate a <code>composer.lock</code> file</li>
+								</ul>
+							</li>
+							<li class="fragment">Whenever a new version of a dependency is released, run <code>composer update</code> to see some more magic</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Composer: Using packages</h2>
+						<ul>
+							<li class="fragment">
+								Include the Composer autoloader
+								<pre class="bigger"><code class="language-php">require_once __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';</code></pre>
+							</li>
+							<li class="fragment">That's it</li>
+						</ul>
+
+						<div class="fragment warning">Warning: don't ever change any of the files inside the <code style="color: #000">vendor</code> subfolder! Above that don't add that folder (along with <code style="color: #000">composer.lock</code>) into version control!</div>
+					</section>
+
+					<section>
+						<h2>Composer Example: Swiftmailer</h2>
+						<ul>
+							<li class="fragment">
+								Except for a different autoloader, nothing has changed!
+								<pre class="bigger"><code class="language-php" data-overlay-example="assets/01/examples/with-composer/1.swiftmailer/index.php" style="max-height: 340px; overflow: scroll;">&lt;?php
+
+// Require autoloader
+require_once __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
+
+// Create the Transport
+$transport = Swift_SmtpTransport::newInstance('smtp2.kahosl.be', 25);
+
+// Create the Mailer using your created Transport
+$mailer = Swift_Mailer::newInstance($transport);
+
+// Create a message
+$message = Swift_Message::newInstance('Lorem Ipsum')
+	-&gt;setFrom(array('johndoe@example.org' =&gt; 'John Doe'))
+	-&gt;setTo(array(
+		'blackhole@bram.us' =&gt; 'blackhole'
+	))
+	-&gt;setBody(strip_tags(file_get_contents('assets/content.html')))
+	-&gt;addPart(file_get_contents('assets/content.html'), 'text/html');
+
+// Send it (or at least try to)
+if(!$mailer-&gt;send($message, $errors)) {
+	echo 'Mailer Error: ';
+	print_r($errors);
+} else {
+	echo 'Message sent!';
+}
+
+// EOF</code></pre>
+							</li>
+						</ul>
+						<footer class="fragment">What also changed is that this package can now easily be updated!</footer>
+					</section>
+
 				</section>
 
 

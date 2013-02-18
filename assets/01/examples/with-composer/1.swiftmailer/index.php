@@ -1,7 +1,7 @@
 <?php
 
-// Include SwiftMailer Autoloader
-require_once 'vendor/autoload.php';
+// Require autoloader
+require_once __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
 // Create the Transport
 $transport = Swift_SmtpTransport::newInstance('smtp2.kahosl.be', 25);
