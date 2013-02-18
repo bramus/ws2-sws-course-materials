@@ -358,6 +358,152 @@ if(!$mailer-&gt;send($message, $errors)) {
 // EOF</code></pre>
 					</section>
 
+					<section>
+						<h2>II. Intermezzo: Autoloaders, Namespaces &amp; PSR-0</h2>
+					</section>
+
+					<section>
+						<h2>Autoloaders (1)</h2>
+
+						<ul>
+							<li class="fragment">Essentially, an autoloader is a function which you tell PHP to use when a class cannot be found
+								<ul>
+									<li class="fragment">The function takes one argument: the name of the requested class</li>
+									<li class="fragment">Easy to write, if you keep your naming and structure consistent</li>
+									<li class="fragment">
+										You register the function with PHP using
+										<pre class="bigger"><code class="language-php">spl_autoload_register('nameOfTheFunction');</code></pre>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Autoloaders (2)</h2>
+						<ul>
+							<li class="fragment">
+								Example: SwiftMailer's autoloader (stripped down)
+								<pre class="bigger"><code class="language-php">function autoload($class) {
+	if (0 !== strpos($class, 'Swift_')) { //Don't interfere w other autoloaders
+		return;
+	}
+
+	$path = __DIR__ . '/' . str_replace('_', '/', $class) . '.php';
+
+	if (!file_exists($path)) return;
+
+	require $path;
+}</code></pre>
+								<ul>
+									<li class="fragment">When using <code>Swift_InputByteStream</code> it'll include <code>/path/to/swiftmailer/Swift/InputByteStream.php</code></li>
+									<li class="fragment">When using <code>Swift_Encoder_Base64Encoder</code> it'll include <code>/path/to/swiftmailer/Swift/Encoder/Base64Encoder.php</code></li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Namespaces (1)</h2>
+
+						<ul>
+							<li class="fragment">When we talked about classes I <a href="http://bramus.github.com/ws1-sws-course-materials/05.classes.html#/3/1">didn't tell you about namespaces</a></li>
+							<li class="fragment">
+								Namespaces allow you to logically group and name your classes without ending up with long classnames such as <code>Swift_Encoder_Base64Encoder</code>
+								<ul>
+									<li>Better is to have a <code>Base64Encoder</code> class in the <code>Swift\Encoder</code> namespace</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Namespaces (2) &mdash; Demo time!</h2>
+
+						<figure><img src="assets/01/namespaces.png" alt="" title="" width="580" class="noborder" /></figure>
+
+					</section>
+
+					<section>
+						<h2>Namespaces (3)</h2>
+
+						<ul>
+							<li class="fragment">
+								Demo Recap
+								<ul>
+									<li class="fragment">
+										Define a namespace for your class
+										<pre class="bigger"><code class="language-php">namespace Ikdoeict\Demo;
+class Foo { ... }</code></pre>
+									</li>
+									<li class="fragment">
+										Reference or import the namespace when instantiating a class
+										<pre class="bigger"><code class="language-php">$foo = new \Ikdoeict\Demo\Foo('hello-foo');</code></pre>
+										<pre class="bigger"><code class="language-php">use \Ikdoeict\Demo\Baz;
+$baz = new Baz('hello-baz');</code></pre>
+									</li>
+									<li class="fragment">
+										Class lookups happen in the same namespace
+										<pre class="bigger"><code class="language-php">namespace Ikdoeict\Demo;
+class Bar extends Foo { ... } // = extends Ikdoeict\Demo\Foo</code></pre>
+									</li>
+									<li class="fragment">
+										The global namespace is <code>\</code>
+										<pre class="bigger"><code class="language-php">$di = new \DirectoryIterator(__DIR__);</code></pre>
+									</li>
+								</ul>
+							</li>
+						</ul>
+
+					</section>
+
+					<section>
+						<h2>PSR-0</h2>
+
+						<ul>
+							<li class="fragment">
+								<a href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md">PSR-0</a> is <em>&ldquo;a standard describing mandatore requirements for autoloader interoperability&rdquo;</em>
+								<ul>
+									<li class="fragment">
+										Defines how to namespace your code:<br />
+										<code>\&lt;VendorName&gt;\(&lt;Namespace&gt;\)*&lt;ClassName&gt;</code></li>
+									<li class="fragment">
+										Defines how that namespace translates to an organization on disk<br />
+										<code>/path/to/project/lib/vendor/Vendor/Namespace/ClassName.php</code>
+									</li>
+								</ul>
+							</li>
+							<li class="fragment">
+								In other words: Adhering to the standard makes your library play nice with <a href="https://gist.github.com/jwage/221634">the PSR-0 autoloader</a>.
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>PSR-0 Analyzed</h2>
+
+						<ul>
+							<li class="fragment">
+								The core of the PSR-0 autoloader
+								<pre class="bigger"><code class="language-php">function autoload($className) {
+	$className = ltrim($className, '\\');
+	$fileName  = '';
+	$namespace = '';
+	if ($lastNsPos = strrpos($className, '\\')) {
+		$namespace = substr($className, 0, $lastNsPos);
+		$className = substr($className, $lastNsPos + 1);
+		$fileName  = str_replace('\\', '/' , $namespace) . '/';
+	}
+	$fileName .= str_replace('_', '/', $className) . '.php';
+	require $fileName;
+}</code></pre>
+								<ul>
+									<li class="fragment">Yes, that's it.</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
 				</section>
 
 
