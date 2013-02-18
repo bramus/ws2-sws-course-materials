@@ -205,7 +205,7 @@
 					</section>
 
 					<section>
-						<h2>1. Kicking it oldskool</h2>
+						<h2>I. Kicking it oldskool</h2>
 					</section>
 
 					<section>
@@ -293,6 +293,69 @@ $graph-&gt;legend-&gt;SetColumns(2);
 
 // Display the graph
 $graph-&gt;Stroke();</code></pre>
+					</section>
+
+
+					<section>
+						<h2>A Better Example: SwiftMailer (1)</h2>
+
+						<ul>
+							<li class="fragment">
+								Library to send e-mail
+								<ul>
+									<li>Website: <a href="http://swiftmailer.org/">http://swiftmailer.org/</a></li>
+									<li>Documentation: <a href="http://swiftmailer.org/docs/introduction.html">http://swiftmailer.org/docs/introduction.html</a></li>
+									<li>Ships with lots of examples in the <code>.zip</code></li>
+								</ul>
+							</li>
+							<li class="fragment">
+								Why is this library better?
+								<ul>
+									<li>It's targetted towards PHP5</li>
+									<li>
+										It comes with an <em>autoloader</em>
+										<ul>
+											<li>Just include the autoloader and whenever you use one of the Swift classes, it'll automatically <code>require</code> it.</li>
+											<li>Having an autoloader mostly attests being well-structured</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>A Better Example: SwiftMailer (1)</h2>
+
+						<pre class="bigger"><code class="language-php" data-overlay-example="assets/01/examples/sans-composer/2.swiftmailer/index.php" style="max-height: 380px; overflow: scroll;">&lt;?php
+
+// Include SwiftMailer Autoloader
+require_once 'swiftmailer/swift_required.php';
+
+// Create the Transport
+$transport = Swift_SmtpTransport::newInstance('smtp2.kahosl.be', 25);
+
+// Create the Mailer using your created Transport
+$mailer = Swift_Mailer::newInstance($transport);
+
+// Create a message
+$message = Swift_Message::newInstance('Lorem Ipsum')
+	-&gt;setFrom(array('johndoe@example.org' =&gt; 'John Doe'))
+	-&gt;setTo(array(
+		'blackhole@bram.us' =&gt; 'blackhole'
+	))
+	-&gt;setBody(strip_tags(file_get_contents('assets/content.html')))
+	-&gt;addPart(file_get_contents('assets/content.html'), 'text/html');
+
+// Send it (or at least try to)
+if(!$mailer-&gt;send($message, $errors)) {
+	echo 'Mailer Error: ';
+	print_r($errors);
+} else {
+	echo 'Message sent!';
+}
+
+// EOF</code></pre>
 					</section>
 
 				</section>
