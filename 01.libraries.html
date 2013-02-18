@@ -690,7 +690,7 @@ if(!$mailer-&gt;send($message, $errors)) {
 
 						<figure><img src="assets/01/twig.png" alt="" title="" width="580" class="noborder" /></figure>
 
-						<p style="font-size: 75%">Let's take a look at the files in  <code>assets/02/examples/with-composer/2.twig/</code></p>
+						<p style="font-size: 75%">Let's take a look at the files in  <code>assets/01/examples/with-composer/2.twig/</code></p>
 
 					</section>
 
@@ -708,6 +708,63 @@ if(!$mailer-&gt;send($message, $errors)) {
 						</ul>
 
 						<p class="fragment" style="font-size: 75%">From now on, we'll be using Twig instead of our own Template class :-)</p>
+
+					</section>
+
+				</section>
+
+
+				<section>
+					<section>
+						<h2>Library Close-up: Doctrine DBAL</h2>
+
+						<p><img src="assets/01/splash-doctrine.jpg" width="421" alt="" style="margin-top: 4em;" /></p>
+					</section>
+
+					<section>
+						<h2>Doctrine DBAL</h2>
+						<ul>
+							<li class="fragment">
+								Database Abstraction Layer from the Doctrine Project
+								<ul>
+									<li>Website: <a href="http://www.doctrine-project.org/projects/dbal.html">http://www.doctrine-project.org/projects/dbal.html</a></li>
+									<li>Documentation: <a href="http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/index.html">http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/index.html</a></li>
+									<li>
+										Install via Composer using
+										<pre class="bigger"><code class="language-js dontrun">{
+	&quot;require&quot;: {
+		&quot;doctrine/dbal&quot;: &quot;1.*&quot;
+	}
+}</code></pre>
+									</li>
+								</ul>
+							</li>
+							<li class="fragment">
+								Note: Don't confuse Doctrine DBAL with <a href="http://www.doctrine-project.org/projects/orm.html">Doctrine ORM</a> <em>(which we won't be using)</em>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Demo time!</h2>
+
+						<figure><img src="assets/01/doctrine.png" alt="" title="" width="580" class="noborder" /></figure>
+
+						<p style="font-size: 75%">Let's take a look at the files in  <code>assets/01/examples/with-composer/3.doctrine/</code></p>
+
+					</section>
+
+					<section>
+						<h2>Demo Recap</h2>
+
+						<ul>
+							<li><a href="http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html#getting-a-connection">Establishing a connection</a></li>
+							<li><a href="http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/data-retrieval-and-manipulation.html#executeupdate">Executing Updates</a> <em>(queries that yield no resultset)</em></li>
+							<li><a href="http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/data-retrieval-and-manipulation.html#executequery">Executing Queries</a> <em>(queries that yield a resultset)</em></li>
+							<li><a href="http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/data-retrieval-and-manipulation.html#fetchall">Fetching data</a></li>
+						</ul>
+
+						<p class="fragment" style="font-size: 75%">From now on, we'll be using Doctrine DBAL :-)</p>
 
 					</section>
 
