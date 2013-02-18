@@ -368,6 +368,7 @@ if(!$mailer-&gt;send($message, $errors)) {
 							<li class="fragment">Essentially, an autoloader is a function which you tell PHP to use when a class cannot be found
 								<ul>
 									<li class="fragment">The function takes one argument: the name of the requested class</li>
+									<li class="fragment">Goal of the function: to automatically load the requested class</li>
 									<li class="fragment">Easy to write, if you keep your naming and structure consistent</li>
 									<li class="fragment">
 										You register the function with PHP using
@@ -406,7 +407,7 @@ if(!$mailer-&gt;send($message, $errors)) {
 						<h2>Namespaces (1)</h2>
 
 						<ul>
-							<li class="fragment">When we talked about classes I <a href="http://bramus.github.com/ws1-sws-course-materials/05.classes.html#/3/1">didn't tell you about namespaces</a></li>
+							<li class="fragment">When we talked about classes we <a href="http://bramus.github.com/ws1-sws-course-materials/05.classes.html#/3/1">didn't talk about namespaces</a></li>
 							<li class="fragment">
 								Namespaces allow you to logically group and name your classes without ending up with long classnames such as <code>Swift_Encoder_Base64Encoder</code>
 								<ul>
@@ -420,6 +421,8 @@ if(!$mailer-&gt;send($message, $errors)) {
 						<h2>Namespaces (2) &mdash; Demo time!</h2>
 
 						<figure><img src="assets/01/namespaces.png" alt="" title="" width="580" class="noborder" /></figure>
+
+						<p style="font-size: 75%">Let's take a look at the files in  <code>assets/01/examples/namespaces/</code></p>
 
 					</section>
 
