@@ -1179,3 +1179,8 @@ strong {
 #reveal .warning p {
 	margin-bottom: 0;
 }
+
+#reveal abbr {
+	cursor: pointer;
+	border-bottom: 1px dotted #ccc;
+}

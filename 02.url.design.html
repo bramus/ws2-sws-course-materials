@@ -44,13 +44,108 @@
 				</section>
 
 
-				<!-- Libaries -->
+				<!-- URL Design -->
 				<section>
 					<section>
 						<h2>URL Design</h2>
 
 						<p><img src="assets/02/futurama_bendersroom.jpg" alt="" title="" width="447" height="334"></p>
 						<q>Not enough room? My place is 2 cubic meters and we only take up 1.5 cubic meters. We've got room for a whole nother 2/3rds of a person.</q>
+					</section>
+
+					<section>
+						<h2>URLs in the olden days</h2>
+
+						<ul>
+							<li class="fragment">
+								In the beginning
+								<ul>
+									<li><code>http://example.org/index.php?action=zomg&amp;page=lol</code></li>
+								</ul>
+							</li>
+							<li class="fragment">
+								Then SEO and &ldquo;<em>nice urls</em>&rdquo; came along
+								<ul>
+									<li class="fragment"><code>http://example.org/zomg/lol</code></li>
+									<li class="fragment"><code>http://example.org/videos/latest/hamburgers</code></li>
+									<li class="fragment"><code>http://example.org/search/lolcats/pictures/yes/1/200</code></li>
+								</ul>
+							</li>
+						</ul>
+						<p class="fragment" style="position: absolute; top: 15%; left: 10%; right: 10%; bottom: 10%; transform: rotate(-8deg);"><img src="assets/02/picard-facepalm.jpg" style="width: 500px;" /></p>
+						<p class="fragment" style="position: absolute; top: 15%; left: 5%; right: 10%; bottom: 10%; transform: rotate(-5deg);"><img src="assets/02/picard-double-facepalm.jpg" style="width: 500px;" /></p>
+					</section>
+
+					<section>
+						<h2>Richardson Maturity Model</h2>
+						<ul>
+							<li class="fragment">Model describing the principal elements of a RESTful API
+								<ul>
+									<li class="fragment">Level 0: Use HTTP as transport system</li>
+									<li class="fragment">Level 1: Identify and organize resources in a hierarchy</li>
+									<li class="fragment">Level 2: Use HTTP verbs for operations</li>
+									<li class="fragment">Level 3: <abbr title="Hypertext As The Engine Of Application State">HATEOAS</abbr></li>
+								</ul>
+							</li>
+							<li class="fragment">Level 1 is what we'll be focussing on
+							</li>
+						</ul>
+						<footer class="fragment"><em>Note: In <a href="http://bramus.github.com/ria-course-materials/">Web &amp; Mobile Development</a> we'll further implement this model</em></footer>
+					</section>
+
+					<section>
+						<h2>Identification &amp; Hierarchy</h2>
+						<ul>
+							<li class="fragment">
+								Basic naming conventions
+								<ul>
+									<li class="fragment">Verbs are bad, nouns are good</li>
+									<li class="fragment">Use plurals</li>
+									<li class="fragment">Respect the Hierarchy</li>
+								</ul>
+							</li>
+							<li class="fragment">
+								Examples
+								<ul>
+									<li class="fragment"><del><code>/product</code></del> &rarr; <ins><code>/products</code></ins></li>
+									<li class="fragment"><del><code>/product/1234</code></del> &rarr; <ins><code>/products/1234</code></ins></li>
+									<li class="fragment"><del><code>/photos/product/1234</code></del> &rarr; <ins><code>/products/1234/photos</code></ins></li>
+									<li class="fragment"><del><code>/photos/product/1234/5678</code></del> &rarr; <ins><code>/products/1234/photos/5678</code></ins></li>
+								</ul>
+							</li>
+						</ul>
+						<footer class="fragment">This doesn't apply for <em>&ldquo;normal pages&rdquo; of your site</em></footer>
+					</section>
+
+					<section>
+						<h2>Identification &amp; Hierarchy bis</h2>
+						<ul>
+							<li class="fragment">
+								Use concrete naming, yet don't be too specific
+								<ul>
+									<li class="fragment"><del><code>/things</code></del></li>
+									<li class="fragment"><del><code>/animals</code></del></li>
+									<li class="fragment"><code class="ok">/dogs</code></li>
+									<li class="fragment"><del><code>/beagles</code></del></li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Example</h2>
+
+						<ul>
+							<li><code>/</code></li>
+							<li><code>/movies</code></li>
+							<li><code>/movies/<em>{id}</em></code></li>
+							<li><code>/movies/<em>{id}</em>/photos</code></li>
+							<li><code>/actors</code></li>
+							<li><code>/actors/<em>{id}</em></code></li>
+							<li><code>/actors/<em>{id}</em>/movies</code></li>
+							<li><code>/about</code></li>
+							<li><code>/contact</code></li>
+						</ul>
 					</section>
 				</section>
 
@@ -71,7 +166,9 @@
 					<section>
 						<h2>Sources</h2>
 						<ul>
-							<li>...</li>
+							<li><a href="http://www.slideshare.net/Wombert/designing-http-interfaces-and-restful-web-services-dpc2012-20120608">http://www.slideshare.net/Wombert/designing-http-interfaces-and-restful-web-services-dpc2012-20120608</a></li>
+							<li><a href="http://martinfowler.com/articles/richardsonMaturityModel.html">http://martinfowler.com/articles/richardsonMaturityModel.html</a></li>
+							<li><a href="https://github.com/restcookbook/restcookbook/blob/master/_posts/2012-12-14-richardsonmaturitymodel.html">https://github.com/restcookbook/restcookbook/blob/master/_posts/2012-12-14-richardsonmaturitymodel.html</a></li>
 						</ul>
 					</section>
 				</section>
