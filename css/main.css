@@ -1169,3 +1169,18 @@ strong {
 #reveal .tooltip div *:last-child {
 	margin-bottom: 0;
 }
+
+#reveal .warning {
+	color: #553d00;
+	background: transparent url('../assets/strong.png') repeat 50% 50%;
+	padding: 0.5em;
+}
+
+#reveal .warning p {
+	margin-bottom: 0;
+}
+
+#reveal abbr {
+	cursor: pointer;
+	border-bottom: 1px dotted #ccc;
+}
