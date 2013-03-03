@@ -163,6 +163,82 @@
 					</section>
 				</section>
 
+
+				<!-- Supporting Nice URLs -->
+				<section>
+					<section>
+						<h2>Supporting Nice URLs</h2>
+
+						<p><img src="assets/02/futurama-buttfailure.png" alt="" title="" width="447" /></p>
+						<q>I installed shock absorbing bumpers on your ass to minimize the chance of catastrofic butt failure.</q>
+					</section>
+
+					<section>
+						<h2>Supporting nice URLs</h2>
+						<ul>
+							<li class="fragment">
+								Build <code>index.php</code> in such a way that it loads up the required files/module based on the current URL (<code>$_SERVER['REQUEST_URI']</code>)
+							</li>
+							<li class="fragment">
+								Re-route all requests to non-existsing URLs to that <code>index.php</code>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Howto: Apache</h2>
+						<ul>
+							<li class="fragment">
+								Possible using the <code>mod_rewrite</code> Apache Module
+								<ul>
+									<li>Wampserver: not enabled by default (<a href="assets/02/wamp_url_rewrite.png">instructions</a>)</li>
+									<li>MAMP Pro: enabled by default</li>
+								</ul>
+							</li>
+							<li class="fragment">
+								Put a file named <code>.htaccess</code> in your root to redirect requests to non-existing files to <code>index.php</code>
+								<pre class="bigger"><code>&lt;IfModule mod_rewrite.c&gt;
+RewriteEngine On
+RewriteBase /
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+&lt;/IfModule&gt;</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Howto: IIS</h2>
+						<ul>
+							<li class="fragment">
+								Possible using the <a href="http://www.iis.net/downloads/microsoft/url-rewrite">IIS Rewrite Module</a>
+							</li>
+							<li class="fragment">
+								Put a file named <code>web.config</code> in your root to redirect requests to non-existing files to <code>index.php</code>
+								<pre class="bigger"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;configuration&gt;
+	&lt;system.webServer&gt;
+		&lt;rewrite&gt;
+			&lt;rules&gt;
+				&lt;rule name=&quot;Main Rule&quot; stopProcessing=&quot;true&quot;&gt;
+					&lt;match url=&quot;.*&quot; /&gt;
+					&lt;conditions logicalGrouping=&quot;MatchAll&quot;&gt;
+						&lt;add input=&quot;{REQUEST_FILENAME}&quot; matchType=&quot;IsFile&quot; negate=&quot;true&quot; /&gt;
+						&lt;add input=&quot;{REQUEST_FILENAME}&quot; matchType=&quot;IsDirectory&quot; negate=&quot;true&quot; /&gt;
+					&lt;/conditions&gt;
+					&lt;action type=&quot;Rewrite&quot; url=&quot;index.php&quot; /&gt;
+				&lt;/rule&gt;
+			&lt;/rules&gt;
+		&lt;/rewrite&gt;
+	&lt;/system.webServer&gt;
+&lt;/configuration&gt;</code></pre>
+							</li>
+						</ul>
+					</section>
+
+				</section>
+
 				<!-- The END -->
 				<section>
 					<section>
