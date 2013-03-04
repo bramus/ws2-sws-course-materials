@@ -49,22 +49,60 @@
 					<section>
 						<h2>Silex Introduction</h2>
 
-						<p><img src="assets/03/..." alt="" title="" width="447" height="334"></p>
-						<q>...</q>
+						<p><img src="assets/03/futurama_conferencetable.jpg" alt="" title="" width="447" /></p>
 					</section>
 
 					<section>
 						<h2>Silex</h2>
 						<ul>
-							<li class="fragment">...</li>
+							<li class="fragment">PHP microframework</li>
+							<li class="fragment">
+								Built around routes
+								<ul>
+									<li class="fragment">When requesting <code>/</code> show the homepage</li>
+									<li class="fragment">When requesting <code>/news</code> show all newsitems</li>
+									<li class="fragment">When requesting <code>/news/{id}</code> show the proper newsitem</li>
+									<li class="fragment">When requesting <code>/news/{id}</code> via <code>POST</code> add a comment</li>
+									<li class="fragment">&hellip;</li>
+								</ul>
+							</li>
+							<li class="fragment">
+								Extensible using Providers
+								<ul>
+									<li class="fragment">Twig Service Provider</li>
+									<li class="fragment">Doctrine Service Provider</li>
+									<li class="fragment">Swiftmailer Service Provider</li>
+									<li class="fragment">&hellip;</li>
+								</ul>
+							</li>
 						</ul>
 					</section>
 
 					<section>
 						<h2>Installation</h2>
 						<ul>
-							<li class="fragment">...</li>
+							<li class="fragment">
+								Installable via Composer
+								<pre class="bigger"><code class="language-js dontrun" style="max-height: 380px; overflow: scroll;">{
+	&quot;require&quot;: {
+		&quot;silex/silex&quot;: &quot;1.0.*@dev&quot;
+	}
+}</code></pre>
+							</li>
 						</ul>
+					</section>
+
+					<section>
+						<h2>Code Example</h2>
+						<div class="fragment"><pre class="bigger"><code class="language-php" style="max-height: 380px; overflow: scroll;">require_once __DIR__ . '/../vendor/autoload.php';
+
+$app = new Silex\Application();
+
+$app->get('/hello/{name}', function($name) use($app) {
+    return 'Hello '.$app->escape($name);
+});
+
+$app->run();</code></pre></div>
 					</section>
 
 				</section>
@@ -75,7 +113,7 @@
 					<section>
 						<h2>Silex Boilerplate &amp; Bootstrapping</h2>
 
-						<p><img src="assets/03/..." alt="" title="" width="447" height="334"></p>
+						<p><img src="assets/03/..." alt="" title="" width="447" height="334" /></p>
 						<q>...</q>
 					</section>
 
@@ -93,7 +131,7 @@
 					<section>
 						<h2>Silex Routing</h2>
 
-						<p><img src="assets/03/..." alt="" title="" width="447" height="334"></p>
+						<p><img src="assets/03/..." alt="" title="" width="447" height="334" /></p>
 						<q>...</q>
 					</section>
 
@@ -146,7 +184,7 @@
 					<section>
 						<h2>Silex <code>$app</code> extras</h2>
 
-						<p><img src="assets/03/..." alt="" title="" width="447" height="334"></p>
+						<p><img src="assets/03/..." alt="" title="" width="447" height="334" /></p>
 						<q>...</q>
 					</section>
 
