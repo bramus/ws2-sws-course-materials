@@ -237,6 +237,28 @@ RewriteRule . /index.php [L]
 						</ul>
 					</section>
 
+					<section>
+						<h2>Howto: Built-in PHP 5.4 server</h2>
+						<ul>
+							<li class="fragment">
+								<strong>All</strong> requests route to <code>index.php</code> by default
+								<ul>
+									<li class="fragment">You'll need to add some extra PHP code to <code>index.php</code> to force non-404 requests route to the correct file 
+									</li>
+								</ul>
+								<div class="fragment"><pre class="bigger"><code>&lt;?php
+
+$filename = __DIR__ . preg_replace('#(\?.*)$#', '', $_SERVER['REQUEST_URI']);
+if (php_sapi_name() === 'cli-server' &amp;&amp; is_file($filename)) {
+	return false;
+}
+
+// rest of your code here</code></pre></div>
+							</li>
+						</ul>
+						<footer class="fragment"><em>Note: You can start a server by running <code>php -S localhost:8080</code> in your project www-root</em></footer>
+					</section>
+
 				</section>
 
 				<!-- The END -->
