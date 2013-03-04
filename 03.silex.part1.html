@@ -114,14 +114,75 @@ $app->run();</code></pre></div>
 					<section>
 						<h2>Silex Boilerplate &amp; Bootstrapping</h2>
 
-						<p><img src="assets/03/..." alt="" title="" width="447" height="334" /></p>
-						<q>...</q>
+						<p><img src="assets/03/futurama_armyofthedamned.jpg" alt="" title="" width="547" /></p>
+						<q>If robots can't go to heaven, heaven can come to us.</q>
 					</section>
 
 					<section>
 						<h2>Silex Boilerplate &amp; Bootstrapping</h2>
 						<ul>
-							<li class="fragment">...</li>
+							<li class="fragment">
+								Basic Silex Project Structure
+								<ul>
+									<li class="fragment">
+										<code>web/</code> &mdash; Public files
+										<ul>
+											<li class="fragment"><code class="special">index.php</code> &mdash; Front Controller</li>
+											<li class="fragment"><code>css/</code> &amp; <code>js/</code> &amp; <code>img/</code> &amp; &hellip;</li>
+										</ul>
+									</li>
+									<li class="fragment">
+										<code>app/</code> &mdash; Project logic
+										<ul>
+											<li class="fragment"><code class="special">bootstrap.php</code> &mdash; App Bootstrap</li>
+											<li class="fragment"><code class="special">app.php</code> &mdash; Routing</li>
+										</ul>
+									</li>
+									<li class="fragment">
+										<code>vendor/</code> &mdash; <em>(as created by Composer)</em>
+									</li>
+									<li class="fragment">
+										<code>composer.json</code>
+									</li>
+								</ul>
+							</li>
+						</ul>
+						<footer class="fragment"><em>Note: The webserver is configured so that it <a href="02.url.design.html#/2">routes all requests to the front controller</a></em></footer>
+					</section>
+
+					<section>
+						<h2>Example</h2>
+
+						<figure><img src="assets/03/example-00.png" alt="" title="" width="580" class="noborder" /></figure>
+
+						<p style="font-size: 75%">Let's take a look at the files in  <code>assets/ws2-sws-fiddles-silex/00.basic/</code></p>
+
+					</section>
+
+					<section>
+						<h2>Example Recap</h2>
+						<ul>
+							<li class="fragment">
+								<code>/web/index.php</code> is the Front Controller
+								<pre class="bigger"><code class="language-php">&lt;?php
+require_once __DIR__ . '/../app/app.php';
+$app->run();</code></pre>
+							</li>
+							<li class="fragment">
+								<code>/app/app.php</code> contains the actual routing
+								<pre class="bigger"><code class="language-php">&lt;?php
+require __DIR__ . '/bootstrap.php';
+$app->get('/', function(Silex\Application $app) {
+	return 'ohai';
+});</code></pre>
+							</li>
+							<li class="fragment">
+								<code>/app/bootstrap.php</code> creates &amp; configures the <code>$app</code>
+								<pre class="bigger"><code class="language-php">&lt;?php
+require_once __DIR__ . '/../vendor/autoload.php';
+$app = new Silex\Application();
+$app['debug'] = true;</code></pre>
+							</li>
 						</ul>
 					</section>
 				</section>
