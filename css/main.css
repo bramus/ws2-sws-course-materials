@@ -1095,6 +1095,10 @@ ins code, code.ok {
 	color: #5C5;
 }
 
+code.special {
+	color: #55F;
+}
+
 strong {
 	color: #553d00;
 	background: transparent url('../assets/strong.png') no-repeat 50% 50%;
