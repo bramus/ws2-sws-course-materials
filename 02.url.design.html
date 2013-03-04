@@ -236,7 +236,7 @@ RewriteRule . /index.php [L]
 
 $filename = __DIR__ . preg_replace('#(\?.*)$#', '', $_SERVER['REQUEST_URI']);
 if (php_sapi_name() === 'cli-server' &amp;&amp; is_file($filename)) {
-    return false;
+	return false;
 }
 
 // rest of your code here</code></pre></div>
