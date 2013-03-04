@@ -1,0 +1,49 @@
+/**
+ * Stylesheet for Tweets
+ *
+ * @media	screen, projection
+ * @author	Bram(us) Van Damme <bramus.vandamme@kahosl.be>
+ */
+
+	/**
+	 * General Page Structure
+	 */
+
+		html, body {
+			height: 100%;
+		}
+
+		body {
+			font-family: "Trebuchet MS", Trebuchet, Verdana, Geneva, Arial, Helvetica, sans-serif;
+			line-height: 1.48;
+			color: #333;
+			background: #fafafa;
+		}
+
+		a {
+			color: #009ACD;
+			text-decoration: none;
+		}
+
+		a:hover {
+			color: #00688B;
+		}
+
+		#siteWrapper {
+			width: 36.25em;
+			margin: 1em auto 0;
+			padding-bottom: 2em;
+		}
+
+		li, p {
+			margin: 1.4em 0;
+		}
+
+		blockquote {
+			margin-left: 1em;
+			padding: 0.5em 0 0.5em 1em;
+			border-left: 1px solid #666;
+			background: rgba(0,0,0,0.05);
+		}
+
+/*EOF*/

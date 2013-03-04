@@ -1,0 +1,21 @@
+{# extend the parent tpl #}
+{% extends 'layout.twig' %}
+
+
+{# set the pagetitle in the parent tpl #}
+{% set pageTitle = 'Linkdumpr &raquo; Users' %}
+
+
+{# overwrite the pageContent block #}
+{% block pageContent %}
+	<p class="breadcrumb"><a href="{{ app.request.baseUrl }}/">Linkdumpr</a> &raquo; Users</p>
+	{% if users %}
+	<ul class="users">
+		{% for user in users %}
+		<li><a href="{{ app.request.baseUrl }}/users/{{ user.id }}" title="{{ user.firstname }} {{ user.lastname }}">{{ user.firstname }} {{ user.lastname }}</a></li>
+		{% endfor %}
+	</ul>
+	{% else %}
+	<p>No users to show!</p>
+	{% endif %}
+{% endblock %}

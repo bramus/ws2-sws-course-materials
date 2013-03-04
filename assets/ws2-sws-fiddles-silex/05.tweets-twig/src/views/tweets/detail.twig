@@ -1,0 +1,16 @@
+{# extend the parent tpl #}
+{% extends 'layout.twig' %}
+
+
+{# set the pagetitle in the parent tpl #}
+{% set pageTitle = 'Tweets - Detail' %}
+
+
+{# overwrite the pageContent block #}
+{% block pageContent %}
+	{% if tweet %}
+	<p>On {{ tweet.created_at|date('d/m/Y H:i:s') }} {{ tweet.author }} tweeted:</p><blockquote>{{ tweet.text }}</blockquote><p><a href="{{ app.request.baseUrl }}/tweets/">&larr; Back to overview</a></p>
+	{% else %}
+	<p>Invalid Tweet!</p>
+	{% endif %}
+{% endblock %}

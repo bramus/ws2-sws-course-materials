@@ -1,0 +1,128 @@
+/**
+ * Stylesheet for Tweets
+ *
+ * @media	screen, projection
+ * @author	Bram(us) Van Damme <bramus.vandamme@kahosl.be>
+ */
+
+	/**
+	 * CSS Clearfix
+	 * @see http://www.positioniseverything.net/easyclearing.html
+	 */
+		.clearfix:after {
+			content: ".";
+			display: block;
+			height: 0;
+			clear: both;
+			visibility: hidden;
+		}
+
+		.ie6 .clearfix {
+			display: inline-block;
+		}
+
+		.ie7 .clearfix {
+			zoom: 1;
+		}
+
+	/**
+	 * General Page Structure
+	 */
+
+		html, body {
+			height: 100%;
+		}
+
+		body {
+			font-family: "Trebuchet MS", Trebuchet, Verdana, Geneva, Arial, Helvetica, sans-serif;
+			line-height: 1.48;
+			color: #333;
+			background: #fafafa;
+		}
+
+		a {
+			color: #009ACD;
+			text-decoration: none;
+		}
+
+		a:hover {
+			color: #00688B;
+		}
+
+		h1 {
+			background: url(../img/dumpster.png) no-repeat 0 100%;
+			font-size: 1em; /* force our base to 16px */
+			width: 43.75em;
+			height: 29.125em;
+			height: 11em;
+			text-indent: -1000em;
+			overflow: hidden;
+		}
+
+		#siteWrapper {
+			width: 43.75em;
+			margin: 0 auto;
+			padding-bottom: 2em;
+		}
+
+		p {
+			margin: 1.4em 0;
+		}
+
+		p.breadcrumb {
+			margin-top: 0.7em;
+			font-style: italic;
+			font-size: 0.8em;
+		}
+
+		.users li, .links li {
+			list-style-position: inside;
+			padding: 0.2em 0;
+			list-style-image: url(../img/icn_user.png);
+		}
+
+		.links li {
+			list-style-image: url(../img/icn_link.png);
+		}
+
+		dt {
+			width: 20%;
+			float: left;
+			text-align: right;
+			clear: left;
+			margin-bottom: 0.2em;
+		}
+
+		dd {
+			width: 75%;
+			float: right;
+		}
+
+		nav[role="navigation"] {
+			border: 1px solid #ccc;
+			border-top: 0;
+		}
+
+		nav[role="navigation"] ul {
+			background: #ECECEC;
+			display: table;
+			width: 100%;
+		}
+
+		nav[role="navigation"] li {
+			display: table-cell;
+			text-align: center;
+		}
+
+		nav[role="navigation"] li a {
+			display: inline-block;
+			width: 100%;
+			padding: 0.2em;
+		}
+
+		nav[role="navigation"] li.active {
+			background: rgba(150,150,150,0.1);
+			text-shadow: 1px 1px 1px #fff;
+		}
+
+/*EOF*/
