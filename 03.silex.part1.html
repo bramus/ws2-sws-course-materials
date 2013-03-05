@@ -201,29 +201,74 @@ $app['debug'] = true;</code></pre>
 					<section>
 						<h2>Silex Routing</h2>
 
-						<p><img src="assets/03/..." alt="" title="" width="447" height="334" /></p>
-						<q>...</q>
+						<p><img src="assets/03/futurama_routes.png" alt="" title="" width="447" /></p>
+						<q>Now here's a route with some chest hair.</q>
 					</section>
 
 					<section>
-						<h2>Silex Routing</h2>
+						<h2>Routing</h2>
 						<ul>
-							<li class="fragment">...</li>
+							<li class="fragment">
+								Definitions
+								<ul>
+									<li class="fragment">A route is a combination of a <strong>pattern</strong> and a <strong>HTTP method</strong></li>
+									<li class="fragment">A route is handled by a <strong>handling function</strong> which returns/does x/y</li>
+								</ul>
+							</li>
+							<li class="fragment">
+								In Silex
+								<pre class="bigger"><code class="language-php">$app->match('<em>pattern</em>', function(Silex\Application $app) {
+	// ...
+})->method('GET|POST');</code></pre>
+							</li>
+							<li class="fragment">
+								Shorthands
+								<pre class="bigger"><code class="language-php">$app->get('<em>pattern</em>', function(Silex\Application $app) {
+	// ...
+});
+$app->post('<em>pattern</em>', function(Silex\Application $app) {
+	// ...
+});</code></pre>
+							</li>
 						</ul>
+						<footer class="fragment"><em>Note: The shorthands are the preferred way to writing code</em></footer>
 					</section>
 
 					<section>
-						<h2>Prerequisites</h2>
+						<h2>Static Routing</h2>
 						<ul>
-							<li class="fragment">...</li>
+							<li class="fragment">Static routes are routes with fixed pattern
+								<pre class="bigger"><code class="language-php">$app->get('/', function(Silex\Application $app) {
+	// show something (e.g. return a blob of HTML)
+});
+
+$app->get('/about', function(Silex\Application $app) {
+	// show something else (e.g. return a blob of HTML)
+});
+
+$app->post('/', function(Silex\Application $app) {
+	// do something (e.g. insert into database, send e-mail)
+});
+</code></pre>
+							</li>
 						</ul>
+						<footer class="fragment"><em>Note: Only the first route that matches will be used</em></footer>
 					</section>
 
 					<section>
 						<h2>Dynamic Routing</h2>
 						<ul>
-							<li class="fragment">...</li>
+							<li class="fragment">
+								Dynamic routes are routes with a dynamic pattern
+								<ul>
+									<li class="fragment">The dynamic part of the pattern will be converted to a variable which you pass into the handling function</li>
+								</ul>
+								<pre class="bigger fragment"><code class="language-php">$app->get('/hello/{name}', function(Silex\Application $app, $name) {
+	return 'Hello ' . $app->escape($name) . '!';
+});</code></pre>
+							</li>
 						</ul>
+						<footer class="fragment"><em>Important: use <code>$app->escape()</code> to prevent XSS!</em></footer>
 					</section>
 
 					<section>
