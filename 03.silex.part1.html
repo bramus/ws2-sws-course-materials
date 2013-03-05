@@ -261,10 +261,13 @@ $app->post('/', function(Silex\Application $app) {
 							<li class="fragment">
 								Dynamic routes<small><a href="http://silex.sensiolabs.org/doc/usage.html#dynamic-routing">&#9873;</a></small> are routes with a dynamic pattern
 								<ul>
-									<li class="fragment">The dynamic part of the pattern will be converted to a variable which you pass into the handling function</li>
+									<li class="fragment">The dynamic parts of the pattern will be converted to <strong>route variables</strong><small><a href="http://silex.sensiolabs.org/doc/usage.html#route-variables">&#9873;</a></small> which you pass into the handling function</li>
 								</ul>
 								<pre class="bigger fragment"><code class="language-php">$app->get('/hello/{name}', function(Silex\Application $app, $name) {
 	return 'Hello ' . $app->escape($name) . '!';
+});</code></pre>
+								<pre class="bigger fragment"><code class="language-php">$app->get('/blog/{postId}/{commentId}', function (Silex\Application $app, $postId, $commentId) {
+	// ...
 });</code></pre>
 							</li>
 						</ul>
