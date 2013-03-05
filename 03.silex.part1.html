@@ -111,7 +111,7 @@
 						<h2>Code Example</h2>
 						<ul>
 							<li class="fragment">
-								The core of Silex is an instance of <code>Silex\Aplication</code>
+								The core of Silex is an instance of <code>Silex\Application</code>
 								<ul>
 									<li class="fragment">Register providers on it</li>
 									<li class="fragment">Define routes on it</li>
@@ -123,10 +123,23 @@
 $app = new Silex\Application();
 
 $app->get('/hello/{name}', function($name) use($app) {
-    return 'Hello ' . $app->escape($name);
+	return 'Hello ' . $app->escape($name);
 });
 
 $app->run();</code></pre></div>
+					</section>
+
+					<section>
+						<h2>Silex Internals</h2>
+						<ul>
+							<li class="fragment">
+								Internally, The Silex Core is built on top of
+								<ul>
+									<li><a href="http://pimple.sensiolabs.org/">Pimple</a></li>
+									<li>A few components of the <a href="http://symfony.com/">Symfony Framework</a></li>
+								</ul>
+							</li>
+						</ul>
 					</section>
 
 				</section>
@@ -336,6 +349,54 @@ $app->post('/', function(Silex\Application $app) {
 						<p style="font-size: 75%">Let's take a look at the files in  <code>assets/ws2-sws-fiddles-silex/02.olleh/</code> <a href="assets/ws2-sws-fiddles-silex/02.olleh/">&rarr;</a></p>
 
 					</section>
+
+					<section>
+						<h2>Sidenote: Request &amp; Response (1)</h2>
+						<ul>
+							<li class="fragment">
+								As said, Silex uses Symfony Components internally
+								<ul>
+									<li class="fragment">The aforementioned <code>$app['request']</code> actually is an instance of <code>Symfony\Component\HttpFoundation\Request</code> <small><a href="http://api.symfony.com/master/Symfony/Component/HttpFoundation/Request.html">&#9873;</a></em></small></li>
+									<li class="fragment">Next to <code>Request</code>, Silex also uses Symfony's <code>Response</code> <small><a href="http://api.symfony.com/master/Symfony/Component/HttpFoundation/Response.html">&#9873;</a></em></small></li>
+								</ul>
+								<pre class="bigger fragment"><code class="language-php">use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+$app->post('/feedback', function(Request $request) {
+	$message = $request->get('message');
+	mail('feedback@yoursite.com', '[YourSite] Feedback', $message);
+
+	return new Response('Thank you for your feedback!', 201);
+});</code></pre>
+							</li>
+						</ul>
+						<footer class="fragment">Silex always uses <code>Response</code> internally, it converts strings to responses with status code <code>200</code></footer>
+					</section>
+
+					<section>
+						<h2>Sidenote: Request &amp; Response (2)</h2>
+						<ul>
+							<li class="fragment">
+								It's also possible to send other types of responses
+								<ul>
+									<li class="fragment">
+										JSON: <code>JsonResponse</code> or use the <code>$app->json()</code> shorthand<small><a href="http://silex.sensiolabs.org/doc/usage.html#json">&#9873;</a></small>
+										<pre class="bigger fragment"><code class="language-php">$app->get('/users/{id}', function(Silex\Application $app, $id) {
+	return $app->json(getUser($id));
+});</code></pre>
+									</li>
+									<li class="fragment">
+										Files: <code>BinaryFileResponse</code> or use the <code>$app->sendFile()</code> shorthand<small><a href="http://silex.sensiolabs.org/doc/usage.html#sending-a-file">&#9873;</a></small>
+										<pre class="bigger fragment"><code class="language-php">$app->get('/files/{path}', function(Silex\Application $app, $path) {
+	if (!file_exists('/base/path/' . $path)) { return 'Invalid File'; }
+	return $app->sendFile('/base/path/' . $path);
+});</code></pre>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
 				</section>
 
 
@@ -366,8 +427,8 @@ $app->post('/', function(Silex\Application $app) {
 	$output = '&lt;ul&gt;';
 	foreach ($tweets as $id => $tweet) {
 		$output .= '&lt;li&gt;&lt;a href=&quot;' . $app['request']->getBaseUrl(). '/tweets/'
-		        . $app->escape($id) . '&quot;>&amp;para;&lt;/a&gt; '
-		        . $app->escape($tweet['text']) . '&lt;/li&gt;';
+				. $app->escape($id) . '&quot;>&amp;para;&lt;/a&gt; '
+				. $app->escape($tweet['text']) . '&lt;/li&gt;';
 	}
 	$output .= '&lt;/ul&gt;';
 	return $output;
@@ -518,45 +579,6 @@ $app->mount('/blog', $blog);</code></pre>
 						</ol>
 					</section>
 
-				</section>
-
-
-				<!-- $app extras -->
-				<section>
-					<section>
-						<h2>Silex <code>$app</code> extras</h2>
-
-						<p><img src="assets/03/..." alt="" title="" width="447" height="334" /></p>
-						<q>...</q>
-					</section>
-
-					<section>
-						<h2>Error Handling</h2>
-						<ul>
-							<li class="fragment">...</li>
-						</ul>
-					</section>
-
-					<section>
-						<h2>Redirects</h2>
-						<ul>
-							<li class="fragment">...</li>
-						</ul>
-					</section>
-
-					<section>
-						<h2>Escaping</h2>
-						<ul>
-							<li class="fragment">...</li>
-						</ul>
-					</section>
-
-					<section>
-						<h2>Request &amp; Response</h2>
-						<ul>
-							<li class="fragment">...</li>
-						</ul>
-					</section>
 				</section>
 
 				<!-- The END -->
