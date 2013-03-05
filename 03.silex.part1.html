@@ -209,20 +209,20 @@ $app['debug'] = true;</code></pre>
 						<h2>Routing</h2>
 						<ul>
 							<li class="fragment">
-								Definitions
+								Definitions<small><a href="http://silex.sensiolabs.org/doc/usage.html#routing">&#9873;</a></small>
 								<ul>
 									<li class="fragment">A route is a combination of a <strong>pattern</strong> and a <strong>HTTP method</strong></li>
 									<li class="fragment">A route is handled by a <strong>handling function</strong> which returns/does x/y</li>
 								</ul>
 							</li>
 							<li class="fragment">
-								In Silex
+								In Silex<small><a href="http://silex.sensiolabs.org/doc/usage.html#other-methods">&#9873;</a></small>
 								<pre class="bigger"><code class="language-php">$app->match('<em>pattern</em>', function(Silex\Application $app) {
 	// ...
 })->method('GET|POST');</code></pre>
 							</li>
 							<li class="fragment">
-								Shorthands
+								Shorthands (preferred)<small><a href="http://silex.sensiolabs.org/doc/usage.html#example-get-route">&#9873;</a></small>
 								<pre class="bigger"><code class="language-php">$app->get('<em>pattern</em>', function(Silex\Application $app) {
 	// ...
 });
@@ -231,7 +231,6 @@ $app->post('<em>pattern</em>', function(Silex\Application $app) {
 });</code></pre>
 							</li>
 						</ul>
-						<footer class="fragment"><em>Note: The shorthands are the preferred way to writing code</em></footer>
 					</section>
 
 					<section>
