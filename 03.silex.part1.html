@@ -226,7 +226,7 @@ $app['debug'] = true;</code></pre>
 							<li class="fragment">
 								Definitions<small><a href="http://silex.sensiolabs.org/doc/usage.html#routing">&#9873;</a></small>
 								<ul>
-									<li class="fragment">A route is a combination of a <strong>pattern</strong> and a <strong>HTTP method</strong></li>
+									<li class="fragment">A route is a combination of a <strong>pattern</strong> and an <strong>HTTP method</strong></li>
 									<li class="fragment">A route is handled by a <strong>handling function</strong> which returns/does x/y</li>
 								</ul>
 							</li>
@@ -251,7 +251,7 @@ $app->post('<em>pattern</em>', function(Silex\Application $app) {
 					<section>
 						<h2>Static Routing</h2>
 						<ul>
-							<li class="fragment">Static routes are routes with fixed pattern
+							<li class="fragment">Static routes are routes with a fixed pattern
 								<pre class="bigger"><code class="language-php">$app->get('/', function(Silex\Application $app) {
 	// show something (e.g. return a blob of HTML)
 });
@@ -480,7 +480,10 @@ $app->post('/', function(Silex\Application $app) {
 					<section>
 						<h2>Sources</h2>
 						<ul>
-							<li><a href="...">...</a></li>
+							<li><a href="http://silex.sensiolabs.org/doc/usage.html">http://silex.sensiolabs.org/doc/usage.html</a></li>
+							<li><a href="http://silex.sensiolabs.org/doc/organizing_controllers.html">http://silex.sensiolabs.org/doc/organizing_controllers.html</a></li>
+							<li><a href="https://igor.io/2012/11/09/scaling-silex.html">https://igor.io/2012/11/09/scaling-silex.html</a></li>
+							<li><a href="https://github.com/Mparaiso/Silex-Blog-App">https://github.com/Mparaiso/Silex-Blog-App</a> (file <code>/app/routes.php</code>)</li>
 						</ul>
 					</section>
 				</section>
