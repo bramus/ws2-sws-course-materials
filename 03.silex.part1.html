@@ -486,12 +486,19 @@ $app->mount('/blog', $blog);</code></pre>
 										Place your classses in <code>/src/<em>namespace</em>/provider/controler</code>
 									</li>
 									<li class="fragment">
-										Classes extend <code>Silex\ControllerProviderInterface</code>
+										Name of class can be chosen freely, though something like <code>TweetsController</code> recommended
+									</li>
+									<li class="fragment">
+										Classes implement <code>Silex\ControllerProviderInterface</code>
 									</li>
 									<li class="fragment">
 										The <code>connect</code> function regulates the (sub)routes to other instance functions
 									</li>
 								</ul>
+							</li>
+							<li class="fragment">
+								Mount your class on the subroute from <code>/app/app.php</code>
+								<pre class="bigger fragment"><code class="language-php">$app->mount('/tweets', new Ikdoeict\Provider\Controller\TweetsController());</code></pre>
 							</li>
 						</ol>
 					</section>
