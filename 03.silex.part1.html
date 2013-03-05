@@ -49,22 +49,69 @@
 					<section>
 						<h2>Silex Introduction</h2>
 
-						<p><img src="assets/03/..." alt="" title="" width="447" height="334"></p>
-						<q>...</q>
+						<p><img src="assets/03/futurama_conferencetable.jpg" alt="" title="" width="447" /></p>
 					</section>
 
 					<section>
 						<h2>Silex</h2>
 						<ul>
-							<li class="fragment">...</li>
+							<li class="fragment">PHP microframework</li>
+							<li class="fragment">
+								Built around routes
+								<ul>
+									<li class="fragment">When requesting <code>/</code> show the homepage</li>
+									<li class="fragment">When requesting <code>/news</code> show all newsitems</li>
+									<li class="fragment">When requesting <code>/news/{id}</code> show the proper newsitem</li>
+									<li class="fragment">When requesting <code>/news/{id}</code> via <code>POST</code> add a comment</li>
+									<li class="fragment">&hellip;</li>
+								</ul>
+							</li>
+							<li class="fragment">
+								Extensible using Providers
+								<ul>
+									<li class="fragment">Twig Service Provider</li>
+									<li class="fragment">Doctrine Service Provider</li>
+									<li class="fragment">Swiftmailer Service Provider</li>
+									<li class="fragment">&hellip;</li>
+								</ul>
+							</li>
 						</ul>
 					</section>
 
 					<section>
 						<h2>Installation</h2>
 						<ul>
-							<li class="fragment">...</li>
+							<li class="fragment">
+								Installable via Composer
+								<pre class="bigger"><code class="language-js dontrun" style="max-height: 380px; overflow: scroll;">{
+	&quot;require&quot;: {
+		&quot;silex/silex&quot;: &quot;1.0.*@dev&quot;
+	}
+}</code></pre>
+							</li>
 						</ul>
+					</section>
+
+					<section>
+						<h2>Code Example</h2>
+						<ul>
+							<li class="fragment">
+								The core of Silex is an instance of <code>Silex\Aplication</code>
+								<ul>
+									<li class="fragment">Register providers on it</li>
+									<li class="fragment">Define routes on it</li>
+								</ul>
+							</li>
+						</ul>
+						<div class="fragment"><pre class="bigger"><code class="language-php" style="max-height: 380px; overflow: scroll;">require_once __DIR__ . '/../vendor/autoload.php';
+
+$app = new Silex\Application();
+
+$app->get('/hello/{name}', function($name) use($app) {
+    return 'Hello ' . $app->escape($name);
+});
+
+$app->run();</code></pre></div>
 					</section>
 
 				</section>
@@ -75,14 +122,75 @@
 					<section>
 						<h2>Silex Boilerplate &amp; Bootstrapping</h2>
 
-						<p><img src="assets/03/..." alt="" title="" width="447" height="334"></p>
-						<q>...</q>
+						<p><img src="assets/03/futurama_armyofthedamned.jpg" alt="" title="" width="547" /></p>
+						<q>If robots can't go to heaven, heaven can come to us.</q>
 					</section>
 
 					<section>
 						<h2>Silex Boilerplate &amp; Bootstrapping</h2>
 						<ul>
-							<li class="fragment">...</li>
+							<li class="fragment">
+								Basic Silex Project Structure
+								<ul>
+									<li class="fragment">
+										<code>web/</code> &mdash; Public files
+										<ul>
+											<li class="fragment"><code class="special">index.php</code> &mdash; Front Controller</li>
+											<li class="fragment"><code>css/</code> &amp; <code>js/</code> &amp; <code>img/</code> &amp; &hellip;</li>
+										</ul>
+									</li>
+									<li class="fragment">
+										<code>app/</code> &mdash; Project logic
+										<ul>
+											<li class="fragment"><code class="special">bootstrap.php</code> &mdash; App Bootstrap</li>
+											<li class="fragment"><code class="special">app.php</code> &mdash; Routing</li>
+										</ul>
+									</li>
+									<li class="fragment">
+										<code>vendor/</code> &mdash; <em>(as created by Composer)</em>
+									</li>
+									<li class="fragment">
+										<code>composer.json</code>
+									</li>
+								</ul>
+							</li>
+						</ul>
+						<footer class="fragment"><em>Note: The webserver is configured so that it <a href="02.url.design.html#/2">routes all requests to the front controller</a></em></footer>
+					</section>
+
+					<section>
+						<h2>Example</h2>
+
+						<figure><img src="assets/03/example-00.png" alt="" title="" width="580" class="noborder" /></figure>
+
+						<p style="font-size: 75%">Let's take a look at the files in  <code>assets/ws2-sws-fiddles-silex/00.basic/</code> <a href="assets/ws2-sws-fiddles-silex/00.basic/">&rarr;</a></p>
+
+					</section>
+
+					<section>
+						<h2>Example Recap</h2>
+						<ul>
+							<li class="fragment">
+								<code>/web/index.php</code> is the Front Controller
+								<pre class="bigger"><code class="language-php">&lt;?php
+require_once __DIR__ . '/../app/app.php';
+$app->run();</code></pre>
+							</li>
+							<li class="fragment">
+								<code>/app/app.php</code> contains the actual routing
+								<pre class="bigger"><code class="language-php">&lt;?php
+require __DIR__ . '/bootstrap.php';
+$app->get('/', function(Silex\Application $app) {
+	return 'ohai';
+});</code></pre>
+							</li>
+							<li class="fragment">
+								<code>/app/bootstrap.php</code> creates &amp; configures the <code>$app</code>
+								<pre class="bigger"><code class="language-php">&lt;?php
+require_once __DIR__ . '/../vendor/autoload.php';
+$app = new Silex\Application();
+$app['debug'] = true;</code></pre>
+							</li>
 						</ul>
 					</section>
 				</section>
@@ -93,51 +201,212 @@
 					<section>
 						<h2>Silex Routing</h2>
 
-						<p><img src="assets/03/..." alt="" title="" width="447" height="334"></p>
-						<q>...</q>
+						<p><img src="assets/03/futurama_routes.png" alt="" title="" width="447" /></p>
+						<q>Now here's a route with some chest hair.</q>
 					</section>
 
 					<section>
-						<h2>Silex Routing</h2>
+						<h2>Routing</h2>
 						<ul>
-							<li class="fragment">...</li>
+							<li class="fragment">
+								Definitions<small><a href="http://silex.sensiolabs.org/doc/usage.html#routing">&#9873;</a></small>
+								<ul>
+									<li class="fragment">A route is a combination of a <strong>pattern</strong> and a <strong>HTTP method</strong></li>
+									<li class="fragment">A route is handled by a <strong>handling function</strong> which returns/does x/y</li>
+								</ul>
+							</li>
+							<li class="fragment">
+								In Silex<small><a href="http://silex.sensiolabs.org/doc/usage.html#other-methods">&#9873;</a></small>
+								<pre class="bigger"><code class="language-php">$app->match('<em>pattern</em>', function(Silex\Application $app) {
+	// ...
+})->method('GET|POST');</code></pre>
+							</li>
+							<li class="fragment">
+								Shorthands (preferred)<small><a href="http://silex.sensiolabs.org/doc/usage.html#example-get-route">&#9873;</a></small>
+								<pre class="bigger"><code class="language-php">$app->get('<em>pattern</em>', function(Silex\Application $app) {
+	// ...
+});
+$app->post('<em>pattern</em>', function(Silex\Application $app) {
+	// ...
+});</code></pre>
+							</li>
 						</ul>
 					</section>
 
 					<section>
-						<h2>Prerequisites</h2>
+						<h2>Static Routing</h2>
 						<ul>
-							<li class="fragment">...</li>
+							<li class="fragment">Static routes are routes with fixed pattern
+								<pre class="bigger"><code class="language-php">$app->get('/', function(Silex\Application $app) {
+	// show something (e.g. return a blob of HTML)
+});
+
+$app->get('/about', function(Silex\Application $app) {
+	// show something else (e.g. return a blob of HTML)
+});
+
+$app->post('/', function(Silex\Application $app) {
+	// do something (e.g. insert into database, send e-mail)
+});
+</code></pre>
+							</li>
 						</ul>
+						<footer class="fragment"><em>Note: Only the first route that matches will be used</em></footer>
 					</section>
 
 					<section>
 						<h2>Dynamic Routing</h2>
 						<ul>
-							<li class="fragment">...</li>
+							<li class="fragment">
+								Dynamic routes<small><a href="http://silex.sensiolabs.org/doc/usage.html#dynamic-routing">&#9873;</a></small> are routes with a dynamic pattern
+								<ul>
+									<li class="fragment">The dynamic parts of the pattern will be converted to <strong>route variables</strong><small><a href="http://silex.sensiolabs.org/doc/usage.html#route-variables">&#9873;</a></small> which you pass into the handling function</li>
+								</ul>
+								<pre class="bigger fragment"><code class="language-php">$app->get('/hello/{name}', function(Silex\Application $app, $name) {
+	return 'Hello ' . $app->escape($name) . '!';
+});</code></pre>
+								<pre class="bigger fragment"><code class="language-php">$app->get('/blog/{postId}/{commentId}', function (Silex\Application $app, $postId, $commentId) {
+	// ...
+});</code></pre>
+							</li>
+						</ul>
+						<footer class="fragment"><em>Important: use <code>$app->escape()</code><small><a href="http://silex.sensiolabs.org/doc/usage.html#escaping" style="font-style: normal; position: relative; top: 5px;">&#9873;</a></small> to prevent XSS!</em></footer>
+					</section>
+
+					<section>
+						<h2>Redirecting and Error Handling</h2>
+						<ul>
+							<li class="fragment">
+								Redirect using <code>$app->redirect()</code><small><a href="http://silex.sensiolabs.org/doc/usage.html#redirects">&#9873;</a></small>
+								<pre class="bigger fragment"><code class="language-php">$app->get('/', function(Silex\Application $app) {
+	return $app->redirect($app['request']->getBaseUrl() . '/hello');
+});</code></pre>
+							</li>
+							<li class="fragment">
+								Override the default error handling using <code>$app->error()</code><small><a href="http://silex.sensiolabs.org/doc/usage.html#error-handlers">&#9873;</a></small>
+								<pre class="bigger fragment"><code class="language-php">$app->error(function (\Exception $e, $code) {
+	if ($code == 404) {
+		return 'Please visit &lt;code&gt;/hello/&lt;em&gt;name&lt;/em&gt;&lt;/code&gt;';
+	} else {
+		return 'Shenanigans! Something went horribly wrong';
+	}
+});</code></pre>
+							</li>
 						</ul>
 					</section>
 
 					<section>
-						<h2>More Routing</h2>
-						<ul>
-							<li class="fragment">...</li>
-						</ul>
+						<h2>Example</h2>
+
+						<figure><img src="assets/03/example-01.png" alt="" title="" width="580" class="noborder" /></figure>
+
+						<p style="font-size: 75%">Let's take a look at the files in  <code>assets/ws2-sws-fiddles-silex/01.hello/</code> <a href="assets/ws2-sws-fiddles-silex/01.hello/">&rarr;</a></p>
+
 					</section>
 
 					<section>
 						<h2>Route Prerequisites</h2>
 						<ul>
-							<li class="fragment">...</li>
+							<li class="fragment">Set requirements for variables in routes<small><a href="http://silex.sensiolabs.org/doc/usage.html#requirements">&#9873;</a></small></li>
+							<li class="fragment">Set defaults for variables in routes<small><a href="http://silex.sensiolabs.org/doc/usage.html#default-values">&#9873;</a></small></li>
+							<li class="fragment">Preprocess variables in routes using converters<small><a href="http://silex.sensiolabs.org/doc/usage.html#route-variables-converters">&#9873;</a></small></li>
 						</ul>
 					</section>
 
 					<section>
-						<h2>Organize Routing</h2>
+						<h2>Example</h2>
+
+						<figure><img src="assets/03/example-02.png" alt="" title="" width="580" class="noborder" /></figure>
+
+						<p style="font-size: 75%">Let's take a look at the files in  <code>assets/ws2-sws-fiddles-silex/02.olleh/</code> <a href="assets/ws2-sws-fiddles-silex/02.olleh/">&rarr;</a></p>
+
+					</section>
+				</section>
+
+
+				<!-- Structured Routing -->
+				<section>
+					<section>
+						<h2>Structured Routing</h2>
+
+						<p><img src="assets/03/futurama_sort.png" alt="" title="" width="447" /></p>
+						<q>Number 1.0, I hereby petition you<br />for an emergency sort-and-file!</q>
+					</section>
+
+					<section>
+						<h2>Base Example</h2>
+
+						<figure><img src="assets/03/example-03.png" alt="" title="" width="580" class="noborder" /></figure>
+
+						<p style="font-size: 75%">Let's take a look at the files in  <br /><code>assets/ws2-sws-fiddles-silex/03.tweets/</code> <a href="assets/ws2-sws-fiddles-silex/03.tweets/">&rarr;</a></p>
+					</section>
+
+					<section>
+						<h2>Example Analysis (1)</h2>
+
 						<ul>
-							<li class="fragment">...</li>
+							<li class="fragment">
+								Pass extra data to handling functions with <code>use</code><small><a href="http://silex.sensiolabs.org/doc/usage.html#example-get-route">&#9873;</a></small>
+								<pre class="bigger fragment"><code class="language-php">$app->get('/tweets', function(Silex\Application $app) use ($tweets) {
+	$output = '&lt;ul&gt;';
+	foreach ($tweets as $id => $tweet) {
+		$output .= '&lt;li&gt;&lt;a href=&quot;' . $app['request']->getBaseUrl(). '/tweets/'
+		        . $app->escape($id) . '&quot;>&amp;para;&lt;/a&gt; '
+		        . $app->escape($tweet['text']) . '&lt;/li&gt;';
+	}
+	$output .= '&lt;/ul&gt;';
+	return $output;
+});</code></pre>
+							</li>
+							<li class="fragment">
+								Trigger errors with <code>$app->abort()</code><small><a href="http://silex.sensiolabs.org/doc/usage.html#dynamic-routing">&#9873;</a></small>
+								<pre class="bigger fragment"><code class="language-php">$app->get('/tweets/{id}', function(Silex\Application $app, $id) use ($tweets) {
+	if (!isset($tweets[$id])) {
+		$app->abort(404, "Tweet $id does not exist");
+	}
+	$tweet = $tweets[$id];
+	return  ...
+})->assert('id', '\d+');</code></pre>
+							</li>
 						</ul>
 					</section>
+
+					<section>
+						<h2>Example Analysis (2)</h2>
+
+						<ul>
+							<li class="fragment">
+								Codebase doesn't scale well
+								<ul>
+									<li class="fragment">What if we need to define more logic/routes?<br />&rarr; <code>/app/app.php</code> will quickly become one cluttered mess</li>
+									<li class="fragment">Solution: Organize our routes in <strong>Controllers</strong></li>
+								</ul>
+							</li>
+							<li class="fragment">
+								Building strings of HTML in your PHP is plain stupid
+								<ul>
+									<li class="fragment">Solution: introduce Twig or the like</li>
+								</ul>
+							</li>
+						</ul>
+						<footer class="fragment"><em>Note: We won't be introducting Twig for now, we'll tackle it later on</em></footer>
+					</section>
+
+					<section>
+						<h2>Route Controllers</h2>
+						<ul>
+							<li class="fragment">....</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Revised Example</h2>
+
+						<figure><img src="assets/03/example-04.png" alt="" title="" width="580" class="noborder" /></figure>
+
+						<p style="font-size: 75%">Let's take a look at the files in <br /><code>assets/ws2-sws-fiddles-silex/04.tweets-organized/</code> <a href="assets/ws2-sws-fiddles-silex/04.tweets-organized/">&rarr;</a></p>
+					</section>
+
 				</section>
 
 
@@ -146,7 +415,7 @@
 					<section>
 						<h2>Silex <code>$app</code> extras</h2>
 
-						<p><img src="assets/03/..." alt="" title="" width="447" height="334"></p>
+						<p><img src="assets/03/..." alt="" title="" width="447" height="334" /></p>
 						<q>...</q>
 					</section>
 

@@ -1,0 +1,11 @@
+{# extend the parent tpl #}
+{% extends 'layout.twig' %}
+
+
+{# set the pagetitle in the parent tpl #}
+{% set pageTitle = 'Linkdumpr &raquo; 404 - File Not Found' %}
+
+{% block pageContent %}
+	<p class="breadcrumb"><a href="{{ app.request.baseUrl }}/">Linkdumpr</a> &raquo; 404 - File Not Found</p>
+	<p>{{ error }}</p>
+{% endblock %}
