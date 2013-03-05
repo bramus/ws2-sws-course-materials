@@ -393,10 +393,50 @@ $app->post('/', function(Silex\Application $app) {
 					</section>
 
 					<section>
-						<h2>Route Controllers</h2>
+						<h2>Route Controllers (1)</h2>
 						<ul>
-							<li class="fragment">....</li>
+							<li class="fragment">
+								Group routes in a <code>ControllerCollection</code><small><a href="http://silex.sensiolabs.org/doc/organizing_controllers.html">&#9873;</a></small>
+							</li>
+							<li class="fragment">
+								A <code>ControllerCollection</code> can be <strong>mounted</strong> onto a <em>base route</em>
+								<pre class="bigger fragment"><code class="language-php">// define controller for a blog
+$blog = $app['controllers_factory'];
+
+$blog->get('/', function () {
+	return 'Blog home page';
+});
+$blog->get('/{id}', function () {
+	return 'Blog detail page';
+})->assert('id', '\d+');
+
+// Mount the blog controller onto the /blog route
+$app->mount('/blog', $blog);</code></pre>
+							</li>
 						</ul>
+						<footer class="fragment">Note: <code>$app['controllers_factory']</code> returns a new <code>ControllerCollection</code> instance</footer>
+					</section>
+
+					<section>
+						<h2>Route Controllers (2)</h2>
+						<ul>
+							<li class="fragment">
+								Structure is still lacking with just <code>ControllerCollection</code>
+							</li>
+							<li class="fragment">
+								We've talked about structure before
+								<ul>
+									<li class="fragment">
+										&hellip; right?
+									</li>
+									<li class="fragment">
+										Right! <a href"01.libraries.html#/3">Classes, and namespaces, and PSR-0</a>!
+									</li>
+								</ul>
+							</li>
+						</ul>
+						<p class="fragment" style="position: absolute; top: 45%; left: 10%; right: 10%; bottom: 10%; transform: rotate(2deg);"><img src="assets/03/picard_notagain.jpg" style="width: 400px;" /></p>
+						<p class="fragment" style="position: absolute; top: 45%; left: 5%; right: 10%; bottom: 10%; transform: rotate(-3deg);"><img src="assets/03/picard_engage.jpg" style="width: 400px;" /></p>
 					</section>
 
 					<section>
@@ -405,6 +445,55 @@ $app->post('/', function(Silex\Application $app) {
 						<figure><img src="assets/03/example-04.png" alt="" title="" width="580" class="noborder" /></figure>
 
 						<p style="font-size: 75%">Let's take a look at the files in <br /><code>assets/ws2-sws-fiddles-silex/04.tweets-organized/</code> <a href="assets/ws2-sws-fiddles-silex/04.tweets-organized/">&rarr;</a></p>
+					</section>
+
+					<section>
+						<h2>Example Recap (1)</h2>
+
+						<ol>
+							<li class="fragment">
+								Create a namespace of your own
+								<ul>
+									<li class="fragment">
+										Place your namespace in <code>/src</code>
+									</li>
+									<li class="fragment">
+										Autoload your namespace by adjusting <code>composer.json</code>
+										<pre class="bigger fragment"><code class="language-js dontrun">{
+	&quot;require&quot;: {
+		&quot;silex/silex&quot;: &quot;1.0.*@dev&quot;
+	},
+	&quot;autoload&quot;: {
+		&quot;psr-0&quot;: {
+			&quot;Ikdoeict&quot;: &quot;src/&quot;
+		}
+	}
+}</code></pre>
+									</li>
+								</ul>
+							</li>
+						</ol>
+					</section>
+
+					<section>
+						<h2>Example Recap (2)</h2>
+
+						<ol start="2">
+							<li class="fragment">
+								Create Router classes per group of routes
+								<ul>
+									<li class="fragment">
+										Place your classses in <code>/src/<em>namespace</em>/provider/controler</code>
+									</li>
+									<li class="fragment">
+										Classes extend <code>Silex\ControllerProviderInterface</code>
+									</li>
+									<li class="fragment">
+										The <code>connect</code> function regulates the (sub)routes to other instance functions
+									</li>
+								</ul>
+							</li>
+						</ol>
 					</section>
 
 				</section>
