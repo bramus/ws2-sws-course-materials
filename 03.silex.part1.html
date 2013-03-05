@@ -321,13 +321,92 @@ $app->post('/', function(Silex\Application $app) {
 						<p style="font-size: 75%">Let's take a look at the files in  <code>assets/ws2-sws-fiddles-silex/02.olleh/</code> <a href="assets/ws2-sws-fiddles-silex/02.olleh/">&rarr;</a></p>
 
 					</section>
+				</section>
+
+
+				<!-- Structured Routing -->
+				<section>
+					<section>
+						<h2>Structured Routing</h2>
+
+						<p><img src="assets/03/futurama_sort.png" alt="" title="" width="447" /></p>
+						<q>Number 1.0, I hereby petition you<br />for an emergency sort-and-file!</q>
+					</section>
 
 					<section>
-						<h2>Organize Routing</h2>
+						<h2>Base Example</h2>
+
+						<figure><img src="assets/03/example-03.png" alt="" title="" width="580" class="noborder" /></figure>
+
+						<p style="font-size: 75%">Let's take a look at the files in  <br /><code>assets/ws2-sws-fiddles-silex/03.tweets/</code> <a href="assets/ws2-sws-fiddles-silex/03.tweets/">&rarr;</a></p>
+					</section>
+
+					<section>
+						<h2>Example Analysis (1)</h2>
+
 						<ul>
-							<li class="fragment">...</li>
+							<li class="fragment">
+								Pass extra data to handling functions with <code>use</code><small><a href="http://silex.sensiolabs.org/doc/usage.html#example-get-route">&#9873;</a></small>
+								<pre class="bigger fragment"><code class="language-php">$app->get('/tweets', function(Silex\Application $app) use ($tweets) {
+	$output = '&lt;ul&gt;';
+	foreach ($tweets as $id => $tweet) {
+		$output .= '&lt;li&gt;&lt;a href=&quot;' . $app['request']->getBaseUrl(). '/tweets/'
+		        . $app->escape($id) . '&quot;>&amp;para;&lt;/a&gt; '
+		        . $app->escape($tweet['text']) . '&lt;/li&gt;';
+	}
+	$output .= '&lt;/ul&gt;';
+	return $output;
+});</code></pre>
+							</li>
+							<li class="fragment">
+								Trigger errors with <code>$app->abort()</code><small><a href="http://silex.sensiolabs.org/doc/usage.html#dynamic-routing">&#9873;</a></small>
+								<pre class="bigger fragment"><code class="language-php">$app->get('/tweets/{id}', function(Silex\Application $app, $id) use ($tweets) {
+	if (!isset($tweets[$id])) {
+		$app->abort(404, "Tweet $id does not exist");
+	}
+	$tweet = $tweets[$id];
+	return  ...
+})->assert('id', '\d+');</code></pre>
+							</li>
 						</ul>
 					</section>
+
+					<section>
+						<h2>Example Analysis (2)</h2>
+
+						<ul>
+							<li class="fragment">
+								Codebase doesn't scale well
+								<ul>
+									<li class="fragment">What if we need to define more logic/routes?<br />&rarr; <code>/app/app.php</code> will quickly become one cluttered mess</li>
+									<li class="fragment">Solution: Organize our routes in <strong>Controllers</strong></li>
+								</ul>
+							</li>
+							<li class="fragment">
+								Building strings of HTML in your PHP is plain stupid
+								<ul>
+									<li class="fragment">Solution: introduce Twig or the like</li>
+								</ul>
+							</li>
+						</ul>
+						<footer class="fragment"><em>Note: We won't be introducting Twig for now, we'll tackle it later on</em></footer>
+					</section>
+
+					<section>
+						<h2>Route Controllers</h2>
+						<ul>
+							<li class="fragment">....</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Revised Example</h2>
+
+						<figure><img src="assets/03/example-04.png" alt="" title="" width="580" class="noborder" /></figure>
+
+						<p style="font-size: 75%">Let's take a look at the files in <br /><code>assets/ws2-sws-fiddles-silex/04.tweets-organized/</code> <a href="assets/ws2-sws-fiddles-silex/04.tweets-organized/">&rarr;</a></p>
+					</section>
+
 				</section>
 
 
