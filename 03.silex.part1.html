@@ -94,16 +94,24 @@
 
 					<section>
 						<h2>Code Example</h2>
+						<ul>
+							<li class="fragment">
+								The core of Silex is an instance of <code>Silex\Aplication</code>
+								<ul>
+									<li class="fragment">Register providers on it</li>
+									<li class="fragment">Define routes on it</li>
+								</ul>
+							</li>
+						</ul>
 						<div class="fragment"><pre class="bigger"><code class="language-php" style="max-height: 380px; overflow: scroll;">require_once __DIR__ . '/../vendor/autoload.php';
 
 $app = new Silex\Application();
 
 $app->get('/hello/{name}', function($name) use($app) {
-    return 'Hello '.$app->escape($name);
+    return 'Hello ' . $app->escape($name);
 });
 
 $app->run();</code></pre></div>
-						<p class="fragment">The core of Silex is <code>$app</code></p>
 					</section>
 
 				</section>
