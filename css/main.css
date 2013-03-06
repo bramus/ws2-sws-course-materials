@@ -1188,3 +1188,18 @@ strong {
 	cursor: pointer;
 	border-bottom: 1px dotted #ccc;
 }
+
+#github-warning {
+	font-size: 65%;
+	position: absolute;
+	bottom: 3em;
+	left: 10%;
+	right: 10%;
+	line-height: 1.2;
+	display: block;
+}
+
+#reveal #github-warning a {
+	color: #33F;
+	text-decoration: underline;
+}
