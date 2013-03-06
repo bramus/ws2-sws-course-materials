@@ -1184,7 +1184,7 @@ strong {
 	margin-bottom: 0;
 }
 
-#reveal abbr {
+#reveal abbr, #reveal acronym {
 	cursor: pointer;
 	border-bottom: 1px dotted #ccc;
 }
