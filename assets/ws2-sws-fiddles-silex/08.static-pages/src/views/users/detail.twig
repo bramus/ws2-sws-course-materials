@@ -8,7 +8,7 @@
 
 {# overwrite the pageContent block #}
 {% block pageContent %}
-	<p class="breadcrumb"><a href="{{ app.request.baseUrl }}/">Linkdumpr</a> &raquo; <a href="{{ app.request.baseUrl }}/users">Users</a> &raquo; {{ user.firstname }} {{ user.lastname }}</p>
+	<p class="breadcrumb"><a href="{{ path('home') }}">Linkdumpr</a> &raquo; <a href="{{ path('users') }}">Users</a> &raquo; {{ user.firstname }} {{ user.lastname }}</p>
 	<dl class="clearfix">
 		<dt>Location</dt>
 		<dd>{{ user.location }}</dd>
@@ -19,6 +19,6 @@
 		<dd><a href="{{ user.url }}">{{ user.url }}</a></dd>
 		{% endif %}
 		<dt>Links</dt>
-		<dd><a href="{{ app.request.baseUrl }}/users/{{ user.id }}/links">{{ linkcount }} links posted</a></dd>
+		<dd><a href="{{ path('users') }}{{ user.id }}/links">{{ linkcount }} links posted</a></dd>
 	</dl>
 {% endblock %}
