@@ -440,7 +440,7 @@ $app->post('/feedback', function(Request $request) {
 								Codebase doesn't scale well
 								<ul>
 									<li class="fragment">What if we need to define more logic/routes?<br />&rarr; <code>/app/app.php</code> will quickly become one cluttered mess</li>
-									<li class="fragment">Solution: Organize our routes in <strong>Controllers</strong></li>
+									<li class="fragment">Solution: Organize our routes in a <strong>ControllerCollection</strong></li>
 								</ul>
 							</li>
 							<li class="fragment">
@@ -490,7 +490,7 @@ $app->mount('/blog', $blog);</code></pre>
 									<li class="fragment">
 										&hellip; right?
 									</li>
-									<li class="fragment">
+									<li class="fragment" style="position: relative;">
 										Right! <a href"01.libraries.html#/3">Classes, and namespaces, and PSR-0</a>!
 									</li>
 								</ul>
@@ -498,6 +498,19 @@ $app->mount('/blog', $blog);</code></pre>
 						</ul>
 						<p class="fragment" style="position: absolute; top: 45%; left: 10%; right: 10%; bottom: 10%; transform: rotate(2deg);"><img src="assets/03/picard_notagain.jpg" style="width: 400px;" /></p>
 						<p class="fragment" style="position: absolute; top: 45%; left: 5%; right: 10%; bottom: 10%; transform: rotate(-3deg);"><img src="assets/03/picard_engage.jpg" style="width: 400px;" /></p>
+					</section>
+
+					<section>
+						<h2>Route Controllers (3)</h2>
+
+						<ul>
+							<li class="fragment">
+								Silex' structured answer: ControllerProviders<small><a href="http://silex.sensiolabs.org/doc/providers.html#controllers-providers">&#9873;</a></small> in which you wrap a <code>ControllerCollection</code>
+								<ul>
+									<li class="fragment">If we namespace our own controllerproviders properly, we'll have a good structure</li>
+								</ul>
+							</li>
+						</ul>
 					</section>
 
 					<section>
@@ -553,7 +566,7 @@ $app->mount('/blog', $blog);</code></pre>
 										Name of class can be chosen freely, though something like <code>TweetsController</code> recommended
 									</li>
 									<li class="fragment">
-										Classes implement <code>Silex\ControllerProviderInterface</code>
+										Classes must implement <code>Silex\ControllerProviderInterface</code>
 									</li>
 									<li class="fragment">
 										The <code>connect</code> function regulates the (sub)routes to other instance functions
