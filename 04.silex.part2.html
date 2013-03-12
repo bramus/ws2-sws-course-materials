@@ -49,35 +49,112 @@
 					<section>
 						<h2>Pimple Deepdive</h2>
 
-						<p><img src="assets/04/.....jpg" alt="" title="" width="447" /></p>
-						<q>...</q>
+						<p><img src="assets/04/futurama_pimple.png" alt="" title="" width="447" /></p>
+						<q>I'll make you cry, buddy. You're a pimple on society's ass and you'll never amount to anything.</q>
 					</section>
 
 					<section>
 						<h2>Pimple</h2>
 						<ul>
-							<li class="fragment">...</li>
+							<li class="fragment">
+								As said before: Silex is built on top of <a href="http://pimple.sensiolabs.org/">Pimple</a>
+								<div class="fragment"><pre class="bigger"><code class="language-php">&lt;?php
+
+namespace Silex;
+&hellip;
+class Application extends \Pimple implements &hellip; {
+	&hellip;
+}</code></pre></div>
+							</li>
+							<li class="fragment">
+								Pimple is a Dependency Injection Container <em>(DIC)</em> for PHP
+								<ul>
+									<li class="fragment">
+										In short: Define something on it, and later on retrieve it again
+										<ul>
+											<li class="fragment">parameters</li>
+											<li class="fragment">objects</li>
+											<li class="fragment">shared objects (cfr. Singleton)</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+						</ul>
+						<footer class="fragment"><em>Remember: Silex' Appliction is also a DIC as it extends Pimple!</em></footer>
+					</section>
+
+					<section>
+						<h2>Creating a pimple</h2>
+						<ul>
+							<li class="fragment">
+								Just create a new instance
+								<pre class="bigger"><code class="language-php">&lt;?php
+
+require_once '/path/to/pimple.php';
+
+$container = new Pimple();</code></pre>
+							</li>
+							<li class="fragment">
+								As <code>Silex\Application</code> extends <code>\Pimple</code>, our <code>$app</code> also is an instance of <em>(a special type of)</em> <code>\Pimple</code>
+								<pre class="bigger"><code class="language-php">&lt;?php
+
+&hellip;
+
+$app = new Silex\Application();</code></pre>
+							</li>
 						</ul>
 					</section>
 
 					<section>
 						<h2>Parameters</h2>
 						<ul>
-							<li class="fragment">...</li>
+							<li class="fragment">
+								Defining a parameter:
+								<pre class="bigger"><code class="language-php">$app['some_parameter'] = 'value';</code></pre>
+							</li>
+							<li class="fragment">
+								Retrieving a parameter:
+								<pre class="bigger"><code class="language-php">echo $app['some_parameter']; // value</code></pre>
+							</li>
 						</ul>
 					</section>
 
 					<section>
 						<h2>Service Definitions</h2>
 						<ul>
-							<li class="fragment">...</li>
+							<li class="fragment">
+								Defining a service:
+								<pre class="bigger"><code class="language-php">$app['some_service'] = function () {
+	return new Whatever();
+};</code></pre>
+							</li>
+							<li class="fragment">
+								Retrieving a service:
+								<pre class="bigger"><code class="language-php">$service = $app['some_service'];</code></pre>
+								<ul>
+									<li class="fragment">Every time you call <code>$app['some_service']</code>, a new instance of the service is created.</li>
+								</ul>
+							</li>
 						</ul>
 					</section>
 
 					<section>
 						<h2>Shared Services</h2>
 						<ul>
-							<li class="fragment">...</li>
+							<li class="fragment">
+								Defining a shared service:
+								<pre class="bigger"><code class="language-php">$app['some_service'] = $app->share(function () {
+	return new Whatever();
+});</code></pre>
+							</li>
+							<li class="fragment">
+								Retrieving a shared service:
+								<pre class="bigger"><code class="language-php">$service = $app['some_service'];</code></pre>
+								<ul>
+									<li class="fragment">On first invocation the service is created.</li>
+									<li class="fragment">Subsequent requests will get the existing instance (cfr. Singleton)</li>
+								</ul>
+							</li>
 						</ul>
 					</section>
 
