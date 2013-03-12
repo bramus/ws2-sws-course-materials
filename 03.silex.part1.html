@@ -136,7 +136,7 @@ $app->run();</code></pre></div>
 							<li class="fragment">
 								Internally, The Silex Core is built on top of
 								<ul>
-									<li><a href="http://pimple.sensiolabs.org/">Pimple</a></li>
+									<li><a href="http://pimple.sensiolabs.org/">Pimple</a>, a Dependency Injection Container</li>
 									<li>A few components of the <a href="http://symfony.com/">Symfony Framework</a></li>
 								</ul>
 							</li>
@@ -371,7 +371,7 @@ $app->post('/feedback', function(Request $request) {
 });</code></pre>
 							</li>
 						</ul>
-						<footer class="fragment">Silex always uses <code>Response</code> internally, it converts strings to responses with status code <code>200</code></footer>
+						<footer class="fragment">Note: When returning a string, Silex converts it to a <code>Response</code> with status code <code>200</code></footer>
 					</section>
 
 					<section>
@@ -456,7 +456,7 @@ $app->post('/feedback', function(Request $request) {
 								Codebase doesn't scale well
 								<ul>
 									<li class="fragment">What if we need to define more logic/routes?<br />&rarr; <code>/app/app.php</code> will quickly become one cluttered mess</li>
-									<li class="fragment">Solution: Organize our routes in <strong>Controllers</strong></li>
+									<li class="fragment">Solution: Organize our routes in a <strong>ControllerCollection</strong></li>
 								</ul>
 							</li>
 							<li class="fragment">
@@ -506,7 +506,7 @@ $app->mount('/blog', $blog);</code></pre>
 									<li class="fragment">
 										&hellip; right?
 									</li>
-									<li class="fragment">
+									<li class="fragment" style="position: relative;">
 										Right! <a href"01.libraries.html#/3">Classes, and namespaces, and PSR-0</a>!
 									</li>
 								</ul>
@@ -514,6 +514,19 @@ $app->mount('/blog', $blog);</code></pre>
 						</ul>
 						<p class="fragment" style="position: absolute; top: 45%; left: 10%; right: 10%; bottom: 10%; transform: rotate(2deg);"><img src="assets/03/picard_notagain.jpg" style="width: 400px;" /></p>
 						<p class="fragment" style="position: absolute; top: 45%; left: 5%; right: 10%; bottom: 10%; transform: rotate(-3deg);"><img src="assets/03/picard_engage.jpg" style="width: 400px;" /></p>
+					</section>
+
+					<section>
+						<h2>Route Controllers (3)</h2>
+
+						<ul>
+							<li class="fragment">
+								Silex' structured answer: ControllerProviders<small><a href="http://silex.sensiolabs.org/doc/providers.html#controllers-providers">&#9873;</a></small> in which you wrap a <code>ControllerCollection</code>
+								<ul>
+									<li class="fragment">If we namespace our own controllerproviders properly, we'll have a good structure</li>
+								</ul>
+							</li>
+						</ul>
 					</section>
 
 					<section>
@@ -560,7 +573,7 @@ $app->mount('/blog', $blog);</code></pre>
 
 						<ol start="2">
 							<li class="fragment">
-								Create Router classes per group of routes
+								Create a ControllerProvider class per group of routes
 								<ul>
 									<li class="fragment">
 										Place your classses in <code>/src/<em>namespace</em>/provider/controler</code>
@@ -569,7 +582,7 @@ $app->mount('/blog', $blog);</code></pre>
 										Name of class can be chosen freely, though something like <code>TweetsController</code> recommended
 									</li>
 									<li class="fragment">
-										Classes implement <code>Silex\ControllerProviderInterface</code>
+										Classes must implement <code>Silex\ControllerProviderInterface</code>
 									</li>
 									<li class="fragment">
 										The <code>connect</code> function regulates the (sub)routes to other instance functions
