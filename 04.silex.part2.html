@@ -1,0 +1,830 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Webscripting2 &mdash; Serverside Webscripting &mdash; 04.silex.part2</title>
+
+		<meta name="description" content="Webscripting2 &mdash; Serverside Webscripting &mdash; 04.silex.part2">
+		<meta name="author" content="Bram(us) Van Damme - ikdoeict.be">
+
+		<link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/main.css" media="screen">
+		<link rel="stylesheet" href="css/print.css" media="print">
+
+		<link rel="stylesheet" href="lib/zenburn.css">
+	</head>
+
+	<body>
+
+		<div id="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+
+				<!-- Title -->
+				<section>
+					<section>
+						<h3 class="inverted">Serverside Webscripting <small>[JLW280]</small></h3>
+						<h1>04.silex.part2</h1>
+
+						<footer>
+							<em><a href="http://www.ikdoeict.be/">ikdoeict.be</a> &mdash; <a href="mailto:bramus.vandamme@kahosl.be">bramus.vandamme@kahosl.be</a></em>
+						</footer>
+						<script>
+							// Delicously hacky. Look away.
+							if( navigator.userAgent.match( /(iPhone|iPad|iPod|Android)/i ) )
+							document.write( '<p style="color: rgba(0,0,0,0.3); text-shadow: none;">('+'Tap to navigate'+')</p>' );
+						</script>
+					</section>
+				</section>
+
+
+				<!-- Pimple -->
+				<section>
+					<section>
+						<h2>Pimple Deepdive</h2>
+
+						<p><img src="assets/04/futurama_pimple.png" alt="" title="" width="447" /></p>
+						<q>I'll make you cry, buddy. You're a pimple on society's ass and you'll never amount to anything.</q>
+					</section>
+
+					<section>
+						<h2>Pimple</h2>
+						<ul>
+							<li class="fragment">
+								As said before: Silex is built on top of <a href="http://pimple.sensiolabs.org/">Pimple</a>
+								<div class="fragment"><pre class="bigger"><code class="language-php">&lt;?php
+
+namespace Silex;
+&hellip;
+class Application extends \Pimple implements &hellip; {
+	&hellip;
+}</code></pre></div>
+							</li>
+							<li class="fragment">
+								Pimple is a Dependency Injection Container <em>(DIC)</em> for PHP
+								<ul>
+									<li class="fragment">
+										In short: Define something on it, and later on retrieve it again
+										<ul>
+											<li class="fragment">parameters</li>
+											<li class="fragment">objects</li>
+											<li class="fragment">shared objects (cfr. Singleton)</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+						</ul>
+						<footer class="fragment"><em>Remember: Silex' Appliction is also a DIC as it extends Pimple!</em></footer>
+					</section>
+
+					<section>
+						<h2>Creating a pimple</h2>
+						<ul>
+							<li class="fragment">
+								Just create a new instance
+								<pre class="bigger"><code class="language-php">&lt;?php
+
+require_once '/path/to/pimple.php';
+
+$container = new Pimple();</code></pre>
+							</li>
+							<li class="fragment">
+								As <code>Silex\Application</code> extends <code>\Pimple</code>, our <code>$app</code> also is an instance of <em>(a special type of)</em> <code>\Pimple</code>
+								<pre class="bigger"><code class="language-php">&lt;?php
+
+&hellip;
+
+$app = new Silex\Application();</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Parameters</h2>
+						<ul>
+							<li class="fragment">
+								Defining a parameter:
+								<pre class="bigger"><code class="language-php">$app['some_parameter'] = 'value';</code></pre>
+							</li>
+							<li class="fragment">
+								Retrieving a parameter:
+								<pre class="bigger"><code class="language-php">echo $app['some_parameter']; // value</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Service Definitions</h2>
+						<ul>
+							<li class="fragment">
+								Defining a service:
+								<pre class="bigger"><code class="language-php">$app['some_service'] = function () {
+	return new Whatever();
+};</code></pre>
+							</li>
+							<li class="fragment">
+								Retrieving a service:
+								<pre class="bigger"><code class="language-php">$service = $app['some_service'];</code></pre>
+								<ul>
+									<li class="fragment">Every time you call <code>$app['some_service']</code>, a new instance of the service is created.</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Shared Services</h2>
+						<ul>
+							<li class="fragment">
+								Defining a shared service:
+								<pre class="bigger"><code class="language-php">$app['some_service'] = $app-&gt;share(function () {
+	return new Whatever();
+});</code></pre>
+							</li>
+							<li class="fragment">
+								Retrieving a shared service:
+								<pre class="bigger"><code class="language-php">$service = $app['some_service'];</code></pre>
+								<ul>
+									<li class="fragment">On first invocation the service is created.</li>
+									<li class="fragment">Subsequent requests will get the existing instance (cfr. Singleton)</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+				</section>
+
+
+				<!-- Services in Silex -->
+				<section>
+					<section>
+						<h2>Services in Silex</h2>
+
+						<p><img src="assets/04/futurama_service.png" alt="" title="" width="447" /></p>
+						<q>Final boarding call for Flight 406, non-stop service to pain!</q>
+					</section>
+
+					<section>
+						<h2>Example (1)</h2>
+						<ul>
+							<li class="fragment">
+								<a href="https://github.com/facebook/facebook-php-sdk">Facebook PHP SDK</a> example:
+								<pre class="bigger"><code class="language-php">require 'facebook-php-sdk/src/facebook.php';
+
+$facebook = new \Facebook(array(
+  'appId'  =&gt; 'YOUR_APP_ID',
+  'secret' =&gt; 'YOUR_APP_SECRET',
+));
+
+// Get User ID
+$user = $facebook-&gt;getUser();</code></pre>
+							</li>
+							<li class="fragment">In Silex: inject the instance of <code>Facebook</code> as a dependency</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Example (2)</h2>
+						<ul>
+							<li class="fragment">
+								Dependency Injection <em>(<code>bootstrap.php</code>)</em>
+								<pre class="bigger"><code class="language-php">$app['facebook.app_id'] = 'YOUR_APP_ID';
+$app['facebook.secret'] = 'YOUR_APP_SECRET';
+
+$app['facebook'] = $app-&gt;share(function() use ($app) {
+	return new \Facebook(array(
+		'appId' =&gt; $app['facebook.app_id'],
+		'secret' =&gt; $app['facebook.secret']
+	));
+});</code></pre>
+							</li>
+							<li class="fragment">
+								Usage <em>(route handling)</em>
+								<pre class="bigger"><code class="language-php">$app-&gt;get('/', function(Silex\Application $app) {
+	$user = $app['facebook']-&gt;getUser();
+	return $app-&gt;json($user);
+});</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>The need for structure</h2>
+						<ul>
+							<li class="fragment">
+								Again, we like our code clean
+								<ol>
+									<li class="fragment">Don't overload <code>app.php</code> with routing logic</li>
+									<li class="fragment">Don't overload <code>bootstrap.php</code> with service definitions</li>
+								</ol>
+							</li>
+							<li class="fragment">
+								Solutions
+								<ol>
+									<li class="fragment">ControllerProviders<small><a href="http://silex.sensiolabs.org/doc/providers.html#controllers-providers">&#9873;</a></small> <em style="font-size: 75%;">(@see <a href="03.silex.part1.html#/4">03.silex.part1</a>)</em></li>
+									<li class="fragment">ServiceProviders<small><a href="http://silex.sensiolabs.org/doc/providers.html#service-providers">&#9873;</a></small></li>
+								</ol>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>ServiceProvider (1)</h2>
+						<ul>
+							<li class="fragment">
+								Cfr. ControllerProvider but different interface/methods
+								<pre class="bigger"><code class="language-php">namespace MyNamespace\Provider\Service;
+
+use Silex\Application;
+use Silex\ServiceProviderInterface;
+
+class WhateverServiceProvider implements ServiceProviderInterface {
+
+	public function register(Application $app) { &hellip; }
+
+	public function boot(Application $app) { &hellip; }
+
+}</code></pre>
+							</li>
+							<li class="fragment">
+								Place your class in <code>/src/namespace/provider/service</code>
+							</li>
+							<li class="fragment">
+								Register your class with Silex' <code>$app</code> using
+								<pre class="bigger"><code class="language-php">$app->register(new MyNamespace\Provider\Service\WhateverServiceProvider(), []);</code></pre></li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>ServiceProvider (2)</h2>
+						<p>From the Silex Docs:</p>
+						<blockquote class="fragment">This is very straight forward, just create a new class that implements the two methods. In the <code>register()</code> method, you can define services on the application which then may make use of other services and parameters. In the <code>boot()</code> method, you can configure the application, just before it handles a request.</blockquote>
+					</section>
+
+					<section>
+						<h2>Revised Example (1)</h2>
+						<ul>
+							<li class="fragment">
+								<code>FacebookServiceProvider.php</code>
+								<pre class="bigger"><code class="language-php">&lt;?php
+
+namespace Ikdoeict\Provider\Service;
+
+use Silex\Application;
+use Silex\ServiceProviderInterface;
+
+class FacebookServiceProvider implements ServiceProviderInterface {
+
+	public function register(Application $app) {
+		$app['facebook'] = $app-&gt;share(function() use ($app) {
+			return new \Facebook(array(
+				'appId' =&gt; $app['facebook.app_id'],
+				'secret' =&gt; $app['facebook.secret']
+			));
+		});
+	}
+
+	public function boot(Application $app) {}
+
+}</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Revised Example (2)</h2>
+						<ul>
+							<li class="fragment">
+								<code>bootstrap.php</code>
+								<pre class="bigger"><code class="language-php">$app-&gt;register(new Ikdoeict\Provider\Service\FacebookServerProvider(), array(
+	'facebook.app_id' =&gt; 'YOUR_APP_ID',
+	'facebook.secret' =&gt; 'YOUR_APP_SECRET'
+));</code></pre>
+							</li>
+							<li class="fragment">
+								<code>app.php</code> or ControllerProvider
+								<pre class="bigger"><code class="language-php">$app-&gt;get('/', function(Silex\Application $app) {
+	$user = $app['facebook']->getUser();
+	return $app-&gt;json($user);
+});</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>More examples</h2>
+						<ul>
+							<li class="fragment"><a href="http://php-and-symfony.matthiasnoback.nl/2012/02/silex-creating-a-service-provider-for-buzz/">Silex: creating a service provider for Buzz</a></li>
+							<li class="fragment">
+								<a href="https://github.com/EmanueleMinotto/FakerServiceProvider">Service Provider for Faker</a>
+								<ul>
+									<li>Note: Faker has a Singleton pattern implemented. No need for a shared service definition</li>
+								</ul>
+							</li>
+							<li class="fragment">&hellip;</li>
+						</ul>
+					</section>
+
+				</section>
+
+
+				<!-- Built-in Service Provider: Twig -->
+				<section>
+					<section>
+						<h2>Built-in Service Provider:<br />TwigServiceProvider</h2>
+
+						<p><img src="assets/04/splash-twig.jpg" width="580" alt="" /></p>
+					</section>
+
+					<section>
+						<h2>TwigServiceProvider</h2>
+						<ul>
+							<li class="fragment">TwigServiceProvider<small><a href="http://silex.sensiolabs.org/doc/providers/twig.html">&#9873;</a></small> provides Twig integration</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Inclusion &amp; Usage</h2>
+						<ul>
+							<li class="fragment">
+								Require twig in <code>composer.json</code>
+								<pre class="bigger"><code>&quot;require&quot;: {
+	&quot;twig/twig&quot;: &quot;&gt;=1.8,&lt;2.0-dev&quot;
+}</code></pre>
+							</li>
+							<li class="fragment">
+								Register the service in <code>bootstrap.php</code>
+								<pre class="bigger"><code class="language-php">$app-&gt;register(new Silex\Provider\TwigServiceProvider(), array(
+	'twig.path' =&gt; __DIR__ . '/views',
+));</code></pre>
+							</li>
+							<li class="fragment">
+								Usage
+								<pre class="bigger"><code class="language-php">$app-&gt;get('/hello/{name}', function ($name) use ($app) {
+	return $app['twig']-&gt;render('hello.twig', array(
+		'name' =&gt; $name,
+	));
+});</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Example</h2>
+
+						<figure><img src="assets/04/example-05.png" alt="" title="" width="580" class="noborder" /></figure>
+
+						<p style="font-size: 75%">Let's take a look at <code>assets/ws2-sws-fiddles-silex/05.tweets-twig/</code> <a href="assets/ws2-sws-fiddles-silex/05.tweets-twig/">&rarr;</a></p>
+					</section>
+
+					<section>
+						<h2>Example Recap</h2>
+
+						<ul>
+							<li class="fragment">
+								Place your templates in <code>/src/views/</code>
+								<ul>
+									<li class="fragment">
+										Use subfolders per entity
+										<ul>
+											<li><code>/src/views/errors/</code>: <code>404.twig</code></li>
+											<li><code>/src/views/tweets/</code>: <code>overview.twig</code> &amp; <code>detail.twig</code></li>
+											<li><code>/src/views</code>: <code>layout.twig</code></li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+							<li class="fragment">In PHP use <code>$app['twig']</code></li>
+							<li class="fragment">
+								The serviceprovider injects some vars into templates
+								<ul>
+									<li>e.g. <code>{{ app.request.baseUrl }}</code></li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+				</section>
+
+
+				<!-- Built-in Service Provider: Swift -->
+				<section>
+					<section>
+						<h2>Built-in Service Provider:<br />SwiftServiceProvider</h2>
+
+						<p><img src="assets/04/splash-swiftmailer.png" width="280" alt="" style="margin-top: 2em" /></p>
+					</section>
+
+					<section>
+						<h2>SwiftServiceProvider</h2>
+						<ul>
+							<li class="fragment">SwiftServiceProvider<small><a href="http://silex.sensiolabs.org/doc/providers/swiftmailer.html">&#9873;</a></small> provides SwiftMailer integration</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Inclusion</h2>
+						<ul>
+							<li class="fragment">
+								Require swiftmailer in <code>composer.json</code>
+								<pre class="bigger"><code>&quot;require&quot;: {
+	&quot;swiftmailer/swiftmailer&quot;: &quot;&gt;=4.1.2,&lt;4.2-dev&quot;
+}</code></pre>
+							</li>
+							<li class="fragment">
+								Register the service in <code>bootstrap.php</code>
+								<pre class="bigger"><code class="language-php">$app-&gt;register(new Silex\Provider\SwiftmailerServiceProvider(), array(
+	'swiftmailer.options' =&gt; array(
+		'host' =&gt; 'host',
+		'port' =&gt; '25',
+		'username' =&gt; 'username',
+		'password' =&gt; 'password',
+		'encryption' =&gt; null,
+		'auth_mode' =&gt; null
+	)
+));</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Usage</h2>
+						<ul>
+							<li class="fragment">
+								Usage
+								<pre class="bigger"><code class="language-php">$app-&gt;post('/feedback', function () use ($app) {
+	$request = $app['request'];
+
+	$message = \Swift_Message::newInstance()
+		-&gt;setSubject('[YourSite] Feedback')
+		-&gt;setFrom(array('noreply@yoursite.com'))
+		-&gt;setTo(array('feedback@yoursite.com'))
+		-&gt;setBody($request->get('message'));
+
+	$app['mailer']-&gt;send($message);
+
+	return new Response('Thank you for your feedback!', 201);
+});</code></pre>
+							</li>
+						</ul>
+					</section>
+
+				</section>
+
+
+				<!-- Built-in Service Provider: Doctrine -->
+				<section>
+					<section>
+						<h2>Built-in Service Provider:<br />DoctrineServiceProvider</h2>
+
+						<p><img src="assets/01/splash-doctrine.jpg" width="421" alt="" style="margin-top: 3em;" /></p>
+					</section>
+
+					<section>
+						<h2>DoctrineServiceProvider</h2>
+						<ul>
+							<li class="fragment">DoctrineServiceProvider<small><a href="http://silex.sensiolabs.org/doc/providers/doctrine.html">&#9873;</a></small> provides Doctrine DBAL integration</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Inclusion</h2>
+						<ul>
+							<li class="fragment">
+								Require doctrine DBAL in <code>composer.json</code>
+								<pre class="bigger"><code>&quot;require&quot;: {
+	&quot;doctrine/dbal&quot;: &quot;&gt;=2.2.*&quot;
+}</code></pre>
+							</li>
+							<li class="fragment">
+								Register the service in <code>bootstrap.php</code>
+								<pre class="bigger"><code class="language-php">$app-&gt;register(new Silex\Provider\DoctrineServiceProvider(), array(
+	'db.options' =&gt; array(
+		'driver' =&gt; 'pdo_mysql',
+		'host' =&gt; 'localhost',
+		'dbname' =&gt; 'todolist',
+		'user' =&gt; 'root',
+		'passwod' =&gt; 'Azerty123'
+	)
+));</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Usage</h2>
+						<ul>
+							<li class="fragment">
+								Usage
+								<pre class="bigger"><code class="language-php">$app-&gt;get('/blog/{id}', function ($id) use ($app) {
+	$sql = 'SELECT * FROM posts WHERE id = ?';
+	$post = $app['db']-&gt;fetchAssoc($sql, array($id));
+
+	return  '&lt;h1&gt;' . $post['title'] . '&lt;/h1&gt;'.
+			'&lt;p&gt;' . $post['body'] . '&lt;/p&gt;';
+})-&gt;assert('id', '\d+');</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Example</h2>
+
+						<figure><img src="assets/04/example-06.png" alt="" title="" width="580" class="noborder" /></figure>
+
+						<p style="font-size: 75%">Let's take a look at <code>assets/ws2-sws-fiddles-silex/06.doctrine/</code> <a href="assets/ws2-sws-fiddles-silex/06.doctrine/">&rarr;</a></p>
+
+						<footer><em>(Be sure to install the example properly. @see the included <code>README.md</code>)</em></footer>
+					</section>
+
+				</section>
+
+
+				<!-- Patterns! -->
+				<section>
+					<section>
+						<h2>Recognizing a pattern &hellip;</h2>
+
+						<p><img src="assets/04/futurama_pattern.png" alt="" title="" width="500" /></p>
+						<q>Uh oh, I think we're going in circles. I recognize that pattern of striations on that gypsum formation.</q>
+					</section>
+
+					<section>
+						<h2>What we already have</h2>
+						<ul>
+							<li class="fragment">Front Controller &amp; Routing</li>
+							<li class="fragment">Controllers per <em>entity</em></li>
+							<li class="fragment">Views (templates) per <em>entity</em></li>
+							<li class="fragment">Data-access entangled in our controller</li>
+						</ul>
+						<p class="fragment">&rarr; If we can split out our data access logic,<br />we can <em>strive</em> towards MVC</p>
+					</section>
+
+					<section>
+						<h2>MVC</h2>
+						<ul>
+							<li class="fragment">
+								Short for <strong>Model-View-Controller</strong>
+							</li>
+							<li class="fragment">
+								Architectural pattern describing how to build your app
+							</li>
+							<li class="fragment">
+								In a web-context:
+								<ul>
+									<li class="fragment">The model represents data</li>
+									<li class="fragment">The view is a visual representation of the model</li>
+									<li class="fragment">The controller is the app logic: decices wat the input was, and orchestrates the proper models/views</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>One small step &hellip;</h2>
+						<ul>
+							<li class="fragment">
+								Splitting off data-access logic is necessarry
+								<ul>
+									<li class="fragment">MVC would also be nice, but let's leave it for now</li>
+								</ul>
+							</li>
+							<li class="fragment" style="padding-top: 1em;">
+								The guys at <a href="http://knplabs.com/">KnpLabs</a> have created <a href="https://github.com/KnpLabs/RepositoryServiceProvider">a nice solution</a>:
+								<ul>
+									<li class="fragment">
+										A base <code>Knp\Repository</code> class which you extend per entity
+										<ul>
+											<li class="fragment">Define the name of the linked table on it</li>
+											<li class="fragment">Use one of the built-in <code>insert()</code>, <code>update()</code>, <code>delete()</code>, <code>find()</code>, or <code>findAll()</code> functions</li>
+										</ul>
+									</li>
+									<li class="fragment">
+										A <code>RepositoryServiceProvider</code> for use with Silex
+									</li>
+									<li class="fragment">
+										Installation via Composer
+										<pre class="bigger"><code>&quot;require&quot;: {
+	&quot;knplabs/repository-service-provider&quot;: &quot;dev-master&quot;
+}</code></pre>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>RepositoryServiceProvider (1)</h2>
+						<ul>
+							<li class="fragment">
+								Base <code>Knp\Repository</code> class
+								<pre class="bigger"><code class="language-php" style="max-height: 380px; overflow: scroll;">&lt;?php
+
+namespace Knp;
+
+use Doctrine\DBAL\Connection;
+
+abstract class Repository {
+
+    abstract public function getTableName();
+
+    public $db;
+
+    public function __construct(Connection $db) {
+        $this-&gt;db = $db;
+    }
+
+    public function insert(array $data) {
+        return $this-&gt;db-&gt;insert($this-&gt;getTableName(), $data);
+    }
+
+    public function update(array $data, array $identifier) {
+        return $this-&gt;db-&gt;update($this-&gt;getTableName(), $data, $identifier);
+    }
+
+    public function delete(array $identifier) {
+        return $this-&gt;db-&gt;delete($this-&gt;getTableName(), $identifier);
+    }
+    public function find($id) {
+        return $this-&gt;db-&gt;fetchAssoc(sprintf('SELECT * FROM %s WHERE id = ? LIMIT 1', $this-&gt;getTableName()), array((int) $id));
+    }
+
+    public function findAll() {
+        return $this-&gt;db-&gt;fetchAll(sprintf('SELECT * FROM %s', $this-&gt;getTableName()));
+    }
+}
+</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>RepositoryServiceProvider (2)</h2>
+						<ul>
+							<li class="fragment">
+								Example class implementation
+								<pre class="bigger"><code class="language-php">namespace Ikdoeict\Provider;
+
+class TweetsRepository extends Knp\Repository {
+	public function getTableName() { return 'tweets'; }
+}</code></pre>
+							</li>
+							<li class="fragment">
+								Registration of the repositories within Silex
+								<pre class="bigger"><code class="language-php">$app-&gt;register(new Knp\Provider\RepositoryServiceProvider(), array(
+	'repository.repositories' =&gt; array(
+		'tweets' =&gt; 'Ikdoeict\\Repository\\TweetsRepository'
+	)
+));</code></pre>
+							</li>
+							<li class="fragment">
+								Usage
+								<pre class="bigger"><code class="language-php">$app['tweets']->findAll();</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Example</h2>
+
+						<figure><img src="assets/04/example-07.png" alt="" title="" width="580" class="noborder" /></figure>
+
+						<p style="font-size: 75%">Let's take a look at <code>assets/ws2-sws-fiddles-silex/07.doctrine-organized/</code> <a href="assets/ws2-sws-fiddles-silex/07.doctrine-organized/">&rarr;</a></p>
+
+						<footer><em>(Be sure to install the example properly. @see the included <code>README.md</code>)</em></footer>
+
+					</section>
+
+					<section>
+						<h2>Example Recap</h2>
+						<ul>
+							<li class="fragment">
+								Create a Repository class per entity of your app
+								<ul>
+									<li class="fragment">
+										Place your classses in <code>/src/<em>namespace</em>/repository</code>
+									</li>
+									<li class="fragment">
+										Name of class can be chosen freely, though something like <code>TweetsRepository</code> recommended
+									</li>
+									<li class="fragment">
+										Classes must extend <code>Knp\Provider</code>
+									</li>
+									<li class="fragment">
+										The <code>getTableName</code> function must return the DB table name
+									</li>
+								</ul>
+							</li>
+							<li class="fragment">
+								Register your repostories in your app while registering <code>RepositoryServiceProvider</code>
+							</li>
+						</ul>
+						<footer class="fragment" style="color: #F66;"><em>Important: don't ever write queries in your ControllerProviders, but put 'm in your Repository classes!</em></footer>
+					</section>
+
+				</section>
+
+
+				<!-- More? -->
+				<section>
+					<section>
+						<h2>More Service Providers</h2>
+
+						<p><img src="assets/04/futurama_notsureif.jpg" alt="" title="" width="447" /></p>
+						<q>Not sure if ...</q>
+					</section>
+
+					<section>
+						<h2>More built-in Service Providers</h2>
+						<ul class="fragment">
+							<li><a href="http://silex.sensiolabs.org/doc/providers/url_generator.html">URL Generator</a></li>
+							<li><a href="http://silex.sensiolabs.org/doc/providers/form.html">Form</a></li>
+							<li><a href="http://silex.sensiolabs.org/doc/providers/validator.html">Validator</a></li>
+							<li><a href="http://silex.sensiolabs.org/doc/providers/session.html">Session</a></li>
+							<li><a href="http://silex.sensiolabs.org/doc/providers/security.html">Security</a></li>
+							<li><a href="http://silex.sensiolabs.org/doc/providers/monolog.html">Monolog</a></li>
+							<li><a href="http://silex.sensiolabs.org/doc/providers/translation.html">Translation</a></li>
+							<li><a href="http://silex.sensiolabs.org/doc/providers/http_cache.html">HTTP Cache</a></li>
+						</ul>
+						<footer class="fragment"><em>We'll take a closer look at these later on :)</em></footer>
+					</section>
+
+					<section>
+						<h2>Other Service-Providers</h2>
+						<ul>
+							<li class="fragment">Check <a href="https://github.com/fabpot/Silex/wiki/Third-Party-ServiceProviders">the Silex Wiki</a>!</li>
+						</ul>
+					</section>
+
+				</section>
+
+				<!-- The END -->
+				<section>
+					<section>
+						<h2>Questions?</h2>
+						<footer>
+							<em><a href="http://www.ikdoeict.be/">ikdoeict.be</a> &mdash; <a href="mailto:bramus.vandamme@kahosl.be">bramus.vandamme@kahosl.be</a></em>
+						</footer>
+					</section>
+				</section>
+
+
+
+				<!-- Sources -->
+				<section id="sources">
+					<section>
+						<h2>Sources</h2>
+						<ul>
+							<li><a href="http://pimple.sensiolabs.org/">http://pimple.sensiolabs.org/</a></li>
+							<li><a href="http://silex.sensiolabs.org/doc/services.html">http://silex.sensiolabs.org/doc/services.html</a></li>
+							<li><a href="http://silex.sensiolabs.org/doc/providers.html">http://silex.sensiolabs.org/doc/providers.html</a></li>
+							<li><a href="http://silex.sensiolabs.org/doc/providers/twig.html">http://silex.sensiolabs.org/doc/providers/twig.html</a></li>
+							<li><a href="http://silex.sensiolabs.org/doc/providers/doctrine.html">http://silex.sensiolabs.org/doc/providers/doctrine.html</a></li>
+							<li><a href="http://silex.sensiolabs.org/doc/providers/swiftmailer.html">http://silex.sensiolabs.org/doc/providers/swiftmailer.html</a></li>
+							<li><a href="http://www.slideshare.net/dustin.whittle/silex-from-micro-to-full-stack">http://www.slideshare.net/dustin.whittle/silex-from-micro-to-full-stack</a></li>
+							<li><a href="http://www.slideshare.net/blongden/silex-the-microframework">http://www.slideshare.net/blongden/silex-the-microframework</a></li>
+							<li><a href="https://github.com/fabpot/Silex/wiki/Third-Party-ServiceProviders">https://github.com/fabpot/Silex/wiki/Third-Party-ServiceProviders</a></li>
+						</ul>
+					</section>
+				</section>
+
+			</div>
+
+			<!-- The navigational controls UI -->
+			<aside class="controls">
+				<a class="left" href="#">&#x25C4;</a>
+				<a class="right" href="#">&#x25BA;</a>
+				<a class="up" href="#">&#x25B2;</a>
+				<a class="down" href="#">&#x25BC;</a>
+				<span id="revealIndex">/</span>
+			</aside>
+
+			<!-- Index Link -->
+			<aside class="back">
+				<a href="index.html">&larr; Back to index</a>
+			</aside>
+
+			<!-- ikdoeict.be Link -->
+			<a href="http://www.ikdoeict.be/" title="ikdoeict.be" id="ikdoeict">ikdoeict.be</a>
+
+			<!-- Displays presentation progress, max value changes via JS to reflect # of slides -->
+			<div class="progress"><span></span></div>
+
+		</div>
+
+		<script src="js/reveal.js"></script>
+		<script src="lib/highlight.js"></script>
+		<script src="lib/prefixfree.js"></script>
+		<script src="lib/css-snippets.js"></script>
+		<script src="lib/css-edit.js"></script>
+		<script src="lib/incrementable.js"></script>
+		<script src="js/main.js"></script>
+
+	</body>
+</html>
