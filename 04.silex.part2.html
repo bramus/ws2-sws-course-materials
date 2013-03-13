@@ -345,21 +345,33 @@ class FacebookServiceProvider implements ServiceProviderInterface {
 					<section>
 						<h2>TwigServiceProvider</h2>
 						<ul>
-							<li class="fragment">...</li>
+							<li class="fragment">TwigServiceProvider<small><a href="http://silex.sensiolabs.org/doc/providers/twig.html">&#9873;</a></small> provides Twig integration</li>
 						</ul>
 					</section>
 
 					<section>
-						<h2>Including</h2>
+						<h2>Inclusion &amp; Usage</h2>
 						<ul>
-							<li class="fragment">...</li>
-						</ul>
-					</section>
-
-					<section>
-						<h2>Usage</h2>
-						<ul>
-							<li class="fragment">...</li>
+							<li class="fragment">
+								Require twig in <code>composer.json</code>
+								<pre class="bigger"><code>&quot;require&quot;: {
+	&quot;twig/twig&quot;: &quot;&gt;=1.8,&lt;2.0-dev&quot;
+}</code></pre>
+							</li>
+							<li class="fragment">
+								Register the service in <code>bootstrap.php</code>
+								<pre class="bigger"><code class="language-php">$app-&gt;register(new Silex\Provider\TwigServiceProvider(), array(
+	'twig.path' =&gt; __DIR__ . '/views',
+));</code></pre>
+							</li>
+							<li class="fragment">
+								Usage
+								<pre class="bigger"><code class="language-php">$app-&gt;get('/hello/{name}', function ($name) use ($app) {
+	return $app['twig']-&gt;render('hello.twig', array(
+		'name' =&gt; $name,
+	));
+});</code></pre>
+							</li>
 						</ul>
 					</section>
 
@@ -368,13 +380,40 @@ class FacebookServiceProvider implements ServiceProviderInterface {
 
 						<figure><img src="assets/04/example-05.png" alt="" title="" width="580" class="noborder" /></figure>
 
-						<p style="font-size: 75%">Let's take a look at the files in  <code>assets/ws2-sws-fiddles-silex/05.tweets-twig/</code> <a href="assets/ws2-sws-fiddles-silex/05.tweets-twig/">&rarr;</a></p>
+						<p style="font-size: 75%">Let's take a look at <code>assets/ws2-sws-fiddles-silex/05.tweets-twig/</code> <a href="assets/ws2-sws-fiddles-silex/05.tweets-twig/">&rarr;</a></p>
+					</section>
+
+					<section>
+						<h2>Example Recap</h2>
+
+						<ul>
+							<li class="fragment">
+								Place your templates in <code>/src/views/</code>
+								<ul>
+									<li class="fragment">
+										Use subfolders per entity
+										<ul>
+											<li><code>/src/views/errors/</code>: <code>404.twig</code></li>
+											<li><code>/src/views/tweets/</code>: <code>overview.twig</code> &amp; <code>detail.twig</code></li>
+											<li><code>/src/views</code>: <code>layout.twig</code></li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+							<li class="fragment">In PHP use <code>$app['twig']</code></li>
+							<li class="fragment">
+								The serviceprovider injects some vars into templates
+								<ul>
+									<li>e.g. <code>{{ app.request.baseUrl }}</code></li>
+								</ul>
+							</li>
+						</ul>
 					</section>
 
 				</section>
 
 
-				<!-- Built-in Service Provider: Twig -->
+				<!-- Built-in Service Provider: Swift -->
 				<section>
 					<section>
 						<h2>Built-in Service Provider:<br />SwiftServiceProvider</h2>
@@ -385,21 +424,54 @@ class FacebookServiceProvider implements ServiceProviderInterface {
 					<section>
 						<h2>SwiftServiceProvider</h2>
 						<ul>
-							<li class="fragment">...</li>
+							<li class="fragment">SwiftServiceProvider<small><a href="http://silex.sensiolabs.org/doc/providers/swiftmailer.html">&#9873;</a></small> provides SwiftMailer integration</li>
 						</ul>
 					</section>
 
 					<section>
-						<h2>Including</h2>
+						<h2>Inclusion</h2>
 						<ul>
-							<li class="fragment">...</li>
+							<li class="fragment">
+								Require swiftmailer in <code>composer.json</code>
+								<pre class="bigger"><code>&quot;require&quot;: {
+	&quot;swiftmailer/swiftmailer&quot;: &quot;&gt;=4.1.2,&lt;4.2-dev&quot;
+}</code></pre>
+							</li>
+							<li class="fragment">
+								Register the service in <code>bootstrap.php</code>
+								<pre class="bigger"><code class="language-php">$app-&gt;register(new Silex\Provider\SwiftmailerServiceProvider(), array(
+	'swiftmailer.options' =&gt; array(
+		'host' =&gt; 'host',
+		'port' =&gt; '25',
+		'username' =&gt; 'username',
+		'password' =&gt; 'password',
+		'encryption' =&gt; null,
+		'auth_mode' =&gt; null
+	)
+));</code></pre>
+							</li>
 						</ul>
 					</section>
 
 					<section>
 						<h2>Usage</h2>
 						<ul>
-							<li class="fragment">...</li>
+							<li class="fragment">
+								Usage
+								<pre class="bigger"><code class="language-php">$app-&gt;post('/feedback', function () use ($app) {
+	$request = $app['request'];
+
+	$message = \Swift_Message::newInstance()
+		-&gt;setSubject('[YourSite] Feedback')
+		-&gt;setFrom(array('noreply@yoursite.com'))
+		-&gt;setTo(array('feedback@yoursite.com'))
+		-&gt;setBody($request->get('message'));
+
+	$app['mailer']-&gt;send($message);
+
+	return new Response('Thank you for your feedback!', 201);
+});</code></pre>
+							</li>
 						</ul>
 					</section>
 
@@ -417,21 +489,47 @@ class FacebookServiceProvider implements ServiceProviderInterface {
 					<section>
 						<h2>DoctrineServiceProvider</h2>
 						<ul>
-							<li class="fragment">...</li>
+							<li class="fragment">DoctrineServiceProvider<small><a href="http://silex.sensiolabs.org/doc/providers/doctrine.html">&#9873;</a></small> provides Doctrine DBAL integration</li>
 						</ul>
 					</section>
 
 					<section>
-						<h2>Including</h2>
+						<h2>Inclusion</h2>
 						<ul>
-							<li class="fragment">...</li>
+							<li class="fragment">
+								Require doctrine DBAL in <code>composer.json</code>
+								<pre class="bigger"><code>&quot;require&quot;: {
+	&quot;doctrine/dbal&quot;: &quot;&gt;=2.2.*&quot;
+}</code></pre>
+							</li>
+							<li class="fragment">
+								Register the service in <code>bootstrap.php</code>
+								<pre class="bigger"><code class="language-php">$app-&gt;register(new Silex\Provider\DoctrineServiceProvider(), array(
+	'db.options' =&gt; array(
+		'driver' =&gt; 'pdo_mysql',
+		'host' =&gt; 'localhost',
+		'dbname' =&gt; 'todolist',
+		'user' =&gt; 'root',
+		'passwod' =&gt; 'Azerty123'
+	)
+));</code></pre>
+							</li>
 						</ul>
 					</section>
 
 					<section>
 						<h2>Usage</h2>
 						<ul>
-							<li class="fragment">...</li>
+							<li class="fragment">
+								Usage
+								<pre class="bigger"><code class="language-php">$app-&gt;get('/blog/{id}', function ($id) use ($app) {
+	$sql = 'SELECT * FROM posts WHERE id = ?';
+	$post = $app['db']-&gt;fetchAssoc($sql, array($id));
+
+	return  '&lt;h1&gt;' . $post['title'] . '&lt;/h1&gt;'.
+			'&lt;p&gt;' . $post['body'] . '&lt;/p&gt;';
+})-&gt;assert('id', '\d+');</code></pre>
+							</li>
 						</ul>
 					</section>
 
@@ -440,7 +538,9 @@ class FacebookServiceProvider implements ServiceProviderInterface {
 
 						<figure><img src="assets/04/example-06.png" alt="" title="" width="580" class="noborder" /></figure>
 
-						<p style="font-size: 75%">Let's take a look at the files in  <code>assets/ws2-sws-fiddles-silex/06.doctrine/</code> <a href="assets/ws2-sws-fiddles-silex/06.doctrine/">&rarr;</a></p>
+						<p style="font-size: 75%">Let's take a look at <code>assets/ws2-sws-fiddles-silex/06.doctrine/</code> <a href="assets/ws2-sws-fiddles-silex/06.doctrine/">&rarr;</a></p>
+
+						<footer><em>(Be sure to install the example properly. @see the included <code>README.md</code>)</em></footer>
 					</section>
 
 				</section>
