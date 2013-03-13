@@ -558,35 +558,135 @@ class FacebookServiceProvider implements ServiceProviderInterface {
 					<section>
 						<h2>What we already have</h2>
 						<ul>
-							<li class="fragment">...</li>
+							<li class="fragment">Front Controller &amp; Routing</li>
+							<li class="fragment">Controllers per <em>entity</em></li>
+							<li class="fragment">Views (templates) per <em>entity</em></li>
+							<li class="fragment">Data-access entangled in our controller</li>
 						</ul>
+						<p class="fragment">&rarr; If we can split out our data access logic,<br />we can <em>strive</em> towards MVC</p>
 					</section>
 
 					<section>
 						<h2>MVC</h2>
 						<ul>
-							<li class="fragment">...</li>
+							<li class="fragment">
+								Short for <strong>Model-View-Controller</strong>
+							</li>
+							<li class="fragment">
+								Architectural pattern describing how to build your app
+							</li>
+							<li class="fragment">
+								In a web-context:
+								<ul>
+									<li class="fragment">The model represents data</li>
+									<li class="fragment">The view is a visual representation of the model</li>
+									<li class="fragment">The controller is the app logic: decices wat the input was, and orchestrates the proper models/views</li>
+								</ul>
+							</li>
 						</ul>
 					</section>
 
 					<section>
 						<h2>One small step &hellip;</h2>
 						<ul>
-							<li class="fragment">...</li>
+							<li class="fragment">
+								Splitting off data-access logic is necessarry
+								<ul>
+									<li class="fragment">MVC would also be nice, but let's leave it for now</li>
+								</ul>
+							</li>
+							<li class="fragment" style="padding-top: 1em;">
+								The guys at <a href="http://knplabs.com/">KnpLabs</a> have created <a href="https://github.com/KnpLabs/RepositoryServiceProvider">a nice solution</a>:
+								<ul>
+									<li class="fragment">
+										A base <code>Knp\Repository</code> class which you extend per entity
+										<ul>
+											<li class="fragment">Define the name of the linked table on it</li>
+											<li class="fragment">Use one of the built-in <code>insert()</code>, <code>update()</code>, <code>delete()</code>, <code>find()</code>, or <code>findAll()</code> functions</li>
+										</ul>
+									</li>
+									<li class="fragment">
+										A <code>RepositoryServiceProvider</code> for use with Silex
+									</li>
+									<li class="fragment">
+										Installation via Composer
+										<pre class="bigger"><code>&quot;require&quot;: {
+	&quot;knplabs/repository-service-provider&quot;: &quot;dev-master&quot;
+}</code></pre>
+									</li>
+								</ul>
+							</li>
 						</ul>
 					</section>
 
 					<section>
 						<h2>RepositoryServiceProvider (1)</h2>
 						<ul>
-							<li class="fragment">...</li>
+							<li class="fragment">
+								Base <code>Knp\Repository</code> class
+								<pre class="bigger"><code class="language-php" style="max-height: 380px; overflow: scroll;">&lt;?php
+
+namespace Knp;
+
+use Doctrine\DBAL\Connection;
+
+abstract class Repository {
+
+    abstract public function getTableName();
+
+    public $db;
+
+    public function __construct(Connection $db) {
+        $this-&gt;db = $db;
+    }
+
+    public function insert(array $data) {
+        return $this-&gt;db-&gt;insert($this-&gt;getTableName(), $data);
+    }
+
+    public function update(array $data, array $identifier) {
+        return $this-&gt;db-&gt;update($this-&gt;getTableName(), $data, $identifier);
+    }
+
+    public function delete(array $identifier) {
+        return $this-&gt;db-&gt;delete($this-&gt;getTableName(), $identifier);
+    }
+    public function find($id) {
+        return $this-&gt;db-&gt;fetchAssoc(sprintf('SELECT * FROM %s WHERE id = ? LIMIT 1', $this-&gt;getTableName()), array((int) $id));
+    }
+
+    public function findAll() {
+        return $this-&gt;db-&gt;fetchAll(sprintf('SELECT * FROM %s', $this-&gt;getTableName()));
+    }
+}
+</code></pre>
+							</li>
 						</ul>
 					</section>
 
 					<section>
 						<h2>RepositoryServiceProvider (2)</h2>
 						<ul>
-							<li class="fragment">...</li>
+							<li class="fragment">
+								Example class implementation
+								<pre class="bigger"><code class="language-php">namespace Ikdoeict\Provider;
+
+class TweetsRepository extends Knp\Repository {
+	public function getTableName() { return 'tweets'; }
+}</code></pre>
+							</li>
+							<li class="fragment">
+								Registration of the repositories within Silex
+								<pre class="bigger"><code class="language-php">$app-&gt;register(new Knp\Provider\RepositoryServiceProvider(), array(
+	'repository.repositories' =&gt; array(
+		'tweets' =&gt; 'Ikdoeict\\Repository\\TweetsRepository'
+	)
+));</code></pre>
+							</li>
+							<li class="fragment">
+								Usage
+								<pre class="bigger"><code class="language-php">$app['tweets']->findAll();</code></pre>
+							</li>
 						</ul>
 					</section>
 
@@ -595,7 +695,37 @@ class FacebookServiceProvider implements ServiceProviderInterface {
 
 						<figure><img src="assets/04/example-07.png" alt="" title="" width="580" class="noborder" /></figure>
 
-						<p style="font-size: 75%">Let's take a look at the files in  <code>assets/ws2-sws-fiddles-silex/07.doctrine-organized/</code> <a href="assets/ws2-sws-fiddles-silex/07.doctrine-organized/">&rarr;</a></p>
+						<p style="font-size: 75%">Let's take a look at <code>assets/ws2-sws-fiddles-silex/07.doctrine-organized/</code> <a href="assets/ws2-sws-fiddles-silex/07.doctrine-organized/">&rarr;</a></p>
+
+						<footer><em>(Be sure to install the example properly. @see the included <code>README.md</code>)</em></footer>
+
+					</section>
+
+					<section>
+						<h2>Example Recap</h2>
+						<ul>
+							<li class="fragment">
+								Create a Repository class per entity of your app
+								<ul>
+									<li class="fragment">
+										Place your classses in <code>/src/<em>namespace</em>/repository</code>
+									</li>
+									<li class="fragment">
+										Name of class can be chosen freely, though something like <code>TweetsRepository</code> recommended
+									</li>
+									<li class="fragment">
+										Classes must extend <code>Knp\Provider</code>
+									</li>
+									<li class="fragment">
+										The <code>getTableName</code> function must return the DB table name
+									</li>
+								</ul>
+							</li>
+							<li class="fragment">
+								Register your repostories in your app while registering <code>RepositoryServiceProvider</code>
+							</li>
+						</ul>
+						<footer class="fragment" style="color: #F66;"><em>Important: don't ever write queries in your ControllerProviders, but put 'm in your Repository classes!</em></footer>
 					</section>
 
 				</section>
@@ -612,16 +742,23 @@ class FacebookServiceProvider implements ServiceProviderInterface {
 
 					<section>
 						<h2>More built-in Service Providers</h2>
-						<ul>
-							<li class="fragment">...</li>
+						<ul class="fragment">
+							<li><a href="http://silex.sensiolabs.org/doc/providers/url_generator.html">URL Generator</a></li>
+							<li><a href="http://silex.sensiolabs.org/doc/providers/form.html">Form</a></li>
+							<li><a href="http://silex.sensiolabs.org/doc/providers/validator.html">Validator</a></li>
+							<li><a href="http://silex.sensiolabs.org/doc/providers/session.html">Session</a></li>
+							<li><a href="http://silex.sensiolabs.org/doc/providers/security.html">Security</a></li>
+							<li><a href="http://silex.sensiolabs.org/doc/providers/monolog.html">Monolog</a></li>
+							<li><a href="http://silex.sensiolabs.org/doc/providers/translation.html">Translation</a></li>
+							<li><a href="http://silex.sensiolabs.org/doc/providers/http_cache.html">HTTP Cache</a></li>
 						</ul>
-						<footer class="fragment">We'll take a closer look later on :)</footer>
+						<footer class="fragment"><em>We'll take a closer look at these later on :)</em></footer>
 					</section>
 
 					<section>
 						<h2>Other Service-Providers</h2>
 						<ul>
-							<li class="fragment">...</li>
+							<li class="fragment">Check <a href="https://github.com/fabpot/Silex/wiki/Third-Party-ServiceProviders">the Silex Wiki</a>!</li>
 						</ul>
 					</section>
 
