@@ -173,56 +173,161 @@ $app = new Silex\Application();</code></pre>
 					<section>
 						<h2>Example (1)</h2>
 						<ul>
-							<li class="fragment">...</li>
+							<li class="fragment">
+								<a href="https://github.com/facebook/facebook-php-sdk">Facebook PHP SDK</a> example:
+								<pre class="bigger"><code class="language-php">require 'facebook-php-sdk/src/facebook.php';
+
+$facebook = new \Facebook(array(
+  'appId'  => 'YOUR_APP_ID',
+  'secret' => 'YOUR_APP_SECRET',
+));
+
+// Get User ID
+$user = $facebook->getUser();</code></pre>
+							</li>
+							<li class="fragment">In Silex: inject the instance of <code>Facebook</code> as a dependency</li>
 						</ul>
 					</section>
 
 					<section>
 						<h2>Example (2)</h2>
 						<ul>
-							<li class="fragment">...</li>
-						</ul>
-					</section>
+							<li class="fragment">
+								Dependency Injection <em>(<code>bootstrap.php</code>)</em>
+								<pre class="bigger"><code class="language-php">$app['facebook.app_id'] = 'YOUR_APP_ID';
+$app['facebook.secret'] = 'YOUR_APP_SECRET';
 
-					<section>
-						<h2>Example (3)</h2>
-						<ul>
-							<li class="fragment">...</li>
+$app['facebook'] = $app->share(function() use ($app) {
+	return new \Facebook(array(
+		'appId' => $app['facebook.app_id'],
+		'secret' => $app['facebook.secret']
+	));
+});</code></pre>
+							</li>
+							<li class="fragment">
+								Usage <em>(route handling)</em>
+								<pre class="bigger"><code class="language-php">$app->get('/', function(Silex\Application $app) {
+	$user = $app['facebook']->getUser();
+	return $app->json($user);
+});</code></pre>
+							</li>
 						</ul>
 					</section>
 
 					<section>
 						<h2>The need for structure</h2>
 						<ul>
-							<li class="fragment">...</li>
+							<li class="fragment">
+								Again, we like our code clean
+								<ol>
+									<li class="fragment">Don't overload <code>app.php</code> with routing logic</li>
+									<li class="fragment">Don't overload <code>bootstrap.php</code> with service definitions</li>
+								</ol>
+							</li>
+							<li class="fragment">
+								Solutions
+								<ol>
+									<li class="fragment">ControllerProviders<small><a href="http://silex.sensiolabs.org/doc/providers.html#controllers-providers">&#9873;</a></small> <em style="font-size: 75%;">(@see <a href="03.silex.part1.html#/4">03.silex.part1</a>)</em></li>
+									<li class="fragment">ServiceProviders<small><a href="http://silex.sensiolabs.org/doc/providers.html#service-providers">&#9873;</a></small></li>
+								</ol>
+							</li>
 						</ul>
+					</section>
+
+					<section>
+						<h2>ServiceProvider (1)</h2>
+						<ul>
+							<li class="fragment">
+								Cfr. ControllerProvider but different interface/methods
+								<pre class="bigger"><code class="language-php">namespace MyNamespace\Provider\Service;
+
+use Silex\Application;
+use Silex\ServiceProviderInterface;
+
+class WhateverServiceProvider implements ServiceProviderInterface {
+
+	public function register(Application $app) { &hellip; }
+
+	public function boot(Application $app) { &hellip; }
+
+}</code></pre>
+							</li>
+							<li class="fragment">
+								Place your class in <code>/src/namespace/provider/service</code>
+							</li>
+							<li class="fragment">
+								Register your class with Silex' <code>$app</code> using
+								<pre class="bigger"><code class="language-php">$app->register(new MyNamespace\Provider\Service\WhateverServiceProvider(), []);</code></pre></li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>ServiceProvider (2)</h2>
+						<p>From the Silex Docs:</p>
+						<blockquote class="fragment">This is very straight forward, just create a new class that implements the two methods. In the <code>register()</code> method, you can define services on the application which then may make use of other services and parameters. In the <code>boot()</code> method, you can configure the application, just before it handles a request.</blockquote>
 					</section>
 
 					<section>
 						<h2>Revised Example (1)</h2>
 						<ul>
-							<li class="fragment">...</li>
+							<li class="fragment">
+								<code>FacebookServiceProvider.php</code>
+								<pre class="bigger"><code class="language-php">&lt;?php
+
+namespace Ikdoeict\Provider\Service;
+
+use Silex\Application;
+use Silex\ServiceProviderInterface;
+
+class FacebookServiceProvider implements ServiceProviderInterface {
+
+	public function register(Application $app) {
+		$app['facebook'] = $app->share(function() use ($app) {
+			return new \Facebook(array(
+				'appId' => $app['facebook.app_id'],
+				'secret' => $app['facebook.secret']
+			));
+		});
+	}
+
+	public function boot(Application $app) {}
+
+}</code></pre>
+							</li>
 						</ul>
 					</section>
 
 					<section>
 						<h2>Revised Example (2)</h2>
 						<ul>
-							<li class="fragment">...</li>
-						</ul>
-					</section>
-
-					<section>
-						<h2>Revised Example (3)</h2>
-						<ul>
-							<li class="fragment">...</li>
+							<li class="fragment">
+								<code>bootstrap.php</code>
+								<pre class="bigger"><code class="language-php">$app->register(new Ikdoeict\Provider\Service\FacebookServerProvider(), array(
+	'facebook.app_id' => 'YOUR_APP_ID',
+	'facebook.secret' => 'YOUR_APP_SECRET'
+));</code></pre>
+							</li>
+							<li class="fragment">
+								<code>app.php</code> or ControllerProvider
+								<pre class="bigger"><code class="language-php">$app->get('/', function(Silex\Application $app) {
+	$user = $app['facebook']->getUser();
+	return $app->json($user);
+});</code></pre>
+							</li>
 						</ul>
 					</section>
 
 					<section>
 						<h2>More examples</h2>
 						<ul>
-							<li class="fragment">...</li>
+							<li class="fragment"><a href="http://php-and-symfony.matthiasnoback.nl/2012/02/silex-creating-a-service-provider-for-buzz/">Silex: creating a service provider for Buzz</a></li>
+							<li class="fragment">
+								<a href="https://github.com/EmanueleMinotto/FakerServiceProvider">Service Provider for Faker</a>
+								<ul>
+									<li>Note: Faker has a Singleton pattern implemented. No need for a shared service definition</li>
+								</ul>
+							</li>
+							<li class="fragment">&hellip;</li>
 						</ul>
 					</section>
 
