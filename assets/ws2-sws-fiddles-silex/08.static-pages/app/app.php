@@ -3,9 +3,6 @@
 // Bootstrap
 require __DIR__ . DIRECTORY_SEPARATOR . 'bootstrap.php';
 
-// Dummy Data
-require __DIR__ . DIRECTORY_SEPARATOR . 'data.php';
-
 $app->error(function (\Exception $e, $code) use ($app) {
 	if ($code == 404) {
 		return $app['twig']->render('errors/404.twig', array('error' => $e->getMessage()));

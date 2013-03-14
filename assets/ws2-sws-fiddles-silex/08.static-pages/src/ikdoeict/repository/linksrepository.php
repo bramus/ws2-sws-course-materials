@@ -2,7 +2,7 @@
 
 namespace Ikdoeict\Repository;
 
-class Link extends \Knp\Repository {
+class LinksRepository extends \Knp\Repository {
 
 	public function getTableName() {
 		return 'links';

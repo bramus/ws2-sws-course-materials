@@ -3,9 +3,6 @@
 // Bootstrap
 require __DIR__ . DIRECTORY_SEPARATOR . 'bootstrap.php';
 
-// Dummy Data
-require __DIR__ . DIRECTORY_SEPARATOR . 'data.php';
-
 // Use Request from Symfony Namespace
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
