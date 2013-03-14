@@ -525,7 +525,7 @@ class FacebookServiceProvider implements ServiceProviderInterface {
 		'host' =&gt; 'localhost',
 		'dbname' =&gt; 'todolist',
 		'user' =&gt; 'root',
-		'passwod' =&gt; 'Azerty123'
+		'password' =&gt; 'Azerty123'
 	)
 ));</code></pre>
 							</li>
@@ -594,11 +594,19 @@ class FacebookServiceProvider implements ServiceProviderInterface {
 								In a web-context:
 								<ul>
 									<li class="fragment">The model represents data</li>
-									<li class="fragment">The view is a visual representation of the model</li>
+									<li class="fragment">The view visually represents the model</li>
 									<li class="fragment">The controller is the app logic: decices wat the input was, and orchestrates the proper models/views</li>
 								</ul>
 							</li>
 						</ul>
+					</section>
+
+					<section>
+						<h2>MVC</h2>
+						<figure>
+							<img src="assets/04/mvc.png" alt="Model View Controller" title="Model View Controller" width="800" />
+							<figcaption>MVC Schematic <em>(<a href="http://www.dubberly.com/articles/model-view-controller-pattern.html">ref</a>)</em></figcaption>
+						</figure>
 					</section>
 
 					<section>
@@ -737,7 +745,7 @@ class TweetsRepository extends Knp\Repository {
 								</ul>
 							</li>
 							<li class="fragment">
-								Register your repostories in your app while registering <code>RepositoryServiceProvider</code>
+								Register your repositories in your app while registering <code>RepositoryServiceProvider</code>
 							</li>
 						</ul>
 						<footer class="fragment" style="color: #F66;"><em>Important: don't ever write queries in your ControllerProviders, but put 'm in your Repository classes!</em></footer>
@@ -805,6 +813,7 @@ class TweetsRepository extends Knp\Repository {
 							<li><a href="http://www.slideshare.net/dustin.whittle/silex-from-micro-to-full-stack">http://www.slideshare.net/dustin.whittle/silex-from-micro-to-full-stack</a></li>
 							<li><a href="http://www.slideshare.net/blongden/silex-the-microframework">http://www.slideshare.net/blongden/silex-the-microframework</a></li>
 							<li><a href="https://github.com/fabpot/Silex/wiki/Third-Party-ServiceProviders">https://github.com/fabpot/Silex/wiki/Third-Party-ServiceProviders</a></li>
+							<li><a href="http://www.dubberly.com/articles/model-view-controller-pattern.html">http://www.dubberly.com/articles/model-view-controller-pattern.html</a></li>
 						</ul>
 					</section>
 				</section>
