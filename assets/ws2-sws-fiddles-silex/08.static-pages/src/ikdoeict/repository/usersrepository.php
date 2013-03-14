@@ -2,7 +2,7 @@
 
 namespace Ikdoeict\Repository;
 
-class User extends \Knp\Repository {
+class UsersRepository extends \Knp\Repository {
 
 	public function getTableName() {
 		return 'users';
