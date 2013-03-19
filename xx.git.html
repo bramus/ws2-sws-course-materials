@@ -1,0 +1,654 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Webscripting2 &mdash; Serverside Webscripting &mdash; xx.git</title>
+
+		<meta name="description" content="Webscripting2 &mdash; Serverside Webscripting &mdash; xx.git">
+		<meta name="author" content="Bram(us) Van Damme - ikdoeict.be">
+
+		<link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/main.css" media="screen">
+		<link rel="stylesheet" href="css/print.css" media="print">
+
+		<link rel="stylesheet" href="lib/zenburn.css">
+	</head>
+
+	<body>
+
+		<div id="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+
+				<!-- Title -->
+				<section>
+					<section>
+						<h3 class="inverted">Serverside Webscripting <small>[JLW280]</small></h3>
+						<h1>xx.git</h1>
+
+						<footer>
+							<em><a href="http://www.ikdoeict.be/">ikdoeict.be</a> &mdash; <a href="mailto:bramus.vandamme@kahosl.be">bramus.vandamme@kahosl.be</a></em>
+						</footer>
+						<script>
+							// Delicously hacky. Look away.
+							if( navigator.userAgent.match( /(iPhone|iPad|iPod|Android)/i ) )
+							document.write( '<p style="color: rgba(0,0,0,0.3); text-shadow: none;">('+'Tap to navigate'+')</p>' );
+						</script>
+					</section>
+				</section>
+
+				<!-- Built-in Service Provider: Swift -->
+				<section>
+					<section>
+						<h2 style="visibility: hidden;">Intro</h2>
+
+						<p><img src="assets/xx/git-logo-white.png" width="447" alt="" class="noborder" style="margin-top: 3em;" /></p>
+
+						<p class="fragment" style="position: absolute; top: 25%; left: 10%; right: 10%; bottom: 10%; transform: rotate(-2deg);"><img src="assets/xx/barfing-rainbow.gif" width="447" alt="What you guys think of it" class="noborder" /></p>
+
+						<p class="fragment" style="position: absolute; top: 25%; left: 10%; right: 10%; bottom: 10%; transform: rotate(2deg);"><img src="assets/xx/obama-not-bad.png" width="447" alt="What I think of it" class="noborder" /></p>
+
+					</section>
+
+					<section>
+						<h2>What is Git?</h2>
+						<blockquote class="fragment">Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency.</blockquote>
+						<ul>
+							<li class="fragment" style="margin-top: 1em;">
+								Version control system
+								<ul>
+									<li class="fragment">Tell it to keep track of certain files</li>
+									<li class="fragment">Save the state of files in a historical timeline <em>(<strong>repository</strong>)</em></li>
+								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 0.4em;">
+								Distributed
+								<ul>
+									<li class="fragment">Works offline</li>
+									<li class="fragment">
+										Several users have their own separate file history
+										<ul>
+											<li class="fragment">These can later on be <strong>merged</strong></li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Installation &amp; Basic Configuration</h2>
+						<ul>
+							<li class="fragment">
+								Download the Git binary from <a href="http://git-scm.com">git-scm.com</a>
+								<ul>
+									<li>On Windows, choose <em>&ldquo;Run Git and included Linux tools from the Windows Command Prompt&rdquo;</em> during installation</li>
+								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Once installed, tell Git who you are
+								<pre class="bigger"><code class="no-highlight">$ git config --global user.name "Lorem Ipsum"
+$ git config --global user.email lorem@ips.um</code></pre>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Let's also ask for colors while we're at it
+								<pre class="bigger"><code class="no-highlight">$ git config --global color.ui true</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Git GUIs</h2>
+						<ul>
+							<li class="fragment">
+								Git is shipped with some <em>(very)</em> basic GUI tools
+								<ul>
+									<li><code>gitk</code>, <code>git-gui</code></li>
+								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Other Git GUIs also exist
+								<ul>
+									<li>Windows: TortoiseGit, SmartGit, etc.</li>
+									<li>OS X: Tower, etc.</li>
+								</ul>
+							</li>
+						</ul>
+						<footer class="fragment"><em>Whilst these GUIs are a nice addition, we'll focus on the command line</em></footer>
+					</section>
+
+				</section>
+
+				<section>
+
+					<section>
+						<h2>Getting started</h2>
+						<p><img src="assets/xx/futurama-max.png" width="447" alt="" class="noborder" /></p>
+						<q>
+							Thank you, thank you. Let's get started. Max, play me over.<br />
+							(gasps) Looks like someone forgot to feed Max!
+						</q>
+					</section>
+
+					<section>
+						<h2>Creating a repository</h2>
+
+						<ul>
+							<li class="fragment">
+								Start tracking files in a directory with <code>git init</code>
+								<pre class="bigger"><code class="no-highlight"><span style="opacity: 0.5;">bramus in ~/Kaho/git-demo</span>
+$ <span class="fragment">git init</span>
+<span class="fragment">Initialized empty Git repository in /Users/bramus/Kaho/git-demo/.git/
+
+<span style="opacity: 0.5;">bramus in ~/Kaho/git-demo</span>
+$ </span></code></pre>
+								<ul>
+									<li class="fragment">
+										Git automatically creates a (hidden) <code>.git</code> folder containing
+										<ul>
+											<li>Meta information</li>
+											<li>The entire history</li>
+											<li>&hellip;</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Checking the status of a repository</h2>
+
+						<ul>
+							<li class="fragment">
+								Git knows whenever a file has changed in the repository
+							</li>
+							<li class="fragment">
+								Use <code>git status</code> to check
+								<pre class="bigger"><code class="no-highlight"><span style="opacity: 0.5;">bramus in ~/Kaho/git-demo</span>
+$ <span class="fragment">touch test.txt</span>
+
+<span class="fragment"><span style="opacity: 0.5;">bramus in ~/Kaho/git-demo</span>
+$ </span><span class="fragment">git status</span>
+<span class="fragment">
+# &hellip;
+#
+<span style="color: #FFF;"># Untracked files:</span>
+# &hellip;
+#	<span style="color: #F55;">test.txt</span>
+#
+
+<span style="opacity: 0.5;">bramus in ~/Kaho/git-demo</span>
+$ </span></code></pre>
+							</li>
+							<li class="fragment">
+								Git compares the current state of the <strong>working directory</strong> to the last stated stored in the history
+							</li>
+						</ul>
+					</section>
+
+
+					<section>
+						<h2>Staging &amp; committing</h2>
+						<ul>
+							<li class="fragment">
+								To save the changes into the history timeline
+								<ol>
+									<li class="fragment">Select which files you want to save using <code>git add</code> &rarr; <strong>staging</strong></li>
+									<li class="fragment">Actually save them using <code>git commit</code> &rarr; <strong>committing</strong></li>
+								</ol>
+								<pre class="bigger fragment"><code class="no-highlight"><span style="opacity: 0.5;">bramus in ~/Kaho/git-demo</span>
+$ <span class="fragment">git add test.txt</span>
+
+<span class="fragment"><span style="opacity: 0.5;">bramus in ~/Kaho/git-demo</span>
+$ </span><span class="fragment">git commit -m 'Start tracking test.txt'</span>
+<span class="fragment">[master (root-commit) 9c43f96] Start tracking test.txt
+ 0 files changed
+ create mode 100644 test.txt
+
+<span style="opacity: 0.5;">bramus in ~/Kaho/git-demo</span>
+$ </span></code></pre>
+							</li>
+							<li class="fragment">
+								The current state of <code>test.txt</code> is stored in the repository
+								<ul>
+									<li class="fragment">The commit is identified as <code>9c43f96</code></li>
+									<li class="fragment">From now on it's possible to go back to this version</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+
+					<section>
+						<h2>Flow visualization</h2>
+						<figure style="margin-top: 4em;" class="fragment">
+							<img src="assets/xx/git-add-commit.png" width="700" alt="" class="noborder" />
+							<figcaption>Visual representation of staging and committing in Git</figcaption>
+						</figure>
+					</section>
+
+
+					<section>
+						<h2>Committing (1)</h2>
+						<ul>
+							<li class="fragment">
+								Only staged files are committed
+								<pre class="bigger fragment"><code class="no-highlight" style="max-height: 380px; overflow: scroll;"><span style="opacity: 0.5;">bramus in ~/Kaho/git-demo on master</span>
+$ <span class="fragment">touch test2.txt</span>
+<span class="fragment">
+<span style="opacity: 0.5;">bramus in ~/Kaho/git-demo on master</span>
+$ </span><span class="fragment">echo 'hello' >> test.txt</span>
+<span class="fragment">
+<span style="opacity: 0.5;">bramus in ~/Kaho/git-demo on master*</span>
+$ </span><span class="fragment">git status</span>
+<span class="fragment"># On branch master
+<span style="color: #FFF;"># Changes not staged for commit:</span>
+# &hellip;
+#	<span style="color: #5F5;">modified:   test.txt</span>
+#
+<span style="color: #FFF;"># Untracked files:</span>
+# &hellip;
+#	<span style="color: #F55;">test2.txt</span>
+#
+<span style="opacity: 0.5;">bramus in ~/Kaho/git-demo on master*</span>
+$ </span><span class="fragment">git add test2.txt</span>
+<span class="fragment">
+<span style="opacity: 0.5;">bramus in ~/Kaho/git-demo on master*</span>
+$ </span><span class="fragment">git status</span>
+<span class="fragment"># On branch master
+<span style="color: #FFF;"># Changes to be committed:</span>
+# &hellip;
+#	<span style="color: #FF5;">new file:   test2.txt</span>
+#
+<span style="color: #FFF;"># Changes not staged for commit:</span>
+# &hellip;
+#	<span style="color: #5F5;">modified:   test.txt</span>
+#
+
+<span style="opacity: 0.5;">bramus in ~/Kaho/git-demo on master*</span>
+$ </span><span class="fragment">git commit -m 'Start tracking test2'</span>
+<span class="fragment">[master f1c6883] Start tracking test2
+ 0 files changed
+ create mode 100644 test2.txt
+
+<span style="opacity: 0.5;">bramus in ~/Kaho/git-demo on master*</span>
+$ </span><span class="fragment">git status</span>
+<span class="fragment"># On branch master
+<span style="color: #FFF;"># Changes not staged for commit:</span>
+# &hellip;
+#	<span style="color: #5F5;">modified:   test.txt</span>
+#
+
+<span style="opacity: 0.5;">bramus in ~/Kaho/git-demo on master*</span>
+$ </span></code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Committing (2)</h2>
+						<ul>
+							<li class="fragment">
+								Stage all files + commit them in one command
+								<pre class="bigger fragment"><code class="no-highlight">$ git commit -am 'commitmessage'</code></pre>
+							</li>
+
+							<li class="fragment" style="margin-top: 1em">
+								Write good commit messages
+								<ul>
+									<li>English</li>
+									<li>Present tense</li>
+								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 1em">
+								One commit = one set of changes
+								<ul>
+									<li>Don't commit 2 features/bugfixes/etc at once</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+
+					<section>
+						<h2>Staging &amp; Unstaging (1)</h2>
+						<ul>
+							<li class="fragment">
+								Stage all files
+								<pre class="bigger fragment"><code class="no-highlight">$ git add .</code></pre>
+							</li>
+							<li class="fragment">
+								Stage all <code>.txt</code> files
+								<pre class="bigger fragment"><code class="no-highlight">$ git add *.txt</code></pre>
+							</li>
+							<li class="fragment">
+								Stage an entire subfolder
+								<pre class="bigger fragment"><code class="no-highlight">$ git add subfolder/</code></pre>
+							</li>
+							<li class="fragment">
+								Unstage files
+								<pre class="bigger fragment"><code class="no-highlight">$ git reset filename</code></pre>
+							</li>
+						</ul>
+					</section>
+
+
+					<section>
+						<h2>Visualization</h2>
+						<figure style="margin-top: 4em;" class="fragment">
+							<img src="assets/xx/git-add-reset-commit.png" width="700" alt="" class="noborder" />
+							<figcaption>Visual representation of staging, unstaging and committing in Git</figcaption>
+						</figure>
+					</section>
+
+
+					<section>
+						<h2>Staging &amp; Unstaging (2)</h2>
+						<ul>
+							<li class="fragment">
+								Deletions are not staged by default
+								<pre class="bigger fragment"><code class="no-highlight" style="max-height: 380px; overflow: scroll;"><span style="opacity: 0.5;">bramus in ~/Kaho/git-demo on master</span>
+$ <span class="fragment">rm test2.txt</span>
+<span class="fragment">
+<span style="opacity: 0.5;">bramus in ~/Kaho/git-demo on master</span>
+$ </span><span class="fragment">git status</span>
+<span class="fragment"># On branch master
+# Changes not staged for commit:
+#
+#	<span style="color: #5F5;">modified:   test.txt</span>
+#	<span style="color: #5F5;">deleted:    test2.txt</span>
+#
+
+<span style="opacity: 0.5;">bramus in ~/Kaho/git-demo on master*</span>
+$ </span><span class="fragment">git add .</span>
+<span class="fragment">
+<span style="opacity: 0.5;">bramus in ~/Kaho/git-demo on master*</span>
+$ </span><span class="fragment">git status</span>
+<span class="fragment"># On branch master
+<span style="color: #FFF;"># Changes to be committed:</span>
+# &hellip;
+#	<span style="color: #FF5;">modified:   test.txt</span>
+#
+<span style="color: #FFF;"># Changes not staged for commit:</span>
+# &hellip;
+#	<span style="color: #5F5;">deleted:    test2.txt</span>
+#
+
+<span style="opacity: 0.5;">bramus in ~/Kaho/git-demo on master*</span>
+$ </span><span class="fragment">git add -u .</span>
+<span class="fragment">
+<span style="opacity: 0.5;">bramus in ~/Kaho/git-demo on master*</span>
+$ </span><span class="fragment">git status</span>
+<span class="fragment"># On branch master
+<span style="color: #FFF;"># Changes to be committed:</span>
+# &hellip;
+#	<span style="color: #FF5;">modified:   test.txt</span>
+#	<span style="color: #FF5;">deleted:    test2.txt</span>
+#
+#
+
+<span style="opacity: 0.5;">bramus in ~/Kaho/git-demo on master*</span>
+$ </span><span class="fragment">git reset test.txt</span>
+<span class="fragment">Unstaged changes after reset:
+M	test.txt
+
+<span style="opacity: 0.5;">bramus in ~/Kaho/git-demo on master*</span>
+$ </span><span class="fragment">git commit -m 'Deleted test2.txt'</span>
+<span class="fragment">[master 1d7a184] Deleted test2.txt
+ 0 files changed
+ delete mode 100644 test2.txt
+
+<span style="opacity: 0.5;">bramus in ~/Kaho/git-demo on master*</span>
+$ </span><span class="fragment">git status</span>
+<span class="fragment"># On branch master
+<span style="color: #FFF;"># Changes not staged for commit:</span>
+# &hellip;
+#	<span style="color: #5F5;">modified:   test.txt</span>
+#
+#
+
+<span style="opacity: 0.5;">bramus in ~/Kaho/git-demo on master*</span>
+$ </span><span class="fragment">ls</span>
+<span class="fragment">drwxr-xr-x   4 bramus  staff  136 Mar 19 21:18 <span style="color: #55F;">.</span>
+drwxr-xr-x  10 bramus  staff  340 Mar 19 15:49 <span style="color: #55F;">..</span>
+drwxr-xr-x  13 bramus  staff  442 Mar 19 21:24 <span style="color: #55F;">.git</span>
+-rw-r--r--   1 bramus  staff    6 Mar 19 20:44 test.txt
+
+<span style="opacity: 0.5;">bramus in ~/Kaho/git-demo on master*</span>
+$ </span><span class="fragment">git commit -am 'Hello'</span>
+<span class="fragment">[master c53f9b6] Hello
+ 1 file changed, 1 insertion(+)
+
+<span style="opacity: 0.5;">bramus in ~/Kaho/git-demo on master</span>
+$ </span></code></pre>
+							</li>
+							<li class="fragment">
+								Solution: use <code>git add -u</code>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Checking changes (1)</h2>
+						<ul>
+							<li class="fragment">
+								Use <code>git diff <em>file</em></code> to compare the current state with the previously committed state
+								<pre class="bigger fragment"><code class="no-highlight" style="max-height: 380px; overflow: scroll;"><span style="opacity: 0.5;">bramus in ~/Kaho/git-demo on master</span>
+$ <span class="fragment">echo 'more hello' >> test.txt</span>
+<span class="fragment">
+<span style="opacity: 0.5;">bramus in ~/Kaho/git-demo on master*</span>
+$ </span><span class="fragment">git diff test.txt</span>
+<span class="fragment"><span style="color: #FF5;">diff --git a/test.txt b/test.txt
+index ce01362..3477282 100644
+--- a/test.txt
++++ b/test.txt</span>
+<span style="color: #F5F;">@@ -1 +1,2 @@</span>
+hello
+<span style="color: #5F5;">+more hello</span>
+
+<span style="opacity: 0.5;">bramus in ~/Kaho/git-demo on master*</span>
+$ </span></code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Checking changes (2)</h2>
+
+						<div class="fragment">
+							<p style="font-size: 75%; margin: 0;">Recommended Sublime Text 2 Plugin: <a href="http://www.jisaacks.com/gitgutter">GitGutter</a></p>
+							<figure><img src="assets/xx/gitgutter.png" alt="" title="" width="700" class="noborder" /></figure>
+						</div>
+
+					</section>
+
+					<section>
+						<h2>Checking the history (1)</h2>
+						<ul>
+							<li class="fragment">
+								Use <code>git log</code> to see the commit log
+								<pre class="bigger fragment"><code class="no-highlight" style="max-height: 380px; overflow: scroll;"><span style="opacity: 0.5;">bramus in ~/Kaho/git-demo</span>
+$ <span class="fragment">git log</span>
+<span class="fragment"><span style="color: #FF5;">commit c53f9b6bd0e7271af7c5d856f84f51d9b749d77f</span>
+Author: Bramus &lt;bramus@bram.us&gt;
+Date:   Tue Mar 19 22:09:32 2013 +0100
+
+    Hello
+
+<span style="color: #FF5;">commit 1d7a18481b5f6664d2cf30b1455c6ad1c041caa2</span>
+Author: Bramus &lt;bramus@bram.us&gt;
+Date:   Tue Mar 19 21:24:13 2013 +0100
+
+    Deleted test2.txt
+
+<span style="color: #FF5;">commit f1c68836b8c1f91c16d4f4c0540fca0f251ff946</span>
+Author: Bramus &lt;bramus@bram.us&gt;
+Date:   Tue Mar 19 20:44:31 2013 +0100
+
+    Start tracking test2
+
+<span style="color: #FF5;">commit 9c43f961b1defcc2f4f14526a2b20c4f3c267a62</span>
+Author: Bramus &lt;bramus@bram.us&gt;
+Date:   Tue Mar 19 16:02:03 2013 +0100
+
+    Start tracking test.txt
+
+<span style="opacity: 0.5;">bramus in ~/Kaho/git-demo</span>
+$ </span></code></pre>
+								<ul>
+									<li class="fragment">Press <code>q</code> to exit the commit log</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Checking the history (2)</h2>
+						<ul>
+							<li class="fragment">
+								Use <code>git log --oneline</code> to get a concise output
+								<pre class="bigger fragment"><code class="no-highlight" style="max-height: 380px; overflow: scroll;"><span style="opacity: 0.5;">bramus in ~/Kaho/git-demo</span>
+$ <span class="fragment">git log --oneline</span>
+<span class="fragment"><span style="color: #FF5;">c53f9b6</span> Hello
+<span style="color: #FF5;">1d7a184</span> deleted test2.txt
+<span style="color: #FF5;">f1c6883</span> Start tracking test2
+<span style="color: #FF5;">9c43f96</span> Start tracking test.txt
+
+<span style="opacity: 0.5;">bramus in ~/Kaho/git-demo</span>
+$ </span></code></pre>
+							</li>
+							<li class="fragment">
+								Filter commits by author
+								<pre class="bigger fragment"><code class="no-highlight">$ git log --author=name</code></pre>
+							</li>
+							<li class="fragment">
+								Filter commits in time
+								<pre class="bigger fragment"><code class="no-highlight">$ git log --since=&quot;1 week ago&quot;</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Checking the history (3)</h2>
+						<ul>
+							<li class="fragment">
+								Ultimate <code>git log</code>
+								<pre class="bigger fragment"><code class="no-highlight" style="white-space: nowrap; overflow: scroll;">$ git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset' --abbrev-commit</code></pre>
+								<pre class="bigger fragment"><code class="no-highlight" style="max-height: 380px; overflow: scroll;"><span style="opacity: 0.5;">bramus in ~/Kaho/git-demo</span>
+$ <span class="fragment" style="white-space: nowrap;">git git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset' --abbrev-commit</span>
+<span class="fragment">* <span style="color: #F55;">c53f9b6</span> - <span style="color: #FF5;">(HEAD, master)</span> Hello <span style="color: #5F5;">(16 minutes ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
+* <span style="color: #F55;">1d7a184</span> - Deleted test2.txt <span style="color: #5F5;">(61 minutes ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
+* <span style="color: #F55;">f1c6883</span> - Start tracking test2 <span style="color: #5F5;">(2 hours ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
+* <span style="color: #F55;">9c43f96</span> - Start tracking test.txt <span style="color: #5F5;">(6 hours ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
+
+<span style="opacity: 0.5;">bramus in ~/Kaho/git-demo</span>
+$ </span></code></pre>
+								<ul>
+									<li class="fragment">
+										Pro tip: create an alias <code>git lg</code> for it
+										<pre class="bigger fragment"><code class="no-highlight" style="white-space: nowrap; overflow: scroll;">$ git config --global alias.lg "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset' --abbrev-commit"</code></pre>
+										<ul>
+											<li class="fragment">From now on, use <code>git lg</code> to get the output as shown above</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Git basics summary</h2>
+
+						<ul>
+							<li class="fragment">
+								Create repository
+								<pre class="bigger fragment"><code class="no-highlight" style="white-space: nowrap; overflow: scroll;">$ git init</code></pre>
+							</li>
+							<li class="fragment">
+								Stage file
+								<pre class="bigger fragment"><code class="no-highlight" style="white-space: nowrap; overflow: scroll;">$ git add <em>file</em></code></pre>
+							</li>
+							<li class="fragment">
+								Unstage file
+								<pre class="bigger fragment"><code class="no-highlight" style="white-space: nowrap; overflow: scroll;">$ git reset <em>file</em></code></pre>
+							</li>
+							<li class="fragment">
+								Commit staged changes
+								<pre class="bigger fragment"><code class="no-highlight" style="white-space: nowrap; overflow: scroll;">$ git commit -m '<em>message</em>'</code></pre>
+							</li>
+							<li class="fragment">
+								Check differences in a file <em>(compared to repository)</em>
+								<pre class="bigger fragment"><code class="no-highlight" style="white-space: nowrap; overflow: scroll;">$ git diff <em>file</em></code></pre>
+							</li>
+							<li class="fragment">
+								Check commit log <em>(using our alias)</em>
+								<pre class="bigger fragment"><code class="no-highlight" style="white-space: nowrap; overflow: scroll;">$ git lg</code></pre>
+							</li>
+						</ul>
+					</section>
+
+				</section>
+
+				<!-- The END -->
+				<section>
+					<section>
+						<h2>Questions?</h2>
+						<footer>
+							<em><a href="http://www.ikdoeict.be/">ikdoeict.be</a> &mdash; <a href="mailto:bramus.vandamme@kahosl.be">bramus.vandamme@kahosl.be</a></em>
+						</footer>
+					</section>
+				</section>
+
+
+
+				<!-- Sources -->
+				<section id="sources">
+					<section>
+						<h2>Sources</h2>
+						<ul>
+							<li><a href="#">&hellip;</a></li>
+						</ul>
+					</section>
+				</section>
+
+			</div>
+
+			<!-- The navigational controls UI -->
+			<aside class="controls">
+				<a class="left" href="#">&#x25C4;</a>
+				<a class="right" href="#">&#x25BA;</a>
+				<a class="up" href="#">&#x25B2;</a>
+				<a class="down" href="#">&#x25BC;</a>
+				<span id="revealIndex">/</span>
+			</aside>
+
+			<!-- Index Link -->
+			<aside class="back">
+				<a href="index.html">&larr; Back to index</a>
+			</aside>
+
+			<!-- ikdoeict.be Link -->
+			<a href="http://www.ikdoeict.be/" title="ikdoeict.be" id="ikdoeict">ikdoeict.be</a>
+
+			<!-- Displays presentation progress, max value changes via JS to reflect # of slides -->
+			<div class="progress"><span></span></div>
+
+		</div>
+
+		<script src="js/reveal.js"></script>
+		<script src="lib/highlight.js"></script>
+		<script src="lib/prefixfree.js"></script>
+		<script src="lib/css-snippets.js"></script>
+		<script src="lib/css-edit.js"></script>
+		<script src="lib/incrementable.js"></script>
+		<script src="js/main.js"></script>
+
+	</body>
+</html>

@@ -1107,6 +1107,7 @@ strong {
 	font-family: palatino, times;
 	font-weight: 300;
 	font-style: italic;
+	line-height: 1;
 }
 
 #reveal section img.noborder {
