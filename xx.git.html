@@ -1400,6 +1400,12 @@ $ </span></code></pre>
 									<li class="fragment">
 										Continue the rebase
 										<pre class="bigger"><code class="no-highlight">$ git rebase --continue</code></pre>
+										<ul>
+											<li>
+												Aborting the rebase is also possible
+												<pre class="bigger"><code class="no-highlight">$ git rebase --abort</code></pre>
+											</li>
+										</ul>
 									</li>
 								</ul>
 							</li>
@@ -1436,6 +1442,85 @@ $ </span></code></pre>
 						<p><img src="assets/xx/futurama-bender-fight.jpg" width="600" alt="" class="noborder" /></p>
 						<q>Yes, we have to work together, and not<br />have this fight I was definitely winning.</q>
 					</section>
+
+					<section>
+						<h2>Collaboration</h2>
+
+						<ul>
+							<li class="fragment">Knowing how to branch != knowing how to collaborate</li>
+							<li class="fragment">
+								When collaborating, maintain this flow
+								<pre class="bigger"><code class="no-highlight" style="max-height: 380px; overflow: scroll;"><span class="fragment"># 1. Make sure the master is up-to-date
+<span style="opacity: 0.5;">     $ git checkout master
+     $ git pull</span></span>
+
+<span class="fragment"># 2. Create a featurebranch based on the master
+<span style="opacity: 0.5;">     $ git checkout -b featurebranch</span></span>
+
+<span class="fragment"># 3. Develop, stage, and commit your feature on the featurebranch.
+     When finished continue to step 4</span>
+
+<span class="fragment"># 4. Make sure the master is still up-to-date
+<span style="opacity: 0.5;">     $ git checkout master
+     $ git pull</span></span>
+
+<span class="fragment"># 5. Rebase the master onto the featurebranch
+     (skip this step if master remained unchanged since step 1)
+<span style="opacity: 0.5;">     $ git checkout featurebranch
+     $ git rebase master</span></span>
+
+<span class="fragment"># 6. Merge the featurebranch onto the master
+<span style="opacity: 0.5;">     $ git checkout master
+     $ git merge featurebranch</span></span>
+
+<span class="fragment"># 7. Push the master
+<span style="opacity: 0.5;">     $ git push origin master</span></span>
+
+<span class="fragment"># 8. Clean up
+<span style="opacity: 0.5;">     $ git branch -d featurebranch</span></span>
+
+<span class="fragment"># 9. Rinse. Repeat</span></code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Few pointers</h2>
+
+						<ul>
+							<li class="fragment">
+								Don't ever develop on the <code>master</code>, but on <em>featurebranches</em>
+								<ul>
+									<li class="fragment">In case that happens use <code>git pull --rebase</code> to minimize the situation. From then on create a featurebranch and continue</li>
+								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">The <code>master</code> must at all times contain deployable code </li>
+							<li class="fragment" style="margin-top: 1em;">Keep your featurebranches local</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Undoing commits</h2>
+
+						<ul>
+							<li class="fragment">
+								Undo last commit
+								<pre class="bigger"><code class="no-highlight">$ git revert HEAD~1</code></pre>
+								<ul>
+									<li class="fragment">Creates a new <em>undo commit</em> &rarr; the faulty commit will always be accessible by checking out that commithash!</li>
+								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Possible to undo a commit without keeping it in the history <strong>only if it hasn't been pushed yet</strong> <em>(two methods)</em>
+								<pre class="bigger"><code class="no-highlight">$ git rebase -i commithash</code></pre>
+								<pre class="bigger"><code class="no-highlight">$ git rebase -i HEAD~2</code></pre>
+								<ul>
+									<li class="fragment">Alternatively checkout the commithash before the faulty one and branch off</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
 				</section>
 
 				<section>
