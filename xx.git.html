@@ -1522,6 +1522,183 @@ $ </span></code></pre>
 						<p><img src="assets/xx/futurama-mutant-march.png" width="600" alt="" class="noborder" /></p>
 						<q>Let's go. If I say one more thing,<br />I might say it with my evening boot.</q>
 					</section>
+
+					<section>
+						<h2>Git Ignore File</h2>
+
+						<ul>
+							<li class="fragment">
+								Git will track all files in the working directory for changes
+							</li>
+							<li class="fragment" style="margin-top: 1em">
+								Ignore certain files by placing their name in <code>.gitignore</code>
+								<pre class="bigger fragment"><code class="no-highlight">Thumbs.db
+app.db
+*.log
+vendor/*
+composer.lock
+config.php</code></pre>
+							</li>
+							<li class="fragment" style="margin-top: 1em">
+								<code>.gitignore</code> must be committed into the repository
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Config files</h2>
+
+						<ul>
+							<li class="fragment">
+								Don't commit config files such as <code>config.php</code>
+							</li>
+							<li class="fragment" style="margin-top: 1em">
+								Add <code>config.php</code> to <code>.gitignore</code> and provide a <code>config.sample.php</code> instead
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Partially staging files</h2>
+
+						<ul>
+							<li class="fragment">
+								Commits must contain only one set of changes
+							</li>
+							<li class="fragment">
+								In case of several changes, choose which changes may be staged using <code>git add -p file</code>
+							</li>
+						</ul>
+						<pre class="bigger fragment"><code class="no-highlight" style="max-height: 330px; overflow: scroll;"><span style="opacity: 0.5;">bramus in ~/Kaho/ikdoeict-website on master*</span>
+$ <span class="fragment" style="color: #FFF;">git add -p index.html</span>
+<span class="fragment"><span style="color: #AA3">diff --git a/index.html b/index.html
+index 3fc8413..d7af84e 100644
+--- a/index.html
++++ b/index.html</span>
+<span style="color: #F5F">@@ -1,6 +1,6 @@</span>
+ &lt;!DOCTYPE html&gt;
+ &lt;head>
+<span style="color: #F55">-	&lt;title&gt;Home | Ikdoeict.BE&lt;/title&gt;</span>
+<span style="color: #5F5">+	&lt;title&gt;Home | IkdoeICT.BE&lt;/title&gt;</span>
+ 	&lt;meta charset="utf-8" /&gt;
+ 	&lt;link rel="stylesheet" href="css/normalize.css" /&gt;
+<span style="color: #55F">Stage this hunk [y,n,q,a,d,/,j,J,g,e,?]?</span></span> <span class="fragment">y</span>
+
+<span class="fragment"><span style="color: #F5F">@@ -176,7 +176,7 @@</span>
+     &lt;/section&gt;
+     &lt;footer&gt;
+<span style="color: #F55">-	&lt;p&gt;Copyright (c) 2012 IkdoeICT.be&lt;/p&gt;</span>
+<span style="color: #5F5">+	&lt;p&gt;Copyright (c) 2013 IkdoeICT.be&lt;/p&gt;</span>
+     &lt;/footer&gt;
+ &lt;/div&gt;
+ <span style="color: #55F">Stage this hunk [y,n,q,a,d,/,j,J,g,e,?]?</span></span> <span class="fragment">n</span>
+<span class="fragment">
+<span style="opacity: 0.5;">bramus in ~/Kaho/ikdoeict-website on master*</span>
+$ </span><span class="fragment" style="color: #FFF;">git status</span>
+<span class="fragment"># On branch master
+# Changes to be committed:
+#   (use &quot;git reset HEAD &lt;file&gt;...&quot; to unstage)
+#
+#	<span style="color: #AA3">modified:   index.html</span>
+#
+# Changes not staged for commit:
+#   (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)
+#   (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)
+#
+#	<span style="color: #5F5">modified:   index.html</span>
+#
+
+<span style="opacity: 0.5;">bramus in ~/Kaho/ikdoeict-website on master*</span>
+$ </span><span class="fragment" style="color: #FFF;">git commit -m 'title casing'</span>
+<span class="fragment">[master fc91e11] title casing
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+<span style="opacity: 0.5;">bramus in ~/Kaho/ikdoeict-website on master*</span>
+$ </span><span class="fragment" style="color: #FFF;">git diff index.html</span>
+<span class="fragment"><span style="color: #AA3">diff --git a/index.html b/index.html
+index 7602651..d7af84e 100644
+--- a/index.html
++++ b/index.html</span>
+<span style="color: #F5F">@@ -176,7 +176,7 @@</span>
+     &lt;/section&gt;
+     &lt;footer&gt;
+<span style="color: #F55">-	&lt;p&gt;Copyright (c) 2012 IkdoeICT.be&lt;/p&gt;</span>
+<span style="color: #5F5">+	&lt;p&gt;Copyright (c) 2013 IkdoeICT.be&lt;/p&gt;</span>
+     &lt;/footer&gt;
+ &lt;/div&gt;
+
+<span style="opacity: 0.5;">bramus in ~/Kaho/ikdoeict-website on master*</span>
+$ </span><span class="fragment" style="color: #FFF;">git add .</span>
+<span class="fragment">
+<span style="opacity: 0.5;">bramus in ~/Kaho/ikdoeict-website on master*</span>
+$ </span><span class="fragment" style="color: #FFF;">git commit -m 'copyright 2013 instead of 2012'</span>
+<span class="fragment">[master c36c7be] copyright 2013 instead of 2012
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+<span style="opacity: 0.5;">bramus in ~/Kaho/ikdoeict-website on master</span>
+$ </span></code></pre>
+					</section>
+
+					<section>
+						<h2>Automatic publishing</h2>
+
+						<ul>
+							<li class="fragment">
+								Oldskool flow: uploaded changed files via FTP and run SQL updates through PHPMyAdmin
+							</li>
+							<li class="fragment" style="margin-top: 1em">
+								Thanks to Git some things can be automated
+								<ul>
+									<li class="fragment" style="margin-top: 0.5em;">
+										<a href="http://www.bram.us/2012/07/18/automatic-website-publishing-with-git-ftp-py-on-mac-os-x/">Automatic uploading of changes via FTP using <code>git-ftp.py</code></a><br />&mdash; Just run <code>python git-ftp.py</code>
+									</li>
+									<li class="fragment" style="margin-top: 0.5em;">
+										Deploy (and rollback) your code and database changes to your own servers using <a href="http://en.wikipedia.org/wiki/Capistrano">Capistrano</a><br />&mdash; Just run <code>cap deploy</code>
+									</li>
+									<li class="fragment" style="margin-top: 0.5em;">
+										Deploy to PaaS services such as <a href="http://www.heroku.com/">Heroku</a> by adding a remote<br />&mdash; Just run <code>git push heroku master</code>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Practice!</h2>
+
+						<ul>
+							<li class="fragment">
+								I learnt Git by just going for it. You should too.
+							</li>
+							<li class="fragment" style="margin-top: 1em">
+								I stil have much to learn about Git
+								<ul>
+									<li>&hellip; but I know how to Google when in need</li>
+									<li>&hellip; but I know how to read (<a href="http://git-scm.com/book/en/">a free book on Git</a>)</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Want more?!</h2>
+
+						<ul class="fragment">
+							<li>
+								Stashing
+							</li>
+							<li>
+								Tagging
+							</li>
+							<li>
+								Cherry Picking
+							</li>
+							<li>
+								&hellip;
+							</li>
+						</ul>
+					</section>
+
 				</section>
 
 				<!-- The END -->
