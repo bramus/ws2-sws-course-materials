@@ -15,6 +15,29 @@
 		<link rel="stylesheet" href="css/main.css" media="screen">
 		<link rel="stylesheet" href="css/print.css" media="print">
 
+		<style>
+			figure.zoomable-12 img:hover {
+				-moz-transform: scale(1.2);
+				-o-transform: scale(1.2);
+				-webkit-transform: scale(1.2);
+				transform: scale(1.2);
+			}
+
+			figure.zoomable-15 img:hover {
+				-moz-transform: scale(1.5);
+				-o-transform: scale(1.5);
+				-webkit-transform: scale(1.5);
+				transform: scale(1.5);
+			}
+
+			figure.zoomable-20 img:hover {
+				-moz-transform: scale(2);
+				-o-transform: scale(2);
+				-webkit-transform: scale(2);
+				transform: scale(2);
+			}
+		</style>
+
 		<link rel="stylesheet" href="lib/zenburn.css">
 
 		<script type="text/javascript">
@@ -587,27 +610,27 @@ $ </span></code></pre>
 						<ul>
 							<li class="fragment">
 								Create repository
-								<pre class="bigger fragment"><code class="no-highlight" style="white-space: nowrap; overflow: scroll;">$ git init</code></pre>
+								<pre class="bigger fragment"><code class="no-highlight">$ git init</code></pre>
 							</li>
 							<li class="fragment">
 								Stage file
-								<pre class="bigger fragment"><code class="no-highlight" style="white-space: nowrap; overflow: scroll;">$ git add <em>file</em></code></pre>
+								<pre class="bigger fragment"><code class="no-highlight">$ git add <em>file</em></code></pre>
 							</li>
 							<li class="fragment">
 								Unstage file
-								<pre class="bigger fragment"><code class="no-highlight" style="white-space: nowrap; overflow: scroll;">$ git reset <em>file</em></code></pre>
+								<pre class="bigger fragment"><code class="no-highlight">$ git reset <em>file</em></code></pre>
 							</li>
 							<li class="fragment">
 								Commit staged changes
-								<pre class="bigger fragment"><code class="no-highlight" style="white-space: nowrap; overflow: scroll;">$ git commit -m '<em>message</em>'</code></pre>
+								<pre class="bigger fragment"><code class="no-highlight">$ git commit -m '<em>message</em>'</code></pre>
 							</li>
 							<li class="fragment">
 								Check differences in a file <em>(compared to repository)</em>
-								<pre class="bigger fragment"><code class="no-highlight" style="white-space: nowrap; overflow: scroll;">$ git diff <em>file</em></code></pre>
+								<pre class="bigger fragment"><code class="no-highlight">$ git diff <em>file</em></code></pre>
 							</li>
 							<li class="fragment">
 								Check commit log <em>(using our alias)</em>
-								<pre class="bigger fragment"><code class="no-highlight" style="white-space: nowrap; overflow: scroll;">$ git lg</code></pre>
+								<pre class="bigger fragment"><code class="no-highlight">$ git lg</code></pre>
 							</li>
 						</ul>
 					</section>
@@ -619,6 +642,159 @@ $ </span></code></pre>
 						<h2>Don't lose your HEAD!</h2>
 						<p style="margin-top: 1.2em;"><img src="assets/xx/futurama-head-museum.jpg" width="500" alt="" class="noborder" /></p>
 						<q>Welcome to the Head Museum. I'm Leonard Nimoy.</q>
+					</section>
+
+					<section>
+						<h2>Commit history</h2>
+						<ul>
+							<li class="fragment">
+								The entire commit history can be visualized as a timeline
+							</li>
+						</ul>
+						<figure class="fragment">
+							<img src="assets/xx/git-timeline.png" alt="" title="" width="700" />
+						</figure>
+
+						<ul class="fragment">
+							<li>
+								Such a timeline is called a <strong>branch</strong>
+								<ul>
+									<li class="fragment">More than one branch can exist <em>(see further)</em></li>
+									<li class="fragment">The default branch is called the <strong>master</strong></li>
+								</ul>
+							</li>
+						</ul>
+						<figure class="fragment">
+							<img src="assets/xx/git-timeline-master.png" alt="" title="" width="700" />
+						</figure>
+					</section>
+
+					<section>
+						<h2>HEAD</h2>
+						<ul>
+							<li class="fragment">
+								The <strong>HEAD</strong> is a pointer pointing towards the current checked out <em>(active)</em> commit
+							</li>
+						</ul>
+						<figure class="fragment">
+							<img src="assets/xx/git-timeline-master-head.png" alt="" title="" width="700" />
+						</figure>
+					</section>
+
+					<section>
+						<h2>Moving the HEAD</h2>
+						<ul>
+							<li class="fragment">
+								The <strong>HEAD</strong> can be moved by <strong>checking out</strong> a commit
+								<pre class="bigger fragment"><code class="no-highlight" style="max-height: 380px; overflow: scroll;"><span style="opacity: 0.5;">bramus in ~/Kaho/git-demo on master</span>
+$ <span class="fragment" style="white-space: nowrap;">git lg</span>
+<span class="fragment">* <span style="color: #F55;">c53f9b6</span> - <span style="color: #FF5;">(HEAD, master)</span> Hello <span style="color: #5F5;">(15 hours ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
+* <span style="color: #F55;">1d7a184</span> - Deleted test2.txt <span style="color: #5F5;">(16 hours ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
+* <span style="color: #F55;">f1c6883</span> - Start tracking test2 <span style="color: #5F5;">(17 hours ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
+* <span style="color: #F55;">9c43f96</span> - Start tracking test.txt <span style="color: #5F5;">(22 hours ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
+
+<span style="opacity: 0.5;">bramus in ~/Kaho/git-demo on master</span>
+$ </span><span class="fragment" style="white-space: nowrap;">git checkout 1d7a184</span>
+<span class="fragment">Note: checking out '1d7a184'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by performing another checkout.
+
+HEAD is now at 1d7a184... Deleted test2.txt
+
+<span style="opacity: 0.5;">bramus in ~/Kaho/git-demo on (no branch)</span>
+$ <span class="fragment" style="white-space: nowrap;">git lg</span>
+<span class="fragment">* <span style="color: #F55;">1d7a184</span> - <span style="color: #FF5;">(HEAD)</span> Deleted test2.txt <span style="color: #5F5;">(16 hours ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
+* <span style="color: #F55;">f1c6883</span> - Start tracking test2 <span style="color: #5F5;">(17 hours ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
+* <span style="color: #F55;">9c43f96</span> - Start tracking test.txt <span style="color: #5F5;">(22 hours ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
+
+<span style="opacity: 0.5;">bramus in ~/Kaho/git-demo on master</span>
+$ <span class="fragment" style="white-space: nowrap;">git checkout f1c6883</span>
+<span class="fragment">Previous HEAD position was 1d7a184... Deleted test2.txt
+HEAD is now at f1c6883... Start tracking test2
+
+<span style="opacity: 0.5;">bramus in ~/Kaho/git-demo on (no branch)</span>
+$ <span class="fragment" style="white-space: nowrap;">git lg</span>
+<span class="fragment">* <span style="color: #F55;">f1c6883</span> - <span style="color: #FF5;">(HEAD)</span> Start tracking test2 <span style="color: #5F5;">(17 hours ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
+* <span style="color: #F55;">9c43f96</span> - Start tracking test.txt <span style="color: #5F5;">(22 hours ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
+
+<span style="opacity: 0.5;">bramus in ~/Kaho/git-demo on master</span>
+$  <span class="fragment" style="white-space: nowrap;">git checkout master</span>
+<span class="fragment">Previous HEAD position was f1c6883... Start tracking test2
+Switched to branch 'master'
+
+<span style="opacity: 0.5;">bramus in ~/Kaho/git-demo on master</span>
+$ <span class="fragment" style="white-space: nowrap;">git lg</span>
+<span class="fragment">* <span style="color: #F55;">c53f9b6</span> - <span style="color: #FF5;">(HEAD, master)</span> Hello <span style="color: #5F5;">(15 hours ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
+* <span style="color: #F55;">1d7a184</span> - Deleted test2.txt <span style="color: #5F5;">(16 hours ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
+* <span style="color: #F55;">f1c6883</span> - Start tracking test2 <span style="color: #5F5;">(17 hours ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
+* <span style="color: #F55;">9c43f96</span> - Start tracking test.txt <span style="color: #5F5;">(22 hours ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
+
+<span style="opacity: 0.5;">bramus in ~/Kaho/git-demo on master</span>
+$ </span></span></code></pre>
+								<ul>
+									<li class="fragment">
+										When checking out a commit the files in your working directory change to the state of the selected commit
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Visualization</h2>
+						<figure class="fragment zoomable-15">
+							<img src="assets/xx/git-movinghead-1.png" width="450" alt="" class="noborder" /><br />
+							<img src="assets/xx/git-movinghead-2.png" width="450" alt="" class="noborder" /><br />
+							<img src="assets/xx/git-movinghead-3.png" width="450" alt="" class="noborder" />
+							<figcaption>Visual representation of moving the <code>HEAD</code> using <code>git checkout</code></figcaption>
+						</figure>
+					</section>
+
+					<section>
+						<h2>Unstaging revisited</h2>
+
+						<ul>
+							<li class="fragment">
+								Unstage one file
+								<pre class="bigger"><code class="no-highlight">$ git reset <em>filename</em></code></pre>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Unstage all files
+								<pre class="bigger"><code class="no-highlight">$ git reset HEAD</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Discarding changes</h2>
+
+						<ul>
+							<li class="fragment">
+								Unstaged changes can be discarded
+								<pre class="bigger"><code class="no-highlight">$ git checkout -- <em>filename</em></code></pre>
+								<ul class="fragment">
+									<li>The selected file will go back to the last committed state</li>
+								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 0.5em;">
+								Unstage all + discard all changes
+								<pre class="bigger"><code class="no-highlight">$ git reset HEAD --hard</code></pre>
+								<ul>
+									<li class="fragment">The <em>entire working directory</em> will go back to the last committed state</li>
+									<li class="fragment">Cannot be undone (!!)</li>
+								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 0.5em;">
+								Unstage all + stash all changes
+								<pre class="bigger"><code class="no-highlight">$ git stash</code></pre>
+								<ul>
+									<li class="fragment">The <em>entire working directory</em> will go back to the last committed state</li>
+									<li class="fragment">Can be undone as the state is saved in a <strong>stash</strong> <small><a href="http://git-scm.com/book/en/Git-Tools-Stashing">&#9873;</a></small></li>
+								</ul>
+							</li>
+						</ul>
 					</section>
 				</section>
 
