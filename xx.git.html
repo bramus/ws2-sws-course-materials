@@ -787,8 +787,167 @@ $ </span></span></code></pre>
 				<section>
 					<section>
 						<h2>Remotes</h2>
-						<p><img src="assets/xx/....jpg" width="447" alt="" class="noborder" /><!-- Attack of the killer app S06E03 --></p>
-						<q>Well, let's at least throw this TV away, the batteries in the remote are gettin' low.</q>
+						<p><img src="assets/xx/futurama-zoidberg-entirely-scared.jpg" width="580" alt="" class="noborder" /><!-- Attack of the killer app S06E03 --></p>
+						<q>Well, let's at least throw this TV away,<br />the batteries in the remote are gettin' low.</q>
+					</section>
+
+					<section>
+						<h2>Remotes</h2>
+
+						<ul style="margin-bottom: 0;">
+							<li class="fragment">
+								A repository can be synched with a server
+								<ul>
+									<li class="fragment">In Git this is called a <strong>remote</strong></li>
+									<li class="fragment">A remote is identified by a name, defaulting to <strong>origin</strong>, and a URL</li>
+									<li class="fragment">Keep a local copy in sync with the remote by <strong>pushing</strong> and <strong>pulling</strong></li>
+									<li class="fragment">Several users can push/pull to/from the same remote</li>
+									<li class="fragment">Possible to define more than one remote <em>(distributed)</em></li>
+								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Visualization
+							</li>
+						</ul>
+						<figure class="fragment zoomable-15">
+							<img src="assets/xx/git-remote.png" width="800" alt="" class="noborder" /><br />
+							<figcaption>Visual representation of a Git remote</figcaption>
+						</figure>
+					</section>
+
+					<section>
+						<h2>Setting up shop (1)</h2>
+
+						<ul>
+							<li class="fragment">
+								If a local copy of a repository doesn't exist yet
+								<ul>
+									<li class="fragment">
+										Clone the repository locally using <code>git clone <em>url</em></code>
+									</li>
+									<li class="fragment">
+										A local copy of the master + <em>the entire commit history</em> is created
+									</li>
+								</ul>
+								<pre class="bigger fragment"><code class="no-highlight" style="max-height: 300px; overflow: scroll;"><span style="opacity: 0.5;">bramus in ~/Kaho</span>
+$ <span class="fragment">git clone git@github.com:fabpot/Silex.git</span>
+<span class="fragment">Cloning into 'Silex'...
+remote: Counting objects: 6612, done.
+remote: Compressing objects: 100% (1908/1908), done.
+remote: Total 6612 (delta 4225), reused 6317 (delta 4008)
+Receiving objects: 100% (6612/6612), 1.28 MiB | 176 KiB/s, done.
+Resolving deltas: 100% (4225/4225), done.
+
+<span style="opacity: 0.5;">bramus in ~/Kaho</span>
+$ </span><span class="fragment">cd Silex
+
+<span style="opacity: 0.5;">bramus in ~/Kaho/Silex on master</span>
+$ </span><span class="fragment">git log --oneline</span>
+<span class="fragment"><span style="color: #FF5;">59e7dbd</span> merged branch davedevelopment/add-doc-info-to-docs (PR #647)
+<span style="color: #FF5;">6a4fffe</span> Added a note about writing documentation
+<span style="color: #FF5;">8e6d30a</span> merged branch davedevelopment/form-extension-points (PR #553)
+<span style="color: #FF5;">7c38c9a</span> Add services allowing for form type extensions and guessers
+<span style="color: #FF5;">fd3ba62</span> merged branch GromNaN/remember-me (PR #645)
+<span style="color: #FF5;">adc172b</span> Add support for remember-me with RememberMeServiceProvider
+<span style="color: #FF5;">fcd93b3</span> added a note about all possible options for the session (refs #633)
+<span style="color: #FF5;">a31&hellip;</span>
+&hellip;
+
+<span style="opacity: 0.5;">bramus in ~/Kaho/Silex on master</span>
+$ </span></code></pre>
+								<ul>
+									<li class="fragment">Clone a repo in the current directory using <code>git clone <em>url</em> .</code></li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Setting up shop (2)</h2>
+
+						<ul>
+							<li class="fragment">
+								If a local copy of a repository already exists
+								<ul>
+									<li class="fragment">
+										Tell the repo where to find the remote: <code>git remote add <em>name</em> <em>url</em></code>
+									</li>
+									<li class="fragment">
+										If the remote repository is empty, push your master to it
+									</li>
+								</ul>
+								<pre class="bigger fragment"><code class="no-highlight" style="max-height: 300px; overflow: scroll;"><span style="opacity: 0.5;">bramus in ~/Kaho/git-demo on master</span>
+$ <span class="fragment">git remote add origin git@github.com:bramus/git-demo.git</span>
+<span class="fragment">
+<span style="opacity: 0.5;">bramus in ~/Kaho/git-demo on master</span>
+$ </span><span class="fragment">git push origin master</span>
+<span class="fragment">Counting objects: 9, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (5/5), done.
+Writing objects: 100% (9/9), 705 bytes, done.
+Total 9 (delta 1), reused 0 (delta 0)
+To git@github.com:bramus/git-demo.git
+ * [new branch]      master -> master
+
+<span style="opacity: 0.5;">bramus in ~/Kaho/git-demo on master</span>
+$ </span></code></pre>
+								<ul>
+									<li class="fragment">
+										If the remote repository is not empty &hellip; <em>(see further)</em>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Push &amp; Pull</h2>
+						<ul>
+							<li class="fragment">
+								Publish locally committed changes
+								<pre class="bigger"><code class="no-highlight">$ git push origin master</code></pre>
+								<ul class="fragment">
+									<li>Use <code>git push</code> and it'll default to <code>origin</code> and <code>master</code></li>
+								</ul>
+							</li>
+							<li class="fragment">
+								Pull changes from the server
+								<pre class="bigger"><code class="no-highlight">$ git pull</code></pre>
+								<ul class="fragment">
+									<li>
+										Will fetch the changes of the <em>tracked branch</em> and merge them into the <em>locally active branch</em>
+										<ul>
+											<li>In this example: <code>origin/master</code> &rarr; <code>master</code></li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Inspecting remotes</h2>
+						<ul>
+							<li class="fragment">
+								List all remotes
+								<pre class="bigger fragment"><code class="no-highlight" style="max-height: 300px; overflow: scroll;"><span style="opacity: 0.5;">bramus in ~/Kaho/git-demo on master</span>
+$ <span class="fragment" style="color: #FFF;">git remote show</span>
+<span class="fragment">origin</span></code></pre>
+							</li>
+							<li class="fragment">
+								Inspect one remote
+								<pre class="bigger fragment"><code class="no-highlight" style="max-height: 300px; overflow: scroll;"><span style="opacity: 0.5;">bramus in ~/Kaho/git-demo on master</span>
+$ <span class="fragment" style="color: #FFF;">git remote show origin</span>
+<span class="fragment">* remote origin
+  Fetch URL: git@github.com:bramus/git-demo.git
+  Push  URL: git@github.com:bramus/git-demo.git
+  HEAD branch: master
+  Remote branch:
+    master tracked
+  Local ref configured for 'git push':
+    master pushes to master (up to date)</span></code></pre>
+							</li>
+						</ul>
 					</section>
 				</section>
 
@@ -840,7 +999,10 @@ $ </span></span></code></pre>
 					<section>
 						<h2>Sources</h2>
 						<ul>
-							<li><a href="#">&hellip;</a></li>
+							<li><a href="http://learn.github.com/">http://learn.github.com/</a></li>
+							<li><a href="https://julianscorner.com/wiki/programming/git/visualguide">https://julianscorner.com/wiki/programming/git/visualguide</a></li>
+							<li><a href="http://irradiated.net/articles/2010/git-cheat-sheet-overview-tutorial/">http://irradiated.net/articles/2010/git-cheat-sheet-overview-tutorial/</a></li>
+							<li><a href="http://learn.github.com/">http://learn.github.com/</a></li>
 						</ul>
 					</section>
 				</section>
