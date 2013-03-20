@@ -1387,6 +1387,26 @@ $ </span></code></pre>
 					</section>
 
 					<section>
+						<h2>Rebase conflicts</h2>
+						<ul>
+							<li class="fragment">
+								About the same scenario as when a <em>merge conflict</em> happens
+								<ul>
+									<li class="fragment">Fix the conflict manually</li>
+									<li class="fragment">
+										Add the fixed file
+										<pre class="bigger"><code class="no-highlight">$ git add <em>conflictedfile</em></code></pre>
+									</li>
+									<li class="fragment">
+										Continue the rebase
+										<pre class="bigger"><code class="no-highlight">$ git rebase --continue</code></pre>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
 						<h2>Publishing/Pulling branches</h2>
 						<ul>
 							<li class="fragment">
@@ -1400,6 +1420,10 @@ $ </span></code></pre>
 							<li class="fragment" style="margin-top: 1em;">
 								Create local branch based on remote branch
 								<pre class="bigger"><code class="no-highlight">$ git checkout -b <em>localbranch</em> remote/<em>remotebranch</em></code></pre>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Update remote branch list
+								<pre class="bigger"><code class="no-highlight">$ git remote update</code></pre>
 							</li>
 						</ul>
 					</section>
