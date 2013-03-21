@@ -1518,7 +1518,7 @@ $ </span></code></pre>
 							<li class="fragment">
 								Don't ever develop on the <code>master</code>, but on <em>featurebranches</em>
 								<ul>
-									<li class="fragment">In case that happens use <code>git pull --rebase</code> to minimize the situation. From then on create a featurebranch and continue</li>
+									<li class="fragment">In case that happens use <code>git pull --rebase</code> to minimize the situation and keep the master clean (<a href="http://cdn.kentnguyen.com/wp-content/uploads/2012/01/git_rebase.png">#</a>). From then on create a featurebranch and continue</li>
 								</ul>
 							</li>
 							<li class="fragment" style="margin-top: 1em;">The <code>master</code> must at all times contain deployable code </li>
@@ -1555,6 +1555,140 @@ $ </span></code></pre>
 						<h2 style="visibility: hidden;">Github</h2>
 						<p style="margin-top: 1.5em;"><img src="assets/xx/github.png" width="800" alt="" class="noborder" /></p>
 					</section>
+
+					<section>
+						<h2>Github</h2>
+
+						<figure><img src="assets/xx/github-screenshot.png" alt="" title="" width="700" class="noborder" /></figure>
+
+					</section>
+
+					<section>
+						<h2>Github</h2>
+
+						<ul>
+							<li class="fragment">
+								Remote Git server with nifty web interface
+								<ul>
+									<li>Browse branches</li>
+									<li>Inspect commmits (<a href="ttps://github.com/bramus/ws2-sws-course-materials/commit/01a54d00633ca8627c717bdec442d322e45e67e8">example</a>)</li>
+								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Repositories
+								<ul>
+									<li>Public / Private (paid account)</li>
+								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Embraced by the open-source community
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Graphical client (limited to one remote)
+								<ul>
+									<li>Both <a href="http://mac.github.com/">Mac</a> &amp; <a href="http://windows.github.com/">Windows</a></li>
+									<li>No graphical way to rebase though</li>
+								</ul>
+							</li>
+						</ul>
+
+					</section>
+
+					<section>
+						<h2>Forking</h2>
+
+						<blockquote class="fragment" style="margin-top: 1em;">If you don't like my code, Fork off!</blockquote>
+
+						<ul>
+							<li class="fragment" style="margin-top: 1em;">
+								Clone a repo from one github account to an other one
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Create forks to develop your own features/your own version of the project
+								<ul>
+									<li class="fragment">Develop on a local <code>featurebranch</code></li>
+									<li class="fragment">Publish <code>featurebranch</code> when ready to your own github remote</li>
+									<li class="fragment">Do a <a href="https://help.github.com/articles/using-pull-requests">pull request</a> to see your changes implemented in the original project repo</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Forking Flow</h2>
+
+						<pre class="bigger"><code class="no-highlight" style="max-height: 380px; overflow: scroll;"><span class="fragment"># 1. Create a fork on GitHub
+<span style="opacity: 0.5;">     e.g. clone fabpot/Silex to bramus/Silex</span></span>
+
+<span class="fragment"># 2. Clone your repo locally
+<span style="opacity: 0.5;">     $ git clone git@github.com:bramus/Silex.git</span></span>
+
+<span class="fragment"># 3. Create a featurebranch based on the master
+<span style="opacity: 0.5;">     $ git checkout -b featurebranch</span></span>
+
+<span class="fragment"># 4. Develop, stage, and commit your feature on the featurebranch.
+     When finished continue to step 5</span>
+
+<span class="fragment"># 5. Publish your featurebranch on Github
+<span style="opacity: 0.5;">     $ git push origin <em>localbranch</em>:<em>remotebranch</em></span></span>
+
+<span class="fragment"># 6. Do a pull request via Github and await merging</span>
+
+<span class="fragment"># 7. Rinse. Repeat.
+<span style="opacity: 0.5;">     Make sure your master is in sync with the original master one!
+     (add the original repo as remote and `git pull original master`)</span></span></code></pre>
+					</section>
+
+					<section>
+						<h2>Merging Pull Requests</h2>
+						<ul>
+							<li class="fragment">Via the Github interface it's possitle to merge pull requests automatically</li>
+							<li class="fragment">Manual process</li>
+						</ul>
+						<pre class="bigger fragment"><code class="no-highlight" style="max-height: 380px; overflow: scroll;"><span class="fragment"># 1. Checkout your master branch
+<span style="opacity: 0.5;">     $ git checkout master</span></span>
+
+<span class="fragment"># 2. Add a new remote named 'otherdude'
+<span style="opacity: 0.5;">     $ git remote add otherdude git://github.com/otherdude/Project.git</span></span>
+
+<span class="fragment"># 3. Pull in (but don't check out) all the commits from the 'otherdude' remote
+<span style="opacity: 0.5;">     $ git fetch otherdude</span></span>
+
+<span class="fragment"># 4. Merge 'otherdude/featurebranch' into your master
+<span style="opacity: 0.5;">     $ git merge otherdude/featurebranch</span></span>
+
+<span class="fragment"># 5. Push your newly-merged branch back to GitHub
+<span style="opacity: 0.5;">     $ git push origin master</span></span></code></pre>
+					</section>
+
+					<section>
+						<h2>git.ikdoeict.be</h2>
+						<ul>
+							<li class="fragment">
+								Our own private Github
+								<ul>
+									<li>
+										Log on to <a href="https://git.ikdoeict.be">the web interface</a> using <code>firstname.lastname@kahosl.be</code>
+									</li>
+									<li>
+										Note: pushing/pulling uses <code>https://</code>, not <code>git://</code>
+										<ul>
+											<li>
+												Login is not your KaHo account! Check Preferences &gt; HTTP Password
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+						</ul>
+						<figure class="fragment zoomable-20">
+							<img src="assets/xx/git-ikdoeict-be-1.png" width="250" alt="" class="noborder" />
+							<img src="assets/xx/git-ikdoeict-be-2.png" width="250" alt="" class="noborder" />
+							<img src="assets/xx/git-ikdoeict-be-3.png" width="250" alt="" class="noborder" />
+							<figcaption>Screenshots of git.ikdoeict.be</figcaption>
+						</figure>
+					</section>
+
 				</section>
 
 				<section>
@@ -1741,6 +1875,12 @@ $ </span></code></pre>
 							</li>
 							<li>
 								Cherry Picking
+							</li>
+							<li>
+								Continuous Integration
+							</li>
+							<li>
+								Commit hooks
 							</li>
 							<li>
 								&hellip;
