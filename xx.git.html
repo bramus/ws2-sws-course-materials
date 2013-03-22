@@ -1622,7 +1622,7 @@ $ </span></code></pre>
 
 <span class="fragment"># 7. Rinse. Repeat.
 <span style="opacity: 0.75;">     Make sure your master is in sync with the original master one!
-     (add the original repo as remote and `git pull original master`)</span></span></code></pre>
+     (add the original repo as remote and `git fetch` and `git rebase original/master`)</span></span></code></pre>
 					</section>
 
 					<section>
@@ -1637,7 +1637,7 @@ $ </span></code></pre>
 <span class="fragment"># 2. Add a new remote named 'otherdude'
 <span style="opacity: 0.75;">     $ git remote add otherdude git://github.com/otherdude/Project.git</span></span>
 
-<span class="fragment"># 3. Pull in (but don't check out) all the commits from the 'otherdude' remote
+<span class="fragment"># 3. Fetch information about all branches on the 'otherdude' remote
 <span style="opacity: 0.75;">     $ git fetch otherdude</span></span>
 
 <span class="fragment"># 4. Merge 'otherdude/featurebranch' into your master
