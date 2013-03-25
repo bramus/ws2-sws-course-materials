@@ -19,6 +19,6 @@
 		<dd><a href="{{ user.url }}">{{ user.url }}</a></dd>
 		{% endif %}
 		<dt>Links</dt>
-		<dd><a href="{{ path('users') }}{{ user.id }}/links">{{ linkcount }} links posted</a></dd>
+		<dd><a href="{{ path('user.links', { id: user.id }) }}">{{ linkcount }} links posted</a></dd>
 	</dl>
 {% endblock %}

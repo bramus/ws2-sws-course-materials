@@ -8,11 +8,11 @@
 
 {# overwrite the pageContent block #}
 {% block pageContent %}
-	<p class="breadcrumb"><a href="{{ path('home') }}">Linkdumpr</a> &raquo; <a href="{{ path('users') }}">Users</a> &raquo; <a href="{{ path('users') }}{{ user.id }}">{{ user.firstname }} {{ user.lastname }}</a> &raquo; Links</p>
+	<p class="breadcrumb"><a href="{{ path('home') }}">Linkdumpr</a> &raquo; <a href="{{ path('users') }}">Users</a> &raquo; <a href="{{ path('user.detail', { id: user.id }) }}">{{ user.firstname }} {{ user.lastname }}</a> &raquo; Links</p>
 	{% if links %}
 	<ul class="links">
 		{% for link in links %}
-		<li><a href="{{ path('links') }}{{ link.id }}" title="{{ link.url }}">{{ link.title }}</a></li>
+		<li><a href="{{ path('link.detail', { id: link.id }) }}" title="{{ link.url }}">{{ link.title }}</a></li>
 		{% endfor %}
 	</ul>
 	{% else %}

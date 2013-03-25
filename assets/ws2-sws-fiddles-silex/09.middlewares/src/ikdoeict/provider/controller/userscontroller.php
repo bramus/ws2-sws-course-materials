@@ -11,8 +11,8 @@ class UsersController implements ControllerProviderInterface {
 	public function connect(Application $app) {
 		$controllers = $app['controllers_factory'];
 		$controllers->get('/', array($this, 'overview'))->bind('users');
-		$controllers->get('/{id}', array($this, 'detail'))->assert('id', '\d+');
-		$controllers->get('/{id}/links', array($this, 'links'))->assert('id', '\d+');
+		$controllers->get('/{id}', array($this, 'detail'))->assert('id', '\d+')->bind('user.detail');
+		$controllers->get('/{id}/links', array($this, 'links'))->assert('id', '\d+')->bind('user.links');
 		return $controllers;
 	}
 
