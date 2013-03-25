@@ -1,0 +1,36 @@
+{# extend the parent tpl #}
+{% extends 'layout.twig' %}
+
+
+{# set the pagetitle in the parent tpl #}
+{% set pageTitle = 'Linkdumpr &raquo; Links' %}
+
+{% block pageContent %}
+	<p class="breadcrumb"><a href="{{ path('home') }}">Linkdumpr</a> &raquo; Links</p>
+	<aside>
+		<form action="{{ path('links') }}" method="post" {{ form_enctype(addlinkform) }} novalidate="novalidate">{# disable HTML5 formchecking #}
+			<h1>Add a link</h1>
+			{{ form_errors(addlinkform) }}
+			{{ form_widget(addlinkform) }}
+			{#
+				{{ form_errors(addlinkform) }}
+				{{ form_row(addlinkform.title) }}
+				{{ form_row(addlinkform.url) }}
+				{{ form_widget(addlinkform._token) }}
+			#}
+			{# {{ form_rest(addlinkform) }} #}
+			<input type="submit" name="submit" />
+		</form>
+	</aside>
+	<section>
+		{% if links %}
+		<ul class="links">
+			{% for link in links %}
+			<li><a href="{{ path('link.detail', { id: link.id }) }}" title="{{ link.url }}">{{ link.title }}</a> &mdash; by <a href="{{ path('user.detail', { id: link.added_by }) }}">{{ link.firstname }}</a></li>
+			{% endfor %}
+		</ul>
+		{% else %}
+		<p>No links to show!</p>
+		{% endif %}
+	</section>
+{% endblock %}

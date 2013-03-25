@@ -10,7 +10,7 @@
 	{% if links %}
 	<ul class="links">
 		{% for link in links %}
-		<li><a href="{{ path('links') }}{{ link.id }}" title="{{ link.url }}">{{ link.title }}</a> &mdash; by <a href="{{ path('users') }}{{ link.added_by }}">{{ link.firstname }}</a></li>
+		<li><a href="{{ path('link.detail', { id: link.id }) }}" title="{{ link.url }}">{{ link.title }}</a> &mdash; by <a href="{{ path('user.detail', { id: link.added_by }) }}">{{ link.firstname }}</a></li>
 		{% endfor %}
 	</ul>
 	{% else %}
