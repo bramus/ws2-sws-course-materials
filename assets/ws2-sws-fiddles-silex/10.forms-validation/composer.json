@@ -1,0 +1,19 @@
+{
+	"require": {
+		"silex/silex": "1.0.*@dev",
+		"twig/twig": "~1.2",
+		"doctrine/dbal": "~2.2",
+		"knplabs/repository-service-provider": "dev-master",
+		"symfony/twig-bridge": "~2.1",
+		"monolog/monolog": "~1.0",
+		"symfony/form": "~2.1",
+		"symfony/validator": "~2.1",
+        "symfony/config": "~2.1",
+        "symfony/translation": "~2.1"
+	},
+	"autoload": {
+		"psr-0": {
+			"Ikdoeict": "src/"
+		}
+	}
+}
