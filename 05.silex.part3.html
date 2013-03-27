@@ -1,0 +1,1068 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Webscripting2 &mdash; Serverside Webscripting &mdash; 05.silex.part3</title>
+
+		<meta name="description" content="Webscripting2 &mdash; Serverside Webscripting &mdash; 05.silex.part3">
+		<meta name="author" content="Bram(us) Van Damme - ikdoeict.be">
+
+		<link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/main.css" media="screen">
+		<link rel="stylesheet" href="css/print.css" media="print">
+
+		<style>
+			.constraints li {
+				width: 25%;
+				float: left;
+			}
+		</style>
+
+		<link rel="stylesheet" href="lib/zenburn.css">
+	</head>
+
+	<body>
+
+		<div id="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+
+				<!-- Title -->
+				<section>
+					<section>
+						<h3 class="inverted">Serverside Webscripting <small>[JLW280]</small></h3>
+						<h1>05.silex.part3</h1>
+
+						<footer>
+							<em><a href="http://www.ikdoeict.be/">ikdoeict.be</a> &mdash; <a href="mailto:bramus.vandamme@kahosl.be">bramus.vandamme@kahosl.be</a></em>
+						</footer>
+						<script>
+							// Delicously hacky. Look away.
+							if( navigator.userAgent.match( /(iPhone|iPad|iPod|Android)/i ) )
+							document.write( '<p style="color: rgba(0,0,0,0.3); text-shadow: none;">('+'Tap to navigate'+')</p>' );
+						</script>
+					</section>
+				</section>
+
+
+
+
+				<!-- Built-in Service Provider: UrlGeneratorServiceProvider -->
+				<section>
+					<section>
+						<h2>Built-in Service Provider:<br />UrlGeneratorServiceProvider</h2>
+
+						<p><img src="assets/05/futurama_bender_terminator.jpg" width="580" alt="" /></p>
+						<q>001100010010011110100001101101110011</q>
+					</section>
+
+					<section>
+						<h2>UrlGeneratorServiceProvider</h2>
+						<ul>
+							<li class="fragment">
+								Silex Routes can be named
+								<pre class="bigger"><code class="language-php">$app->get('/', function () {
+	return 'welcome to the homepage';
+})->bind('homepage');
+
+$app->get('/hello/{name}', function ($name) {
+	return "Hello $name!";
+})->bind('hello');</code></pre>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">The UrlGenerator Service Provider<small><a href="http://silex.sensiolabs.org/doc/providers/url_generator.html">&#9873;</a></small> allows you to reference those routes in your App and via Twig</li>
+						</ul>
+
+					</section>
+
+					<section>
+						<h2>Inclusion</h2>
+						<ul>
+							<li class="fragment">
+								If you want to use the shorthand functions within Twig templates, require <code>symfony/twig-bridge</code> in <code>composer.json</code>
+								<pre class="bigger"><code>&quot;require&quot;: {
+	&quot;symfony/twig-bridge&quot;: &quot;2.*&quot;
+}</code></pre>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Register the service in <code>bootstrap.php</code>
+								<pre class="bigger"><code class="language-php">$app->register(new Silex\Provider\UrlGeneratorServiceProvider());</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Usage</h2>
+						<ul>
+							<li class="fragment">
+								In PHP
+								<pre class="bigger"><code class="language-php">$app['url_generator']->generate('homepage');</code></pre>
+								<pre class="bigger"><code class="language-php">$app['url_generator']->generate('hello', array('name' => 'Bramus')); 
+// -&gt; `/hello/Bramus`</code></pre>
+							</li>
+							<li class="fragment">
+								In Twig
+								<pre class="bigger"><code class="no-highlight">{{ app.url_generator.generate('homepage') }}</code></pre>
+							</li>
+							<li class="fragment">
+								In Twig, using <code>twig-bridge</code>
+								<pre class="bigger"><code class="no-highlight">{{ path('homepage') }} <span style="opacity: 0.75">{# -&gt; `/` #}</span></code></pre>
+								<pre class="bigger"><code class="no-highlight">{{ url('homepage') }} <span style="opacity: 0.75">{# -&gt; `http://example.org/` #}</span></code></pre>
+								<pre class="bigger"><code class="no-highlight">{{ path('hello', {name: 'Bramus'}) }} <span style="opacity: 0.75">{# -&gt; `/hello/Bramus` #}</span></code></pre>
+								<pre class="bigger"><code class="no-highlight" style="white-space: nowrap; overflow: hidden;">{{ url('hello', {name: 'Bramus'}) }} <span style="opacity: 0.75">{# -&gt; `http://example.org/hello/Bramus` #}</span></code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Sidenote: Static pages</h2>
+						<ul>
+							<li class="fragment">
+								Writing controllers for static pages is overkill. Here's a simple way to do it (in <code>app.php</code>)
+							</li>
+						</ul>
+						<pre class="bigger fragment"><code class="language-php">$pages = array(
+		'/' =&gt; 'home',
+		'/about' =&gt; 'about'
+	);
+	foreach ($pages as $route =&gt; $view) {
+		$app-&gt;get($route, function () use ($app, $view) {
+			return $app['twig']->render('static/' . $view . '.twig');
+		})-&gt;bind($view);
+	}
+}</code></pre>
+						<footer class="fragment">Place static page templates in <code>/src/views/static/</code></footer>
+					</section>
+
+					<section>
+						<h2>Example</h2>
+
+						<figure><img src="assets/05/example-08.png" alt="" title="" width="580" class="noborder" /></figure>
+
+						<p style="font-size: 75%">Let's take a look at <code>assets/ws2-sws-fiddles-silex/08.static-pages/</code> <a href="assets/ws2-sws-fiddles-silex/08.static-pages/">&rarr;</a></p>
+					</section>
+
+					<section>
+						<h2>Example Recap</h2>
+
+						<ul>
+							<li class="fragment">
+								Place static page templates in <code>/src/views/static/</code>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Give routes a name using <code>bind()</code> within the <code>connect()</code> function of the controller
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								No need for <code>{{ app.request.baseUrl }}</code> in Twig anymore as <code>{{ path('links') }}</code> includes it
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Extract parts of the URL in Twig using <code>app.request.getPathInfo()|split('/')[1]</code>
+							</li>
+						</ul>
+					</section>
+
+				</section>
+
+
+
+
+				<!-- Built-in Service Provider: MonologServiceProvider -->
+				<section>
+					<section>
+						<h2>Built-in Service Provider:<br />MonologServiceProvider</h2>
+
+						<p><img src="assets/05/futurama-control.png" width="580" height="280" alt="" /></p>
+						<q>Captain's log: We have lost control of the ship.<br />Adddendum: Whoooaaaa!</q>
+					</section>
+
+					<section>
+						<h2>MonologServiceProvider</h2>
+						<ul>
+							<li class="fragment">The MonologServiceProvider<small><a href="http://silex.sensiolabs.org/doc/providers/monolog.html">&#9873;</a></small> provides a default logging mechanism through the <a href="https://github.com/Seldaek/monolog">Monolog library</a>.</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Monolog log levels
+								<div class="columns" style="font-size: 80%">
+									<div class="column column-12">
+										<ul>
+											<li>
+												<code>DEBUG</code> <em style="font-size: 80%">(100)</em>
+												<ul><li>Detailed debug information</li></ul>
+											</li>
+											<li>
+												<code>INFO</code> <em style="font-size: 80%">(200)</em>
+												<ul><li>Interesting events.<br />e.g. User logs in, SQL logs</li></ul>
+											</li>
+											<li>
+												<code>NOTICE</code> <em style="font-size: 80%">(250)</em>
+												<ul><li>Normal but significant events</li></ul>
+											</li>
+											<li>
+												<code>WARNING</code> <em style="font-size: 80%">(300)</em>
+												<ul><li>Exceptional occurrences that are not errors.<br />e.g. Use of deprecated APIs</li></ul>
+											</li>
+										</ul>
+									</div>
+									<div class="column column-12">
+										<ul>
+											<li>
+												<code>ERROR</code> <em style="font-size: 80%">(400)</em>
+												<ul><li>Runtime errs that don't need immediate action</li></ul>
+											</li>
+											<li>
+												<code>CRITICAL</code> <em style="font-size: 80%">(500)</em>
+												<ul><li>Critical conditions.<br />e.g. unexpected exception</li></ul>
+											</li>
+											<li>
+												<code>ALERT</code> <em style="font-size: 80%">(550)</em>
+												<ul><li>Action must be taken immediately.<br />e.g.database unavailable</li></ul>
+											</li>
+											<li>
+												<code>EMERGENCY</code> <em style="font-size: 80%">(600)</em>
+												<ul><li>Emergency: system is unusable</li></ul>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Inclusion</h2>
+						<ul>
+							<li class="fragment">
+								Require <code>monolog/monolog</code> in <code>composer.json</code>
+								<pre class="bigger"><code>&quot;require&quot;: {
+	&quot;monolog/monolog&quot;: &quot;>=1.0.0&quot;
+}</code></pre>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Register the service in <code>bootstrap.php</code>
+								<pre class="bigger"><code class="language-php">$app-&gt;register(new Silex\Provider\MonologServiceProvider(), array(
+	'monolog.logfile' =&gt; __DIR__ . '/development.log',
+));</code></pre>
+								<ul>
+									<li>
+										Registration parameters
+										<ul>
+											<li><code>monolog.logfile</code> &mdash; Location of logfile</li>
+											<li><code>monolog.level</code> <em>(optional)</em> &mdash; Minimum log level before event is written in log. Default: <code>Monolog\Logger::DEBUG</code></li>
+											<li><code>monolog.name</code> <em>(optional)</em> &mdash; Name of the monolog channel.<br />Default: <code>myapp</code></li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Usage</h2>
+						<ul>
+							<li class="fragment">
+								Log events through <code>$app['monolog']</code>
+								<pre class="bigger fragment"><code class="language-php">$app['monolog']-&gt;addDebug('Testing the Monolog logging.');</code></pre>
+								<pre class="bigger fragment"><code class="language-php">$app['monolog']-&gt;addInfo(sprintf('User &quot;%s&quot; registered.', $username));</code></pre>
+								<pre class="bigger fragment"><code class="language-php">$app['monolog']-&gt;addWarning('The use of global is deprecated');</code></pre>
+								<pre class="bigger fragment"><code class="language-php">$app['monolog']-&gt;addError('Could not update item in database');</code></pre>
+							</li>
+							<li class="fragment">
+								Sample output
+								<pre class="bigger fragment"><code class="no-highlight">[2013-03-25 15:12:55] myapp.DEBUG: Testing the Monolog logging.
+[2013-03-25 15:12:56] myapp.INFO: User &quot;Bramus&quot; registered.
+[2013-03-25 15:12:57] myapp.WARNING: The use of global is deprecated
+[2013-03-25 15:12:58] myapp.ERROR: Could not update item in database</code></pre>
+							</li>
+						</ul>
+					</section>
+
+				</section>
+
+
+
+
+				<!-- Middleware -->
+				<section>
+					<section>
+						<h2>Middlewares</h2>
+
+						<p><img src="assets/05/futurama-middle-of-nowhere.png" width="447" alt="" /></p>
+						<q>OK. We're in the middle of nowhere,<br />which is the safest part of nowhere.</q>
+					</section>
+
+					<section>
+						<h2>Middlewares</h2>
+
+						<ul>
+							<li class="fragment">
+								Silex apps are executed in different stages
+								<ul>
+									<li>Bootstrapping of the app</li>
+									<li>Execution of the controller</li>
+									<li>Request handling</li>
+									<li>Output return</li>
+									<li>Process termination</li>
+								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Middleware<small><a href="http://silex.sensiolabs.org/doc/middlewares.html">&#9873;</a></small> = code executed in between the stages
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Middlewares can be global, or only for a specific route
+								<ul>
+									<li>Application middleware</li>
+									<li>Route specific middleware</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Before Application Middleware</h2>
+
+						<blockquote class="fragment" style="width: 100%">A before application middleware allows you to tweak the Request before the controller is executed</blockquote>
+
+						<ul style="margin-top: 1em;">
+							<li class="fragment">
+								Example
+								<pre class="bigger"><code class="language-php" style="overflow: scroll;">$app-&gt;before(function (Request $request) use ($app) {
+	<span style="white-space: nowrap;">$app['twig']-&gt;addGlobal('first_url_part', explode('/', $request-&gt;getPathInfo())[1]);</span>
+});</code></pre>
+							</li>
+							<li class="fragment">
+								By default, the middleware is run after the routing and the security. To let it execute earlier use
+								<pre class="bigger"><code class="language-php">$app-&gt;before(function (Request $request) use ($app) {
+	// ...
+}, Application::EARLY_EVENT);</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>After Application Middleware</h2>
+
+						<blockquote class="fragment" style="width: 100%">An after application middleware allows you to tweak the Response before it is sent to the client</blockquote>
+
+						<ul style="margin-top: 1em;">
+							<li class="fragment">
+								Example
+								<pre class="bigger"><code class="language-php">$app-&gt;after(function (Request $request) use ($app) {
+	// ...
+});</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Finish Application Middleware</h2>
+
+						<blockquote class="fragment" style="width: 100%">A finish application middleware allows you to execute tasks after the Response has been sent to the client (like sending emails or logging)</blockquote>
+
+						<ul style="margin-top: 1em;">
+							<li class="fragment">
+								Example
+								<pre class="bigger"><code class="language-php">$app-&gt;finish(function (Request $request, Response $response) {
+	// Warning: modifications to the Request or Response will be ignored
+});</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Example</h2>
+
+						<figure><img src="assets/05/example-09.png" alt="" title="" width="580" class="noborder" /></figure>
+
+						<p style="font-size: 75%">Let's take a look at <code>assets/ws2-sws-fiddles-silex/09.middlewares/</code> <a href="assets/ws2-sws-fiddles-silex/09.middlewares/">&rarr;</a></p>
+					</section>
+
+					<section>
+						<h2>Before Route Middleware</h2>
+
+						<blockquote class="fragment" style="width: 100%">A before route middleware is fired just before the route callback, but after the before application middlewares</blockquote>
+
+						<ul style="margin-top: 1em;">
+							<li class="fragment">
+								Example
+								<pre class="bigger"><code class="language-php" style="overflow: scroll;">$app->get('/somewhere', function () {
+	// ...
+})->before(function (Request $request) use ($app) {
+	// ...
+});</code></pre>
+							</li>
+							<li class="fragment">
+								Example <em>(using a controller)</em>
+								<pre class="bigger"><code class="language-php">public function connect(Application $app) {
+	return $app['controllers_factory']-&gt;get('/somewhere',
+	       array($this,'somewhere')-&gt;before(array($this,'check'));
+}
+
+public function check(Request $request, Application $app) { /* ... */ }</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>After Route Middleware</h2>
+
+						<blockquote class="fragment" style="width: 100%">An after route middleware is fired just after the route callback, but before the application its after application middlewares</blockquote>
+
+						<ul style="margin-top: 1em;">
+							<li class="fragment">
+								Example
+								<pre class="bigger"><code class="language-php">$app->get('/somewhere', function () {
+	// ...
+})->after(function (Request $request, Response $response) use ($app) {
+	// ...
+});</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Example</h2>
+
+						<p style="margin-top: 4.5em;"><em>See further ;-)</em></p>
+					</section>
+
+				</section>
+
+
+
+
+				<!-- Built-in Service Provider: ValidationServiceProvider -->
+				<section>
+					<section>
+						<h2>Built-in Service Provider:<br />ValidationServiceProvider</h2>
+
+						<p><img src="assets/05/futurama-funeral-director.png" width="500" alt="" /></p>
+						<q> I am the grand funeral director.<br />&mdash; Do you validate parking?</q>
+					</section>
+
+					<section>
+						<h2>ValidationServiceProvider</h2>
+						<ul>
+							<li class="fragment">
+								The ValidatorServiceProvider<small><a href="http://silex.sensiolabs.org/doc/providers/validator.html">&#9873;</a></small> provides a service for validating data.
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								It is most useful when used with the FormServiceProvider, but can also be used standalone.
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Inclusion</h2>
+						<ul>
+							<li class="fragment">
+								Require <code>symfony/validator</code> in <code>composer.json</code>
+								<pre class="bigger"><code>&quot;require&quot;: {
+	&quot;symfony/validator&quot;: &quot;~2.1&quot;
+}</code></pre>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Register the service in <code>bootstrap.php</code>
+								<pre class="bigger"><code class="language-php">$app->register(new Silex\Provider\ValidatorServiceProvider());</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Usage</h2>
+						<ul>
+							<li class="fragment">
+								Uses Symfony's Validator which works with constraints
+								<ul class="constraints clearfix">
+									<li>Blank</li>
+									<li>Choice</li>
+									<li>Collection</li>
+									<li>Date</li>
+									<li>DateTime</li>
+									<li>Email</li>
+									<li>False</li>
+									<li>File</li>
+									<li>Image</li>
+									<li>Ip</li>
+									<li>Max</li>
+									<li>Min</li>
+									<li>MaxLength</li>
+									<li>MinLength</li>
+									<li>NotBlank</li>
+									<li>NotNull</li>
+									<li>Null</li>
+									<li>Time</li>
+									<li>True</li>
+									<li>Url</li>
+								</ul>
+								<br style="clear: left;" />
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Each constraint is a class in the namespace <code>\Symfony\Component\Validator\Constraints</code><small><a href="http://api.symfony.com/master/Symfony/Component/Validator/Constraints.html">&#9873;</a></small>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Warning!</h2>
+
+						<p style="margin-top: 4em;" class="warning">Don't use the following examples to base your code upon. Only use them to get the gist of the constraints. When working with forms we'll use an other structure!</p>
+					</section>
+
+					<section>
+						<h2>Validating Values</h2>
+
+						<ul>
+							<li class="fragment">
+								Validate a single value<small><a href="http://silex.sensiolabs.org/doc/providers/validator.html#validating-values">&#9873;</a></small> using<br /><code>$app['validator']-&gt;validateValue($val, <em>constraints</em>);</code>
+								<pre class="bigger fragment"><code class="language-php" style="max-height: 480px; overflow: scroll;">use Symfony\Component\Validator\Constraints as Assert;
+
+$app-&gt;get('/validate/{email}', function ($email) use ($app) {
+	$errors = $app['validator']-&gt;validateValue($email, new Assert\Email());
+
+	if (count($errors) > 0) {
+		return (string) $errors;
+	} else {
+		return 'The email is valid';
+	}
+
+});</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Validating Associative Arrays</h2>
+
+						<ul>
+							<li class="fragment">
+								Validate an associate array<small><a href="http://silex.sensiolabs.org/doc/providers/validator.html#validating-associative-arrays">&#9873;</a></small> by building a <em>constraints collection</em> parallel to the array
+								<pre class="bigger fragment"><code class="language-php" style="max-height: 380px; overflow: scroll;">use Symfony\Component\Validator\Constraints as Assert;
+
+$book = array(
+	'title' =&gt; 'My Book',
+	'author' =&gt; array(
+		'first_name' =&gt; 'Fabien',
+		'last_name'  =&gt; 'Potencier',
+	),
+);
+
+$constraints = new Assert\Collection(array(
+	'title' =&gt; new Assert\Length(array('min' =&gt; 10)),
+	'author' =&gt; new Assert\Collection(array(
+		'first_name' =&gt; array(
+			new Assert\NotBlank(), 
+			new Assert\Length(array('min' =&gt; 10))
+		),
+		'last_name'  =&gt; new Assert\Length(array('min' =&gt; 10)),
+	)),
+));
+$errors = $app['validator']-&gt;validateValue($book, $constraints);
+
+if (count($errors) &gt; 0) {
+	foreach ($errors as $error) {
+		echo $error-&gt;getPropertyPath().' '.$error-&gt;getMessage()."\n";
+	}
+} else {
+	echo 'The book is valid';
+}</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Validating Objects</h2>
+
+						<ul>
+							<li class="fragment">
+								Check the documentation to validate objects<small><a href=" http://silex.sensiolabs.org/doc/providers/validator.html#validating-objects">&#9873;</a></small>
+							</li>
+						</ul>
+					</section>
+
+				</section>
+
+
+
+
+				<!-- Built-in Service Provider: ValidationServiceProvider -->
+				<section>
+					<section>
+						<h2>Built-in Service Provider:<br />FormServiceProvider</h2>
+
+						<p><img src="assets/05/futurama-forms.png" width="400" alt="" /></p>
+						<q>Guards! ... bring me the forms I need<br />to fill out to have her taken away!</q>
+					</section>
+
+					<section>
+						<h2>FormServiceProvider</h2>
+						<ul>
+							<li class="fragment">The FormServiceProvider<small><a href="http://silex.sensiolabs.org/doc/providers/form.html">&#9873;</a></small> provides a service for building forms in your application with the Symfony2 Form component</li>
+						</ul>
+
+					</section>
+
+					<section>
+						<h2>Inclusion</h2>
+						<ul>
+							<li class="fragment">
+								Require <code>symfony/form</code> and <code>symfony/twig-bridge</code> in <code>composer.json</code>
+								<pre class="bigger"><code>&quot;require&quot;: {
+	&quot;symfony/form&quot;: &quot;~2.1&quot;
+	&quot;symfony/twig-bridge&quot;: &quot;~2.1&quot;
+}</code></pre>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Register the service in <code>bootstrap.php</code>
+								<pre class="bigger"><code class="language-php">$app->register(new Silex\Provider\FormServiceProvider());</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Usage (1/2)</h2>
+
+						<ul>
+							<li class="fragment">
+								Use <code style="font-size: 70%;">$app['form.factory']</code> to Symfony's Form Component
+								<pre class="bigger fragment"><code class="language-php" style="max-height: 380px; overflow: scroll;">$app->match('/form', function (Request $request) use ($app) {
+	// some default data for when the form is displayed the first time
+	$data = array(
+		'name' =&gt; 'Your name',
+		'email' =&gt; 'Your email',
+		'message' =&gt; 'Your message'
+	);
+
+	$form = $app['form.factory']-&gt;createBuilder('form', $data)
+		-&gt;add('name', 'text')
+		-&gt;add('email', 'email')
+		-&gt;add('message', 'textarea')
+		-&gt;getForm();
+
+	if ('POST' == $request-&gt;getMethod()) {
+		$form-&gt;bind($request);
+
+		if ($form-&gt;isValid()) {
+			$data = $form-&gt;getData();
+
+			// do something with the data
+
+			// redirect somewhere
+			return $app-&gt;redirect('...');
+		}
+	}
+
+	// display the form
+	return $app['twig']-&gt;render('index.twig', array('form' =&gt; $form-&gt;createView()));
+});</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Usage (2/2)</h2>
+						<ul>
+							<li class="fragment">
+								Twig template code
+								<pre class="bigger"><code class="language-html dontrun" style="max-height: 380px; overflow: scroll;">&lt;form action=&quot;#&quot; method=&quot;post&quot; {{ form_enctype(form) }}&gt;
+	{{ form_widget(form) }}
+	&lt;input type=&quot;submit&quot; name=&quot;submit&quot; /&gt;
+&lt;/form&gt;</code></pre>
+							</li>
+							<li class="fragment">
+								Resulting HTML
+								<pre class="bigger"><code class="language-html dontrun" style="max-height: 280px; overflow: scroll;">&lt;form action=&quot;#&quot; method=&quot;post&quot;&gt;
+	&lt;div id=&quot;form&quot;&gt;
+		&lt;div&gt;
+			&lt;label for=&quot;form_name&quot;&gt;Name&lt;/label&gt;
+			<span style="white-space: nowrap;">&lt;input type=&quot;text&quot; id=&quot;form_name&quot; name=&quot;form[name]&quot; value=&quot;Your name&quot;&gt;</span>
+		&lt;/div&gt;
+		&lt;div&gt;
+			&lt;label for=&quot;form_email&quot;&gt;Email&lt;/label&gt;
+			<span style="white-space: nowrap;">&lt;input type=&quot;text&quot; id=&quot;form_email&quot; name=&quot;form[email]&quot; value=&quot;Your email&quot;&gt;</span>
+		&lt;/div&gt;
+		&lt;div&gt;
+			&lt;label for=&quot;form_message&quot;&gt;Message&lt;/label&gt;
+			<span style="white-space: nowrap;">&lt;textarea id=&quot;form_message&quot; name=&quot;form[message]&quot;&gt;Your message&lt;/textarea&gt;</span>
+		&lt;/div&gt;
+		<span style="white-space: nowrap;">&lt;input type=&quot;hidden&quot; id=&quot;form__token&quot; name=&quot;form[_token]&quot; value=&quot;bdb2fdb025d2a20fa21e4a3cbc6c8fda8051e020&quot;&gt;</span>
+	&lt;/div&gt;
+	&lt;input type=&quot;submit&quot; name=&quot;submit&quot; /&gt;
+&lt;/form&gt;</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Form Field Types</h2>
+
+						<ul>
+							<li class="fragment">
+								Form field types<small><a href="http://symfony.com/doc/current/book/forms.html#built-in-field-types">&#9873;</a></small>
+								<ul class="constraints">
+									<li>checkbox</li>
+									<li>choice</li>
+									<li>csrf</li>
+									<li>date</li>
+									<li>datetime</li>
+									<li>hidden</li>
+									<li>text</li>
+									<li>textarea</li>
+									<li>email</li>
+									<li>integer</li>
+									<li>number</li>
+									<li>password</li>
+									<li>search</li>
+									<li>url</li>
+									<li>...</li>
+								</ul>
+								<br style="clear: left;" />
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Customizing forms</h2>
+						<ul>
+							<li class="fragment">
+								To create a named form use an alternate syntax
+								<pre class="bigger"><code class="language-php" style="max-height: 180px; overflow: scroll;">$loginform = $app['form.factory']-&gt;createNamed('loginform', $data)
+	-&gt;add('username', 'text')
+	-&gt;add('password', 'password');</code></pre>
+							</li>
+							<li class="fragment">
+								It's possible to customize<small><a href="http://symfony.com/doc/current/book/forms.html#rendering-each-field-by-hand">&#9873;</a></small> the output of a form
+								<pre class="bigger"><code class="language-html dontrun" style="max-height: 240px; overflow: scroll;">&lt;form action=&quot;#&quot; method=&quot;post&quot;  {{ form_enctype(form) }}&gt;
+	&lt;dl class=&quot;clearfix&quot;&gt;
+		&lt;dt&gt;
+			{{ form_label(loginform.username) }}
+		&lt;/dt&gt;
+		&lt;dd&gt;
+			{{ form_widget(loginform.username) }}
+			{{ form_errors(loginform.username) }}
+		&lt;/dd&gt;
+		&lt;dt&gt;
+			{{ form_label(loginform.password) }}
+		&lt;/dt&gt;
+		&lt;dd&gt;
+			{{ form_widget(loginform.password) }}
+			{{ form_errors(loginform.password) }}
+		&lt;/dd&gt;
+	&lt;/dl&gt;
+	{{ form_widget(loginform._token) }}
+	&lt;input type=&quot;submit&quot; name=&quot;submit&quot; value=&quot;Log In&quot; /&gt;
+&lt;/form&gt;</code></pre>
+								<ul>
+									<li>Don't forget the CSRF token!!</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Forms + Validator = Winning!</h2>
+						<ul>
+							<li class="fragment">
+								FormServiceProvider plays nice with ValidatorServiceProvider
+								<pre class="bigger"><code class="language-php" style="max-height: 380px; overflow: scroll;">$loginform = $app['form.factory']-&gt;createNamed('loginform', $data)
+	-&gt;add('username', 'text', array(
+		'constraints' =&gt; new Assert\Email()
+	))
+	-&gt;add('password', 'password', array(
+		'constraints' =&gt; array(
+			new Assert\NotBlank(),
+			new Assert\Length(array('max' =&gt; 30))
+		)
+	));</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Forms + Validator Prerequisites</h2>
+						<ul>
+							<li class="fragment">
+								Require a few more packages in <code>composer.json</code> though
+								<pre class="bigger"><code>&quot;require&quot;: {
+	&quot;symfony/form&quot;: &quot;~2.1&quot;,
+	&quot;symfony/validator&quot;: &quot;~2.1&quot;,
+	&quot;symfony/twig-bridge&quot;: &quot;~2.1&quot;,
+	&quot;symfony/config&quot;: &quot;~2.1&quot;,
+	&quot;symfony/validation&quot;: &quot;~2.1&quot;
+}</code></pre>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Register the TranslationServiceProvider in <code>bootstrap.php</code> (with emtpy messages) or it won't work
+								<pre class="bigger"><code class="language-php">$app-&gt;register(new Silex\Provider\TranslationServiceProvider(), array(
+	'translator.messages' =&gt; array(),
+));</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Example</h2>
+
+						<figure><img src="assets/05/example-10.png" alt="" title="" width="580" class="noborder" /></figure>
+
+						<p style="font-size: 75%">Let's take a look at <code>assets/ws2-sws-fiddles-silex/10.forms-validation/</code> <a href="assets/ws2-sws-fiddles-silex/10.forms-validation/">&rarr;</a></p>
+					</section>
+
+					<section>
+						<h2>File Uploads</h2>
+						<pre class="bigger"><code class="language-php" style="max-height: 420px; overflow: scroll;">$app-&gt;match('/', function (Application $app) {
+
+	$uploadform = $app['form.factory']
+		-&gt;createNamed('uploadform')
+		-&gt;add('my_upload', 'file', array(
+			'constraints' =&gt; new Assert\NotBlank()
+		));
+
+	if ('POST' == $app['request']->getMethod()) {
+		$uploadform->bindRequest($app['request']);
+
+		if ($uploadform->isValid()) {
+			$files = $app['request']->files->get($uploadform->getName());
+			$filename = $files['my_upload']->getClientOriginalName();
+			$files['my_upload']->move(__DIR__ . '/../web/uploads/', $filename);
+
+			return $app['twig']->render('form.twig', array(
+				'message' => 'File was successfully uploaded!',
+				'uploadform' => $uploadform->createView()
+			));
+		}
+	}
+
+	return $app['twig']->render('form.twig', array(
+		'message' => 'Upload a file',
+		'uploadform' => $uploadform->createView()
+	));
+
+})->method('GET|POST');</code></pre>
+					</section>
+
+					<section>
+						<h2>Example</h2>
+
+						<figure><img src="assets/05/example-11.png" alt="" title="" width="580" class="noborder" /></figure>
+
+						<p style="font-size: 75%">Let's take a look at <code>assets/ws2-sws-fiddles-silex/11.session-upload/</code> <a href="assets/ws2-sws-fiddles-silex/11.session-upload/">&rarr;</a></p>
+					</section>
+
+				</section>
+
+
+
+
+				<!-- Built-in Service Provider: SessionServiceProvider -->
+				<section>
+					<section>
+						<h2>Built-in Service Provider:<br />SessionServiceProvider</h2>
+
+						<p><img src="assets/05/futurama-hammertime.png" width="580" alt="" /></p>
+						<q>Now Stop! Hammertime!</q>
+					</section>
+
+					<section>
+						<h2>SessionServiceProvider</h2>
+						<ul>
+							<li class="fragment">The SessionServiceProvider<small><a href="http://silex.sensiolabs.org/doc/providers/session.html">&#9873;</a></small> provides a service for storing data persistently between requests</li>
+						</ul>
+
+					</section>
+
+					<section>
+						<h2>Inclusion &amp; Usage</h2>
+						<ul>
+							<li class="fragment">
+								Register the service in <code>bootstrap.php</code>
+								<pre class="bigger"><code class="language-php">$app-&gt;register(new Silex\Provider\SessionServiceProvider());</code></pre>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Use <code>$app['session']</code> to get and set session data
+								<pre class="bigger"><code class="language-php">$app['session']-&gt;set('name', 'Bramus');</code></pre>
+								<pre class="bigger"><code class="language-php">echo $app['session']->get('name'); // Bramus</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Example</h2>
+
+						<figure><img src="assets/05/example-11-redux.png" alt="" title="" width="580" class="noborder" /></figure>
+
+						<p style="font-size: 75%">Again take a look at <code>assets/ws2-sws-fiddles-silex/11.session-upload/</code> <a href="assets/ws2-sws-fiddles-silex/11.session-upload/">&rarr;</a></p>
+					</section>
+				</section>
+
+
+
+
+				<!-- Custom Provider: ConfigServiceProvider -->
+				<section>
+
+					<section>
+						<h2>ConfigServiceProvider</h2>
+
+						<p><img src="assets/05/futurama-configure.png" width="400" alt="" /></p>
+
+						<q>If we can re-route engine power through the primary weapons and configure them to Melllvar's frequency, that should overload his electro-quantum structure.</q>
+					</section>
+
+					<section>
+						<h2>ConfigServiceProvider</h2>
+
+						<ul>
+							<li class="fragment">Instead of defining configuration parameters using <code>define()</code> use the custom ConfigServiceProvider<small><a href="https://github.com/igorw/ConfigServiceProvider">&#9873;</a></small></li>
+							<li class="fragment" style="margin-top: 1em;">Works with configuration files in PHP, JSON or YAML</li>
+							<li class="fragment" style="margin-top: 1em;">Injects the parameters onto <code>$app</code></li>
+						</ul>
+
+					</section>
+
+					<section>
+						<h2>Inclusion</h2>
+						<ul>
+							<li class="fragment">
+								Require <code>igorw/config-service-provider</code> in <code>composer.json</code>
+								<pre class="bigger"><code>&quot;require&quot;: {
+	&quot;igorw/config-service-provider&quot;: &quot;~1.1&quot;
+}</code></pre>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Register the service in <code>bootstrap.php</code> referencing the config file
+								<pre class="bigger"><code class="language-php">$app-&gt;register(new Igorw\Silex\ConfigServiceProvider(__DIR__ . 'config.php'));</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Example Config Files (1/2)</h2>
+						<ul class="columns">
+							<li class="fragment column" style="width: 45%; padding-right: 5%;">
+								PHP
+								<pre class="bigger" style="width: 100%;"><code class="language-php" style="width: 100%; overflow: scroll;">return array(
+	'db.options' => array(
+		'host' => '127.0.0.1',
+		'dbname' => 'mydatabase',
+		'user' => 'root',
+		'password' => NULL,
+	),
+	'myproject.test' => array(
+		'param2' => '456',
+		'param3' => array(
+			'param2B' => '456',
+			'param2C' => '456',
+		),
+		'param4' => array(4, 5, 6)
+	)
+);</span></code></pre>
+							</li>
+							<li class="fragment column" style="width: 45%; padding-right: 5%;">
+								JSON
+								<pre class="bigger" style="width: 100%;"><code class="language-javascript dontrun" style="width: 100%; overflow: scroll;">{
+	&quot;db.options&quot;: {
+		&quot;host&quot;: &quot;127.0.0.1&quot;,
+		&quot;dbname&quot;: &quot;mydatabase&quot;,
+		&quot;user&quot;: &quot;root&quot;,
+		&quot;password&quot;: null
+	},
+	&quot;myproject.test&quot;: {
+		&quot;param2&quot;: &quot;456&quot;,
+		&quot;param3&quot;: {
+			&quot;param2B&quot;: &quot;456&quot;,
+			&quot;param2C&quot;: &quot;456&quot;
+		},
+		&quot;param4&quot;: [4, 5, 6]
+	}
+}</span></code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Example Config Files (2/2)</h2>
+						<ul class="columns">
+							<li class="fragment column" style="width: 45%; padding-right: 5%;">
+								YAML
+								<pre class="bigger" style="width: 100%;"><code class="dont-highlight" style="width: 100%; overflow: scroll;">db.options:
+  host: 127.0.0.1
+  dbname: mydatabase
+  user: root
+  password: ~
+myproject.test:
+  param2: &quot;456&quot;
+  param3:
+	param2B: &quot;456&quot;
+	param2C: &quot;456&quot;
+  param4: [4, 5, 6]</span></code></pre>
+							</li>
+							<li class="fragment column" style="width: 45%; padding-right: 5%;">
+								Usage: <code>$app['db.options']['user']</code>
+							</li>
+							<li style="clear: left; visibility: hidden;"></li>
+						</ul>
+						<div class="fragment warning" style="margin-top: 1em;">As the ikdoeict webspaces are entirely accessible over HTTP, use a PHP file to not expose any config data!</div>
+					</section>
+
+				</section>
+
+				<!-- The END -->
+				<section>
+					<section>
+						<h2>Questions?</h2>
+						<footer>
+							<em><a href="http://www.ikdoeict.be/">ikdoeict.be</a> &mdash; <a href="mailto:bramus.vandamme@kahosl.be">bramus.vandamme@kahosl.be</a></em>
+						</footer>
+					</section>
+				</section>
+
+
+
+				<!-- Sources -->
+				<section id="sources">
+					<section>
+						<h2>Sources</h2>
+						<ul>
+							<li><a href="#">...</a></li>
+						</ul>
+					</section>
+				</section>
+
+			</div>
+
+			<!-- The navigational controls UI -->
+			<aside class="controls">
+				<a class="left" href="#">&#x25C4;</a>
+				<a class="right" href="#">&#x25BA;</a>
+				<a class="up" href="#">&#x25B2;</a>
+				<a class="down" href="#">&#x25BC;</a>
+				<span id="revealIndex">/</span>
+			</aside>
+
+			<!-- Index Link -->
+			<aside class="back">
+				<a href="index.html">&larr; Back to index</a>
+			</aside>
+
+			<!-- ikdoeict.be Link -->
+			<a href="http://www.ikdoeict.be/" title="ikdoeict.be" id="ikdoeict">ikdoeict.be</a>
+
+			<!-- Displays presentation progress, max value changes via JS to reflect # of slides -->
+			<div class="progress"><span></span></div>
+
+		</div>
+
+		<script src="js/reveal.js"></script>
+		<script src="lib/highlight.js"></script>
+		<script src="lib/prefixfree.js"></script>
+		<script src="lib/css-snippets.js"></script>
+		<script src="lib/css-edit.js"></script>
+		<script src="lib/incrementable.js"></script>
+		<script src="js/main.js"></script>
+
+	</body>
+</html>
