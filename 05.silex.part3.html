@@ -277,6 +277,155 @@ $app->get('/hello/{name}', function ($name) {
 
 
 
+
+				<!-- Middleware -->
+				<section>
+					<section>
+						<h2>Middlewares</h2>
+
+						<p><img src="assets/05/futurama-middle-of-nowhere.png" width="447" alt="" /></p>
+						<q>OK. We're in the middle of nowhere,<br />which is the safest part of nowhere.</q>
+					</section>
+
+					<section>
+						<h2>Middlewares</h2>
+
+						<ul>
+							<li class="fragment">
+								Silex apps are executed in different stages
+								<ul>
+									<li>Bootstrapping of the app</li>
+									<li>Execution of the controller</li>
+									<li>Request handling</li>
+									<li>Output return</li>
+									<li>Process termination</li>
+								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Middleware<small><a href="http://silex.sensiolabs.org/doc/middlewares.html">&#9873;</a></small> = code executed in between the stages
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Middlewares can be global, or only for a specific route
+								<ul>
+									<li>Application middleware</li>
+									<li>Route specific middleware</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Before Application Middleware</h2>
+
+						<blockquote class="fragment" style="width: 100%">A before application middleware allows you to tweak the Request before the controller is executed</blockquote>
+
+						<ul style="margin-top: 1em;">
+							<li class="fragment">
+								Example
+								<pre class="bigger"><code class="language-php" style="overflow: scroll;">$app-&gt;before(function (Request $request) use ($app) {
+	<span style="white-space: nowrap;">$app['twig']-&gt;addGlobal('first_url_part', explode('/', $request-&gt;getPathInfo())[1]);</span>
+});</code></pre>
+							</li>
+							<li class="fragment">
+								By default, the middleware is run after the routing and the security. To let it execute earlier use
+								<pre class="bigger"><code class="language-php">$app-&gt;before(function (Request $request) use ($app) {
+	// ...
+}, Application::EARLY_EVENT);</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>After Application Middleware</h2>
+
+						<blockquote class="fragment" style="width: 100%">An after application middleware allows you to tweak the Response before it is sent to the client</blockquote>
+
+						<ul style="margin-top: 1em;">
+							<li class="fragment">
+								Example
+								<pre class="bigger"><code class="language-php">$app-&gt;after(function (Request $request) use ($app) {
+	// ...
+});</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Finish Application Middleware</h2>
+
+						<blockquote class="fragment" style="width: 100%">A finish application middleware allows you to execute tasks after the Response has been sent to the client (like sending emails or logging)</blockquote>
+
+						<ul style="margin-top: 1em;">
+							<li class="fragment">
+								Example
+								<pre class="bigger"><code class="language-php">$app-&gt;finish(function (Request $request, Response $response) {
+	// Warning: modifications to the Request or Response will be ignored
+});</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Example</h2>
+
+						<figure><img src="assets/05/example-09.png" alt="" title="" width="580" class="noborder" /></figure>
+
+						<p style="font-size: 75%">Let's take a look at <code>assets/ws2-sws-fiddles-silex/09.middlewares/</code> <a href="assets/ws2-sws-fiddles-silex/09.middlewares/">&rarr;</a></p>
+					</section>
+
+					<section>
+						<h2>Before Route Middleware</h2>
+
+						<blockquote class="fragment" style="width: 100%">A before route middleware is fired just before the route callback, but after the before application middlewares</blockquote>
+
+						<ul style="margin-top: 1em;">
+							<li class="fragment">
+								Example
+								<pre class="bigger"><code class="language-php" style="overflow: scroll;">$app->get('/somewhere', function () {
+	// ...
+})->before(function (Request $request) use ($app) {
+	// ...
+});</code></pre>
+							</li>
+							<li class="fragment">
+								Example <em>(using a controller)</em>
+								<pre class="bigger"><code class="language-php">public function connect(Application $app) {
+	return $app['controllers_factory']-&gt;get('/somewhere',
+	       array($this,'somewhere')-&gt;before(array($this,'check'));
+}
+
+public function check(Request $request, Application $app) { /* ... */ }</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>After Route Middleware</h2>
+
+						<blockquote class="fragment" style="width: 100%">An after route middleware is fired just after the route callback, but before the application its after application middlewares</blockquote>
+
+						<ul style="margin-top: 1em;">
+							<li class="fragment">
+								Example
+								<pre class="bigger"><code class="language-php">$app->get('/somewhere', function () {
+	// ...
+})->after(function (Request $request, Response $response) use ($app) {
+	// ...
+});</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Example</h2>
+
+						<p style="margin-top: 4.5em;"><em>See further ;-)</em></p>
+					</section>
+
+				</section>
+
+
+
 				<!-- The END -->
 				<section>
 					<section>
