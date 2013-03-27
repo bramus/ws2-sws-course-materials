@@ -163,6 +163,120 @@ $app->get('/hello/{name}', function ($name) {
 
 
 
+
+				<!-- Built-in Service Provider: MonologServiceProvider -->
+				<section>
+					<section>
+						<h2>Built-in Service Provider:<br />MonologServiceProvider</h2>
+
+						<p><img src="assets/05/futurama-control.png" width="580" height="280" alt="" /></p>
+						<q>Captain's log: We have lost control of the ship.<br />Adddendum: Whoooaaaa!</q>
+					</section>
+
+					<section>
+						<h2>MonologServiceProvider</h2>
+						<ul>
+							<li class="fragment">The MonologServiceProvider<small><a href="http://silex.sensiolabs.org/doc/providers/monolog.html">&#9873;</a></small> provides a default logging mechanism through the <a href="https://github.com/Seldaek/monolog">Monolog library</a>.</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Monolog log levels
+								<div class="columns" style="font-size: 80%">
+									<div class="column column-12">
+										<ul>
+											<li>
+												<code>DEBUG</code> <em style="font-size: 80%">(100)</em>
+												<ul><li>Detailed debug information</li></ul>
+											</li>
+											<li>
+												<code>INFO</code> <em style="font-size: 80%">(200)</em>
+												<ul><li>Interesting events.<br />e.g. User logs in, SQL logs</li></ul>
+											</li>
+											<li>
+												<code>NOTICE</code> <em style="font-size: 80%">(250)</em>
+												<ul><li>Normal but significant events</li></ul>
+											</li>
+											<li>
+												<code>WARNING</code> <em style="font-size: 80%">(300)</em>
+												<ul><li>Exceptional occurrences that are not errors.<br />e.g. Use of deprecated APIs</li></ul>
+											</li>
+										</ul>
+									</div>
+									<div class="column column-12">
+										<ul>
+											<li>
+												<code>ERROR</code> <em style="font-size: 80%">(400)</em>
+												<ul><li>Runtime errs that don't need immediate action</li></ul>
+											</li>
+											<li>
+												<code>CRITICAL</code> <em style="font-size: 80%">(500)</em>
+												<ul><li>Critical conditions.<br />e.g. unexpected exception</li></ul>
+											</li>
+											<li>
+												<code>ALERT</code> <em style="font-size: 80%">(550)</em>
+												<ul><li>Action must be taken immediately.<br />e.g.database unavailable</li></ul>
+											</li>
+											<li>
+												<code>EMERGENCY</code> <em style="font-size: 80%">(600)</em>
+												<ul><li>Emergency: system is unusable</li></ul>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Inclusion</h2>
+						<ul>
+							<li class="fragment">
+								Require <code>monolog/monolog</code> in <code>composer.json</code>
+								<pre class="bigger"><code>&quot;require&quot;: {
+	&quot;monolog/monolog&quot;: &quot;>=1.0.0&quot;
+}</code></pre>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Register the service in <code>bootstrap.php</code>
+								<pre class="bigger"><code class="language-php">$app-&gt;register(new Silex\Provider\MonologServiceProvider(), array(
+	'monolog.logfile' =&gt; __DIR__ . '/development.log',
+));</code></pre>
+								<ul>
+									<li>
+										Registration parameters
+										<ul>
+											<li><code>monolog.logfile</code> &mdash; Location of logfile</li>
+											<li><code>monolog.level</code> <em>(optional)</em> &mdash; Minimum log level before event is written in log. Default: <code>Monolog\Logger::DEBUG</code></li>
+											<li><code>monolog.name</code> <em>(optional)</em> &mdash; Name of the monolog channel.<br />Default: <code>myapp</code></li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Usage</h2>
+						<ul>
+							<li class="fragment">
+								Log events through <code>$app['monolog']</code>
+								<pre class="bigger fragment"><code class="language-php">$app['monolog']-&gt;addDebug('Testing the Monolog logging.');</code></pre>
+								<pre class="bigger fragment"><code class="language-php">$app['monolog']-&gt;addInfo(sprintf('User &quot;%s&quot; registered.', $username));</code></pre>
+								<pre class="bigger fragment"><code class="language-php">$app['monolog']-&gt;addWarning('The use of global is deprecated');</code></pre>
+								<pre class="bigger fragment"><code class="language-php">$app['monolog']-&gt;addError('Could not update item in database');</code></pre>
+							</li>
+							<li class="fragment">
+								Sample output
+								<pre class="bigger fragment"><code class="no-highlight">[2013-03-25 15:12:55] myapp.DEBUG: Testing the Monolog logging.
+[2013-03-25 15:12:56] myapp.INFO: User &quot;Bramus&quot; registered.
+[2013-03-25 15:12:57] myapp.WARNING: The use of global is deprecated
+[2013-03-25 15:12:58] myapp.ERROR: Could not update item in database</code></pre>
+							</li>
+						</ul>
+					</section>
+
+				</section>
+
+
+
 				<!-- The END -->
 				<section>
 					<section>
