@@ -45,6 +45,124 @@
 
 
 
+
+				<!-- Built-in Service Provider: UrlGeneratorServiceProvider -->
+				<section>
+					<section>
+						<h2>Built-in Service Provider:<br />UrlGeneratorServiceProvider</h2>
+
+						<p><img src="assets/05/futurama_bender_terminator.jpg" width="580" alt="" /></p>
+						<q>001100010010011110100001101101110011</q>
+					</section>
+
+					<section>
+						<h2>UrlGeneratorServiceProvider</h2>
+						<ul>
+							<li class="fragment">
+								Silex Routes can be named
+								<pre class="bigger"><code class="language-php">$app->get('/', function () {
+	return 'welcome to the homepage';
+})->bind('homepage');
+
+$app->get('/hello/{name}', function ($name) {
+	return "Hello $name!";
+})->bind('hello');</code></pre>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">The UrlGenerator Service Provider<small><a href="http://silex.sensiolabs.org/doc/providers/url_generator.html">&#9873;</a></small> allows you to reference those routes in your App and via Twig</li>
+						</ul>
+
+					</section>
+
+					<section>
+						<h2>Inclusion</h2>
+						<ul>
+							<li class="fragment">
+								If you want to use the shorthand functions within Twig templates, require <code>symfony/twig-bridge</code> in <code>composer.json</code>
+								<pre class="bigger"><code>&quot;require&quot;: {
+	&quot;symfony/twig-bridge&quot;: &quot;2.*&quot;
+}</code></pre>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Register the service in <code>bootstrap.php</code>
+								<pre class="bigger"><code class="language-php">$app->register(new Silex\Provider\UrlGeneratorServiceProvider());</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Usage</h2>
+						<ul>
+							<li class="fragment">
+								In PHP
+								<pre class="bigger"><code class="language-php">$app['url_generator']->generate('homepage');</code></pre>
+								<pre class="bigger"><code class="language-php">$app['url_generator']->generate('hello', array('name' => 'Bramus')); 
+// -&gt; `/hello/Bramus`</code></pre>
+							</li>
+							<li class="fragment">
+								In Twig
+								<pre class="bigger"><code class="no-highlight">{{ app.url_generator.generate('homepage') }}</code></pre>
+							</li>
+							<li class="fragment">
+								In Twig, using <code>twig-bridge</code>
+								<pre class="bigger"><code class="no-highlight">{{ path('homepage') }} <span style="opacity: 0.75">{# -&gt; `/` #}</span></code></pre>
+								<pre class="bigger"><code class="no-highlight">{{ url('homepage') }} <span style="opacity: 0.75">{# -&gt; `http://example.org/` #}</span></code></pre>
+								<pre class="bigger"><code class="no-highlight">{{ path('hello', {name: 'Bramus'}) }} <span style="opacity: 0.75">{# -&gt; `/hello/Bramus` #}</span></code></pre>
+								<pre class="bigger"><code class="no-highlight" style="white-space: nowrap; overflow: hidden;">{{ url('hello', {name: 'Bramus'}) }} <span style="opacity: 0.75">{# -&gt; `http://example.org/hello/Bramus` #}</span></code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Sidenote: Static pages</h2>
+						<ul>
+							<li class="fragment">
+								Writing controllers for static pages is overkill. Here's a simple way to do it (in <code>app.php</code>)
+							</li>
+						</ul>
+						<pre class="bigger fragment"><code class="language-php">$pages = array(
+		'/' =&gt; 'home',
+		'/about' =&gt; 'about'
+	);
+	foreach ($pages as $route =&gt; $view) {
+		$app-&gt;get($route, function () use ($app, $view) {
+			return $app['twig']->render('static/' . $view . '.twig');
+		})-&gt;bind($view);
+	}
+}</code></pre>
+						<footer class="fragment">Place static page templates in <code>/src/views/static/</code></footer>
+					</section>
+
+					<section>
+						<h2>Example</h2>
+
+						<figure><img src="assets/05/example-08.png" alt="" title="" width="580" class="noborder" /></figure>
+
+						<p style="font-size: 75%">Let's take a look at <code>assets/ws2-sws-fiddles-silex/08.static-pages/</code> <a href="assets/ws2-sws-fiddles-silex/08.static-pages/">&rarr;</a></p>
+					</section>
+
+					<section>
+						<h2>Example Recap</h2>
+
+						<ul>
+							<li class="fragment">
+								Place static page templates in <code>/src/views/static/</code>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Give routes a name using <code>bind()</code> within the <code>connect()</code> function of the controller
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								No need for <code>{{ app.request.baseUrl }}</code> in Twig anymore as <code>{{ path('links') }}</code> includes it
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Extract parts of the URL in Twig using <code>app.request.getPathInfo()|split('/')[1]</code>
+							</li>
+						</ul>
+					</section>
+
+				</section>
+
+
+
 				<!-- The END -->
 				<section>
 					<section>
