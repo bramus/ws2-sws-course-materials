@@ -855,6 +855,49 @@ if (count($errors) &gt; 0) {
 				</section>
 
 
+
+
+				<!-- Built-in Service Provider: SessionServiceProvider -->
+				<section>
+					<section>
+						<h2>Built-in Service Provider:<br />SessionServiceProvider</h2>
+
+						<p><img src="assets/05/futurama-hammertime.png" width="580" alt="" /></p>
+						<q>Now Stop! Hammertime!</q>
+					</section>
+
+					<section>
+						<h2>SessionServiceProvider</h2>
+						<ul>
+							<li class="fragment">The SessionServiceProvider<small><a href="http://silex.sensiolabs.org/doc/providers/session.html">&#9873;</a></small> provides a service for storing data persistently between requests</li>
+						</ul>
+
+					</section>
+
+					<section>
+						<h2>Inclusion &amp; Usage</h2>
+						<ul>
+							<li class="fragment">
+								Register the service in <code>bootstrap.php</code>
+								<pre class="bigger"><code class="language-php">$app-&gt;register(new Silex\Provider\SessionServiceProvider());</code></pre>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Use <code>$app['session']</code> to get and set session data
+								<pre class="bigger"><code class="language-php">$app['session']-&gt;set('name', 'Bramus');</code></pre>
+								<pre class="bigger"><code class="language-php">echo $app['session']->get('name'); // Bramus</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Example</h2>
+
+						<figure><img src="assets/05/example-11-redux.png" alt="" title="" width="580" class="noborder" /></figure>
+
+						<p style="font-size: 75%">Again take a look at <code>assets/ws2-sws-fiddles-silex/11.session-upload/</code> <a href="assets/ws2-sws-fiddles-silex/11.session-upload/">&rarr;</a></p>
+					</section>
+				</section>
+
 				<!-- The END -->
 				<section>
 					<section>
