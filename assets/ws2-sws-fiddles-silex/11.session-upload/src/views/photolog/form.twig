@@ -1,0 +1,31 @@
+{# extend the parent tpl #}
+{% extends 'layout.twig' %}
+
+
+{# set the pagetitle in the parent tpl #}
+{% set pageTitle = 'Photolog &raquo; Upload Photo' %}
+
+
+{# overwrite the pageContent block #}
+{% block pageContent %}
+	<p class="breadcrumb"><a href="{{ path('home') }}">My Website</a> &raquo; <a href="{{ path('photolog.browse') }}">Photolog</a> &raquo; Upload photo</p>
+
+	<form action="{{ path('photolog.upload') }}" method="post" {{ form_enctype(uploadform) }} novalidate="novalidate">{# disable HTML5 formchecking #}
+		<dl class="clearfix">
+			<dt>
+				{{ form_label(uploadform.photo) }}
+			</dt>
+			<dd>
+				{{ form_widget(uploadform.photo) }}
+				{{ form_errors(uploadform.photo) }}
+			</dd>
+			<dt>
+				&nbsp;
+			</dt>
+			<dd>
+				{{ form_widget(uploadform._token) }}
+				<input type="submit" name="submit" value="Upload Photo" />
+			</dd>
+		</dl>
+	</form>
+{% endblock %}

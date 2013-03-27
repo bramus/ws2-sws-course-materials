@@ -1,0 +1,22 @@
+{# extend the parent tpl #}
+{% extends 'layout.twig' %}
+
+
+{# set the pagetitle in the parent tpl #}
+{% set pageTitle = 'Photolog &raquo; Browse' %}
+
+{% block pageContent %}
+	<p class="breadcrumb"><a href="{{ path('home') }}">My Website</a> &raquo; <a href="{{ path('photolog.browse') }}">Photolog</a> &raquo; Browse</p>
+
+	<ul class="photos clearfix">
+		<li>
+			<a href="{{ path('photolog.upload') }}" title="Upload Photo"><img src="{{ app.request.baseUrl }}/img/add.png" title="Upload Photo" alt="Upload Photo" /><span class="caption">Upload Photo &rarr;</span></a>
+		</li>
+		{% for photo in photos %}
+		<li>
+			<img src="{{ app.request.baseUrl }}{{ photo.url }}" alt="{{ photo.title }}" title="{{ photo.title }}" />
+			<span class="caption">{{ photo.title }}</span>
+		</li>
+		{% endfor %}
+	</ul>
+{% endblock %}

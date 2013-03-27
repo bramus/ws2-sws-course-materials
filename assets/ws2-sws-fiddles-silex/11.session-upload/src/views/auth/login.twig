@@ -1,0 +1,38 @@
+{# extend the parent tpl #}
+{% extends 'layout.twig' %}
+
+
+{# set the pagetitle in the parent tpl #}
+{% set pageTitle = 'Auth &raquo; Please Log In' %}
+
+
+{# overwrite the pageContent block #}
+{% block pageContent %}
+	<p class="breadcrumb"><a href="{{ path('home') }}">My Website</a> &raquo; Please Log In</p>
+
+	<form action="{{ path('auth.login') }}" method="post" {{ form_enctype(loginform) }} novalidate="novalidate">{# disable HTML5 formchecking #}
+		<dl class="clearfix">
+			<dt>
+				{{ form_label(loginform.username) }}
+			</dt>
+			<dd>
+				{{ form_widget(loginform.username) }}
+				{{ form_errors(loginform.username) }}
+			</dd>
+			<dt>
+				{{ form_label(loginform.password) }}
+			</dt>
+			<dd>
+				{{ form_widget(loginform.password) }}
+				{{ form_errors(loginform.password) }}
+			</dd>
+			<dt>
+				&nbsp;
+			</dt>
+			<dd>
+				{{ form_widget(loginform._token) }}
+				<input type="submit" name="submit" value="Log in" />
+			</dd>
+		</dl>
+	</form>
+{% endblock %}
