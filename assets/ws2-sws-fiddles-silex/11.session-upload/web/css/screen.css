@@ -1,0 +1,141 @@
+/**
+ * Stylesheet for Upload
+ *
+ * @media	screen, projection
+ * @author	Bram(us) Van Damme <bramus.vandamme@kahosl.be>
+ */
+
+	/**
+	 * CSS Clearfix
+	 * @see http://www.positioniseverything.net/easyclearing.html
+	 */
+		.clearfix:after {
+			content: ".";
+			display: block;
+			height: 0;
+			clear: both;
+			visibility: hidden;
+		}
+
+		.ie6 .clearfix {
+			display: inline-block;
+		}
+
+		.ie7 .clearfix {
+			zoom: 1;
+		}
+
+	/**
+	 * Project Styles
+	 */
+
+		body {
+			font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", sans-serif;
+			font-weight: 300;
+			font-size: 0.9em;
+			line-height: 1.2;
+			background: #FCFCFC;
+			margin: 0;
+			padding: 0;
+		}
+
+		[role="main"] {
+			width: 704px;
+			margin: 0 auto;
+			padding: 1em;
+		}
+
+		ul.photos {
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+
+		ul.photos li {
+			display:  block;
+			width: 310px;
+			height: 310px;
+			float: left;
+			border: 1px solid #ccc;
+			margin: 20px;
+			position: relative;
+			box-shadow: 0 0 20px #CCC;
+
+		}
+
+		ul.photos li img {
+			max-width: 100%;
+		}
+
+		ul.photos li .caption {
+			display: block;
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			padding: 5px;
+			color: #000;
+			background: rgba(255,255,255,0.9);
+			border-top: 1px solid #ccc;
+			text-shadow: 1px 1px 1px #fff;
+		}
+
+		ul.photos li:hover {
+			box-shadow: 0 0 20px #999;
+		}
+
+		form {
+			padding: 0;
+			margin: 0;
+		}
+
+		form dl {
+			padding: 1em;
+			width: 400px;
+			border: 1px solid #ccc;
+			border-radius: 0.5em;
+			margin: 0 auto;
+		}
+
+		form dt {
+			width: 130px;
+			float: left;
+			clear: left;
+			min-height: 1em;
+			margin: 0;
+			margin-bottom: 0.2em;
+		}
+
+		form dd {
+			width: 250px;
+			float: left;
+			min-height: 1em;
+			margin: 0;
+			margin-bottom: 0.2em;
+		}
+
+		form dt label {
+			display: block;
+			text-align: right;
+			margin-right: 0.4em;
+			line-height: 1.5;
+		}
+
+		form dd ul {
+			padding: 0;
+			margin: 0 0 0.2em 0.2em;
+			list-style: none;
+			font-size: 0.7em;
+			color: red;
+		}
+
+		input[type="text"], input[type="password"], textarea {
+			border: 1px solid #ccc;
+			font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", sans-serif;
+			font-weight: 300;
+			font-size: 14px;
+			background: #fff;
+			width: 200px;
+		}
+
+/* EOF */
