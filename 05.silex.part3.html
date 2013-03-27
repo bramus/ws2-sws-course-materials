@@ -898,6 +898,118 @@ if (count($errors) &gt; 0) {
 					</section>
 				</section>
 
+
+
+
+				<!-- Custom Provider: ConfigServiceProvider -->
+				<section>
+
+					<section>
+						<h2>ConfigServiceProvider</h2>
+
+						<p><img src="assets/05/futurama-configure.png" width="400" alt="" /></p>
+
+						<q>If we can re-route engine power through the primary weapons and configure them to Melllvar's frequency, that should overload his electro-quantum structure.</q>
+					</section>
+
+					<section>
+						<h2>ConfigServiceProvider</h2>
+
+						<ul>
+							<li class="fragment">Instead of defining configuration parameters using <code>define()</code> use the custom ConfigServiceProvider<small><a href="https://github.com/igorw/ConfigServiceProvider">&#9873;</a></small></li>
+							<li class="fragment" style="margin-top: 1em;">Works with configuration files in PHP, JSON or YAML</li>
+							<li class="fragment" style="margin-top: 1em;">Injects the parameters onto <code>$app</code></li>
+						</ul>
+
+					</section>
+
+					<section>
+						<h2>Inclusion</h2>
+						<ul>
+							<li class="fragment">
+								Require <code>igorw/config-service-provider</code> in <code>composer.json</code>
+								<pre class="bigger"><code>&quot;require&quot;: {
+	&quot;igorw/config-service-provider&quot;: &quot;~1.1&quot;
+}</code></pre>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Register the service in <code>bootstrap.php</code> referencing the config file
+								<pre class="bigger"><code class="language-php">$app-&gt;register(new Igorw\Silex\ConfigServiceProvider(__DIR__ . 'config.php'));</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Example Config Files (1/2)</h2>
+						<ul class="columns">
+							<li class="fragment column" style="width: 45%; padding-right: 5%;">
+								PHP
+								<pre class="bigger" style="width: 100%;"><code class="language-php" style="width: 100%; overflow: scroll;">return array(
+	'db.options' => array(
+		'host' => '127.0.0.1',
+		'dbname' => 'mydatabase',
+		'user' => 'root',
+		'password' => NULL,
+	),
+	'myproject.test' => array(
+		'param2' => '456',
+		'param3' => array(
+			'param2B' => '456',
+			'param2C' => '456',
+		),
+		'param4' => array(4, 5, 6)
+	)
+);</span></code></pre>
+							</li>
+							<li class="fragment column" style="width: 45%; padding-right: 5%;">
+								JSON
+								<pre class="bigger" style="width: 100%;"><code class="language-javascript dontrun" style="width: 100%; overflow: scroll;">{
+	&quot;db.options&quot;: {
+		&quot;host&quot;: &quot;127.0.0.1&quot;,
+		&quot;dbname&quot;: &quot;mydatabase&quot;,
+		&quot;user&quot;: &quot;root&quot;,
+		&quot;password&quot;: null
+	},
+	&quot;myproject.test&quot;: {
+		&quot;param2&quot;: &quot;456&quot;,
+		&quot;param3&quot;: {
+			&quot;param2B&quot;: &quot;456&quot;,
+			&quot;param2C&quot;: &quot;456&quot;
+		},
+		&quot;param4&quot;: [4, 5, 6]
+	}
+}</span></code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Example Config Files (2/2)</h2>
+						<ul class="columns">
+							<li class="fragment column" style="width: 45%; padding-right: 5%;">
+								YAML
+								<pre class="bigger" style="width: 100%;"><code class="dont-highlight" style="width: 100%; overflow: scroll;">db.options:
+  host: 127.0.0.1
+  dbname: mydatabase
+  user: root
+  password: ~
+myproject.test:
+  param2: &quot;456&quot;
+  param3:
+	param2B: &quot;456&quot;
+	param2C: &quot;456&quot;
+  param4: [4, 5, 6]</span></code></pre>
+							</li>
+							<li class="fragment column" style="width: 45%; padding-right: 5%;">
+								Usage: <code>$app['db.options']['user']</code>
+							</li>
+							<li style="clear: left; visibility: hidden;"></li>
+						</ul>
+						<div class="fragment warning" style="margin-top: 1em;">As the ikdoeict webspaces are entirely accessible over HTTP, use a PHP file to not expose any config data!</div>
+					</section>
+
+				</section>
+
 				<!-- The END -->
 				<section>
 					<section>
