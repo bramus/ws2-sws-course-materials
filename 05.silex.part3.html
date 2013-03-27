@@ -15,6 +15,13 @@
 		<link rel="stylesheet" href="css/main.css" media="screen">
 		<link rel="stylesheet" href="css/print.css" media="print">
 
+		<style>
+			.constraints li {
+				width: 25%;
+				float: left;
+			}
+		</style>
+
 		<link rel="stylesheet" href="lib/zenburn.css">
 	</head>
 
@@ -420,6 +427,160 @@ public function check(Request $request, Application $app) { /* ... */ }</code></
 						<h2>Example</h2>
 
 						<p style="margin-top: 4.5em;"><em>See further ;-)</em></p>
+					</section>
+
+				</section>
+
+
+
+
+				<!-- Built-in Service Provider: ValidationServiceProvider -->
+				<section>
+					<section>
+						<h2>Built-in Service Provider:<br />ValidationServiceProvider</h2>
+
+						<p><img src="assets/05/futurama-funeral-director.png" width="500" alt="" /></p>
+						<q> I am the grand funeral director.<br />&mdash; Do you validate parking?</q>
+					</section>
+
+					<section>
+						<h2>ValidationServiceProvider</h2>
+						<ul>
+							<li class="fragment">
+								The ValidatorServiceProvider<small><a href="http://silex.sensiolabs.org/doc/providers/validator.html">&#9873;</a></small> provides a service for validating data.
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								It is most useful when used with the FormServiceProvider, but can also be used standalone.
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Inclusion</h2>
+						<ul>
+							<li class="fragment">
+								Require <code>symfony/validator</code> in <code>composer.json</code>
+								<pre class="bigger"><code>&quot;require&quot;: {
+	&quot;symfony/validator&quot;: &quot;~2.1&quot;
+}</code></pre>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Register the service in <code>bootstrap.php</code>
+								<pre class="bigger"><code class="language-php">$app->register(new Silex\Provider\ValidatorServiceProvider());</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Usage</h2>
+						<ul>
+							<li class="fragment">
+								Uses Symfony's Validator which works with constraints
+								<ul class="constraints clearfix">
+									<li>Blank</li>
+									<li>Choice</li>
+									<li>Collection</li>
+									<li>Date</li>
+									<li>DateTime</li>
+									<li>Email</li>
+									<li>False</li>
+									<li>File</li>
+									<li>Image</li>
+									<li>Ip</li>
+									<li>Max</li>
+									<li>Min</li>
+									<li>MaxLength</li>
+									<li>MinLength</li>
+									<li>NotBlank</li>
+									<li>NotNull</li>
+									<li>Null</li>
+									<li>Time</li>
+									<li>True</li>
+									<li>Url</li>
+								</ul>
+								<br style="clear: left;" />
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Each constraint is a class in the namespace <code>\Symfony\Component\Validator\Constraints</code><small><a href="http://api.symfony.com/master/Symfony/Component/Validator/Constraints.html">&#9873;</a></small>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Warning!</h2>
+
+						<p style="margin-top: 4em;" class="warning">Don't use the following examples to base your code upon. Only use them to get the gist of the constraints. When working with forms we'll use an other structure!</p>
+					</section>
+
+					<section>
+						<h2>Validating Values</h2>
+
+						<ul>
+							<li class="fragment">
+								Validate a single value<small><a href="http://silex.sensiolabs.org/doc/providers/validator.html#validating-values">&#9873;</a></small> using<br /><code>$app['validator']-&gt;validateValue($val, <em>constraints</em>);</code>
+								<pre class="bigger fragment"><code class="language-php" style="max-height: 480px; overflow: scroll;">use Symfony\Component\Validator\Constraints as Assert;
+
+$app-&gt;get('/validate/{email}', function ($email) use ($app) {
+	$errors = $app['validator']-&gt;validateValue($email, new Assert\Email());
+
+	if (count($errors) > 0) {
+		return (string) $errors;
+	} else {
+		return 'The email is valid';
+	}
+
+});</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Validating Associative Arrays</h2>
+
+						<ul>
+							<li class="fragment">
+								Validate an associate array<small><a href="http://silex.sensiolabs.org/doc/providers/validator.html#validating-associative-arrays">&#9873;</a></small> by building a <em>constraints collection</em> parallel to the array
+								<pre class="bigger fragment"><code class="language-php" style="max-height: 380px; overflow: scroll;">use Symfony\Component\Validator\Constraints as Assert;
+
+$book = array(
+	'title' =&gt; 'My Book',
+	'author' =&gt; array(
+		'first_name' =&gt; 'Fabien',
+		'last_name'  =&gt; 'Potencier',
+	),
+);
+
+$constraints = new Assert\Collection(array(
+	'title' =&gt; new Assert\Length(array('min' =&gt; 10)),
+	'author' =&gt; new Assert\Collection(array(
+		'first_name' =&gt; array(
+			new Assert\NotBlank(), 
+			new Assert\Length(array('min' =&gt; 10))
+		),
+		'last_name'  =&gt; new Assert\Length(array('min' =&gt; 10)),
+	)),
+));
+$errors = $app['validator']-&gt;validateValue($book, $constraints);
+
+if (count($errors) &gt; 0) {
+	foreach ($errors as $error) {
+		echo $error-&gt;getPropertyPath().' '.$error-&gt;getMessage()."\n";
+	}
+} else {
+	echo 'The book is valid';
+}</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Validating Objects</h2>
+
+						<ul>
+							<li class="fragment">
+								Check the documentation to validate objects<small><a href=" http://silex.sensiolabs.org/doc/providers/validator.html#validating-objects">&#9873;</a></small>
+							</li>
+						</ul>
 					</section>
 
 				</section>
