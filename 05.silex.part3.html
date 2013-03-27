@@ -587,6 +587,274 @@ if (count($errors) &gt; 0) {
 
 
 
+
+				<!-- Built-in Service Provider: ValidationServiceProvider -->
+				<section>
+					<section>
+						<h2>Built-in Service Provider:<br />FormServiceProvider</h2>
+
+						<p><img src="assets/05/futurama-forms.png" width="400" alt="" /></p>
+						<q>Guards! ... bring me the forms I need<br />to fill out to have her taken away!</q>
+					</section>
+
+					<section>
+						<h2>FormServiceProvider</h2>
+						<ul>
+							<li class="fragment">The FormServiceProvider<small><a href="http://silex.sensiolabs.org/doc/providers/form.html">&#9873;</a></small> provides a service for building forms in your application with the Symfony2 Form component</li>
+						</ul>
+
+					</section>
+
+					<section>
+						<h2>Inclusion</h2>
+						<ul>
+							<li class="fragment">
+								Require <code>symfony/form</code> and <code>symfony/twig-bridge</code> in <code>composer.json</code>
+								<pre class="bigger"><code>&quot;require&quot;: {
+	&quot;symfony/form&quot;: &quot;~2.1&quot;
+	&quot;symfony/twig-bridge&quot;: &quot;~2.1&quot;
+}</code></pre>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Register the service in <code>bootstrap.php</code>
+								<pre class="bigger"><code class="language-php">$app->register(new Silex\Provider\FormServiceProvider());</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Usage (1/2)</h2>
+
+						<ul>
+							<li class="fragment">
+								Use <code style="font-size: 70%;">$app['form.factory']</code> to Symfony's Form Component
+								<pre class="bigger fragment"><code class="language-php" style="max-height: 380px; overflow: scroll;">$app->match('/form', function (Request $request) use ($app) {
+	// some default data for when the form is displayed the first time
+	$data = array(
+		'name' =&gt; 'Your name',
+		'email' =&gt; 'Your email',
+		'message' =&gt; 'Your message'
+	);
+
+	$form = $app['form.factory']-&gt;createBuilder('form', $data)
+		-&gt;add('name', 'text')
+		-&gt;add('email', 'email')
+		-&gt;add('message', 'textarea')
+		-&gt;getForm();
+
+	if ('POST' == $request-&gt;getMethod()) {
+		$form-&gt;bind($request);
+
+		if ($form-&gt;isValid()) {
+			$data = $form-&gt;getData();
+
+			// do something with the data
+
+			// redirect somewhere
+			return $app-&gt;redirect('...');
+		}
+	}
+
+	// display the form
+	return $app['twig']-&gt;render('index.twig', array('form' =&gt; $form-&gt;createView()));
+});</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Usage (2/2)</h2>
+						<ul>
+							<li class="fragment">
+								Twig template code
+								<pre class="bigger"><code class="language-html dontrun" style="max-height: 380px; overflow: scroll;">&lt;form action=&quot;#&quot; method=&quot;post&quot; {{ form_enctype(form) }}&gt;
+	{{ form_widget(form) }}
+	&lt;input type=&quot;submit&quot; name=&quot;submit&quot; /&gt;
+&lt;/form&gt;</code></pre>
+							</li>
+							<li class="fragment">
+								Resulting HTML
+								<pre class="bigger"><code class="language-html dontrun" style="max-height: 280px; overflow: scroll;">&lt;form action=&quot;#&quot; method=&quot;post&quot;&gt;
+	&lt;div id=&quot;form&quot;&gt;
+		&lt;div&gt;
+			&lt;label for=&quot;form_name&quot;&gt;Name&lt;/label&gt;
+			<span style="white-space: nowrap;">&lt;input type=&quot;text&quot; id=&quot;form_name&quot; name=&quot;form[name]&quot; value=&quot;Your name&quot;&gt;</span>
+		&lt;/div&gt;
+		&lt;div&gt;
+			&lt;label for=&quot;form_email&quot;&gt;Email&lt;/label&gt;
+			<span style="white-space: nowrap;">&lt;input type=&quot;text&quot; id=&quot;form_email&quot; name=&quot;form[email]&quot; value=&quot;Your email&quot;&gt;</span>
+		&lt;/div&gt;
+		&lt;div&gt;
+			&lt;label for=&quot;form_message&quot;&gt;Message&lt;/label&gt;
+			<span style="white-space: nowrap;">&lt;textarea id=&quot;form_message&quot; name=&quot;form[message]&quot;&gt;Your message&lt;/textarea&gt;</span>
+		&lt;/div&gt;
+		<span style="white-space: nowrap;">&lt;input type=&quot;hidden&quot; id=&quot;form__token&quot; name=&quot;form[_token]&quot; value=&quot;bdb2fdb025d2a20fa21e4a3cbc6c8fda8051e020&quot;&gt;</span>
+	&lt;/div&gt;
+	&lt;input type=&quot;submit&quot; name=&quot;submit&quot; /&gt;
+&lt;/form&gt;</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Form Field Types</h2>
+
+						<ul>
+							<li class="fragment">
+								Form field types<small><a href="http://symfony.com/doc/current/book/forms.html#built-in-field-types">&#9873;</a></small>
+								<ul class="constraints">
+									<li>checkbox</li>
+									<li>choice</li>
+									<li>csrf</li>
+									<li>date</li>
+									<li>datetime</li>
+									<li>hidden</li>
+									<li>text</li>
+									<li>textarea</li>
+									<li>email</li>
+									<li>integer</li>
+									<li>number</li>
+									<li>password</li>
+									<li>search</li>
+									<li>url</li>
+									<li>...</li>
+								</ul>
+								<br style="clear: left;" />
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Customizing forms</h2>
+						<ul>
+							<li class="fragment">
+								To create a named form use an alternate syntax
+								<pre class="bigger"><code class="language-php" style="max-height: 180px; overflow: scroll;">$loginform = $app['form.factory']-&gt;createNamed('loginform', $data)
+	-&gt;add('username', 'text')
+	-&gt;add('password', 'password');</code></pre>
+							</li>
+							<li class="fragment">
+								It's possible to customize<small><a href="http://symfony.com/doc/current/book/forms.html#rendering-each-field-by-hand">&#9873;</a></small> the output of a form
+								<pre class="bigger"><code class="language-html dontrun" style="max-height: 240px; overflow: scroll;">&lt;form action=&quot;#&quot; method=&quot;post&quot;  {{ form_enctype(form) }}&gt;
+	&lt;dl class=&quot;clearfix&quot;&gt;
+		&lt;dt&gt;
+			{{ form_label(loginform.username) }}
+		&lt;/dt&gt;
+		&lt;dd&gt;
+			{{ form_widget(loginform.username) }}
+			{{ form_errors(loginform.username) }}
+		&lt;/dd&gt;
+		&lt;dt&gt;
+			{{ form_label(loginform.password) }}
+		&lt;/dt&gt;
+		&lt;dd&gt;
+			{{ form_widget(loginform.password) }}
+			{{ form_errors(loginform.password) }}
+		&lt;/dd&gt;
+	&lt;/dl&gt;
+	{{ form_widget(loginform._token) }}
+	&lt;input type=&quot;submit&quot; name=&quot;submit&quot; value=&quot;Log In&quot; /&gt;
+&lt;/form&gt;</code></pre>
+								<ul>
+									<li>Don't forget the CSRF token!!</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Forms + Validator = Winning!</h2>
+						<ul>
+							<li class="fragment">
+								FormServiceProvider plays nice with ValidatorServiceProvider
+								<pre class="bigger"><code class="language-php" style="max-height: 380px; overflow: scroll;">$loginform = $app['form.factory']-&gt;createNamed('loginform', $data)
+	-&gt;add('username', 'text', array(
+		'constraints' =&gt; new Assert\Email()
+	))
+	-&gt;add('password', 'password', array(
+		'constraints' =&gt; array(
+			new Assert\NotBlank(),
+			new Assert\Length(array('max' =&gt; 30))
+		)
+	));</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Forms + Validator Prerequisites</h2>
+						<ul>
+							<li class="fragment">
+								Require a few more packages in <code>composer.json</code> though
+								<pre class="bigger"><code>&quot;require&quot;: {
+	&quot;symfony/form&quot;: &quot;~2.1&quot;,
+	&quot;symfony/validator&quot;: &quot;~2.1&quot;,
+	&quot;symfony/twig-bridge&quot;: &quot;~2.1&quot;,
+	&quot;symfony/config&quot;: &quot;~2.1&quot;,
+	&quot;symfony/validation&quot;: &quot;~2.1&quot;
+}</code></pre>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Register the TranslationServiceProvider in <code>bootstrap.php</code> (with emtpy messages) or it won't work
+								<pre class="bigger"><code class="language-php">$app-&gt;register(new Silex\Provider\TranslationServiceProvider(), array(
+	'translator.messages' =&gt; array(),
+));</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Example</h2>
+
+						<figure><img src="assets/05/example-10.png" alt="" title="" width="580" class="noborder" /></figure>
+
+						<p style="font-size: 75%">Let's take a look at <code>assets/ws2-sws-fiddles-silex/10.forms-validation/</code> <a href="assets/ws2-sws-fiddles-silex/10.forms-validation/">&rarr;</a></p>
+					</section>
+
+					<section>
+						<h2>File Uploads</h2>
+						<pre class="bigger"><code class="language-php" style="max-height: 420px; overflow: scroll;">$app-&gt;match('/', function (Application $app) {
+
+	$uploadform = $app['form.factory']
+		-&gt;createNamed('uploadform')
+		-&gt;add('my_upload', 'file', array(
+			'constraints' =&gt; new Assert\NotBlank()
+		));
+
+	if ('POST' == $app['request']->getMethod()) {
+		$uploadform->bindRequest($app['request']);
+
+		if ($uploadform->isValid()) {
+			$files = $app['request']->files->get($uploadform->getName());
+			$filename = $files['my_upload']->getClientOriginalName();
+			$files['my_upload']->move(__DIR__ . '/../web/uploads/', $filename);
+
+			return $app['twig']->render('form.twig', array(
+				'message' => 'File was successfully uploaded!',
+				'uploadform' => $uploadform->createView()
+			));
+		}
+	}
+
+	return $app['twig']->render('form.twig', array(
+		'message' => 'Upload a file',
+		'uploadform' => $uploadform->createView()
+	));
+
+})->method('GET|POST');</code></pre>
+					</section>
+
+					<section>
+						<h2>Example</h2>
+
+						<figure><img src="assets/05/example-11.png" alt="" title="" width="580" class="noborder" /></figure>
+
+						<p style="font-size: 75%">Let's take a look at <code>assets/ws2-sws-fiddles-silex/11.session-upload/</code> <a href="assets/ws2-sws-fiddles-silex/11.session-upload/">&rarr;</a></p>
+					</section>
+
+				</section>
+
+
 				<!-- The END -->
 				<section>
 					<section>
