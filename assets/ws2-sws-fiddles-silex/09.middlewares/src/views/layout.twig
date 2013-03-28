@@ -28,10 +28,10 @@
 
 		<nav role="navigation">
 			<ul>
-				<li class="{% if app.request.getPathInfo()|split('/')[1] == '' %}active{% endif %}"><a href="{{ path('home') }}">Home</a></li>
-				<li class="{% if app.request.getPathInfo()|split('/')[1] == 'links' %}active{% endif %}"><a href="{{ path('links') }}">Links</a></li>
-				<li class="{% if app.request.getPathInfo()|split('/')[1] == 'users' %}active{% endif %}"><a href="{{ path('users') }}">Users</a></li>
-				<li class="{% if app.request.getPathInfo()|split('/')[1] == 'about' %}active{% endif %}"><a href="{{ path('about') }}">About</a></li>
+				<li class="{% if first_url_part == '' %}active{% endif %}"><a href="{{ path('home') }}">Home</a></li>
+				<li class="{% if first_url_part == 'links' %}active{% endif %}"><a href="{{ path('links') }}">Links</a></li>
+				<li class="{% if first_url_part == 'users' %}active{% endif %}"><a href="{{ path('users') }}">Users</a></li>
+				<li class="{% if first_url_part == 'about' %}active{% endif %}"><a href="{{ path('about') }}">About</a></li>
 			</ul>
 		</nav>
 
