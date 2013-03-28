@@ -688,7 +688,7 @@ if (count($errors) &gt; 0) {
 			&lt;label for=&quot;form_message&quot;&gt;Message&lt;/label&gt;
 			<span style="white-space: nowrap;">&lt;textarea id=&quot;form_message&quot; name=&quot;form[message]&quot;&gt;Your message&lt;/textarea&gt;</span>
 		&lt;/div&gt;
-		<span style="white-space: nowrap;">&lt;input type=&quot;hidden&quot; id=&quot;form__token&quot; name=&quot;form[_token]&quot; value=&quot;bdb2fdb025d2a20fa21e4a3cbc6c8fda8051e020&quot;&gt;</span>
+		<span style="white-space: nowrap;">&lt;input type=&quot;hidden&quot; id=&quot;form_token&quot; name=&quot;form[_token]&quot; value=&quot;bdb2fdb025d2a20fa21e4a3cbc6c8fda8051e020&quot;&gt;</span>
 	&lt;/div&gt;
 	&lt;input type=&quot;submit&quot; name=&quot;submit&quot; /&gt;
 &lt;/form&gt;</code></pre>
@@ -735,7 +735,7 @@ if (count($errors) &gt; 0) {
 							</li>
 							<li class="fragment">
 								It's possible to customize<small><a href="http://symfony.com/doc/current/book/forms.html#rendering-each-field-by-hand">&#9873;</a></small> the output of a form
-								<pre class="bigger"><code class="language-html dontrun" style="max-height: 240px; overflow: scroll;">&lt;form action=&quot;#&quot; method=&quot;post&quot;  {{ form_enctype(form) }}&gt;
+								<pre class="bigger"><code class="language-html dontrun" style="max-height: 240px; overflow: scroll;">&lt;form action=&quot;#&quot; method=&quot;post&quot;  {{ form_enctype(loginform) }}&gt;
 	&lt;dl class=&quot;clearfix&quot;&gt;
 		&lt;dt&gt;
 			{{ form_label(loginform.username) }}
@@ -791,7 +791,7 @@ if (count($errors) &gt; 0) {
 	&quot;symfony/validator&quot;: &quot;~2.1&quot;,
 	&quot;symfony/twig-bridge&quot;: &quot;~2.1&quot;,
 	&quot;symfony/config&quot;: &quot;~2.1&quot;,
-	&quot;symfony/validation&quot;: &quot;~2.1&quot;
+	&quot;symfony/translation&quot;: &quot;~2.1&quot;
 }</code></pre>
 							</li>
 							<li class="fragment" style="margin-top: 1em;">
