@@ -398,7 +398,7 @@ $app->get('/hello/{name}', function ($name) {
 								Example <em>(using a controller)</em>
 								<pre class="bigger"><code class="language-php">public function connect(Application $app) {
 	return $app['controllers_factory']-&gt;get('/somewhere',
-	       array($this,'somewhere')-&gt;before(array($this,'check'));
+	       array($this,'somewhere'))-&gt;before(array($this,'check'));
 }
 
 public function check(Request $request, Application $app) { /* ... */ }</code></pre>
