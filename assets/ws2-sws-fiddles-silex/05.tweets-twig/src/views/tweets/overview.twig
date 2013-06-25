@@ -1,0 +1,20 @@
+{# extend the parent tpl #}
+{% extends 'layout.twig' %}
+
+
+{# set the pagetitle in the parent tpl #}
+{% set pageTitle = 'Tweets - Browse' %}
+
+
+{# overwrite the pageContent block #}
+{% block pageContent %}
+	{% if tweets %}
+	<ul>
+		{% for id, tweet in tweets %}
+		<li><a href="{{ app.request.baseUrl }}/tweets/{{ id|escape('url') }}">&para;</a> {{ tweet.text }}<br />&mdash; by {{ tweet.author }} <i>{{ tweet.created_at|date('d/m/Y H:i:s') }}</i></li>
+		{% endfor %}
+	</ul>
+	{% else %}
+	<p>No tweets!</p>
+	{% endif %}
+{% endblock %}

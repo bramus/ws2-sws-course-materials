@@ -1,0 +1,14 @@
+{
+	"require": {
+		"silex/silex": "1.0.*@dev",
+		"twig/twig": "1.*",
+		"doctrine/dbal": "2.*",
+		"knplabs/repository-service-provider": "dev-master",
+		"symfony/twig-bridge": "2.*"
+	},
+	"autoload": {
+		"psr-0": {
+			"Ikdoeict": "src/"
+		}
+	}
+}

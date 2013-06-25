@@ -1,0 +1,11 @@
+{# extend the parent tpl #}
+{% extends 'layout.twig' %}
+
+
+{# set the pagetitle in the parent tpl #}
+{% set pageTitle = 'Linkdumpr' %}
+
+{% block pageContent %}
+	<p class="breadcrumb"><a href="{{ path('home') }}">Linkdumpr</a> &raquo; Home</p>
+	<p>Explore <a href="{{ path('links') }}">our links</a> added by <a href="{{ path('users') }}">our users</a></p>
+{% endblock %}

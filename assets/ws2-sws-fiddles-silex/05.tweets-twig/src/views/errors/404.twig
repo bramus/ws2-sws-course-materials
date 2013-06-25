@@ -1,0 +1,10 @@
+{# extend the parent tpl #}
+{% extends 'layout.twig' %}
+
+
+{# set the pagetitle in the parent tpl #}
+{% set pageTitle = 'Tweets - 404 (File Not Found)' %}
+
+{% block pageContent %}
+	<p><strong>404 (File Not Found)</strong><br />{{ error }}</p>
+{% endblock %}

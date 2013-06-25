@@ -1,0 +1,15 @@
+{# extend the parent tpl #}
+{% extends 'layout.twig' %}
+
+
+{# set the pagetitle in the parent tpl #}
+{% set pageTitle = 'Photologger' %}
+
+{% block pageContent %}
+	<p class="breadcrumb"><a href="{{ path('home') }}">My Website</a> &raquo; Home</p>
+	{% if user %}
+		<p>Welcome to <strong>Photolog</strong>, {{ user.username|capitalize }} (<a href="{{ path('auth.logout') }}">logout</a>)! You can <a href="{{ path('photolog.browse') }}">browse your photos</a> or <a href="{{ path('photolog.upload') }}">add a new one</a></p>
+	{% else %}
+		<p>Welcome to <strong>Photolog</strong>. Once <a href="{{ path('auth.login') }}">logged in</a> you can <a href="{{ path('photolog.browse') }}">browse your photos</a> or <a href="{{ path('photolog.upload') }}">add a new one</a></p>
+	{% endif %}
+{% endblock %}
