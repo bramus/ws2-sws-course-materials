@@ -30,6 +30,15 @@ window.addEventListener('load', function() {
 		transition: query.transition || 'default' // default/cube/page/concave/linear(2d)
 	});
 
+	// Don't reveal fragments if not on sws.slidedeck (easier for students to study)
+	if (window.location.host != 'sws2.slidedeck') {
+		var fragments = document.querySelectorAll('.fragment');
+		for (var i = 0, len = fragments.length; i < len ; i++) {
+			fragments[i].classList.add('visible');
+			fragments[i].classList.remove('fragment');
+		}
+	}
+
 
 	// Syntax Highlighting (all code blocks: JS, CSS, HTML, PHP, etc.) + play nice contenteditable
 	var codeBlocks = document.querySelectorAll('pre code');
