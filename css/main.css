@@ -427,16 +427,101 @@ html {
 	top: -4px;
 }
 
-	#reveal .back a {
+	#reveal .back > a {
 		font-size: 14px;
 		opacity: 0.1;
 		white-space: nowrap;
 	}
 
-	#reveal .back a:hover {
+	#reveal .back > a:hover {
 		opacity: 0.7;
 		color: hsl(185, 85%, 70%);
 	}
+
+
+/***********************************************
+ * NAV
+ ***********************************************/
+
+/* index menu */
+
+#reveal nav {
+	padding: 10px;
+	width: 280px;
+	max-height: 545px;
+	max-height: 100vh;
+	overflow-y: auto;
+	-webkit-box-shadow: 10px 10px 25px #1c1e20;
+	-moz-box-shadow: 10px 10px 25px #1c1e20;
+	box-shadow: 10px 10px 25px #1c1e20;
+	z-index: 99999;
+	background: #555a5f;
+	letter-spacing: 1px;
+}
+
+#reveal nav {
+	font-size: 14px;
+	opacity: 0.1;
+	white-space: nowrap;
+}
+
+#reveal nav:hover {
+	opacity: 1;
+	color: hsl(185, 85%, 70%);
+}
+
+#reveal nav > p {
+	color: #000;
+	font-size: 14px;
+	padding: 3px;
+	line-height: 20px;
+	cursor: pointer;
+	color: #fff;
+	margin: 0;
+}
+
+#reveal nav > ul {
+	line-height: 20px;
+	display: none;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+#reveal nav > ul > li {
+	padding: 5px 0;
+	font-size: 16px;
+	padding-left: 5px;
+	position: relative;
+	list-style: none;
+}
+
+#reveal nav > ul > li > ul {
+	margin: 0;
+	padding: 4px 0 0 20px;
+	opacity: 0.7;
+}
+
+#reveal nav > ul > li > ul > li {
+	font-size: 12px;
+	position: relative;
+	list-style: none;
+}
+
+#reveal nav:hover ul {
+	display: block;
+}
+
+#reveal nav .pagenr {
+	position: absolute;
+	top: 2px;
+	right: 5px;
+	color: #ccc;
+}
+
+#reveal nav > ul > li > ul > li a {
+	border-bottom: 1px dotted #999;
+}
 
 /*********************************************
  * IKDOEICT BRANDING
