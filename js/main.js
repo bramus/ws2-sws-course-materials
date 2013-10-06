@@ -61,7 +61,7 @@ window.addEventListener('load', function() {
 				if (subTitleEl) {
 					subSlides.push({
 						num: i + '/' + (j-1),
-						title: subTitleEl.innerText,
+						title: subTitleEl.innerText || subTitleEl.innerHTML,
 					});
 				}
 			}
@@ -69,7 +69,7 @@ window.addEventListener('load', function() {
 
 		toc.push({
 			num : i,
-			title: document.querySelector('#' + mainSection.id + ' > section > h2').innerText,
+			title: document.querySelector('#' + mainSection.id + ' > section > h2').innerText || document.querySelector('#' + mainSection.id + ' > section > h2').innerHTML,
 			subSlides : subSlides
 		});
 	}
