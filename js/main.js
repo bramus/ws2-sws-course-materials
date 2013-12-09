@@ -34,8 +34,11 @@ window.addEventListener('load', function() {
 	if (window.location.host != 'sws2.slidedeck') {
 		var fragments = document.querySelectorAll('.fragment');
 		for (var i = 0, len = fragments.length; i < len ; i++) {
-			fragments[i].classList.add('visible');
-			fragments[i].classList.remove('fragment');
+			var fcl = fragments[i].classList;
+			if (!fcl.contains('dontunfragment')) {
+				fcl.add('visible');
+				fcl.remove('fragment');
+			}
 		}
 	}
 

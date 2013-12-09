@@ -87,9 +87,9 @@
 
 						<p><img src="assets/xx/git-logo-white.png" width="447" alt="" class="noborder" style="margin-top: 3em;" /></p>
 
-						<p class="fragment" style="position: absolute; top: 25%; left: 10%; right: 10%; bottom: 10%; transform: rotate(-2deg);"><img src="assets/xx/barfing-rainbow.gif" width="447" alt="What you guys think of it" class="noborder" /></p>
+						<p class="fragment dontunfragment" style="position: absolute; top: 25%; left: 10%; right: 10%; bottom: 10%; transform: rotate(-2deg);"><img src="assets/xx/barfing-rainbow.gif" width="447" alt="What you guys think of it" class="noborder" /></p>
 
-						<p class="fragment" style="position: absolute; top: 25%; left: 10%; right: 10%; bottom: 10%; transform: rotate(2deg);"><img src="assets/xx/obama-not-bad.png" width="447" alt="What I think of it" class="noborder" /></p>
+						<p class="fragment dontunfragment" style="position: absolute; top: 25%; left: 10%; right: 10%; bottom: 10%; transform: rotate(2deg);"><img src="assets/xx/obama-not-bad.png" width="447" alt="What I think of it" class="noborder" /></p>
 
 					</section>
 
@@ -180,8 +180,8 @@ $ git config --global user.email lorem@ips.um</code></pre>
 							<li class="fragment">
 								Start tracking files in a directory with <code>git init</code>
 								<pre class="bigger"><code class="no-highlight"><span style="opacity: 0.75;">bramus in ~/Kaho/git-demo</span>
-$ <span class="fragment">git init</span>
-<span class="fragment">Initialized empty Git repository in /Users/bramus/Kaho/git-demo/.git/
+$ <span class="fragment dontunfragment">git init</span>
+<span class="fragment dontunfragment">Initialized empty Git repository in /Users/bramus/Kaho/git-demo/.git/
 
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo</span>
 $ </span></code></pre>
@@ -209,11 +209,11 @@ $ </span></code></pre>
 							<li class="fragment">
 								Use <code>git status</code> to check
 								<pre class="bigger"><code class="no-highlight"><span style="opacity: 0.75;">bramus in ~/Kaho/git-demo</span>
-$ <span class="fragment">touch test.txt</span>
+$ <span class="fragment dontunfragment">touch test.txt</span>
 
-<span class="fragment"><span style="opacity: 0.75;">bramus in ~/Kaho/git-demo</span>
-$ </span><span class="fragment">git status</span>
-<span class="fragment">
+<span class="fragment dontunfragment"><span style="opacity: 0.75;">bramus in ~/Kaho/git-demo</span>
+$ </span><span class="fragment dontunfragment">git status</span>
+<span class="fragment dontunfragment">
 # &hellip;
 #
 <span style="color: #FFF;"># Untracked files:</span>
@@ -241,11 +241,11 @@ $ </span></code></pre>
 									<li class="fragment">Actually save them using <code>git commit</code> &rarr; <strong>committing</strong></li>
 								</ol>
 								<pre class="bigger fragment"><code class="no-highlight"><span style="opacity: 0.75;">bramus in ~/Kaho/git-demo</span>
-$ <span class="fragment">git add test.txt</span>
+$ <span class="fragment dontunfragment">git add test.txt</span>
 
-<span class="fragment"><span style="opacity: 0.75;">bramus in ~/Kaho/git-demo</span>
-$ </span><span class="fragment">git commit -m 'Start tracking test.txt'</span>
-<span class="fragment">[master (root-commit) 9c43f96] Start tracking test.txt
+<span class="fragment dontunfragment"><span style="opacity: 0.75;">bramus in ~/Kaho/git-demo</span>
+$ </span><span class="fragment dontunfragment">git commit -m 'Start tracking test.txt'</span>
+<span class="fragment dontunfragment">[master (root-commit) 9c43f96] Start tracking test.txt
  0 files changed
  create mode 100644 test.txt
 
@@ -278,14 +278,14 @@ $ </span></code></pre>
 							<li class="fragment">
 								Only staged files are committed
 								<pre class="bigger fragment"><code class="no-highlight" style="max-height: 380px; overflow: scroll;"><span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master</span>
-$ <span class="fragment">touch test2.txt</span>
-<span class="fragment">
+$ <span class="fragment dontunfragment">touch test2.txt</span>
+<span class="fragment dontunfragment">
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master</span>
-$ </span><span class="fragment">echo 'hello' >> test.txt</span>
-<span class="fragment">
+$ </span><span class="fragment dontunfragment">echo 'hello' >> test.txt</span>
+<span class="fragment dontunfragment">
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master*</span>
-$ </span><span class="fragment">git status</span>
-<span class="fragment"># On branch master
+$ </span><span class="fragment dontunfragment">git status</span>
+<span class="fragment dontunfragment"># On branch master
 <span style="color: #FFF;"># Changes not staged for commit:</span>
 # &hellip;
 #	<span style="color: #5F5;">modified:   test.txt</span>
@@ -295,11 +295,11 @@ $ </span><span class="fragment">git status</span>
 #	<span style="color: #F55;">test2.txt</span>
 #
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master*</span>
-$ </span><span class="fragment">git add test2.txt</span>
-<span class="fragment">
+$ </span><span class="fragment dontunfragment">git add test2.txt</span>
+<span class="fragment dontunfragment">
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master*</span>
-$ </span><span class="fragment">git status</span>
-<span class="fragment"># On branch master
+$ </span><span class="fragment dontunfragment">git status</span>
+<span class="fragment dontunfragment"># On branch master
 <span style="color: #FFF;"># Changes to be committed:</span>
 # &hellip;
 #	<span style="color: #AA3;">new file:   test2.txt</span>
@@ -310,14 +310,14 @@ $ </span><span class="fragment">git status</span>
 #
 
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master*</span>
-$ </span><span class="fragment">git commit -m 'Start tracking test2'</span>
-<span class="fragment">[master f1c6883] Start tracking test2
+$ </span><span class="fragment dontunfragment">git commit -m 'Start tracking test2'</span>
+<span class="fragment dontunfragment">[master f1c6883] Start tracking test2
  0 files changed
  create mode 100644 test2.txt
 
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master*</span>
-$ </span><span class="fragment">git status</span>
-<span class="fragment"># On branch master
+$ </span><span class="fragment dontunfragment">git status</span>
+<span class="fragment dontunfragment"># On branch master
 <span style="color: #FFF;"># Changes not staged for commit:</span>
 # &hellip;
 #	<span style="color: #5F5;">modified:   test.txt</span>
@@ -396,11 +396,11 @@ $ </span></code></pre>
 							<li class="fragment">
 								Deletions are not staged by default
 								<pre class="bigger fragment"><code class="no-highlight" style="max-height: 380px; overflow: scroll;"><span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master</span>
-$ <span class="fragment">rm test2.txt</span>
-<span class="fragment">
+$ <span class="fragment dontunfragment">rm test2.txt</span>
+<span class="fragment dontunfragment">
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master</span>
-$ </span><span class="fragment">git status</span>
-<span class="fragment"># On branch master
+$ </span><span class="fragment dontunfragment">git status</span>
+<span class="fragment dontunfragment"># On branch master
 # Changes not staged for commit:
 #
 #	<span style="color: #5F5;">modified:   test.txt</span>
@@ -408,11 +408,11 @@ $ </span><span class="fragment">git status</span>
 #
 
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master*</span>
-$ </span><span class="fragment">git add .</span>
-<span class="fragment">
+$ </span><span class="fragment dontunfragment">git add .</span>
+<span class="fragment dontunfragment">
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master*</span>
-$ </span><span class="fragment">git status</span>
-<span class="fragment"># On branch master
+$ </span><span class="fragment dontunfragment">git status</span>
+<span class="fragment dontunfragment"># On branch master
 <span style="color: #FFF;"># Changes to be committed:</span>
 # &hellip;
 #	<span style="color: #AA3;">modified:   test.txt</span>
@@ -423,11 +423,11 @@ $ </span><span class="fragment">git status</span>
 #
 
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master*</span>
-$ </span><span class="fragment">git add -u .</span>
-<span class="fragment">
+$ </span><span class="fragment dontunfragment">git add -u .</span>
+<span class="fragment dontunfragment">
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master*</span>
-$ </span><span class="fragment">git status</span>
-<span class="fragment"># On branch master
+$ </span><span class="fragment dontunfragment">git status</span>
+<span class="fragment dontunfragment"># On branch master
 <span style="color: #FFF;"># Changes to be committed:</span>
 # &hellip;
 #	<span style="color: #AA3;">modified:   test.txt</span>
@@ -436,19 +436,19 @@ $ </span><span class="fragment">git status</span>
 #
 
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master*</span>
-$ </span><span class="fragment">git reset test.txt</span>
-<span class="fragment">Unstaged changes after reset:
+$ </span><span class="fragment dontunfragment">git reset test.txt</span>
+<span class="fragment dontunfragment">Unstaged changes after reset:
 M	test.txt
 
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master*</span>
-$ </span><span class="fragment">git commit -m 'Deleted test2.txt'</span>
-<span class="fragment">[master 1d7a184] Deleted test2.txt
+$ </span><span class="fragment dontunfragment">git commit -m 'Deleted test2.txt'</span>
+<span class="fragment dontunfragment">[master 1d7a184] Deleted test2.txt
  0 files changed
  delete mode 100644 test2.txt
 
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master*</span>
-$ </span><span class="fragment">git status</span>
-<span class="fragment"># On branch master
+$ </span><span class="fragment dontunfragment">git status</span>
+<span class="fragment dontunfragment"># On branch master
 <span style="color: #FFF;"># Changes not staged for commit:</span>
 # &hellip;
 #	<span style="color: #5F5;">modified:   test.txt</span>
@@ -456,15 +456,15 @@ $ </span><span class="fragment">git status</span>
 #
 
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master*</span>
-$ </span><span class="fragment">ls</span>
-<span class="fragment">drwxr-xr-x   4 bramus  staff  136 Mar 19 21:18 <span style="color: #55F;">.</span>
+$ </span><span class="fragment dontunfragment">ls</span>
+<span class="fragment dontunfragment">drwxr-xr-x   4 bramus  staff  136 Mar 19 21:18 <span style="color: #55F;">.</span>
 drwxr-xr-x  10 bramus  staff  340 Mar 19 15:49 <span style="color: #55F;">..</span>
 drwxr-xr-x  13 bramus  staff  442 Mar 19 21:24 <span style="color: #55F;">.git</span>
 -rw-r--r--   1 bramus  staff    6 Mar 19 20:44 test.txt
 
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master*</span>
-$ </span><span class="fragment">git commit -am 'Hello'</span>
-<span class="fragment">[master c53f9b6] Hello
+$ </span><span class="fragment dontunfragment">git commit -am 'Hello'</span>
+<span class="fragment dontunfragment">[master c53f9b6] Hello
  1 file changed, 1 insertion(+)
 
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master</span>
@@ -485,11 +485,11 @@ $ </span></code></pre>
 							<li class="fragment">
 								Use <code>git diff <em>file</em></code> to compare the current state with the previously committed state
 								<pre class="bigger fragment"><code class="no-highlight" style="max-height: 380px; overflow: scroll;"><span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master</span>
-$ <span class="fragment">echo 'more hello' >> test.txt</span>
-<span class="fragment">
+$ <span class="fragment dontunfragment">echo 'more hello' >> test.txt</span>
+<span class="fragment dontunfragment">
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master*</span>
-$ </span><span class="fragment">git diff test.txt</span>
-<span class="fragment"><span style="color: #AA3;">diff --git a/test.txt b/test.txt
+$ </span><span class="fragment dontunfragment">git diff test.txt</span>
+<span class="fragment dontunfragment"><span style="color: #AA3;">diff --git a/test.txt b/test.txt
 index ce01362..3477282 100644
 --- a/test.txt
 +++ b/test.txt</span>
@@ -519,8 +519,8 @@ $ </span></code></pre>
 							<li class="fragment">
 								Use <code>git log</code> to see the commit log
 								<pre class="bigger fragment"><code class="no-highlight" style="max-height: 380px; overflow: scroll;"><span style="opacity: 0.75;">bramus in ~/Kaho/git-demo</span>
-$ <span class="fragment">git log</span>
-<span class="fragment"><span style="color: #AA3;">commit c53f9b6bd0e7271af7c5d856f84f51d9b749d77f</span>
+$ <span class="fragment dontunfragment">git log</span>
+<span class="fragment dontunfragment"><span style="color: #AA3;">commit c53f9b6bd0e7271af7c5d856f84f51d9b749d77f</span>
 Author: Bramus &lt;bramus@bram.us&gt;
 Date:   Tue Mar 19 22:09:32 2013 +0100
 
@@ -559,8 +559,8 @@ $ </span></code></pre>
 							<li class="fragment">
 								Use <code>git log --oneline</code> to get a concise output
 								<pre class="bigger fragment"><code class="no-highlight" style="max-height: 380px; overflow: scroll;"><span style="opacity: 0.75;">bramus in ~/Kaho/git-demo</span>
-$ <span class="fragment">git log --oneline</span>
-<span class="fragment"><span style="color: #AA3;">c53f9b6</span> Hello
+$ <span class="fragment dontunfragment">git log --oneline</span>
+<span class="fragment dontunfragment"><span style="color: #AA3;">c53f9b6</span> Hello
 <span style="color: #AA3;">1d7a184</span> deleted test2.txt
 <span style="color: #AA3;">f1c6883</span> Start tracking test2
 <span style="color: #AA3;">9c43f96</span> Start tracking test.txt
@@ -586,8 +586,8 @@ $ </span></code></pre>
 								Ultimate <code>git log</code>
 								<pre class="bigger fragment"><code class="no-highlight" style="white-space: nowrap; overflow: scroll;">$ git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset' --abbrev-commit</code></pre>
 								<pre class="bigger fragment"><code class="no-highlight" style="max-height: 380px; overflow: scroll;"><span style="opacity: 0.75;">bramus in ~/Kaho/git-demo</span>
-$ <span class="fragment" style="white-space: nowrap;">git git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset' --abbrev-commit</span>
-<span class="fragment">* <span style="color: #F55;">c53f9b6</span> - <span style="color: #AA3;">(HEAD, master)</span> Hello <span style="color: #5F5;">(16 minutes ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
+$ <span class="fragment dontunfragment" style="white-space: nowrap;">git git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset' --abbrev-commit</span>
+<span class="fragment dontunfragment">* <span style="color: #F55;">c53f9b6</span> - <span style="color: #AA3;">(HEAD, master)</span> Hello <span style="color: #5F5;">(16 minutes ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
 * <span style="color: #F55;">1d7a184</span> - Deleted test2.txt <span style="color: #5F5;">(61 minutes ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
 * <span style="color: #F55;">f1c6883</span> - Start tracking test2 <span style="color: #5F5;">(2 hours ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
 * <span style="color: #F55;">9c43f96</span> - Start tracking test.txt <span style="color: #5F5;">(6 hours ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
@@ -695,15 +695,15 @@ $ </span></code></pre>
 							<li class="fragment">
 								The <strong>HEAD</strong> can be moved by <strong>checking out</strong> a commit
 								<pre class="bigger fragment"><code class="no-highlight" style="max-height: 380px; overflow: scroll;"><span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master</span>
-$ <span class="fragment" style="white-space: nowrap;">git lg</span>
-<span class="fragment">* <span style="color: #F55;">c53f9b6</span> - <span style="color: #AA3;">(HEAD, master)</span> Hello <span style="color: #5F5;">(15 hours ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
+$ <span class="fragment dontunfragment" style="white-space: nowrap;">git lg</span>
+<span class="fragment dontunfragment">* <span style="color: #F55;">c53f9b6</span> - <span style="color: #AA3;">(HEAD, master)</span> Hello <span style="color: #5F5;">(15 hours ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
 * <span style="color: #F55;">1d7a184</span> - Deleted test2.txt <span style="color: #5F5;">(16 hours ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
 * <span style="color: #F55;">f1c6883</span> - Start tracking test2 <span style="color: #5F5;">(17 hours ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
 * <span style="color: #F55;">9c43f96</span> - Start tracking test.txt <span style="color: #5F5;">(22 hours ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
 
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master</span>
-$ </span><span class="fragment" style="white-space: nowrap;">git checkout 1d7a184</span>
-<span class="fragment">Note: checking out '1d7a184'.
+$ </span><span class="fragment dontunfragment" style="white-space: nowrap;">git checkout 1d7a184</span>
+<span class="fragment dontunfragment">Note: checking out '1d7a184'.
 
 You are in 'detached HEAD' state. You can look around, make experimental
 changes and commit them, and you can discard any commits you make in this
@@ -712,29 +712,29 @@ state without impacting any branches by performing another checkout.
 HEAD is now at 1d7a184... Deleted test2.txt
 
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on (no branch)</span>
-$ <span class="fragment" style="white-space: nowrap;">git lg</span>
-<span class="fragment">* <span style="color: #F55;">1d7a184</span> - <span style="color: #AA3;">(HEAD)</span> Deleted test2.txt <span style="color: #5F5;">(16 hours ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
+$ <span class="fragment dontunfragment" style="white-space: nowrap;">git lg</span>
+<span class="fragment dontunfragment">* <span style="color: #F55;">1d7a184</span> - <span style="color: #AA3;">(HEAD)</span> Deleted test2.txt <span style="color: #5F5;">(16 hours ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
 * <span style="color: #F55;">f1c6883</span> - Start tracking test2 <span style="color: #5F5;">(17 hours ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
 * <span style="color: #F55;">9c43f96</span> - Start tracking test.txt <span style="color: #5F5;">(22 hours ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
 
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master</span>
-$ <span class="fragment" style="white-space: nowrap;">git checkout f1c6883</span>
-<span class="fragment">Previous HEAD position was 1d7a184... Deleted test2.txt
+$ <span class="fragment dontunfragment" style="white-space: nowrap;">git checkout f1c6883</span>
+<span class="fragment dontunfragment">Previous HEAD position was 1d7a184... Deleted test2.txt
 HEAD is now at f1c6883... Start tracking test2
 
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on (no branch)</span>
-$ <span class="fragment" style="white-space: nowrap;">git lg</span>
-<span class="fragment">* <span style="color: #F55;">f1c6883</span> - <span style="color: #AA3;">(HEAD)</span> Start tracking test2 <span style="color: #5F5;">(17 hours ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
+$ <span class="fragment dontunfragment" style="white-space: nowrap;">git lg</span>
+<span class="fragment dontunfragment">* <span style="color: #F55;">f1c6883</span> - <span style="color: #AA3;">(HEAD)</span> Start tracking test2 <span style="color: #5F5;">(17 hours ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
 * <span style="color: #F55;">9c43f96</span> - Start tracking test.txt <span style="color: #5F5;">(22 hours ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
 
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master</span>
-$  <span class="fragment" style="white-space: nowrap;">git checkout master</span>
-<span class="fragment">Previous HEAD position was f1c6883... Start tracking test2
+$  <span class="fragment dontunfragment" style="white-space: nowrap;">git checkout master</span>
+<span class="fragment dontunfragment">Previous HEAD position was f1c6883... Start tracking test2
 Switched to branch 'master'
 
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master</span>
-$ <span class="fragment" style="white-space: nowrap;">git lg</span>
-<span class="fragment">* <span style="color: #F55;">c53f9b6</span> - <span style="color: #AA3;">(HEAD, master)</span> Hello <span style="color: #5F5;">(15 hours ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
+$ <span class="fragment dontunfragment" style="white-space: nowrap;">git lg</span>
+<span class="fragment dontunfragment">* <span style="color: #F55;">c53f9b6</span> - <span style="color: #AA3;">(HEAD, master)</span> Hello <span style="color: #5F5;">(15 hours ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
 * <span style="color: #F55;">1d7a184</span> - Deleted test2.txt <span style="color: #5F5;">(16 hours ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
 * <span style="color: #F55;">f1c6883</span> - Start tracking test2 <span style="color: #5F5;">(17 hours ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
 * <span style="color: #F55;">9c43f96</span> - Start tracking test.txt <span style="color: #5F5;">(22 hours ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
@@ -852,8 +852,8 @@ $ </span></span></code></pre>
 									</li>
 								</ul>
 								<pre class="bigger fragment"><code class="no-highlight" style="max-height: 300px; overflow: scroll;"><span style="opacity: 0.75;">bramus in ~/Kaho</span>
-$ <span class="fragment">git clone git@github.com:fabpot/Silex.git</span>
-<span class="fragment">Cloning into 'Silex'...
+$ <span class="fragment dontunfragment">git clone git@github.com:fabpot/Silex.git</span>
+<span class="fragment dontunfragment">Cloning into 'Silex'...
 remote: Counting objects: 6612, done.
 remote: Compressing objects: 100% (1908/1908), done.
 remote: Total 6612 (delta 4225), reused 6317 (delta 4008)
@@ -861,11 +861,11 @@ Receiving objects: 100% (6612/6612), 1.28 MiB | 176 KiB/s, done.
 Resolving deltas: 100% (4225/4225), done.
 
 <span style="opacity: 0.75;">bramus in ~/Kaho</span>
-$ </span><span class="fragment">cd Silex
+$ </span><span class="fragment dontunfragment">cd Silex
 
 <span style="opacity: 0.75;">bramus in ~/Kaho/Silex on master</span>
-$ </span><span class="fragment">git log --oneline</span>
-<span class="fragment"><span style="color: #AA3;">59e7dbd</span> merged branch davedevelopment/add-doc-info-to-docs (PR #647)
+$ </span><span class="fragment dontunfragment">git log --oneline</span>
+<span class="fragment dontunfragment"><span style="color: #AA3;">59e7dbd</span> merged branch davedevelopment/add-doc-info-to-docs (PR #647)
 <span style="color: #AA3;">6a4fffe</span> Added a note about writing documentation
 <span style="color: #AA3;">8e6d30a</span> merged branch davedevelopment/form-extension-points (PR #553)
 <span style="color: #AA3;">7c38c9a</span> Add services allowing for form type extensions and guessers
@@ -899,11 +899,11 @@ $ </span></code></pre>
 									</li>
 								</ul>
 								<pre class="bigger fragment"><code class="no-highlight" style="max-height: 300px; overflow: scroll;"><span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master</span>
-$ <span class="fragment">git remote add origin git@github.com:bramus/git-demo.git</span>
-<span class="fragment">
+$ <span class="fragment dontunfragment">git remote add origin git@github.com:bramus/git-demo.git</span>
+<span class="fragment dontunfragment">
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master</span>
-$ </span><span class="fragment">git push origin master</span>
-<span class="fragment">Counting objects: 9, done.
+$ </span><span class="fragment dontunfragment">git push origin master</span>
+<span class="fragment dontunfragment">Counting objects: 9, done.
 Delta compression using up to 8 threads.
 Compressing objects: 100% (5/5), done.
 Writing objects: 100% (9/9), 705 bytes, done.
@@ -953,14 +953,14 @@ $ </span></code></pre>
 							<li class="fragment">
 								List all remotes
 								<pre class="bigger fragment"><code class="no-highlight" style="max-height: 300px; overflow: scroll;"><span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master</span>
-$ <span class="fragment" style="color: #FFF;">git remote show</span>
-<span class="fragment">origin</span></code></pre>
+$ <span class="fragment dontunfragment" style="color: #FFF;">git remote show</span>
+<span class="fragment dontunfragment">origin</span></code></pre>
 							</li>
 							<li class="fragment">
 								Inspect one remote
 								<pre class="bigger fragment"><code class="no-highlight" style="max-height: 300px; overflow: scroll;"><span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master</span>
-$ <span class="fragment" style="color: #FFF;">git remote show origin</span>
-<span class="fragment">* remote origin
+$ <span class="fragment dontunfragment" style="color: #FFF;">git remote show origin</span>
+<span class="fragment dontunfragment">* remote origin
   Fetch URL: git@github.com:bramus/git-demo.git
   Push  URL: git@github.com:bramus/git-demo.git
   HEAD branch: master
@@ -1015,24 +1015,24 @@ $ <span class="fragment" style="color: #FFF;">git remote show origin</span>
 							<li class="fragment">
 								Creating an <code>experiment</code> branch based on the <code>master</code>
 								<pre class="bigger fragment"><code class="no-highlight" style="max-height: 380px; overflow: scroll;"><span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master</span>
-$ <span class="fragment" style="color: #FFF;">git branch</span>
-<span class="fragment">* <span style="background-color: #AA3; color: #333;">master</span>
+$ <span class="fragment dontunfragment" style="color: #FFF;">git branch</span>
+<span class="fragment dontunfragment">* <span style="background-color: #AA3; color: #333;">master</span>
 
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master</span>
-$ </span><span class="fragment" style="color: #FFF;">git branch experiment</span>
-<span class="fragment">
+$ </span><span class="fragment dontunfragment" style="color: #FFF;">git branch experiment</span>
+<span class="fragment dontunfragment">
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master</span>
-$ </span><span class="fragment" style="color: #FFF;">git branch</span>
-<span class="fragment">  <span style="color: #AA3;">experiment</span>
+$ </span><span class="fragment dontunfragment" style="color: #FFF;">git branch</span>
+<span class="fragment dontunfragment">  <span style="color: #AA3;">experiment</span>
 * <span style="background-color: #AA3; color: #333;">master</span>
 
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master</span>
-$ </span><span class="fragment" style="color: #FFF;">git checkout experiment</span>
-<span class="fragment">Switched to branch 'experiment'
+$ </span><span class="fragment dontunfragment" style="color: #FFF;">git checkout experiment</span>
+<span class="fragment dontunfragment">Switched to branch 'experiment'
 
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on experiment</span>
-$ </span><span class="fragment" style="color: #FFF;">git branch</span>
-<span class="fragment">* <span style="background-color: #AA3; color: #333;">experiment</span>
+$ </span><span class="fragment dontunfragment" style="color: #FFF;">git branch</span>
+<span class="fragment dontunfragment">* <span style="background-color: #AA3; color: #333;">experiment</span>
   <span style="color: #AA3;">master</span>
 
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master</span>
@@ -1057,50 +1057,50 @@ $ </span></code></pre>
 							<li class="fragment">
 								Changes are committed on the active branch
 								<pre class="bigger fragment"><code class="no-highlight" style="max-height: 380px; overflow: scroll;"><span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on experiment</span>
-$ <span class="fragment" style="color: #FFF;">touch exp.txt</span>
-<span class="fragment">
+$ <span class="fragment dontunfragment" style="color: #FFF;">touch exp.txt</span>
+<span class="fragment dontunfragment">
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on experiment*</span>
-$ </span><span class="fragment" style="color: #FFF;">git add .</span>
-<span class="fragment">
+$ </span><span class="fragment dontunfragment" style="color: #FFF;">git add .</span>
+<span class="fragment dontunfragment">
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on experiment*</span>
-$ </span><span class="fragment" style="color: #FFF;">git commit -m 'Start tracking exp.txt'</span>
-<span class="fragment">[experiment a65b9d7] Start tracking exp.txt
+$ </span><span class="fragment dontunfragment" style="color: #FFF;">git commit -m 'Start tracking exp.txt'</span>
+<span class="fragment dontunfragment">[experiment a65b9d7] Start tracking exp.txt
  0 files changed
  create mode 100644 exp.txt
 
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on experiment</span>
-$ </span><span class="fragment" style="color: #FFF;">git lg</span>
-<span class="fragment">* <span style="color: #F55;">a65b9d7</span> - <span style="color: #AA3;">(HEAD, experiment)</span> Start tracking exp.txt (7 seconds ago) <span style="color: #55F;">&lt;Bramus&gt;</span>
+$ </span><span class="fragment dontunfragment" style="color: #FFF;">git lg</span>
+<span class="fragment dontunfragment">* <span style="color: #F55;">a65b9d7</span> - <span style="color: #AA3;">(HEAD, experiment)</span> Start tracking exp.txt (7 seconds ago) <span style="color: #55F;">&lt;Bramus&gt;</span>
 * <span style="color: #F55;">c53f9b6</span> - <span style="color: #AA3;">(origin/master, master)</span> Hello <span style="color: #5F5;">(15 hours ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
 * <span style="color: #F55;">1d7a184</span> - Deleted test2.txt <span style="color: #5F5;">(16 hours ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
 * <span style="color: #F55;">f1c6883</span> - Start tracking test2 <span style="color: #5F5;">(17 hours ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
 * <span style="color: #F55;">9c43f96</span> - Start tracking test.txt <span style="color: #5F5;">(22 hours ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
 
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on experiment</span>
-$ </span><span class="fragment" style="color: #FFF;">git checkout master</span>
-<span class="fragment">Switched to branch 'master'
+$ </span><span class="fragment dontunfragment" style="color: #FFF;">git checkout master</span>
+<span class="fragment dontunfragment">Switched to branch 'master'
 
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master</span>
-$ </span><span class="fragment">ls</span>
-<span class="fragment">drwxr-xr-x   4 bramus  staff  136 Mar 20 20:19 <span style="color: #55F;">.</span>
+$ </span><span class="fragment dontunfragment">ls</span>
+<span class="fragment dontunfragment">drwxr-xr-x   4 bramus  staff  136 Mar 20 20:19 <span style="color: #55F;">.</span>
 drwxr-xr-x  11 bramus  staff  374 Mar 20 15:53 <span style="color: #55F;">..</span>
 drwxr-xr-x  14 bramus  staff  476 Mar 20 20:19 <span style="color: #55F;">.git</span>
 -rw-r--r--   1 bramus  staff    6 Mar 20 14:38 test.txt
 
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master</span>
-$ </span><span class="fragment" style="color: #FFF;">echo 'on the master right now' &gt;&gt; test.txt</span>
-<span class="fragment">
+$ </span><span class="fragment dontunfragment" style="color: #FFF;">echo 'on the master right now' &gt;&gt; test.txt</span>
+<span class="fragment dontunfragment">
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master*</span>
-$ </span><span class="fragment" style="color: #FFF;">git add .</span>
-<span class="fragment">
+$ </span><span class="fragment dontunfragment" style="color: #FFF;">git add .</span>
+<span class="fragment dontunfragment">
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master*</span>
-$ </span><span class="fragment" style="color: #FFF;">git commit -m 'on the master'</span>
-<span class="fragment">[master 0ea8dd4] on the master
+$ </span><span class="fragment dontunfragment" style="color: #FFF;">git commit -m 'on the master'</span>
+<span class="fragment dontunfragment">[master 0ea8dd4] on the master
  1 file changed, 1 insertion(+)
 
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master</span>
-$ </span><span class="fragment" style="color: #FFF;">git lg</span>
-<span class="fragment">* <span style="color: #F55;">0ea8dd4</span> - <span style="color: #AA3;">(HEAD, master)</span> on the master (2 seconds ago) <span style="color: #55F;">&lt;Bramus&gt;</span>
+$ </span><span class="fragment dontunfragment" style="color: #FFF;">git lg</span>
+<span class="fragment dontunfragment">* <span style="color: #F55;">0ea8dd4</span> - <span style="color: #AA3;">(HEAD, master)</span> on the master (2 seconds ago) <span style="color: #55F;">&lt;Bramus&gt;</span>
 * <span style="color: #F55;">c53f9b6</span> - <span style="color: #AA3;">(origin/master)</span> Hello <span style="color: #5F5;">(15 hours ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
 * <span style="color: #F55;">1d7a184</span> - Deleted test2.txt <span style="color: #5F5;">(16 hours ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
 * <span style="color: #F55;">f1c6883</span> - Start tracking test2 <span style="color: #5F5;">(17 hours ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
@@ -1137,14 +1137,14 @@ $ </span></code></pre>
 									<li>A merge commit is created</li>
 								</ul>
 								<pre class="bigger fragment"><code class="no-highlight" style="max-height: 360px; overflow: scroll;"><span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master</span>
-$ <span class="fragment" style="color: #FFF;">git merge experiment</span>
-<span class="fragment">Merge made by the 'recursive' strategy.
+$ <span class="fragment dontunfragment" style="color: #FFF;">git merge experiment</span>
+<span class="fragment dontunfragment">Merge made by the 'recursive' strategy.
  0 files changed
  create mode 100644 exp.txt
 
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master</span>
-$ </span><span class="fragment" style="color: #FFF;">git lg</span>
-<span class="fragment">*   <span style="color: #F55;">965d016</span> - <span style="color: #AA3;">(HEAD, master)</span> Merge branch 'experiment' <span style="color: #5F5;">(5 seconds ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
+$ </span><span class="fragment dontunfragment" style="color: #FFF;">git lg</span>
+<span class="fragment dontunfragment">*   <span style="color: #F55;">965d016</span> - <span style="color: #AA3;">(HEAD, master)</span> Merge branch 'experiment' <span style="color: #5F5;">(5 seconds ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
 <span style="color: #F55;">|</span><span style="color: #5F5;">\</span>
 <span style="color: #F55;">|</span> * <span style="color: #F55;">a65b9d7</span> - <span style="color: #AA3;">(experiment)</span> Start tracking exp.txt <span style="color: #5F5;">(6 minutes ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
 * <span style="color: #5F5;">|</span> <span style="color: #F55;">0ea8dd4</span> - on the master <span style="color: #5F5;">(2 minutes ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
@@ -1179,13 +1179,13 @@ $ </span></code></pre>
 									<li>Override warning using <code>-D</code> instead of <code>-d</code></li>
 								</ul>
 								<pre class="bigger fragment"><code class="no-highlight" style="max-height: 360px; overflow: scroll;"><span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master</span>
-$ <span class="fragment" style="color: #FFF;">git branch -d otherbranch</span>
-<span class="fragment">error: The branch 'otherbranch' is not fully merged.
+$ <span class="fragment dontunfragment" style="color: #FFF;">git branch -d otherbranch</span>
+<span class="fragment dontunfragment">error: The branch 'otherbranch' is not fully merged.
 If you are sure you want to delete it, run 'git branch -D otherbranch'.
 
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master</span>
-$ </span><span class="fragment" style="color: #FFF;">git branch -D otherbranch</span>
-<span class="fragment">Deleted branch otherbranch (was e079840).
+$ </span><span class="fragment dontunfragment" style="color: #FFF;">git branch -D otherbranch</span>
+<span class="fragment dontunfragment">Deleted branch otherbranch (was e079840).
 
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master</span>
 $ </span></code></pre>
@@ -1215,44 +1215,44 @@ $ </span></code></pre>
 									<li>Manual intervention <em>(choosing which version to keep)</em> is needed</li>
 								</ul>
 								<pre class="bigger fragment"><code class="no-highlight" style="max-height: 280px; overflow: scroll;"><span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master</span>
-$ <span class="fragment" style="color: #FFF;">echo 'something for exp' >> exp.txt</span>
-<span class="fragment">
+$ <span class="fragment dontunfragment" style="color: #FFF;">echo 'something for exp' >> exp.txt</span>
+<span class="fragment dontunfragment">
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master*</span>
-$ </span><span class="fragment" style="color: #FFF;">git add .</span>
-<span class="fragment">
+$ </span><span class="fragment dontunfragment" style="color: #FFF;">git add .</span>
+<span class="fragment dontunfragment">
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master*</span>
-$ </span><span class="fragment" style="color: #FFF;">git commit -m 'change exp.txt'</span>
-<span class="fragment">[master babbcd3] change exp.txt
+$ </span><span class="fragment dontunfragment" style="color: #FFF;">git commit -m 'change exp.txt'</span>
+<span class="fragment dontunfragment">[master babbcd3] change exp.txt
  1 file changed, 1 insertion(+)
 
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master</span>
-$ </span><span class="fragment" style="color: #FFF;">git checkout experiment </span>
-<span class="fragment">Switched to branch 'experiment'
+$ </span><span class="fragment dontunfragment" style="color: #FFF;">git checkout experiment </span>
+<span class="fragment dontunfragment">Switched to branch 'experiment'
 
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on experiment</span>
-$ </span><span class="fragment" style="color: #FFF;">echo 'a different line for exp.txt' >> exp.txt</span>
-<span class="fragment">
+$ </span><span class="fragment dontunfragment" style="color: #FFF;">echo 'a different line for exp.txt' >> exp.txt</span>
+<span class="fragment dontunfragment">
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on experiment*</span>
-$ </span><span class="fragment" style="color: #FFF;">git add .</span>
-<span class="fragment">
+$ </span><span class="fragment dontunfragment" style="color: #FFF;">git add .</span>
+<span class="fragment dontunfragment">
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on experiment*</span>
-$ </span><span class="fragment" style="color: #FFF;">git commit -m 'change exp.txt (from experiment)'</span>
-<span class="fragment">[experiment 2925064] change exp.txt (from experiment)
+$ </span><span class="fragment dontunfragment" style="color: #FFF;">git commit -m 'change exp.txt (from experiment)'</span>
+<span class="fragment dontunfragment">[experiment 2925064] change exp.txt (from experiment)
  1 file changed, 1 insertion(+)
 
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on experiment</span>
-$ </span><span class="fragment" style="color: #FFF;">git checkout master</span>
-<span class="fragment">Switched to branch 'master'
+$ </span><span class="fragment dontunfragment" style="color: #FFF;">git checkout master</span>
+<span class="fragment dontunfragment">Switched to branch 'master'
 
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master</span>
-$ </span><span class="fragment" style="color: #FFF;">git merge experiment</span>
-<span class="fragment">Auto-merging exp.txt
+$ </span><span class="fragment dontunfragment" style="color: #FFF;">git merge experiment</span>
+<span class="fragment dontunfragment">Auto-merging exp.txt
 CONFLICT (content): Merge conflict in exp.txt
 Automatic merge failed; fix conflicts and then commit the result.
 
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master*</span>
-$ </span><span class="fragment" style="color: #FFF;">git status</span>
-<span class="fragment"># On branch master
+$ </span><span class="fragment dontunfragment" style="color: #FFF;">git status</span>
+<span class="fragment dontunfragment"># On branch master
 # Unmerged paths:
 #   (use &quot;git add/rm &lt;file&gt;...&quot; as appropriate to mark resolution)
 #
@@ -1260,22 +1260,22 @@ $ </span><span class="fragment" style="color: #FFF;">git status</span>
 #
 
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master*</span>
-$ </span><span class="fragment" style="color: #FFF;">cat exp.txt </span>
-<span class="fragment">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+$ </span><span class="fragment dontunfragment" style="color: #FFF;">cat exp.txt </span>
+<span class="fragment dontunfragment">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
 something for exp
 =======
 a different line for exp.txt
 &gt;&gt;&gt;&gt;&gt;&gt;&gt; experiment
 
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master*</span>
-$ </span><span class="fragment" style="color: #FFF;">subl exp.txt</span>
-<span class="fragment">
+$ </span><span class="fragment dontunfragment" style="color: #FFF;">subl exp.txt</span>
+<span class="fragment dontunfragment">
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master*</span>
-$ </span><span class="fragment" style="color: #FFF;">git add exp.txt</span>
-<span class="fragment">
+$ </span><span class="fragment dontunfragment" style="color: #FFF;">git add exp.txt</span>
+<span class="fragment dontunfragment">
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master*</span>
-$ </span><span class="fragment" style="color: #FFF;">git commit</span>
-<span class="fragment">[master 80de07c] Merge branch 'experiment'
+$ </span><span class="fragment dontunfragment" style="color: #FFF;">git commit</span>
+<span class="fragment dontunfragment">[master 80de07c] Merge branch 'experiment'
 
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master</span>
 $ </span></code></pre>
@@ -1358,28 +1358,28 @@ a different line for exp.txt
 						<h2>Rebasing Example</h2>
 
 						<pre class="bigger fragment"><code class="no-highlight" style="max-height: 380px; overflow: scroll;"><span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master</span>
-$ <span class="fragment" style="color: #FFF;">git lg</span>
-<span class="fragment">* <span style="color: #F55;">1e7f02e</span> - <span style="color: #AA3;">(HEAD, master)</span> A change comtd on master <span style="color: #5F5;">(12 seconds ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
+$ <span class="fragment dontunfragment" style="color: #FFF;">git lg</span>
+<span class="fragment dontunfragment">* <span style="color: #F55;">1e7f02e</span> - <span style="color: #AA3;">(HEAD, master)</span> A change comtd on master <span style="color: #5F5;">(12 seconds ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
 * <span style="color: #F55;">80de07c</span> - First commit! <span style="color: #5F5;">(2 minutes ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
 
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on master</span>
-$ </span><span class="fragment" style="color: #FFF;">git checkout experiment</span>
-<span class="fragment">Switched to branch 'experiment'
+$ </span><span class="fragment dontunfragment" style="color: #FFF;">git checkout experiment</span>
+<span class="fragment dontunfragment">Switched to branch 'experiment'
 
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on experiment</span>
-$ </span><span class="fragment" style="color: #FFF;">git lg</span>
-<span class="fragment"><span style="white-space: nowrap;">* <span style="color: #F55;">669ae62</span> - <span style="color: #AA3;">(HEAD, experiment)</span> A 2nd change comtd on experiment <span style="color: #5F5;">(34 seconds ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span></span>* <span style="color: #F55;">a9bdacb</span> - A change comtd on experiment<span style="color: #5F5;">(69 seconds ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
+$ </span><span class="fragment dontunfragment" style="color: #FFF;">git lg</span>
+<span class="fragment dontunfragment"><span style="white-space: nowrap;">* <span style="color: #F55;">669ae62</span> - <span style="color: #AA3;">(HEAD, experiment)</span> A 2nd change comtd on experiment <span style="color: #5F5;">(34 seconds ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span></span>* <span style="color: #F55;">a9bdacb</span> - A change comtd on experiment<span style="color: #5F5;">(69 seconds ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
 * <span style="color: #F55;">80de07c</span> - First commit! <span style="color: #5F5;">(2 minutes ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
 
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on experiment</span>
-$ </span><span class="fragment" style="color: #FFF;">git rebase master</span>
-<span class="fragment">First, rewinding head to replay your work on top of it...
+$ </span><span class="fragment dontunfragment" style="color: #FFF;">git rebase master</span>
+<span class="fragment dontunfragment">First, rewinding head to replay your work on top of it...
 Applying: A change comtd on experiment
 Applying: A 2nd change comtd on experiment
 
 <span style="opacity: 0.75;">bramus in ~/Kaho/git-demo on experiment</span>
-$ </span><span class="fragment" style="color: #FFF;">git lg</span>
-<span class="fragment"><span style="white-space: nowrap;">* <span style="color: #F55;">dba0673</span> - <span style="color: #AA3;">(HEAD, experiment)</span> A 2nd change comtd on experiment <span style="color: #5F5;">(2 seconds ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span></span>* <span style="color: #F55;">84484e4</span> - A change comtd on experiment<span style="color: #5F5;">(2 seconds ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
+$ </span><span class="fragment dontunfragment" style="color: #FFF;">git lg</span>
+<span class="fragment dontunfragment"><span style="white-space: nowrap;">* <span style="color: #F55;">dba0673</span> - <span style="color: #AA3;">(HEAD, experiment)</span> A 2nd change comtd on experiment <span style="color: #5F5;">(2 seconds ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span></span>* <span style="color: #F55;">84484e4</span> - A change comtd on experiment<span style="color: #5F5;">(2 seconds ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
 * <span style="color: #F55;">1e7f02e</span> - <span style="color: #AA3;">(master)</span> A change comtd on master <span style="color: #5F5;">(54 seconds ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
 * <span style="color: #F55;">80de07c</span> - First commit! <span style="color: #5F5;">(3 minutes ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
 
@@ -1480,36 +1480,36 @@ $ </span></code></pre>
 							<li class="fragment">Knowing how to branch != knowing how to collaborate</li>
 							<li class="fragment">
 								When collaborating, maintain this flow
-								<pre class="bigger"><code class="no-highlight" style="max-height: 380px; overflow: scroll;"><span class="fragment"># 1. Make sure the master is up-to-date
+								<pre class="bigger"><code class="no-highlight" style="max-height: 380px; overflow: scroll;"><span class="fragment dontunfragment"># 1. Make sure the master is up-to-date
 <span style="opacity: 0.75;">     $ git checkout master
      $ git pull</span></span>
 
-<span class="fragment"># 2. Create a featurebranch based on the master
+<span class="fragment dontunfragment"># 2. Create a featurebranch based on the master
 <span style="opacity: 0.75;">     $ git checkout -b featurebranch</span></span>
 
-<span class="fragment"># 3. Develop, stage, and commit your feature on the featurebranch.
+<span class="fragment dontunfragment"># 3. Develop, stage, and commit your feature on the featurebranch.
      When finished continue to step 4</span>
 
-<span class="fragment"># 4. Make sure the master is still up-to-date
+<span class="fragment dontunfragment"># 4. Make sure the master is still up-to-date
 <span style="opacity: 0.75;">     $ git checkout master
      $ git pull</span></span>
 
-<span class="fragment"># 5. Rebase the master onto the featurebranch
+<span class="fragment dontunfragment"># 5. Rebase the master onto the featurebranch
      (skip this step if master remained unchanged since step 1)
 <span style="opacity: 0.75;">     $ git checkout featurebranch
      $ git rebase master</span></span>
 
-<span class="fragment"># 6. Merge the featurebranch onto the master
+<span class="fragment dontunfragment"># 6. Merge the featurebranch onto the master
 <span style="opacity: 0.75;">     $ git checkout master
      $ git merge featurebranch</span></span>
 
-<span class="fragment"># 7. Push the master
+<span class="fragment dontunfragment"># 7. Push the master
 <span style="opacity: 0.75;">     $ git push origin master</span></span>
 
-<span class="fragment"># 8. Clean up
+<span class="fragment dontunfragment"># 8. Clean up
 <span style="opacity: 0.75;">     $ git branch -d featurebranch</span></span>
 
-<span class="fragment"># 9. Rinse. Repeat</span></code></pre>
+<span class="fragment dontunfragment"># 9. Rinse. Repeat</span></code></pre>
 							</li>
 						</ul>
 					</section>
@@ -1620,24 +1620,24 @@ $ </span></code></pre>
 					<section>
 						<h2>Forking Flow</h2>
 
-						<pre class="bigger"><code class="no-highlight" style="max-height: 380px; overflow: scroll;"><span class="fragment"># 1. Create a fork on GitHub
+						<pre class="bigger"><code class="no-highlight" style="max-height: 380px; overflow: scroll;"><span class="fragment dontunfragment"># 1. Create a fork on GitHub
 <span style="opacity: 0.75;">     e.g. clone fabpot/Silex to bramus/Silex</span></span>
 
-<span class="fragment"># 2. Clone your repo locally
+<span class="fragment dontunfragment"># 2. Clone your repo locally
 <span style="opacity: 0.75;">     $ git clone git@github.com:bramus/Silex.git</span></span>
 
-<span class="fragment"># 3. Create a featurebranch based on the master
+<span class="fragment dontunfragment"># 3. Create a featurebranch based on the master
 <span style="opacity: 0.75;">     $ git checkout -b featurebranch</span></span>
 
-<span class="fragment"># 4. Develop, stage, and commit your feature on the featurebranch.
+<span class="fragment dontunfragment"># 4. Develop, stage, and commit your feature on the featurebranch.
      When finished continue to step 5</span>
 
-<span class="fragment"># 5. Publish your featurebranch on Github
+<span class="fragment dontunfragment"># 5. Publish your featurebranch on Github
 <span style="opacity: 0.75;">     $ git push origin <em>localbranch</em>:<em>remotebranch</em></span></span>
 
-<span class="fragment"># 6. Do a pull request via Github and await merging</span>
+<span class="fragment dontunfragment"># 6. Do a pull request via Github and await merging</span>
 
-<span class="fragment"># 7. Rinse. Repeat.
+<span class="fragment dontunfragment"># 7. Rinse. Repeat.
 <span style="opacity: 0.75;">     Make sure your master is in sync with the original master one!
      (add the original repo as remote and `git fetch` and `git rebase original/master`)</span></span></code></pre>
 					</section>
@@ -1648,19 +1648,19 @@ $ </span></code></pre>
 							<li class="fragment">Via the Github interface it's possitle to merge pull requests automatically</li>
 							<li class="fragment">Manual process</li>
 						</ul>
-						<pre class="bigger fragment"><code class="no-highlight" style="max-height: 380px; overflow: scroll;"><span class="fragment"># 1. Checkout your master branch
+						<pre class="bigger fragment"><code class="no-highlight" style="max-height: 380px; overflow: scroll;"><span class="fragment dontunfragment"># 1. Checkout your master branch
 <span style="opacity: 0.75;">     $ git checkout master</span></span>
 
-<span class="fragment"># 2. Add a new remote named 'otherdude'
+<span class="fragment dontunfragment"># 2. Add a new remote named 'otherdude'
 <span style="opacity: 0.75;">     $ git remote add otherdude git://github.com/otherdude/Project.git</span></span>
 
-<span class="fragment"># 3. Fetch information about all branches on the 'otherdude' remote
+<span class="fragment dontunfragment"># 3. Fetch information about all branches on the 'otherdude' remote
 <span style="opacity: 0.75;">     $ git fetch otherdude</span></span>
 
-<span class="fragment"># 4. Merge 'otherdude/featurebranch' into your master
+<span class="fragment dontunfragment"># 4. Merge 'otherdude/featurebranch' into your master
 <span style="opacity: 0.75;">     $ git merge otherdude/featurebranch</span></span>
 
-<span class="fragment"># 5. Push your newly-merged branch back to GitHub
+<span class="fragment dontunfragment"># 5. Push your newly-merged branch back to GitHub
 <span style="opacity: 0.75;">     $ git push origin master</span></span></code></pre>
 					</section>
 
@@ -1748,8 +1748,8 @@ config.php</code></pre>
 							</li>
 						</ul>
 						<pre class="bigger fragment"><code class="no-highlight" style="max-height: 330px; overflow: scroll;"><span style="opacity: 0.75;">bramus in ~/Kaho/ikdoeict-website on master*</span>
-$ <span class="fragment" style="color: #FFF;">git add -p index.html</span>
-<span class="fragment"><span style="color: #AA3">diff --git a/index.html b/index.html
+$ <span class="fragment dontunfragment" style="color: #FFF;">git add -p index.html</span>
+<span class="fragment dontunfragment"><span style="color: #AA3">diff --git a/index.html b/index.html
 index 3fc8413..d7af84e 100644
 --- a/index.html
 +++ b/index.html</span>
@@ -1760,20 +1760,20 @@ index 3fc8413..d7af84e 100644
 <span style="color: #5F5">+	&lt;title&gt;Home | IkdoeICT.BE&lt;/title&gt;</span>
  	&lt;meta charset="utf-8" /&gt;
  	&lt;link rel="stylesheet" href="css/normalize.css" /&gt;
-<span style="color: #55F">Stage this hunk [y,n,q,a,d,/,j,J,g,e,?]?</span></span> <span class="fragment">y</span>
+<span style="color: #55F">Stage this hunk [y,n,q,a,d,/,j,J,g,e,?]?</span></span> <span class="fragment dontunfragment">y</span>
 
-<span class="fragment"><span style="color: #F5F">@@ -176,7 +176,7 @@</span>
+<span class="fragment dontunfragment"><span style="color: #F5F">@@ -176,7 +176,7 @@</span>
      &lt;/section&gt;
      &lt;footer&gt;
 <span style="color: #F55">-	&lt;p&gt;Copyright (c) 2012 IkdoeICT.be&lt;/p&gt;</span>
 <span style="color: #5F5">+	&lt;p&gt;Copyright (c) 2013 IkdoeICT.be&lt;/p&gt;</span>
      &lt;/footer&gt;
  &lt;/div&gt;
- <span style="color: #55F">Stage this hunk [y,n,q,a,d,/,j,J,g,e,?]?</span></span> <span class="fragment">n</span>
-<span class="fragment">
+ <span style="color: #55F">Stage this hunk [y,n,q,a,d,/,j,J,g,e,?]?</span></span> <span class="fragment dontunfragment">n</span>
+<span class="fragment dontunfragment">
 <span style="opacity: 0.75;">bramus in ~/Kaho/ikdoeict-website on master*</span>
-$ </span><span class="fragment" style="color: #FFF;">git status</span>
-<span class="fragment"># On branch master
+$ </span><span class="fragment dontunfragment" style="color: #FFF;">git status</span>
+<span class="fragment dontunfragment"># On branch master
 # Changes to be committed:
 #   (use &quot;git reset HEAD &lt;file&gt;...&quot; to unstage)
 #
@@ -1787,13 +1787,13 @@ $ </span><span class="fragment" style="color: #FFF;">git status</span>
 #
 
 <span style="opacity: 0.75;">bramus in ~/Kaho/ikdoeict-website on master*</span>
-$ </span><span class="fragment" style="color: #FFF;">git commit -m 'title casing'</span>
-<span class="fragment">[master fc91e11] title casing
+$ </span><span class="fragment dontunfragment" style="color: #FFF;">git commit -m 'title casing'</span>
+<span class="fragment dontunfragment">[master fc91e11] title casing
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 <span style="opacity: 0.75;">bramus in ~/Kaho/ikdoeict-website on master*</span>
-$ </span><span class="fragment" style="color: #FFF;">git diff index.html</span>
-<span class="fragment"><span style="color: #AA3">diff --git a/index.html b/index.html
+$ </span><span class="fragment dontunfragment" style="color: #FFF;">git diff index.html</span>
+<span class="fragment dontunfragment"><span style="color: #AA3">diff --git a/index.html b/index.html
 index 7602651..d7af84e 100644
 --- a/index.html
 +++ b/index.html</span>
@@ -1806,11 +1806,11 @@ index 7602651..d7af84e 100644
  &lt;/div&gt;
 
 <span style="opacity: 0.75;">bramus in ~/Kaho/ikdoeict-website on master*</span>
-$ </span><span class="fragment" style="color: #FFF;">git add .</span>
-<span class="fragment">
+$ </span><span class="fragment dontunfragment" style="color: #FFF;">git add .</span>
+<span class="fragment dontunfragment">
 <span style="opacity: 0.75;">bramus in ~/Kaho/ikdoeict-website on master*</span>
-$ </span><span class="fragment" style="color: #FFF;">git commit -m 'copyright 2013 instead of 2012'</span>
-<span class="fragment">[master c36c7be] copyright 2013 instead of 2012
+$ </span><span class="fragment dontunfragment" style="color: #FFF;">git commit -m 'copyright 2013 instead of 2012'</span>
+<span class="fragment dontunfragment">[master c36c7be] copyright 2013 instead of 2012
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 <span style="opacity: 0.75;">bramus in ~/Kaho/ikdoeict-website on master</span>
