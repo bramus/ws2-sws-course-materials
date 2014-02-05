@@ -69,23 +69,32 @@
 					<section>
 						<h2>Wait? What? This is it?!</h2>
 						<ul class="short">
-							<li>Yes, it's called a slide deck.</li>
-							<li>Built with HTML/CSS/JS</li>
-							<li>Powered by <em>(a customized)</em> <a href="http://hakim.se/projects/reveal-js">Reveal.js</a></li>
-							<li>Main navigation: left/right</li>
-							<li>Sub-slides: up/down <em>(try it now!)</em></li>
-							<li>Touch Device users: Swiping supported!</li>
+							<li class="fragment">
+								Yes, it's called a slide deck.
+								<ul>
+									<li>Built with HTML/CSS/JS</li>
+									<li>Powered by <em>(a customized)</em> <a href="http://hakim.se/projects/reveal-js">Reveal.js</a></li>
+								</ul>
+							</li>
+							<li class="fragment">
+								Navigation
+								<ul>
+									<li>Main navigation: left/right</li>
+									<li>Sub-slides: up/down <em>(try it now!)</em></li>
+									<li>Touch Device users: Swiping supported!</li>
+								</ul>
+							</li>
 						</ul>
 					</section>
 
 					<section>
 						<h2>Lost?</h2>
 						<ul class="short">
+							<li>Slides Navigator <em>(Top-Left)</em></li>
+							<li>Slide Overview <em>(space)</em></li>
 							<li>Compass <em>(Bottom-Right)</em></li>
 							<li>Slide Number <em>(Bottom-Right)</em></li>
 							<li>Progress Bar <em>(Bottom)</em></li>
-							<li>Slide Overview <em>(space)</em></li>
-							<li>Back to index link <em>(Top-Left)</em></li>
 						</ul>
 					</section>
 
@@ -257,18 +266,14 @@ alert('OK GO!');</code></pre>
 						<h2>Timing</h2>
 						<ul>
 							<li class="fragment">
-								One semester = 13 weeks
-							</li>
-							<li class="fragment">
-								Two main parts
-								<ul>
-									<li>Week 1-7 = PHP</li>
-									<li>Week 8-12 = Information Architecture</li>
-									<li>Note: Week 13 = polyweek</li>
+								One semester = 12 + 1 weeks
+								<ul class="fragment">
+									<li>Week 1-7 = Composer, PSR-0, and Silex</li>
+									<li>Week 8-12 = Various Topics</li>
+									<li>Week 13 = polyweek</li>
 								</ul>
 							</li>
 						</ul>
-						<footer class="fragment">Next year: IA will move to its own course; More time for PHP (<a href="http://24.media.tumblr.com/tumblr_m8t6dkEC521qjt710o1_500.gif">huzzah</a>!)</footer>
 					</section>
 
 				</section>
@@ -362,10 +367,10 @@ alert('OK GO!');</code></pre>
 												<li>PHP Syntax</li>
 												<li>Client-Server</li>
 												<li>Forms</li>
-												<li>Data Persistency</li>
+												<li>Data Persistency (Sessions, Cookies)</li>
 												<li>Classes</li>
-												<li>Templates philosophy</li>
-												<li>Databases basics</li>
+												<li>Templates (Twig)</li>
+												<li>Databases (PDO)</li>
 											</ul>
 										</li>
 									</ul>
@@ -395,27 +400,20 @@ alert('OK GO!');</code></pre>
 										<li>Silex Basics</li>
 										<li>Silex Providers</li>
 										<li>Silex Services</li>
+										<li>i18n</li>
+										<li>timezone aware apps</li>
 									</ul>
 								</li>
 							</ul>
 							<ul class="column column-12">
 								<li class="fragment">
-									Information Architecture
-									<ul>
-										<li>User Stories &amp; Page Tables</li>
-										<li>Wireframing</li>
-										<li>Responsive</li>
-									</ul>
-								</li>
-							</ul>
-							<ul class="column column-12" style="clear: left; padding-top: 0.75em;">
-								<li class="fragment">
-									Misc
+									Various Topics
 									<ul>
 										<li>Git</li>
 										<li>URL Design</li>
-										<li>Web Process</li>
+										<li>Optimization</li>
 										<li>Deployment</li>
+										<li>&hellip;</li>
 									</ul>
 								</li>
 							</ul>
@@ -428,7 +426,7 @@ alert('OK GO!');</code></pre>
 							<li class="fragment">
 								Technology
 								<ul>
-									<li>Scripting Language: PHP 5.4</li>
+									<li>Scripting Language: PHP 5.4+</li>
 									<li>Databaseserver: MySQL and SQLite3</li>
 									<li>Webserver: Apache or <a href="http://php.net/manual/en/features.commandline.webserver.php">PHP 5.4's built-in server</a></li>
 								</ul>
@@ -454,10 +452,10 @@ alert('OK GO!');</code></pre>
 							<li class="fragment">
 								A PHP specific IDE
 								<ul>
+									<li>Zend Studio</li>
+									<li>PHPStorm</li>
 									<li>Netbeans</li>
 									<li>Aptana Studio</li>
-									<li>PHPStorm</li>
-									<li>Zend Studio</li>
 								</ul>
 							</li>
 							<li class="fragment">
@@ -484,7 +482,7 @@ alert('OK GO!');</code></pre>
 							<li class="fragment">
 								Course Materials
 								<ul>
-									<li>Available on <a href="http://bramus.github.com/ws2-sws-course-materials/">GitHub</a></li>
+									<li>Available on <a href="http://bramus.github.io/ws2-sws-course-materials/">GitHub</a></li>
 									<li>Feel free to fork and commit improvements/additions</li>
 								</ul>
 							</li>
@@ -568,7 +566,7 @@ git pull</code></pre>
 										Correct URL? Correct variable? Does the variable contain anything?
 										<ul>
 											<li>Debugsession</li>
-											<li>use <code>dump();</code></li>
+											<li>use <code>var_dump()</code> and the like</li>
 										</ul>
 									</li>
 									<li>
