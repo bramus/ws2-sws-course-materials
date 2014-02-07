@@ -95,19 +95,19 @@
 									<li class="fragment">Include it in your own code in order to get it to work</li>
 								</ul>
 							</li>
-							<li class="fragment">
+							<li class="fragment" style="margin-top: 1em;">
 								Optional properties
-								<ul>
-									<li class="fragment">Split out nicely in several classes for different subfunctionalities</li>
+								<ul class="twocolled">
 									<li class="fragment">Standalone</li>
 									<li class="fragment">Independent</li>
 									<li class="fragment">Documentation provided</li>
+									<li class="fragment">Unit Tests</li>
 									<li class="fragment">Extensible</li>
-									<li class="fragment">PSR-0 Compliant <em>(more on that later)</em></li>
+									<li class="fragment">Structured / PSR-X Compliant<br /><em>(more on that later)</em></li>
 								</ul>
 							</li>
 						</ul>
-						<footer class="fragment">Tip: you can identify a well-written library if it has most (it not all!) of the optional properties</footer>
+						<footer class="fragment"><em>Tip: you can identify a well-written library if it has most (it not all!) of the optional properties</em></footer>
 					</section>
 
 					<section>
@@ -116,16 +116,17 @@
 							<li class="fragment">
 								Specific Libraries
 								<ul>
-									<li>Sending e-mail: PHPMailer, SwiftMailer, &hellip;</li>
-									<li>Working with PDF files: TCPDF, FPDI, &hellip;</li>
-									<li>Graphing/Charting: pChart, JpGraph, Libchart, &hellip;</li>
-									<li>Office Files: PHPExcel, PHPWord, &hellip;</li>
-									<li>Templating: Twig, &hellip;</li>
-									<li>Database and ORM: Doctrine, &hellip;</li>
-									<li>&hellip; <em>(#lmgtfy)</em></li>
+									<li class="fragment">Templating: Twig</li>
+									<li class="fragment">Sending e-mail: PHPMailer, SwiftMailer, &hellip;</li>
+									<li class="fragment">Working with PDF files: TCPDF, FPDI, &hellip;</li>
+									<li class="fragment">Graphing/Charting: pChart, JpGraph, Libchart, &hellip;</li>
+									<li class="fragment">Manipulate Office Files: PHPExcel, PHPWord, &hellip;</li>
+									<li class="fragment">Database and ORM: Doctrine, Fuel, Kohana, Propel, Redbean, &hellip;</li>
+									<li class="fragment">Routing: Klein, Ham, jream/route, bramus/router, &hellip;</li>
+									<li class="fragment">&hellip; <em>(#lmgtfy)</em></li>
 								</ul>
 							</li>
-							<li class="fragment">
+							<li class="fragment" style="margin-top: 1em;">
 								General Libraries
 								<ul>
 									<li>Spoon Library</li>
@@ -143,7 +144,7 @@
 								<ul>
 									<li>Bad quality</li>
 									<li>No proper abstraction</li>
-									<li>Legacy PHP4 code</li>
+									<li>Legacy PHP 4 and pre-PHP 5.4 code</li>
 									<li>No documentation</li>
 									<li>&hellip;</li>
 								</ul>
@@ -163,7 +164,7 @@
 									<li class="fragment">Internally, a framework will most likely contain/use a library</li>
 								</ul>
 							</li>
-							<li class="fragment">
+							<li class="fragment" style="margin-top: 1em;">
 								Examples
 								<div class="columns fragment">
 									<div class="column column-12">
@@ -172,6 +173,7 @@
 											<li>CakePHP</li>
 											<li>CodeIgniter</li>
 											<li>Laravel</li>
+											<li>Slim</li>
 										</ul>
 									</div>
 									<div class="column column-12">
@@ -179,6 +181,7 @@
 											<li>Symfony</li>
 											<li>YII</li>
 											<li>Silex</li>
+											<li>Kohana</li>
 											<li>etc.</li>
 										</ul>
 									</div>
@@ -220,7 +223,7 @@
 							<li>Drop it in your project</li>
 							<li>Cross your fingers and hope all still works (mostly: dependencies)</li>
 						</ol>
-						<footer class="fragment">(If you did keep your code up-to-date that is)</footer>
+						<footer class="fragment"><em>(If you do keep your code up-to-date that is)</em></footer>
 					</section>
 
 					<section>
@@ -238,7 +241,8 @@
 						</ul>
 
 						<div class="fragment warning">
-							<p>Warning: This library is outdated (last release 2010) and is in desperate need of a code refresh! We'll use it to make a few arguments later on.</p>
+							<p>Warning: This library is outdated (last release 2010) and is in desperate need of a code refresh!</p>
+							<p style="margin-top: 0.75em;">We'll merely use it to make a few arguments later on.</p>
 						</div>
 
 					</section>
@@ -294,21 +298,21 @@ $graph-&gt;Stroke();</code></pre>
 								Library to send e-mail
 								<ul>
 									<li>Website: <a href="http://swiftmailer.org/">http://swiftmailer.org/</a></li>
-									<li>Documentation: <a href="http://swiftmailer.org/docs/introduction.html">http://swiftmailer.org/docs/introduction.html</a></li>
-									<li>Ships with lots of examples in the <code>.zip</code></li>
 								</ul>
 							</li>
-							<li class="fragment">
+							<li class="fragment" style="margin-top: 1em;">
 								Why is this library better?
 								<ul>
-									<li>It's targetted towards PHP5</li>
+									<li>Targetted towards PHP5</li>
 									<li>
-										It comes with an <em>autoloader</em>
+										Comes with an <em>autoloader</em>
 										<ul>
 											<li>Just include the autoloader and whenever you use one of the Swift classes, it'll automatically <code>require</code> it.</li>
-											<li>Having an autoloader mostly attests being well-structured</li>
+											<li>Having an autoloader mostly attests being <strong>well-structured</strong></li>
 										</ul>
 									</li>
+									<li>Lots of <a href="http://swiftmailer.org/docs/introduction.html">documentation and examples</a></li>
+									<li><a href="https://travis-ci.org/swiftmailer/swiftmailer">Unit tested</a></li>
 								</ul>
 							</li>
 						</ul>
@@ -359,16 +363,16 @@ if(!$mailer-&gt;send($message, $errors)) {
 						<h2>Autoloaders (1)</h2>
 
 						<ul>
-							<li class="fragment">Essentially, an autoloader is a function which you tell PHP to use when a class cannot be found
+							<li class="fragment">Essentially, an autoloader is a function which finds and loads a PHP class which has not been included yet via <code>include</code> or <code>require</code>.
 								<ul>
 									<li class="fragment">The function takes one argument: the name of the requested class</li>
-									<li class="fragment">Goal of the function: to automatically load the requested class</li>
+									<li class="fragment">Function then translates the classname to an actual file to include</li>
 									<li class="fragment">Easy to write, if you keep your naming and structure consistent</li>
-									<li class="fragment">
-										You register the function with PHP using
-										<pre class="bigger"><code class="language-php">spl_autoload_register('nameOfTheFunction');</code></pre>
-									</li>
 								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Tell PHP to use that function for autoloading, using
+								<pre class="bigger"><code class="language-php">spl_autoload_register('nameOfTheFunction');</code></pre>
 							</li>
 						</ul>
 					</section>
@@ -401,11 +405,12 @@ if(!$mailer-&gt;send($message, $errors)) {
 						<h2>Namespaces (1)</h2>
 
 						<ul>
-							<li class="fragment">When we talked about classes we <a href="http://bramus.github.com/ws1-sws-course-materials/04.classes.html#/3/1">didn't talk about namespaces</a></li>
-							<li class="fragment">
-								Namespaces allow you to logically group and name your classes without ending up with long classnames such as <code>Swift_Encoder_Base64Encoder</code>
+							<li class="fragment">When we talk about classes we <a href="http://bramus.github.com/ws1-sws-course-materials/04.classes.html#/3/1">didn't talk about namespaces</a></li>
+							<li class="fragment" style="margin-top: 1em;">
+								Namespaces allow you to logically group and name your classes
 								<ul>
-									<li>Better is to have a <code>Base64Encoder</code> class in the <code>Swift\Encoder</code> namespace</li>
+									<li class="fragment">No more lengthy classnames such as <code>Swift_Encoder_Base64Encoder</code></li>
+									<li class="fragment">&hellip; but a class <code>Base64Encoder</code> in the <code>Swift\Encoder</code> namespace</li>
 								</ul>
 							</li>
 						</ul>
@@ -414,42 +419,39 @@ if(!$mailer-&gt;send($message, $errors)) {
 					<section>
 						<h2>Namespaces (2) &mdash; Demo time!</h2>
 
-						<figure><img src="assets/01/namespaces.png" alt="" title="" width="580" class="noborder" /></figure>
+						<div class="hastooltip fragment">
 
-						<p style="font-size: 75%">Let's take a look at the files in  <code>assets/01/examples/namespaces/</code></p>
+							<figure><img src="assets/01/namespaces.png" alt="" title="" width="580" class="noborder" /></figure>
 
-					</section>
+							<p style="font-size: 75%">Let's take a look at the files in  <code>assets/01/examples/namespaces/</code> <a href="assets/01/examples/namespaces/">&rarr;</a></p>
 
-					<section>
-						<h2>Namespaces (3)</h2>
-
-						<ul>
-							<li class="fragment">
-								Demo Recap
-								<ul>
-									<li class="fragment">
-										Define a namespace for your class
-										<pre class="bigger"><code class="language-php">namespace Ikdoeict\Demo;
+							<div class="tooltip">
+								<div style="width: 600px;">
+									<ul>
+										<li>
+											Define a namespace for your class at the very top of the file
+											<pre><code class="language-php">namespace Ikdoeict\Demo;
 class Foo { ... }</code></pre>
-									</li>
-									<li class="fragment">
-										Reference or import the namespace when instantiating a class
-										<pre class="bigger"><code class="language-php">$foo = new \Ikdoeict\Demo\Foo('hello-foo');</code></pre>
-										<pre class="bigger"><code class="language-php">use \Ikdoeict\Demo\Baz;
-$baz = new Baz('hello-baz');</code></pre>
-									</li>
-									<li class="fragment">
-										Class lookups happen in the same namespace
-										<pre class="bigger"><code class="language-php">namespace Ikdoeict\Demo;
+										</li>
+										<li style="margin-top: 1em;">
+											Refer to a class with its full namespace.
+											<pre><code class="language-php">$foo = new \Ikdoeict\Demo\Foo('hello-foo');</code></pre>
+										</li>
+										<li style="margin-top: 1em;">
+											If you don't use the full namespace, PHP will look in the current active namespace and the &ndash; via <code>use</code> &ndash; imported namespaces.
+											<pre><code class="language-php">namespace Ikdoeict\Demo;
 class Bar extends Foo { ... } // = extends Ikdoeict\Demo\Foo</code></pre>
-									</li>
-									<li class="fragment">
-										The global namespace is <code>\</code>
-										<pre class="bigger"><code class="language-php">$di = new \DirectoryIterator(__DIR__);</code></pre>
-									</li>
-								</ul>
-							</li>
-						</ul>
+											<pre><code class="language-php">use \Ikdoeict\Demo\Baz;
+$baz = new Baz('hello-baz'); // = \Ikdoeict\Demo\Baz</code></pre>
+										</li>
+										<li style="margin-top: 1em;">
+											The global namespace is <code>\</code>
+											<pre><code class="language-php">$di = new \DirectoryIterator(__DIR__);</code></pre>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
 
 					</section>
 
@@ -458,7 +460,7 @@ class Bar extends Foo { ... } // = extends Ikdoeict\Demo\Foo</code></pre>
 
 						<ul>
 							<li class="fragment">
-								<a href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md">PSR-0</a> is <em>&ldquo;a standard describing mandatore requirements for autoloader interoperability&rdquo;</em>
+								<a href="http://www.php-fig.org/psr/psr-0/">PSR-0</a> is <em>&ldquo;a standard describing mandatore requirements for autoloader interoperability&rdquo;</em>
 								<ul>
 									<li class="fragment">
 										Defines how to namespace your code:<br />
@@ -469,10 +471,11 @@ class Bar extends Foo { ... } // = extends Ikdoeict\Demo\Foo</code></pre>
 									</li>
 								</ul>
 							</li>
-							<li class="fragment">
+							<li class="fragment" style="margin-top: 1em;">
 								In other words: Adhering to the standard makes your library play nice with <a href="https://gist.github.com/jwage/221634">the PSR-0 autoloader</a>.
 							</li>
 						</ul>
+						<footer class="fragment"><em>Beware: Use the exact casing on disk as some file systems are Case Sensitive!</em></footer>
 					</section>
 
 					<section>
@@ -519,13 +522,11 @@ class Bar extends Foo { ... } // = extends Ikdoeict\Demo\Foo</code></pre>
 							</div>
 						</div>
 
-						<ul style="clear: left;">
-							<li class="fragment">Freely translated: this tool will save you lots of headaches</li>
+						<ul style="clear: left; margin-top: 10em;">
 							<li class="fragment">
-								<a href="http://getcomposer.org/">Composer</a> is worthless without <a href="https://packagist.org/">Packagist</a> though:
+								Roughly translated: this tool will save you lots of headaches
 								<ul>
-									<li class="fragment">Composer = the command line tool installing the packages</li>
-									<li class="fragment">Packagist = the repository aggregating all installable packages</li>
+									<li>Just tell composer which package and which version <em>(specific, or &ldquo;the latest&rdquo;)</em> you need and it will install/update it for you</li>
 								</ul>
 							</li>
 						</ul>
@@ -541,79 +542,94 @@ class Bar extends Foo { ... } // = extends Ikdoeict\Demo\Foo</code></pre>
 									<li>Packages are installed on a per project basis (<code>vendor</code> subfolder), not system-wide (cfr. PEAR)</li>
 								</ul>
 							</li>
-							<li class="fragment">
+							<li class="fragment" style="margin-top: 1em;">
 								Composer is clever
 								<ul>
 									<li>Composer finds out which versions of which packages (and which versions of its dependencies) need to be installed, and installs them.</li>
 								</ul>
 							</li>
-							<li class="fragment">
+							<li class="fragment" style="margin-top: 1em;">
 								Installed packages can be autoloaded
+								<ul>
+									<li>Composer will generate one single autoloader for all dependencies</li>
+								</ul>
 							</li>
 						</ul>
 						<footer class="fragment">Told you: it saves lots of headaches!</footer>
 					</section>
 
 					<section>
-						<h2>Composer: Installation</h2>
-
+						<h2>Packagist</h2>
 						<ul>
 							<li class="fragment">
-								OS X
-								<pre class="bigger"><code>$ curl -s https://getcomposer.org/installer | php
-$ sudo mv composer.phar /usr/bin/composer</code></pre>
-							</li>
-							<li class="fragment">
-								Windows: <a href="https://getcomposer.org/Composer-Setup.exe">Download &amp; Run the installer</a>
+								Composer is worthless without <a href="https://packagist.org/">Packagist</a>:
+								<ul>
+									<li class="fragment">Composer = the command line tool which downloads the packages</li>
+									<li class="fragment">Packagist = a website aggregating all installable packages</li>
+								</ul>
+								<div class="fragment" style="text-align: center;">
+									<figure><img src="assets/01/packagist.png" alt="" title="" width="580" class="noborder" /></figure>
+								</div>
 							</li>
 						</ul>
-						<div class="fragment warning"><p style="font-size: 65%; line-height: 1.2;">OS X users beware: If you're using MAMP, make sure that the <code>php</code> binary used is the one included with MAMP, and not the one shipped with OS X. <em>(<a href="00.intro.html#/3/6">instructions</a>)</em>!</p></div>
 					</section>
 
 					<section>
-						<h2>Composer: Obtaining packages</h2>
+						<h2>Installing Composer</h2>
+
+						<ul>
+							<li class="fragment">
+								Unix / OS X
+								<pre class="bigger"><code>$ curl -s https://getcomposer.org/installer | php
+$ mkdir /usr/local/bin/
+$ mv composer.phar /usr/local/bin/composer</code></pre>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Windows: <a href="https://getcomposer.org/Composer-Setup.exe">Download &amp; Run the installer</a>
+							</li>
+						</ul>
+						<div class="fragment warning" style="margin-top: 1em;"><p style="font-size: 65%; line-height: 1.2;">OS X users beware: If you're using MAMP, make sure that the <code>php</code> binary used is the one included with MAMP, and not the one shipped with OS X. <em>(<a href="00.intro.html#/3/6">instructions</a>)</em>!</p></div>
+					</section>
+
+					<section>
+						<h2>Installing packages using Composer</h2>
 						<ul>
 							<li class="fragment">
 								Create a file named <code>composer.json</code> in your project root to declare your dependencies in
 								<pre class="bigger"><code class="language-js dontrun">{
     &quot;require&quot;: {
+    	&quot;monolog/monolog&quot;: &quot;~1.5&quot;,
         &quot;swiftmailer/swiftmailer&quot;: &quot;4.*&quot;
     }
 }</code></pre>
 							</li>
-							<li class="fragment">
+							<li class="fragment" style="margin-top: 1em;">
 								Run <code>composer install</code> to install the dependencies
 								<ul>
-									<li class="fragment">Composer will install the packages in a <code>vendor</code> subfolder</li>
-									<li class="fragment">Composer will also generate a <code>composer.lock</code> file</li>
+									<li class="fragment">
+										Composer will install the packages in a <code>vendor/</code> subfolder
+									</li>
+									<li class="fragment">
+										Composer will generate one single autoloader for all dependencies
+									</li>
 								</ul>
 							</li>
-							<li class="fragment">Whenever a new version of a dependency is released, run <code>composer update</code> to see some more magic</li>
 						</ul>
 					</section>
 
 					<section>
-						<h2>Composer: Using packages</h2>
+						<h2>Using the installed packages</h2>
 						<ul>
 							<li class="fragment">
-								Include the Composer autoloader
-								<pre class="bigger"><code class="language-php">require_once __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';</code></pre>
+								Include the Composer autoloader instead of the one from the package or manually including all required filed
+								<pre class="bigger"><code class="language-php">require_once __DIR__ . '/vendor/autoload.php';</code></pre>
 							</li>
-							<li class="fragment">That's it</li>
-						</ul>
+							<li class="fragment" style="margin-top: 1em;">
+								Swiftmailer example
+								<pre class="bigger"><code class="language-php" data-overlay-example="assets/01/examples/with-composer/1.swiftmailer/index.php" style="max-height: 240px; overflow: scroll;">&lt;?php
 
-						<div class="fragment warning">Warning: don't ever change any of the files inside the <code style="color: #000">vendor</code> subfolder! Above that don't add that folder (along with <code style="color: #000">composer.lock</code>) into version control!</div>
-					</section>
-
-					<section>
-						<h2>Composer Example: Swiftmailer</h2>
-						<ul>
-							<li class="fragment">
-								Except for a different autoloader, nothing has changed!
-								<pre class="bigger"><code class="language-php" data-overlay-example="assets/01/examples/with-composer/1.swiftmailer/index.php" style="max-height: 340px; overflow: scroll;">&lt;?php
-
-// Require autoloader
-require_once __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
+// Require composer autoloader
+require_once __DIR__ . '/vendor/autoload.php';
 
 // Create the Transport
 $transport = Swift_SmtpTransport::newInstance('smtp2.kahosl.be', 25);
@@ -641,7 +657,74 @@ if(!$mailer-&gt;send($message, $errors)) {
 // EOF</code></pre>
 							</li>
 						</ul>
-						<footer class="fragment">What also changed is that this package can now easily be updated!</footer>
+
+					</section>
+
+					<section>
+						<h2>Specifying Package Versions</h2>
+						<ul>
+							<li class="fragment">
+								Exact version: <code>&quot;4.2.1&quot;</code>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Range: <code>&quot;&gt;=4.1.6,&lt;=5.0&quot;</code>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Wildcard: <code>&quot;4.1.*&quot;</code>
+								<ul>
+									<li>= equivalent of <code>&gt;=4.1.0,&lt;4.2.0</code></li>
+								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Tilde Operator: <code>&quot;~4.1&quot;</code>
+								<ul>
+									<li>= equivalent of <code>&gt;=4.1,&lt;5.0</code></li>
+									<li>Recommended; Useful for projects respecting <a href="http://semver.org/">semantic versioning</a></li>
+								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Latest commit: <code>&quot;dev-master&quot;</code>
+							</li>
+						</ul>
+					</section>
+
+
+					<section>
+						<h2>Updating dependencies</h2>
+						<ul>
+							<li class="fragment">
+								Composer will generate a <code>composer.lock</code> file after running the initial <code>composer install</code>
+								<ul>
+									<li class="fragment">The lock file contains info about the installed package versions</li>
+								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								The lock file has precedence over <code>composer.json</code> when running <code>composer install</code>
+								<ul>
+									<li class="fragment">
+										Successive runs of <code>composer install</code> will use the lock file!
+									</li>
+									<li class="fragment">
+										Put Differently: It locks the project to those specific versions
+									</li>
+								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								&rarr; Run <code>composer update</code> to skip the lock file and fetch updated versions. A new lock file will be generated.
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Composer vs. Version Control</h2>
+						<ul>
+							<li class="fragment">
+								A few important notes
+									<div class="fragment warning" style="margin-top: 0.25em;">Don't ever change the contents of the <code>vendor/</code> folder!</div>
+									<div class="fragment warning" style="margin-top: 0.25em;">Don't ever add the <code>vendor/</code> folder to version control!</div>
+									<div class="fragment warning" style="margin-top: 0.25em;">Do add the <code>composer.lock</code> to version control</div>
+							</li>
+						</ul>
 					</section>
 
 				</section>
@@ -658,53 +741,43 @@ if(!$mailer-&gt;send($message, $errors)) {
 						<h2>Twig</h2>
 						<ul>
 							<li class="fragment">
-								Library to working with templates
+								Library to working with templates which we used in WS1
 								<ul>
 									<li>Website: <a href="http://twig.sensiolabs.org/">http://twig.sensiolabs.org/</a></li>
 									<li>Documentation: <a href="http://twig.sensiolabs.org/documentation">http://twig.sensiolabs.org/documentation</a></li>
-									<li>
-										Install via Composer using
-										<pre class="bigger"><code class="language-js dontrun">{
+								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Install it via Composer using
+								<pre class="bigger"><code class="language-js dontrun">{
 	&quot;require&quot;: {
 		&quot;twig/twig&quot;: &quot;1.*&quot;
 	}
 }</code></pre>
-									</li>
-								</ul>
 							</li>
-							<li class="fragment">
-								Differs quite a bit from the Template class we know
-								<ul>
-									<li>Fast, Supports caching, Template oriented syntax, Flexible, Extensible</li>
-								</ul>
-							</li>
-							<li class="fragment">Bonus: It automatically prevents XSS!</li>
 						</ul>
 					</section>
 
 					<section>
 						<h2>Demo time!</h2>
 
-						<figure><img src="assets/01/twig.png" alt="" title="" width="580" class="noborder" /></figure>
+						<div class="hastooltip">
+							<figure><img src="assets/01/twig.png" alt="" title="" width="580" class="noborder" /></figure>
 
-						<p style="font-size: 75%">Let's take a look at the files in  <code>assets/01/examples/with-composer/2.twig/</code></p>
+							<p style="font-size: 75%; padding-bottom: 2em;">Let's take a look at the files in  <code>assets/01/examples/with-composer/2.twig/</code> <a href="assets/01/examples/with-composer/2.twig/">&rarr;</a></p>
 
-					</section>
+							<div class="tooltip">
+								<div>
+									<ul>
+										<li>Define requirements in <code>composer.json</code></li>
+										<li>Run <code>composer install</code></li>
+										<li>Require composer's <code>autoloader.php</code></li>
+										<li>Use Twig as we did before</li>
+									</ul>
+								</div>
+							</div>
 
-					<section>
-						<h2>Demo Recap</h2>
-
-						<ul>
-							<li><a href="http://twig.sensiolabs.org/doc/api.html#basics">Loading and displaying a template (PHP)</a></li>
-							<li><a href="http://twig.sensiolabs.org/doc/templates.html#synopsis">Displaying variables</a></li>
-							<li><a href="http://twig.sensiolabs.org/doc/templates.html#filters">Template Filters</a> + <a href="http://twig.sensiolabs.org/doc/filters/index.html">List of filters</a> <em>(think modifiers)</em></li>
-							<li><a href="http://twig.sensiolabs.org/doc/templates.html#control-structure">Template Control Structures</a> <em>(think options and iterations)</em></li>
-							<li><a href="http://twig.sensiolabs.org/doc/templates.html#comments">Template Comments</a></li>
-							<li><a href="http://twig.sensiolabs.org/doc/templates.html#template-inheritance">Template Inheritance</a></li>
-							<li><a href="http://twig.sensiolabs.org/doc/templates.html#including-other-templates">Including other templates</a></li>
-						</ul>
-
-						<p class="fragment" style="font-size: 75%">From now on, we'll be using Twig instead of our own Template class :-)</p>
+						</div>
 
 					</section>
 
@@ -726,21 +799,19 @@ if(!$mailer-&gt;send($message, $errors)) {
 								<ul>
 									<li>Website: <a href="http://www.doctrine-project.org/projects/dbal.html">http://www.doctrine-project.org/projects/dbal.html</a></li>
 									<li>Documentation: <a href="http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/index.html">http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/index.html</a></li>
-									<li>
-										Install via Composer using
-										<pre class="bigger"><code class="language-js dontrun">{
-	&quot;require&quot;: {
-		&quot;doctrine/dbal&quot;: &quot;1.*&quot;
-	}
-}</code></pre>
-									</li>
 								</ul>
 							</li>
-							<li class="fragment">
-								Note: Don't confuse Doctrine DBAL with <a href="http://www.doctrine-project.org/projects/orm.html">Doctrine ORM</a> <em>(which we won't be using)</em>
+
+							<li class="fragment" style="margin-top: 1em;">
+								Install via Composer using
+								<pre class="bigger"><code class="language-js dontrun">{
+	&quot;require&quot;: {
+		&quot;doctrine/dbal&quot;: &quot;~2.3&quot;
+	}
+}</code></pre>
 							</li>
-							<li class="fragment">Bonus: It automatically prevents SQL Injection <em>(when used correctly)</em>!</li>
 						</ul>
+						<footer class="fragment">Note: Don't confuse Doctrine DBAL with <a href="http://www.doctrine-project.org/projects/orm.html">Doctrine ORM</a> <em>(which we won't be using)</em></footer>
 					</section>
 
 					<section>
@@ -748,7 +819,7 @@ if(!$mailer-&gt;send($message, $errors)) {
 
 						<figure><img src="assets/01/doctrine.png" alt="" title="" width="580" class="noborder" /></figure>
 
-						<p style="font-size: 75%">Let's take a look at the files in  <code>assets/01/examples/with-composer/3.doctrine/</code></p>
+						<p style="font-size: 75%">Let's take a look at the files in  <code>assets/01/examples/with-composer/3.doctrine/</code> <a href="assets/01/examples/with-composer/3.doctrine/">&rarr;</a></p>
 
 					</section>
 
@@ -762,7 +833,9 @@ if(!$mailer-&gt;send($message, $errors)) {
 							<li><a href="http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/data-retrieval-and-manipulation.html#fetchall">Fetching data</a></li>
 						</ul>
 
-						<p class="fragment" style="font-size: 75%">From now on, we'll be using Doctrine DBAL :-)</p>
+						<p class="fragment warning">Don't forget the charset <code>UTF-8</code> on the connection!</p>
+
+						<footer class="fragment">&rarr; From now on, we'll be using Doctrine DBAL</footer>
 
 					</section>
 
@@ -808,6 +881,7 @@ if(!$mailer-&gt;send($message, $errors)) {
 							<li><a href="http://coding.smashingmagazine.com/2011/10/17/getting-started-with-php-templating/">http://coding.smashingmagazine.com/2011/10/17/getting-started-with-php-templating/</a></li>
 							<li><a href="twig.sensiolabs.org/pdf/Twig.pdf">twig.sensiolabs.org/pdf/Twig.pdf</a></li>
 							<li><a href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md">https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md</a></li>
+							<li><a href="http://www.php-fig.org/psr/psr-0/">http://www.php-fig.org/psr/psr-0/</a></li>
 							<li><a href="http://getcomposer.org/doc/00-intro.md">http://getcomposer.org/doc/00-intro.md</a></li>
 							<li><a href="http://nelm.io/blog/2011/12/composer-part-1-what-why/">http://nelm.io/blog/2011/12/composer-part-1-what-why/</a></li>
 							<li><a href="https://packagist.org/">https://packagist.org/</a></li>

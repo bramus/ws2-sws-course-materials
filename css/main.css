@@ -156,6 +156,11 @@ html {
 		margin-bottom: 0;
     }
 
+    #reveal ul.twocolled li {
+    	width: 45%;
+    	float: left;
+    }
+
 #reveal ol {
 	list-style: decimal;
 }
@@ -1268,6 +1273,14 @@ strong {
 
 #reveal .warning p {
 	margin-bottom: 0;
+}
+
+#reveal .warning code {
+	background: #3F3F3F;
+	padding: 2px 4px;
+	box-shadow: 0px 0px 6px rgba(0,0,0,0.3);
+	font-size: 80%;
+	color: #fff;
 }
 
 #reveal abbr, #reveal acronym {
