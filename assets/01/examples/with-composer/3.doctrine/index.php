@@ -1,6 +1,7 @@
 <html>
 <head>
 	<title>Doctrine DBAL</title>
+	<meta charset="utf-8">
 	<style>
 		div { padding-left: 1em; margin-left: 1em; border-left: 0.125em solid #666; }
 		pre { border: 0.125em dotted #333; padding: 1em; width: 80%; overflow: scroll; }
@@ -40,7 +41,8 @@ $connectionParams = array(
 	'user' => 'root',
 	'password' => 'Azerty123',
 	'host' => 'localhost',
-	'driver' => 'pdo_mysql'
+	'driver' => 'pdo_mysql',
+	'charset' => 'utf8'
 );
 $db = \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
 
