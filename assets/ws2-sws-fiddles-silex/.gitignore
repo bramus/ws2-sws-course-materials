@@ -1,6 +1,5 @@
 .DS_Store
 vendor
-composer.lock
 *.psd
 app.db
 app.log
