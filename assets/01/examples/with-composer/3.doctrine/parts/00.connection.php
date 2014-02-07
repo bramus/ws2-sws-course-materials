@@ -7,6 +7,7 @@ $connectionParams = array(
 	'user' => 'root',
 	'password' => 'Azerty123',
 	'host' => 'localhost',
-	'driver' => 'pdo_mysql'
+	'driver' => 'pdo_mysql',
+	'charset' => 'utf8'
 );
 $db = \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);

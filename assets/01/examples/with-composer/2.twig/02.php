@@ -20,7 +20,7 @@ echo $template->render(array(
 	'myarray' => array(
 		'JLW272' => 'WS1: Clientside Webscripten',
 		'JLW274' => 'WS1: Serverside Webscripten',
-		'JLW280' => 'WS2: Serverside Webscripten'
+		'JLW323' => 'WS2: Serverside Webscripten'
 	)
 ));
 
