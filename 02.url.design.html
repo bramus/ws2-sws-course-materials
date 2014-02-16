@@ -78,7 +78,7 @@
 									<li><code>http://example.org/index.php?action=zomg&amp;page=lol</code></li>
 								</ul>
 							</li>
-							<li class="fragment">
+							<li class="fragment" style="margin-top: 1em">
 								Then SEO and &ldquo;<em>nice urls</em>&rdquo; came along
 								<ul>
 									<li class="fragment"><code>http://example.org/zomg/lol</code></li>
@@ -102,7 +102,7 @@
 									<li class="fragment">Level 3: <acronym title="Hypertext As The Engine Of Application State">HATEOAS</acronym></li>
 								</ul>
 							</li>
-							<li class="fragment">Level 1 is what we'll be focussing on
+							<li class="fragment" style="margin-top: 1em">Level 1 is what we'll be focussing on
 							</li>
 						</ul>
 						<footer class="fragment"><em>Note: In <a href="http://bramus.github.com/ria-course-materials/">Web &amp; Mobile Development</a> we'll further implement this model</em></footer>
@@ -119,7 +119,7 @@
 									<li class="fragment">Respect the Hierarchy</li>
 								</ul>
 							</li>
-							<li class="fragment">
+							<li class="fragment" style="margin-top: 1em">
 								Examples
 								<ul>
 									<li class="fragment"><del><code>/product</code></del> &rarr; <ins><code>/products</code></ins></li>
@@ -176,18 +176,18 @@
 
 					<section>
 						<h2>Supporting nice URLs</h2>
-						<ul>
+						<ol>
 							<li class="fragment">
-								Build <code>index.php</code> in such a way that it loads up the required files/module based on the current URL (<code>$_SERVER['REQUEST_URI']</code>)
+								Route all requests to <code>index.php</code>
 							</li>
-							<li class="fragment">
-								Re-route all requests to non-existsing URLs to that <code>index.php</code>
+							<li class="fragment" style="margin-top: 1em;">
+								Build <code>index.php</code> in such a way so that it loads the requested content based upon the URL
 							</li>
-						</ul>
+						</ol>
 					</section>
 
 					<section>
-						<h2>Howto: Apache</h2>
+						<h2>1. Howto: Apache</h2>
 						<ul>
 							<li class="fragment">
 								Possible using the <code>mod_rewrite</code> Apache Module
@@ -210,7 +210,7 @@ RewriteRule . /index.php [L]
 					</section>
 
 					<section>
-						<h2>Howto: IIS</h2>
+						<h2>1. Howto: IIS</h2>
 						<ul>
 							<li class="fragment">
 								Possible using the <a href="http://www.iis.net/downloads/microsoft/url-rewrite">IIS Rewrite Module</a>
@@ -239,7 +239,7 @@ RewriteRule . /index.php [L]
 					</section>
 
 					<section>
-						<h2>Howto: Built-in PHP 5.4 server</h2>
+						<h2>1. Howto: Built-in PHP 5.4 server</h2>
 						<ul>
 							<li class="fragment">
 								<strong>All</strong> requests route to <code>index.php</code> by default
@@ -258,6 +258,54 @@ if (php_sapi_name() === 'cli-server' &amp;&amp; is_file($filename)) {
 							</li>
 						</ul>
 						<footer class="fragment"><em>Note: You can start a server by running <code>php -S localhost:8080</code> in your project www-root</em></footer>
+					</section>
+
+
+					<section>
+						<h2>2. Howto</h2>
+
+						<ul>
+							<li class="fragment">
+								Write something yourself.
+								<ul>
+									<li class="fragment">Use the value in <code>$_SERVER['REQUEST_URI']</code> to get started</li>
+								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Install a <em>router</em> library that does this for you.
+								<ul class="fragment">
+									<li><a href="https://github.com/chriso/klein.php">Klein</a></li>
+									<li><a href="https://github.com/radiosilence/Ham">HAM</a></li>
+									<li><a href="https://github.com/bramus/router">bramus/router</a></li>
+									<li>The router that ships with the framework you're using</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+
+					<section>
+						<h2>2. Example</h2>
+
+						<pre class="bigger"><code class="language-php">&lt;?php
+
+require __DIR__ . '/vendor/autoload.php';
+
+$router = new \Bramus\Router\Router();
+
+$router-&gt;get('/', function() {
+	echo 'index';
+});
+
+$router-&gt;get('/hello', function() {
+	echo 'hello';
+});
+
+$router-&gt;get('/hello/(\w+)', function($name) {
+	echo 'hello ' . htmlentities($name);
+});
+
+$router->run();</code></pre>
 					</section>
 
 				</section>
