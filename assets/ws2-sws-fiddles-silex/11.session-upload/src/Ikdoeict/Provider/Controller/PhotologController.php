@@ -19,7 +19,7 @@ class PhotologController implements ControllerProviderInterface {
 			->before(array($this, 'checkLogin'));
 
 		$controllers
-			->match('/upload', array($this, 'upload'))
+			->match('/upload/', array($this, 'upload'))
 			->method('GET|POST')
 			->bind('photolog.upload')
 			->before(array($this, 'checkLogin'));

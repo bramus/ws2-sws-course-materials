@@ -11,7 +11,7 @@ class LinksController implements ControllerProviderInterface {
 	public function connect(Application $app) {
 		$controllers = $app['controllers_factory'];
 		$controllers->get('/', array($this, 'overview'))->bind('links');
-		$controllers->get('/{id}', array($this, 'detail'))->assert('id', '\d+')->bind('link.detail');
+		$controllers->get('/{id}/', array($this, 'detail'))->assert('id', '\d+')->bind('link.detail');
 		return $controllers;
 	}
 

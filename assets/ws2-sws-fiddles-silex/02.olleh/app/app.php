@@ -18,7 +18,7 @@ $app->get('/', function(Silex\Application $app) {
 });
 
 // Dynamic Routing: Catch requests to /olleh and /olleh/{name}
-$app->get('/olleh/{name}', function(Silex\Application $app, $name) {
+$app->get('/olleh/{name}/', function(Silex\Application $app, $name) {
 	return '!' . $app->escape($name) . ' olleH';
 })
 ->assert('name', '\w+') // Routing Requirements (only allow alphanumeric characters) - @see http://silex.sensiolabs.org/doc/usage.html#requirements

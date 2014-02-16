@@ -18,7 +18,7 @@ $app->get('/', function(Silex\Application $app) {
 	return $app->redirect($app['request']->getBaseUrl() . '/tweets');
 });
 
-$app->get('/tweets', function(Silex\Application $app) use ($tweets) {
+$app->get('/tweets/', function(Silex\Application $app) use ($tweets) {
 	$output = '<ul>';
 	foreach ($tweets as $id => $tweet) {
 		$output .= '<li><a href="' . $app['request']->getBaseUrl(). '/tweets/' . $app->escape($id) . '">&para;</a> ' . $app->escape($tweet['text']) . '<br />&mdash; by ' . $app->escape($tweet['author'])  .' <i>' . $app->escape($tweet['created_at']) . '</i></li>';
@@ -27,7 +27,7 @@ $app->get('/tweets', function(Silex\Application $app) use ($tweets) {
 	return $output;
 });
 
-$app->get('/tweets/{id}', function (Silex\Application $app, $id) use ($tweets) {
+$app->get('/tweets/{id}/', function (Silex\Application $app, $id) use ($tweets) {
 	if (!isset($tweets[$id])) {
 		$app->abort(404, "Tweet $id does not exist");
 	}

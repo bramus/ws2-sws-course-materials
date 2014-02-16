@@ -16,9 +16,9 @@ class AuthController implements ControllerProviderInterface {
 			return $app->redirect($app['url_generator']->generate('auth.login'));
 		});
 
-		$controllers->match('/login', array($this, 'login'))->method('GET|POST')->bind('auth.login');
+		$controllers->match('/login/', array($this, 'login'))->method('GET|POST')->bind('auth.login');
 
-		$controllers->get('/logout', array($this, 'logout'))->assert('id', '\d+')->bind('auth.logout');
+		$controllers->get('/logout/', array($this, 'logout'))->assert('id', '\d+')->bind('auth.logout');
 
 		return $controllers;
 	}
