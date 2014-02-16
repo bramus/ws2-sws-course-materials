@@ -1,6 +1,6 @@
 {
 	"require": {
-		"silex/silex": "1.0.*@dev",
+		"silex/silex": "~1.1",
 		"twig/twig": "1.*",
 		"doctrine/dbal": "2.*",
 		"knplabs/repository-service-provider": "dev-master",

@@ -101,7 +101,7 @@
 								Installable via Composer
 								<pre class="bigger"><code class="language-js dontrun" style="max-height: 380px; overflow: scroll;">{
 	&quot;require&quot;: {
-		&quot;silex/silex&quot;: &quot;1.0.*@dev&quot;
+		&quot;silex/silex&quot;: &quot;~1.1&quot;
 	}
 }</code></pre>
 							</li>
@@ -165,7 +165,8 @@ $app->run();</code></pre></div>
 										<code>web/</code> &mdash; Public files
 										<ul>
 											<li class="fragment"><code class="special">index.php</code> &mdash; Front Controller</li>
-											<li class="fragment"><code>css/</code> &amp; <code>js/</code> &amp; <code>img/</code> &amp; &hellip;</li>
+											<li class="fragment"><code>css/</code> <span style="font-size: 70%">&amp;</span> <code>js/</code> <span style="font-size: 70%">&amp;</span> <code>img/</code> <span style="font-size: 70%">&amp;</span> <code>files/</code> <span style="font-size: 70%">&amp;</span> &hellip;</li>
+											<li class="fragment"><code>.htaccess</code> (<a href="02.url.design.html#/2">or the like</a>)</li>
 										</ul>
 									</li>
 									<li class="fragment">
@@ -179,12 +180,12 @@ $app->run();</code></pre></div>
 										<code>vendor/</code> &mdash; <em>(as created by Composer)</em>
 									</li>
 									<li class="fragment">
-										<code>composer.json</code>
+										<code>composer.json</code> <span style="font-size: 70%">&amp;</span> <code>composer.lock</code>
 									</li>
 								</ul>
 							</li>
 						</ul>
-						<footer class="fragment"><em>Note: The webserver is configured so that it <a href="02.url.design.html#/2">routes all requests to the front controller</a></em></footer>
+						<footer class="fragment"><em>Note: Make sure only the contents of <code>web/</code> are accessible over HTTP!</em></footer>
 					</section>
 
 					<section>
@@ -244,13 +245,13 @@ $app['debug'] = true;</code></pre>
 									<li class="fragment">A route is handled by a <strong>handling function</strong> which returns/does x/y</li>
 								</ul>
 							</li>
-							<li class="fragment">
+							<li class="fragment" style="margin-top: 1em">
 								In Silex<small><a href="http://silex.sensiolabs.org/doc/usage.html#other-methods">&#9873;</a></small>
 								<pre class="bigger"><code class="language-php">$app->match('<em>pattern</em>', function(Silex\Application $app) {
 	// ...
 })->method('GET|POST');</code></pre>
 							</li>
-							<li class="fragment">
+							<li class="fragment" style="margin-top: 1em">
 								Shorthands (preferred)<small><a href="http://silex.sensiolabs.org/doc/usage.html#example-get-route">&#9873;</a></small>
 								<pre class="bigger"><code class="language-php">$app->get('<em>pattern</em>', function(Silex\Application $app) {
 	// ...
@@ -280,7 +281,7 @@ $app->post('/', function(Silex\Application $app) {
 </code></pre>
 							</li>
 						</ul>
-						<footer class="fragment"><em>Note: Only the first route that matches will be used</em></footer>
+						<footer class="fragment"><em>Note: Only the first route matched will be used</em></footer>
 					</section>
 
 					<section>
@@ -311,7 +312,7 @@ $app->post('/', function(Silex\Application $app) {
 	return $app->redirect($app['request']->getBaseUrl() . '/hello');
 });</code></pre>
 							</li>
-							<li class="fragment">
+							<li class="fragment" style="margin-top: 1em">
 								Override the default error handling using <code>$app->error()</code><small><a href="http://silex.sensiolabs.org/doc/usage.html#error-handlers">&#9873;</a></small>
 								<pre class="bigger fragment"><code class="language-php">$app->error(function (\Exception $e, $code) {
 	if ($code == 404) {
@@ -459,7 +460,7 @@ $app->post('/feedback', function(Request $request) {
 									<li class="fragment">Solution: Organize our routes in a <strong>ControllerCollection</strong></li>
 								</ul>
 							</li>
-							<li class="fragment">
+							<li class="fragment" style="margin-top: 1em;">
 								Building strings of HTML in your PHP is plain stupid
 								<ul>
 									<li class="fragment">Solution: introduce Twig or the like</li>
@@ -475,8 +476,8 @@ $app->post('/feedback', function(Request $request) {
 							<li class="fragment">
 								Group routes in a <code>ControllerCollection</code><small><a href="http://silex.sensiolabs.org/doc/organizing_controllers.html">&#9873;</a></small>
 							</li>
-							<li class="fragment">
-								A <code>ControllerCollection</code> can be <strong>mounted</strong> onto a <em>base route</em>
+							<li class="fragment" style="margin-top: 1em;">
+								Mount the <code>ControllerCollection</code> instance onto a <em>base route</em>
 								<pre class="bigger fragment"><code class="language-php">// define controller for a blog
 $blog = $app['controllers_factory'];
 
@@ -500,7 +501,7 @@ $app->mount('/blog', $blog);</code></pre>
 							<li class="fragment">
 								Structure is still lacking with just <code>ControllerCollection</code>
 							</li>
-							<li class="fragment">
+							<li class="fragment" style="margin-top: 1em;">
 								We've talked about structure before
 								<ul>
 									<li class="fragment">
@@ -521,7 +522,7 @@ $app->mount('/blog', $blog);</code></pre>
 
 						<ul>
 							<li class="fragment">
-								Silex' structured answer: ControllerProviders<small><a href="http://silex.sensiolabs.org/doc/providers.html#controllers-providers">&#9873;</a></small> in which you wrap a <code>ControllerCollection</code>
+								Silex' structured answer: ControllerProviders<small><a href="http://silex.sensiolabs.org/doc/providers.html#controller-providers">&#9873;</a></small> in which you wrap a <code>ControllerCollection</code>
 								<ul>
 									<li class="fragment">If we namespace our own controllerproviders properly, we'll have a good structure</li>
 								</ul>
@@ -551,7 +552,7 @@ $app->mount('/blog', $blog);</code></pre>
 										Autoload your namespace by adjusting <code>composer.json</code>
 										<pre class="bigger fragment"><code class="language-js dontrun">{
 	&quot;require&quot;: {
-		&quot;silex/silex&quot;: &quot;1.0.*@dev&quot;
+		&quot;silex/silex&quot;: &quot;~1.1&quot;
 	},
 	&quot;autoload&quot;: {
 		&quot;psr-0&quot;: {
@@ -573,23 +574,23 @@ $app->mount('/blog', $blog);</code></pre>
 
 						<ol start="2">
 							<li class="fragment">
-								Create a ControllerProvider class per group of routes
+								Create a ControllerProvider per group of routes
 								<ul>
 									<li class="fragment">
-										Place your classses in <code>/src/<em>namespace</em>/provider/controller</code>
+										The class must implement <code>Silex\ControllerProviderInterface</code>
 									</li>
 									<li class="fragment">
-										Name of class can be chosen freely, though something like <code>TweetsController</code> recommended
+										Name of the class can be chosen freely, though something like <code>TweetsController</code> recommended
 									</li>
 									<li class="fragment">
-										Classes must implement <code>Silex\ControllerProviderInterface</code>
+										Place the file in <code>/src/<em>Namespace</em>/Provider/Controller</code>
 									</li>
 									<li class="fragment">
 										The <code>connect</code> function regulates the (sub)routes to other instance functions
 									</li>
 								</ul>
 							</li>
-							<li class="fragment">
+							<li class="fragment" style="margin-top: 1em;">
 								Mount your class on the subroute from <code>/app/app.php</code>
 								<pre class="bigger fragment"><code class="language-php">$app->mount('/tweets', new Ikdoeict\Provider\Controller\TweetsController());</code></pre>
 							</li>
