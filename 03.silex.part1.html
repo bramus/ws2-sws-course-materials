@@ -255,7 +255,7 @@ $app->post('<em>pattern</em>', function(Silex\Application $app) {
 	// show something (e.g. return a blob of HTML)
 });
 
-$app->get('/about', function(Silex\Application $app) {
+$app->get('/about/', function(Silex\Application $app) {
 	// show something else (e.g. return a blob of HTML)
 });
 
@@ -276,10 +276,10 @@ $app->post('/', function(Silex\Application $app) {
 								<ul>
 									<li class="fragment">The dynamic parts of the pattern will be converted to <strong>route variables</strong><small><a href="http://silex.sensiolabs.org/doc/usage.html#route-variables">&#9873;</a></small> which you pass into the handling function</li>
 								</ul>
-								<pre class="bigger fragment"><code class="language-php">$app->get('/hello/{name}', function(Silex\Application $app, $name) {
+								<pre class="bigger fragment"><code class="language-php">$app->get('/hello/{name}/', function(Silex\Application $app, $name) {
 	return 'Hello ' . $app->escape($name) . '!';
 });</code></pre>
-								<pre class="bigger fragment"><code class="language-php">$app->get('/blog/{postId}/{commentId}', function (Silex\Application $app, $postId, $commentId) {
+								<pre class="bigger fragment"><code class="language-php">$app->get('/blog/{postId}/{commentId}/', function (Silex\Application $app, $postId, $commentId) {
 	// ...
 });</code></pre>
 							</li>
@@ -305,6 +305,20 @@ $app->post('/', function(Silex\Application $app) {
 		return 'Shenanigans! Something went horribly wrong';
 	}
 });</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Important note on route patterns</h2>
+
+						<ul>
+							<li class="fragment">
+								Define your patterns with a trailing <code>/</code>
+								<ul>
+									<li class="fragment"><code class="nok">$app->get('/hello', &hellip;);</code> will respond to <code>http://localhost/hello</code> but not to <code>http://localhost/hello/</code></li>
+									<li class="fragment"><code class="ok">$app->get('/hello/', &hellip;);</code> will respond to <code>http://localhost/hello</code> and to <code>http://localhost/hello/</code></li>
+								</ul>
 							</li>
 						</ul>
 					</section>
