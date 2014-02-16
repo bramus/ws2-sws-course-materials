@@ -30,7 +30,7 @@ $app->finish(function (Request $request, Response $response) use ($app) {
 // Define routes for our static pages
 $pages = array(
 	'/' => 'home',
-	'/about' => 'about'
+	'/about/' => 'about'
 );
 foreach ($pages as $route => $view) {
 	$app->get($route, function () use ($app, $view) {

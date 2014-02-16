@@ -22,7 +22,7 @@ class TweetsController implements ControllerProviderInterface {
 
 		// Bind sub-routes
 		$controllers->get('/', array($this, 'overview'));
-		$controllers->get('/{id}', array($this, 'detail'))->assert('id', '\d+');
+		$controllers->get('/{id}/', array($this, 'detail'))->assert('id', '\d+');
 
 		return $controllers;
 

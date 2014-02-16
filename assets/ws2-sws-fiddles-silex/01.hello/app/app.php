@@ -18,7 +18,7 @@ $app->get('/', function(Silex\Application $app) {
 });
 
 // Dynamic Routing: Catch requests to /hello/{name} - @see http://silex.sensiolabs.org/doc/usage.html#dynamic-routing
-$app->get('/hello/{name}', function(Silex\Application $app, $name) {
+$app->get('/hello/{name}/', function(Silex\Application $app, $name) {
 	return 'Hello ' . $app->escape($name) . '!';
 });
 
