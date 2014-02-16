@@ -335,9 +335,14 @@ $app->post('/', function(Silex\Application $app) {
 					<section>
 						<h2>Route Prerequisites</h2>
 						<ul>
-							<li class="fragment">Set requirements for variables in routes<small><a href="http://silex.sensiolabs.org/doc/usage.html#requirements">&#9873;</a></small></li>
-							<li class="fragment">Set defaults for variables in routes<small><a href="http://silex.sensiolabs.org/doc/usage.html#default-values">&#9873;</a></small></li>
-							<li class="fragment">Preprocess variables in routes using converters<small><a href="http://silex.sensiolabs.org/doc/usage.html#route-variables-converters">&#9873;</a></small></li>
+							<li class="fragment">
+								It's possible to
+								<ul>
+									<li class="fragment">Set requirements for variables in routes<small><a href="http://silex.sensiolabs.org/doc/usage.html#requirements">&#9873;</a></small></li>
+									<li class="fragment">Set defaults for variables in routes<small><a href="http://silex.sensiolabs.org/doc/usage.html#default-values">&#9873;</a></small></li>
+									<li class="fragment">Preprocess variables in routes using converters<small><a href="http://silex.sensiolabs.org/doc/usage.html#route-variables-converters">&#9873;</a></small></li>
+								</ul>
+							</li>
 						</ul>
 					</section>
 
@@ -348,6 +353,36 @@ $app->post('/', function(Silex\Application $app) {
 
 						<p style="font-size: 75%">Let's take a look at the files in  <code>assets/ws2-sws-fiddles-silex/02.olleh/</code> <a href="assets/ws2-sws-fiddles-silex/02.olleh/">&rarr;</a></p>
 
+					</section>
+
+					<section>
+						<h2>Route Prerequisites, Redux</h2>
+						<ul>
+							<li class="fragment" style="margin-top: 1em;">
+								Not covered in the example, but also possible:
+								<ul>
+									<li class="fragment">
+										Limit routes on a host using <code>-&gt;host()</code>
+										<pre class="bigger"><code class="language-php">$app-&gt;match('/', function() {
+    // app-specific action
+})-&gt;host('example.com');
+
+$app-&gt;match('/', function ($user) {
+    // user-specific action
+})-&gt;host('{user}.example.com');</code></pre>
+									</li>
+									<li class="fragment">
+										Require HTTP/HTTPS using <code>-&gt;requireHttp()</code> and <code>-&gt;requireHttps()</code>
+									</li>
+									<li class="fragment">
+										Convert variables to a certain type using <code>-&gt;convert()</code>
+										<pre class="bigger"><code class="language-php">$app-&gt;get('/user/{id}', function ($id) {
+    // ...
+})-&gt;convert('id', function ($id) { return new User($id); });</code></pre>
+									</li>
+								</ul>
+							</li>
+						</ul>
 					</section>
 
 					<section>
