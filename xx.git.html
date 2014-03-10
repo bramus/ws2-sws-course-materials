@@ -36,6 +36,13 @@
 				-webkit-transform: scale(2);
 				transform: scale(2);
 			}
+
+			figure.zoomable-30 img:hover {
+				-moz-transform: scale(3);
+				-o-transform: scale(3);
+				-webkit-transform: scale(3);
+				transform: scale(3);
+			}
 		</style>
 
 		<link rel="stylesheet" href="lib/zenburn.css">
@@ -1668,23 +1675,18 @@ $ </span></code></pre>
 						<h2>git.ikdoeict.be</h2>
 						<ul>
 							<li class="fragment">
-								Our own private Github
+								&ldquo;Our own private Github&rdquo;, powered by GitLab
 								<ul>
 									<li>
-										Log on to <a href="https://git.ikdoeict.be">the web interface</a> using <code>firstname.lastname@kahosl.be</code>
+										Log on to <a href="https://git.ikdoeict.be">the web interface</a> using <a href="http://helpdesk.ikdoeict.be/index.php?/Knowledgebase/Article/View/2/7/info-kaho-account">your KaHo Account</a>
 									</li>
 									<li>
-										Note: pushing/pulling uses <code>https://</code>, not <code>git://</code>
-										<ul>
-											<li>
-												Login is not your KaHo account! Check Preferences &gt; HTTP Password
-											</li>
-										</ul>
+										Note: push/pull possible via <code>https://</code>, or <code>git://</code>
 									</li>
 								</ul>
 							</li>
 						</ul>
-						<figure class="fragment zoomable-20">
+						<figure class="fragment zoomable-30">
 							<img src="assets/xx/git-ikdoeict-be-1.png" width="250" alt="" class="noborder" />
 							<img src="assets/xx/git-ikdoeict-be-2.png" width="250" alt="" class="noborder" />
 							<img src="assets/xx/git-ikdoeict-be-3.png" width="250" alt="" class="noborder" />
@@ -1714,7 +1716,7 @@ $ </span></code></pre>
 app.db
 *.log
 vendor/*
-composer.lock
+node_modules/*
 config.php</code></pre>
 							</li>
 							<li class="fragment" style="margin-top: 1em">

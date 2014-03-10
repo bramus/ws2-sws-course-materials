@@ -59,6 +59,293 @@
 				</section>
 
 
+				<!-- DI -->
+				<section>
+
+					<section>
+						<h2>Dependency Injection</h2>
+
+						<p><img src="assets/04/futurama_blernsball.jpg" alt="" title="" width="447" /></p>
+						<q style="font-size: 90%">He's good, alright. But he's no Clem Johnson. And Johnson played back in the days before steroid injections were mandatory.</q>
+					</section>
+
+					<section>
+						<h2>Dependency Injection</h2>
+						<ul>
+							<li class="fragment">
+								Design pattern in which you inject dependencies, instead of creating them in the class requiring them.
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Injection possible via
+								<ul>
+									<li>The constructor</li>
+									<li>A setter function</li>
+									<li>A property</li>
+								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Better code
+								<ul>
+									<li class="fragment">Easier to test</li>
+									<li class="fragment">Inversion of Control <em>(see further)</em></li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Dependency Injection Example (1/2)</h2>
+						<ul>
+							<li class="fragment">
+								Without DI:
+								<pre class="bigger"><code class="language-php" data-overlay-example="assets/04/examples/di_01.php">&lt;?php
+
+class Router {
+
+	protected $request;
+	protected $response;
+
+	public function __construct($path) {
+		$this-&gt;request = new Request();
+		$this-&gt;response = new Response();
+		$this-&gt;path = $path;
+		// &hellip;
+	}
+
+}
+
+$router = new Router('/hello');
+var_dump($router);</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Dependency Injection Example (2/2)</h2>
+						<ul>
+							<li class="fragment">
+								With DI:
+								<pre class="bigger"><code class="language-php" data-overlay-example="assets/04/examples/di_02.php">&lt;?php
+
+class Router {
+
+	protected $request;
+	protected $response;
+
+	public function __construct(Request $request, Response $response, $path) {
+		$this-&gt;request = $request;
+		$this-&gt;response = $response;
+		$this-&gt;path = $path;
+	}
+
+}
+
+$request = new Request();
+$reponse = new Response();
+$router = new Router($request, $response, '/hello');
+var_dump($router);</code></pre>
+							</li>
+						</ul>
+						<footer class="fragment">&rarr; We have injected the dependencies via the constructor</footer>
+					</section>
+
+					<section>
+						<h2>Inversion of Control</h2>
+						<ul>
+							<li class="fragment">
+								With DI we have inverted the control of dependencies from the one being called (<code>Router</code>) to the one calling <em>(you)</em>.
+								<ul>
+									<li class="fragment">This is called <strong>Inversion of Control</strong></li>
+								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 1em">&rarr; Dependency Injection affords Inversion of Control</li>
+							<li class="fragment" style="margin-top: 1em">
+								But &hellip; why?
+								<ul>
+									<li class="fragment">You have control over the dependecies: if you rather use Logger X instead of Logger Y, just inject that one onto the class requiring it</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Dependency Injection Container</h2>
+						<ul>
+							<li class="fragment">
+								DiC = a container object &hellip;
+								<ul>
+									<li class="fragment">&hellip; on which you store all dependencies <em>(object registry)</em></li>
+									<li class="fragment">&hellip; which can create dependencies <em>(object factory)</em></li>
+								</ul>
+							</li>
+							<li style="margin-top: 1em" class="fragment">
+								Very (very) simple DiC example:
+								<div class="fragment"><pre class="bigger"><code class="language-php" style="max-height: 380px; overflow: scroll;">class Container {
+
+	protected $dependencies = [];
+
+	public function set($name, $val) {
+		$this-&gt;dependencies[$name] = $val;
+	}
+
+	public function get($name) {
+		return isset($this-&gt;dependencies[$name]) ? (is_callable($this-&gt;dependencies[$name]) ? $this-&gt;dependencies[$name]() : $this-&gt;dependencies[$name]) : null;
+	}
+
+}</code></pre></div>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>DiC Usage</h2>
+						<ul>
+							<li>
+								Using the DiC from the previous slide:
+								<div class="fragment"><pre class="bigger"><code class="language-php" data-overlay-example="assets/04/examples/di_03.php" style="max-height: 380px; overflow: scroll;">// Router Class
+class Router {
+
+	protected $request;
+	protected $response;
+
+	public function __construct(Request $request, Response $response, $path) {
+		$this-&gt;request = $request;
+		$this-&gt;response = $response;
+		$this-&gt;path = $path;
+	}
+
+}
+
+// Create DiC
+$container = new Container();
+
+// Tell DiC how to create dependencies
+$container-&gt;set('request', function() {
+	return new Request();
+});
+$container-&gt;set('response', function() {
+	return new Response();
+});
+
+// Create a router, injecting the dependencies
+$router = new Router($container-&gt;get('request'), $container-&gt;get('response'), '/hello');</code></pre></div>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>DiC Features</h2>
+						<ul>
+							<li class="fragment">
+								<em>Object Instantiation</em>
+								<ul>
+									<li class="fragment">Act as a factory to create new objects</li>
+								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								<em>Auto-Wiring</em>
+								<ul>
+									<li class="fragment">Say <code>A</code> requires <code>A</code> and <code>B</code> requires <code>C</code></li>
+									<li class="fragment">If you request an <code>A</code> from the DiC, it should create all required dependencies (<code>B</code> and <code>C</code>)</li>
+								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								&rarr; Our DiC here only does <em>Object Instantiation</em>.
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Service Locator</h2>
+						<ul>
+							<li class="fragment">
+								Codewise exactly the same as DiC
+								<div class="fragment"><pre class="bigger"><code class="language-php"style="max-height: 380px; overflow: scroll;">class ServiceLocator {
+
+	protected $dependencies = [];
+
+	public function set($name, $val) {
+		$this-&gt;dependencies[$name] = $val;
+	}
+
+	public function get($name) {
+		return isset($this-&gt;dependencies[$name]) ? (is_callable($this-&gt;dependencies[$name]) ? $this-&gt;dependencies[$name]() : $this-&gt;dependencies[$name]) : null;
+	}
+
+}</code></pre></div>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Consumption/usage is different:
+								<ul>
+									<li class="fragment">
+										Don't inject dependencies one by one but injec the entire container
+									</li>
+									<li class="fragment">
+										Implementation will ask container for the dependencies it needs
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>SL Usage</h2>
+						<ul>
+							<li>
+								Using the SL from the previous slide:
+										<pre class="bigger"><code class="language-php" data-overlay-example="assets/04/examples/di_04.php" style="max-height: 360px; overflow: scroll;">// Router Class
+class Router {
+
+	protected $request;
+	protected $response;
+
+	public function __construct(ServiceLocator $sl, $path) {
+		$this-&gt;request = $sl-&gt;get('request');
+		$this-&gt;response = $sl-&gt;get('response');
+		$this-&gt;path = $path;
+	}
+
+}
+
+// Create SL
+$sl = new ServiceLocator();
+
+// Tell DiC how to create dependencies
+$sl-&gt;set('request', function() {
+	return new Request();
+});
+$sl-&gt;set('response', function() {
+	return new Response();
+});
+
+// Create a router, injecting the dependencies
+$router = new Router($sl, '/hello');</code></pre>
+									</li>
+								</ul>
+							</li>
+						</ul>
+						<footer class="fragment">&rarr; The <code>Router</code> has become <em>container aware</em></footer>
+					</section>
+
+					<section>
+						<h2>DiC vs. SL</h2>
+						<ul>
+							<li class="fragment">
+								Push vs. Pull
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Which is best?
+								<ul>
+									<li class="fragment">It Depends&trade;</li>
+									<li class="fragment">SL is a violation of the <a href="http://pragprog.com/articles/tell-dont-ask">Tell, Don't Ask</a> principle</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+				</section>
+
+
 				<!-- Pimple -->
 				<section>
 					<section>
@@ -81,25 +368,24 @@ class Application extends \Pimple implements &hellip; {
 	&hellip;
 }</code></pre></div>
 							</li>
-							<li class="fragment">
-								Pimple is a Dependency Injection Container <em>(DIC)</em> for PHP
+							<li class="fragment" style="margin-top: 1em;">
+								Pimple is a Dependency Injection Container
 								<ul>
 									<li class="fragment">
-										In short: Define something on it, and later on retrieve it again
+										Supports defining:
 										<ul>
-											<li class="fragment">parameters</li>
-											<li class="fragment">objects</li>
-											<li class="fragment">shared objects (cfr. Singleton)</li>
+											<li class="fragment">Parameters</li>
+											<li class="fragment">Objects</li>
+											<li class="fragment">Shared objects (cfr. Singleton)</li>
 										</ul>
 									</li>
 								</ul>
 							</li>
 						</ul>
-						<footer class="fragment"><em>Remember: Silex' Appliction is also a DIC as it extends Pimple!</em></footer>
 					</section>
 
 					<section>
-						<h2>Creating a pimple</h2>
+						<h2>Creating a Pimple</h2>
 						<ul>
 							<li class="fragment">
 								Just create a new instance
@@ -109,7 +395,7 @@ require_once '/path/to/pimple.php';
 
 $container = new Pimple();</code></pre>
 							</li>
-							<li class="fragment">
+							<li class="fragment" style="margin-top: 1em;">
 								As <code>Silex\Application</code> extends <code>\Pimple</code>, our <code>$app</code> also is an instance of <em>(a special type of)</em> <code>\Pimple</code>
 								<pre class="bigger"><code class="language-php">&lt;?php
 
@@ -127,7 +413,7 @@ $app = new Silex\Application();</code></pre>
 								Defining a parameter:
 								<pre class="bigger"><code class="language-php">$app['some_parameter'] = 'value';</code></pre>
 							</li>
-							<li class="fragment">
+							<li class="fragment" style="margin-top: 1em;">
 								Retrieving a parameter:
 								<pre class="bigger"><code class="language-php">echo $app['some_parameter']; // value</code></pre>
 							</li>
@@ -143,7 +429,7 @@ $app = new Silex\Application();</code></pre>
 	return new Whatever();
 };</code></pre>
 							</li>
-							<li class="fragment">
+							<li class="fragment" style="margin-top: 1em;">
 								Retrieving a service:
 								<pre class="bigger"><code class="language-php">$service = $app['some_service'];</code></pre>
 								<ul>
@@ -162,13 +448,59 @@ $app = new Silex\Application();</code></pre>
 	return new Whatever();
 });</code></pre>
 							</li>
-							<li class="fragment">
+							<li class="fragment" style="margin-top: 1em;">
 								Retrieving a shared service:
 								<pre class="bigger"><code class="language-php">$service = $app['some_service'];</code></pre>
 								<ul>
 									<li class="fragment">On first invocation the service is created.</li>
 									<li class="fragment">Subsequent requests will get the existing instance (cfr. Singleton)</li>
 								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Practical Example (1)</h2>
+						<ul>
+							<li class="fragment">
+								<a href="https://github.com/facebook/facebook-php-sdk">Facebook PHP SDK</a> standalone example:
+								<pre class="bigger"><code class="language-php">require 'facebook-php-sdk/src/facebook.php';
+
+$facebook = new \Facebook(array(
+  'appId'  =&gt; 'YOUR_APP_ID',
+  'secret' =&gt; 'YOUR_APP_SECRET',
+));
+
+// Get User ID
+$user = $facebook-&gt;getUser();</code></pre>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								&rarr; Let's inject the <code>Facebook</code> object as a dependency of our Silex <code>$app</code>.
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Practical Example (2)</h2>
+						<ul>
+							<li class="fragment">
+								Dependency Injection is done in <code>bootstrap.php</code></em>
+								<pre class="bigger"><code class="language-php">$app['facebook.app_id'] = 'YOUR_APP_ID';
+$app['facebook.secret'] = 'YOUR_APP_SECRET';
+
+$app['facebook'] = $app-&gt;share(function() use ($app) {
+	return new \Facebook(array(
+		'appId' =&gt; $app['facebook.app_id'],
+		'secret' =&gt; $app['facebook.secret']
+	));
+});</code></pre>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Usage:
+								<pre class="bigger"><code class="language-php">$app-&gt;get('/', function(Silex\Application $app) {
+	$user = $app['facebook']-&gt;getUser();
+	return $app-&gt;json($user);
+});</code></pre>
 							</li>
 						</ul>
 					</section>
@@ -186,60 +518,16 @@ $app = new Silex\Application();</code></pre>
 					</section>
 
 					<section>
-						<h2>Example (1)</h2>
-						<ul>
-							<li class="fragment">
-								<a href="https://github.com/facebook/facebook-php-sdk">Facebook PHP SDK</a> example:
-								<pre class="bigger"><code class="language-php">require 'facebook-php-sdk/src/facebook.php';
-
-$facebook = new \Facebook(array(
-  'appId'  =&gt; 'YOUR_APP_ID',
-  'secret' =&gt; 'YOUR_APP_SECRET',
-));
-
-// Get User ID
-$user = $facebook-&gt;getUser();</code></pre>
-							</li>
-							<li class="fragment">In Silex: inject the instance of <code>Facebook</code> as a dependency</li>
-						</ul>
-					</section>
-
-					<section>
-						<h2>Example (2)</h2>
-						<ul>
-							<li class="fragment">
-								Dependency Injection <em>(<code>bootstrap.php</code>)</em>
-								<pre class="bigger"><code class="language-php">$app['facebook.app_id'] = 'YOUR_APP_ID';
-$app['facebook.secret'] = 'YOUR_APP_SECRET';
-
-$app['facebook'] = $app-&gt;share(function() use ($app) {
-	return new \Facebook(array(
-		'appId' =&gt; $app['facebook.app_id'],
-		'secret' =&gt; $app['facebook.secret']
-	));
-});</code></pre>
-							</li>
-							<li class="fragment">
-								Usage <em>(route handling)</em>
-								<pre class="bigger"><code class="language-php">$app-&gt;get('/', function(Silex\Application $app) {
-	$user = $app['facebook']-&gt;getUser();
-	return $app-&gt;json($user);
-});</code></pre>
-							</li>
-						</ul>
-					</section>
-
-					<section>
 						<h2>The need for structure</h2>
 						<ul>
 							<li class="fragment">
-								Again, we like our code clean
+								As per usual, we like our code clean
 								<ol>
 									<li class="fragment">Don't overload <code>app.php</code> with routing logic</li>
-									<li class="fragment">Don't overload <code>bootstrap.php</code> with service definitions</li>
+									<li class="fragment">Don't overload <code>bootstrap.php</code> with dependency injections</li>
 								</ol>
 							</li>
-							<li class="fragment">
+							<li class="fragment" style="margin-top: 1em;">
 								Solutions
 								<ol>
 									<li class="fragment">ControllerProviders<small><a href="http://silex.sensiolabs.org/doc/providers.html#controllers-providers">&#9873;</a></small> <em style="font-size: 75%;">(@see <a href="03.silex.part1.html#/4">03.silex.part1</a>)</em></li>
@@ -251,9 +539,15 @@ $app['facebook'] = $app-&gt;share(function() use ($app) {
 
 					<section>
 						<h2>ServiceProvider (1)</h2>
+						<p>From the Silex Docs:</p>
+						<blockquote class="fragment">This is very straight forward, just create a new class that implements two methods. In the <code>register()</code> method, you can define services on the application which then may make use of other services and parameters. In the <code>boot()</code> method, you can configure the application, just before it handles a request.</blockquote>
+					</section>
+
+					<section>
+						<h2>ServiceProvider (2)</h2>
 						<ul>
 							<li class="fragment">
-								Cfr. ControllerProvider but different interface/methods
+								Cfr. <code>ControllerProvider</code> but different interface/methods
 								<pre class="bigger"><code class="language-php">namespace MyNamespace\Provider\Service;
 
 use Silex\Application;
@@ -261,13 +555,18 @@ use Silex\ServiceProviderInterface;
 
 class WhateverServiceProvider implements ServiceProviderInterface {
 
-	public function register(Application $app) { &hellip; }
+	public function register(Application $app) {
+		// Inject the dependency here
+		$app['whatever'] = &gt;share(function() {
+			return new Whatever();
+		}
+	}
 
 	public function boot(Application $app) { &hellip; }
 
 }</code></pre>
 							</li>
-							<li class="fragment">
+							<li class="fragment" style="margin-top: 1em">
 								Place your class in <code>/src/namespace/provider/service</code>
 							</li>
 							<li class="fragment">
@@ -277,16 +576,10 @@ class WhateverServiceProvider implements ServiceProviderInterface {
 					</section>
 
 					<section>
-						<h2>ServiceProvider (2)</h2>
-						<p>From the Silex Docs:</p>
-						<blockquote class="fragment">This is very straight forward, just create a new class that implements the two methods. In the <code>register()</code> method, you can define services on the application which then may make use of other services and parameters. In the <code>boot()</code> method, you can configure the application, just before it handles a request.</blockquote>
-					</section>
-
-					<section>
 						<h2>Revised Example (1)</h2>
 						<ul>
 							<li class="fragment">
-								<code>FacebookServiceProvider.php</code>
+								In <code>FacebookServiceProvider.php</code>
 								<pre class="bigger"><code class="language-php">&lt;?php
 
 namespace Ikdoeict\Provider\Service;
@@ -316,14 +609,14 @@ class FacebookServiceProvider implements ServiceProviderInterface {
 						<h2>Revised Example (2)</h2>
 						<ul>
 							<li class="fragment">
-								<code>bootstrap.php</code>
+								In <code>bootstrap.php</code>
 								<pre class="bigger"><code class="language-php">$app-&gt;register(new Ikdoeict\Provider\Service\FacebookServerProvider(), array(
 	'facebook.app_id' =&gt; 'YOUR_APP_ID',
 	'facebook.secret' =&gt; 'YOUR_APP_SECRET'
 ));</code></pre>
 							</li>
-							<li class="fragment">
-								<code>app.php</code> or ControllerProvider
+							<li class="fragment" style="margin-top: 1em;">
+								In <code>app.php</code>
 								<pre class="bigger"><code class="language-php">$app-&gt;get('/', function(Silex\Application $app) {
 	$user = $app['facebook']->getUser();
 	return $app-&gt;json($user);
@@ -336,13 +629,13 @@ class FacebookServiceProvider implements ServiceProviderInterface {
 						<h2>More examples</h2>
 						<ul>
 							<li class="fragment"><a href="http://php-and-symfony.matthiasnoback.nl/2012/02/silex-creating-a-service-provider-for-buzz/">Silex: creating a service provider for Buzz</a></li>
-							<li class="fragment">
+							<li class="fragment" style="margin-top: 1em;">
 								<a href="https://github.com/EmanueleMinotto/FakerServiceProvider">Service Provider for Faker</a>
 								<ul>
 									<li>Note: Faker has a Singleton pattern implemented. No need for a shared service definition</li>
 								</ul>
 							</li>
-							<li class="fragment">&hellip;</li>
+							<li class="fragment" style="margin-top: 1em;">&hellip;</li>
 						</ul>
 					</section>
 
@@ -373,13 +666,13 @@ class FacebookServiceProvider implements ServiceProviderInterface {
 	&quot;twig/twig&quot;: &quot;&gt;=1.8,&lt;2.0-dev&quot;
 }</code></pre>
 							</li>
-							<li class="fragment">
+							<li class="fragment" style="margin-top: 1em;">
 								Register the service in <code>bootstrap.php</code>
 								<pre class="bigger"><code class="language-php">$app-&gt;register(new Silex\Provider\TwigServiceProvider(), array(
 	'twig.path' =&gt; __DIR__ . '/views',
 ));</code></pre>
 							</li>
-							<li class="fragment">
+							<li class="fragment" style="margin-top: 1em;">
 								Usage
 								<pre class="bigger"><code class="language-php">$app-&gt;get('/hello/{name}', function ($name) use ($app) {
 	return $app['twig']-&gt;render('hello.twig', array(
@@ -415,8 +708,8 @@ class FacebookServiceProvider implements ServiceProviderInterface {
 									</li>
 								</ul>
 							</li>
-							<li class="fragment">In PHP use <code>$app['twig']</code></li>
-							<li class="fragment">
+							<li class="fragment" style="margin-top: 1em;">In PHP use <code>$app['twig']</code></li>
+							<li class="fragment" style="margin-top: 1em;">
 								The serviceprovider injects some vars into templates
 								<ul>
 									<li>e.g. <code>{{ app.request.baseUrl }}</code></li>
@@ -452,7 +745,7 @@ class FacebookServiceProvider implements ServiceProviderInterface {
 	&quot;swiftmailer/swiftmailer&quot;: &quot;&gt;=4.1.2,&lt;4.2-dev&quot;
 }</code></pre>
 							</li>
-							<li class="fragment">
+							<li class="fragment" style="margin-top: 1em;">
 								Register the service in <code>bootstrap.php</code>
 								<pre class="bigger"><code class="language-php">$app-&gt;register(new Silex\Provider\SwiftmailerServiceProvider(), array(
 	'swiftmailer.options' =&gt; array(
@@ -517,7 +810,7 @@ class FacebookServiceProvider implements ServiceProviderInterface {
 	&quot;doctrine/dbal&quot;: &quot;&gt;=2.2.*&quot;
 }</code></pre>
 							</li>
-							<li class="fragment">
+							<li class="fragment" style="margin-top: 1em;">
 								Register the service in <code>bootstrap.php</code>
 								<pre class="bigger"><code class="language-php">$app-&gt;register(new Silex\Provider\DoctrineServiceProvider(), array(
 	'db.options' =&gt; array(
@@ -587,10 +880,10 @@ class FacebookServiceProvider implements ServiceProviderInterface {
 							<li class="fragment">
 								Short for <strong>Model-View-Controller</strong>
 							</li>
-							<li class="fragment">
+							<li class="fragment" style="margin-top: 1em;">
 								Architectural pattern describing how to build your app
 							</li>
-							<li class="fragment">
+							<li class="fragment" style="margin-top: 1em;">
 								In a web-context:
 								<ul>
 									<li class="fragment">The model represents data</li>
@@ -698,17 +991,17 @@ class TweetsRepository extends \Knp\Repository {
 	public function getTableName() { return 'tweets'; }
 }</code></pre>
 							</li>
-							<li class="fragment">
+							<li class="fragment" style="margin-top: 1em;">
 								Registration of the repositories within Silex
 								<pre class="bigger"><code class="language-php">$app-&gt;register(new Knp\Provider\RepositoryServiceProvider(), array(
 	'repository.repositories' =&gt; array(
-		'tweets' =&gt; 'Ikdoeict\\Repository\\TweetsRepository'
+		'db.tweets' =&gt; 'Ikdoeict\\Repository\\TweetsRepository'
 	)
 ));</code></pre>
 							</li>
-							<li class="fragment">
+							<li class="fragment" style="margin-top: 1em;">
 								Usage
-								<pre class="bigger"><code class="language-php">$app['tweets']->findAll();</code></pre>
+								<pre class="bigger"><code class="language-php">$app['db.tweets']->findAll();</code></pre>
 							</li>
 						</ul>
 					</section>
@@ -744,8 +1037,11 @@ class TweetsRepository extends \Knp\Repository {
 									</li>
 								</ul>
 							</li>
-							<li class="fragment">
+							<li class="fragment" style="margin-top: 1em;">
 								Register your repositories in your app while registering <code>RepositoryServiceProvider</code>
+								<ul>
+									<li>Use <code>db.</code> as a prefix</li>
+								</ul>
 							</li>
 						</ul>
 						<footer class="fragment" style="color: #F66;"><em>Important: don't ever write queries in your ControllerProviders, but put 'm in your Repository classes!</em></footer>
@@ -804,6 +1100,9 @@ class TweetsRepository extends \Knp\Repository {
 					<section>
 						<h2>Sources</h2>
 						<ul>
+							<li><a href="http://adamcod.es/2013/11/25/service-locator-vs-dependency-injection-container.html">http://adamcod.es/2013/11/25/service-locator-vs-dependency-injection-container.html</a></li>
+							<li><a href="http://ralphschindler.com/2012/10/10/di-dic-service-locator-redux">http://ralphschindler.com/2012/10/10/di-dic-service-locator-redux</a></li>
+							<li><a href="http://php-di.org/doc/understanding-di.html">http://php-di.org/doc/understanding-di.html</a></li>
 							<li><a href="http://pimple.sensiolabs.org/">http://pimple.sensiolabs.org/</a></li>
 							<li><a href="http://silex.sensiolabs.org/doc/services.html">http://silex.sensiolabs.org/doc/services.html</a></li>
 							<li><a href="http://silex.sensiolabs.org/doc/providers.html">http://silex.sensiolabs.org/doc/providers.html</a></li>
