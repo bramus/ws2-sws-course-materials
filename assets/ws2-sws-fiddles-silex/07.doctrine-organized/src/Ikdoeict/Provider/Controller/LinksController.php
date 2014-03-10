@@ -16,13 +16,13 @@ class LinksController implements ControllerProviderInterface {
 	}
 
 	public function overview(Application $app) {
-		$links = $app['links']->findAll();
+		$links = $app['db.links']->findAll();
 		return $app['twig']->render('links/overview.twig', array('links' => $links));
 	}
 
 
 	public function detail(Application $app, $id) {
-		$link = $app['links']->find($id);
+		$link = $app['db.links']->find($id);
 		if (!$link) {
 			$app->abort(404, 'The requested link (id #' . $app->escape($id) . ') does not exist');
 		}

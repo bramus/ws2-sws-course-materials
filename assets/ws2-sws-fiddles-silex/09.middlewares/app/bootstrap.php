@@ -25,8 +25,8 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
 // Use Repository Service Provider — @note: Be sure to install RSP via Composer first!
 $app->register(new Knp\Provider\RepositoryServiceProvider(), array(
 	'repository.repositories' => array(
-		'users' => 'Ikdoeict\\Repository\\UsersRepository',
-		'links' => 'Ikdoeict\\Repository\\LinksRepository'
+		'db.users' => 'Ikdoeict\\Repository\\UsersRepository',
+		'db.links' => 'Ikdoeict\\Repository\\LinksRepository'
 	)
 ));
 
