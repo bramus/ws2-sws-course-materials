@@ -17,27 +17,27 @@ class UsersController implements ControllerProviderInterface {
 	}
 
 	public function overview(Application $app) {
-		$users = $app['users']->findAll();
+		$users = $app['db.users']->findAll();
 		return $app['twig']->render('users/overview.twig', array('users' => $users));
 	}
 
 
 	public function detail(Application $app, $id) {
-		$user = $app['users']->find($id);
+		$user = $app['db.users']->find($id);
 		if (!$user) {
 			$app->abort(404, 'The requested user (id #' . $app->escape($id) . ') does not exist');
 		}
-		$linkcount = $app['users']->getNumLinks($id);
+		$linkcount = $app['db.users']->getNumLinks($id);
 		return $app['twig']->render('users/detail.twig', array('user' => $user, 'linkcount' => $linkcount));
 	}
 
 
 	public function links(Application $app, $id) {
-		$user = $app['users']->find($id);
+		$user = $app['db.users']->find($id);
 		if (!$user) {
 			$app->abort(404, 'The requested user (id #' . $app->escape($id) . ') does not exist');
 		}
-		$links = $app['users']->getLinks($id);
+		$links = $app['db.users']->getLinks($id);
 		return $app['twig']->render('users/links.twig', array('user' => $user, 'links' => $links));
 	}
 

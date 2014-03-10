@@ -38,19 +38,19 @@ class LinksController implements ControllerProviderInterface {
 				$data['added_by'] = '1'; // @todo: fetch this from the session
 				$data['added_on'] = date('Y-m-d');
 
-				$app['links']->insert($data);
+				$app['db.links']->insert($data);
 
 				return $app->redirect($app['url_generator']->generate('links') . '?added');
 			}
 		}
 
-		$links = $app['links']->findAll();
+		$links = $app['db.links']->findAll();
 		return $app['twig']->render('links/overview.twig', array('links' => $links, 'addlinkform' => $addlinkform->createView()));
 	}
 
 
 	public function detail(Application $app, $id) {
-		$link = $app['links']->find($id);
+		$link = $app['db.links']->find($id);
 		if (!$link) {
 			$app->abort(404, 'The requested link (id #' . $app->escape($id) . ') does not exist');
 		}
