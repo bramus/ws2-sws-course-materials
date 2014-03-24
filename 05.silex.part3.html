@@ -116,7 +116,7 @@ $app->get('/hello/{name}', function ($name) {
 							<li class="fragment">
 								In PHP
 								<pre class="bigger"><code class="language-php">$app['url_generator']->generate('homepage');</code></pre>
-								<pre class="bigger"><code class="language-php">$app['url_generator']->generate('hello', array('name' => 'Bramus')); 
+								<pre class="bigger"><code class="language-php">$app['url_generator']->generate('hello', array('name' => 'Bramus'));
 // -&gt; `/hello/Bramus`</code></pre>
 							</li>
 							<li class="fragment">
@@ -568,7 +568,7 @@ $constraints = new Assert\Collection(array(
 	'title' =&gt; new Assert\Length(array('min' =&gt; 10)),
 	'author' =&gt; new Assert\Collection(array(
 		'first_name' =&gt; array(
-			new Assert\NotBlank(), 
+			new Assert\NotBlank(),
 			new Assert\Length(array('min' =&gt; 10))
 		),
 		'last_name'  =&gt; new Assert\Length(array('min' =&gt; 10)),
@@ -743,12 +743,12 @@ if (count($errors) &gt; 0) {
 						<ul>
 							<li class="fragment">
 								To create a named form use an alternate syntax
-								<pre class="bigger"><code class="language-php" style="max-height: 180px; overflow: scroll;">$loginform = $app['form.factory']-&gt;createNamed('loginform', $data)
+								<pre class="bigger"><code class="language-php" style="max-height: 180px; overflow: scroll;">$loginform = $app['form.factory']-&gt;createNamed('loginform')
 	-&gt;add('username', 'text')
 	-&gt;add('password', 'password');</code></pre>
 							</li>
 							<li class="fragment">
-								It's possible to customize<small><a href="http://symfony.com/doc/current/book/forms.html#rendering-each-field-by-hand">&#9873;</a></small> the output of a form
+								It's possible to customize<small><a href="http://symfony.com/doc/current/book/forms.html#rendering-each-field-by-hand">&#9873;</a></small> <a href="http://symfony.com/doc/current/reference/forms/twig_reference.html">&#9873;</a></small> the output of a form
 								<pre class="bigger"><code class="language-html dontrun" style="max-height: 240px; overflow: scroll;">&lt;form action=&quot;#&quot; method=&quot;post&quot;  {{ form_enctype(loginform) }}&gt;
 	&lt;dl class=&quot;clearfix&quot;&gt;
 		&lt;dt&gt;
@@ -823,6 +823,71 @@ if (count($errors) &gt; 0) {
 						<figure><img src="assets/05/example-10.png" alt="" title="" width="580" class="noborder" /></figure>
 
 						<p style="font-size: 75%">Let's take a look at <code>assets/ws2-sws-fiddles-silex/10.forms-validation/</code> <a href="assets/ws2-sws-fiddles-silex/10.forms-validation/">&rarr;</a></p>
+					</section>
+
+					<section>
+						<h2>Example sidenotes (1/3)</h2>
+						<ul>
+							<li class="fragment">
+								Add <code>novalidate=&quot;novalidate&quot;</code> to the form to prevent HTML5 formchecking.
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Default data is passed to named forms using a 3rd parameter on creation
+								<pre class="bigger"><code>$data = array('title' =&gt; 'foo');
+$addlinkform = $app['form.factory']-&gt;createNamed('addlinkform', 'form', $data);</code></pre>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Labels default to the name of the input. Change it via <code>label</code> or from within Twig
+								<pre class="bigger"><code>$addlinkform-&gt;add('url', 'url', array('label' => 'The URL'));</code></pre>
+								<pre class="bigger"><code>{{ form_row(addlinkform.url, { 'label': 'The URL' }) }}</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Example sidenotes (2/3)</h2>
+						<ul>
+							<li class="fragment">
+								When using <code>date</code> as a type
+								<ul>
+									<li class="fragment">
+										Symonfy will output three dropdowns which is not recommended (UX!)
+										<ul>
+											<li class="fragment">
+												Set <code>widget</code> to <code>single_text</code> to get one single textfield
+											</li>
+										</ul>
+									</li>
+									<li class="fragment">
+										You can manipulate the format via <code>format</code>
+									</li>
+								</ul>
+								<div class="fragment">
+									<pre class="bigger"><code>$registerform-&gt;add('date', 'date', array(
+	'widget' =&gt; 'single_text',
+	'format' =&gt; 'YYYY-mm-dd'
+));</code></pre>
+								</div>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								It's also possible to check one single field for validity
+								<pre class="bigger"><code>if (!$registerform-&gt;get('email')-&gt;isValid()) { &hellip; }</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Example sidenotes (3/3)</h2>
+						<ul>
+							<li class="fragment">
+								It's also possible to add/display errors for the entire form (instead of per field)
+								<pre class="bigger"><code>$addlinkform-&gt;addError(new \Symfony\Component\Form\FormError('That link was already entered'));</code></pre>
+								<pre class="bigger"><code>{{ form_errors(addlinkform) }}
+{{ form_widget(addlinkform.title) }}
+{{ form_widget(addlinkform.url) }}
+{{ form_widget(addlinkform._token) }}</code></pre>
+							</li>
+						</ul>
 					</section>
 
 					<section>
@@ -947,10 +1012,11 @@ if (count($errors) &gt; 0) {
 }</code></pre>
 							</li>
 							<li class="fragment" style="margin-top: 1em;">
-								Register the service in <code>bootstrap.php</code> referencing the config file
+								Register the service in <code>bootstrap.php</code> referencing the config
 								<pre class="bigger"><code class="language-php">$app-&gt;register(new Igorw\Silex\ConfigServiceProvider(__DIR__ . '/config.php'));</code></pre>
 							</li>
 						</ul>
+						<div class="fragment warning" style="margin-top: 1em;">Don't ever place your config file in the web folder!</div>
 					</section>
 
 					<section>
@@ -960,10 +1026,15 @@ if (count($errors) &gt; 0) {
 								PHP
 								<pre class="bigger" style="width: 100%;"><code class="language-php" style="width: 100%; overflow: scroll;">return array(
 	'db.options' => array(
-		'host' => '127.0.0.1',
-		'dbname' => 'mydatabase',
+		'dbname' => 'todolist',
 		'user' => 'root',
-		'password' => NULL,
+		'password' => 'Azerty123',
+		'host' => 'localhost',
+		'driver' => 'pdo_mysql',
+		'charset' => 'utf8',
+		'driverOptions' => array(
+			1002 => 'SET NAMES utf8'
+		)
 	),
 	'myproject.test' => array(
 		'param2' => '456',
@@ -979,10 +1050,15 @@ if (count($errors) &gt; 0) {
 								JSON
 								<pre class="bigger" style="width: 100%;"><code class="language-javascript dontrun" style="width: 100%; overflow: scroll;">{
 	&quot;db.options&quot;: {
-		&quot;host&quot;: &quot;127.0.0.1&quot;,
-		&quot;dbname&quot;: &quot;mydatabase&quot;,
+		&quot;dbname&quot;: &quot;todolist&quot;,
 		&quot;user&quot;: &quot;root&quot;,
-		&quot;password&quot;: null
+		&quot;password&quot;: &quot;Azerty123&quot;,
+		&quot;host&quot;: &quot;localhost&quot;,
+		&quot;driver&quot;: &quot;pdo_mysql&quot;,
+		&quot;charset&quot;: &quot;utf8&quot;,
+		&quot;driverOptions&quot;: {
+			1002: &quot;SET NAMES utf8&quot;
+		}
 	},
 	&quot;myproject.test&quot;: {
 		&quot;param2&quot;: &quot;456&quot;,
@@ -1002,24 +1078,31 @@ if (count($errors) &gt; 0) {
 						<ul class="columns">
 							<li class="fragment column" style="width: 45%; padding-right: 5%;">
 								YAML
-								<pre class="bigger" style="width: 100%;"><code class="dont-highlight" style="width: 100%; overflow: scroll;">db.options:
-  host: 127.0.0.1
-  dbname: mydatabase
-  user: root
-  password: ~
-myproject.test:
-  param2: &quot;456&quot;
-  param3:
-	param2B: &quot;456&quot;
-	param2C: &quot;456&quot;
-  param4: [4, 5, 6]</span></code></pre>
+								<pre class="bigger" style="width: 100%;"><code class="dont-highlight" style="width: 100%; overflow: scroll;">---
+  db.options:
+    dbname: "todolist"
+    user: "root"
+    password: "Azerty123"
+    host: "localhost"
+    driver: "pdo_mysql"
+    charset: "utf8"
+    driverOptions:
+      1002: "SET NAMES utf8"
+  myproject.test:
+    param2: "456"
+    param3:
+      param2B: "456"
+      param2C: "456"
+    param4:
+      - 4
+      - 5
+      - 6</code></pre>
 							</li>
 							<li class="fragment column" style="width: 45%; padding-right: 5%;">
 								Usage: <code>$app['db.options']['user']</code>
 							</li>
 							<li style="clear: left; visibility: hidden;"></li>
 						</ul>
-						<div class="fragment warning" style="margin-top: 1em;">As the ikdoeict webspaces are entirely accessible over HTTP, use a PHP file to not expose any config data!</div>
 					</section>
 
 				</section>

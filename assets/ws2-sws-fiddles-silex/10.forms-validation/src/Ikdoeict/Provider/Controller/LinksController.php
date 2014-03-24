@@ -19,12 +19,14 @@ class LinksController implements ControllerProviderInterface {
 	public function overview(Application $app) {
 
 		// Create “Add Link” Form
-		$addlinkform = $app['form.factory']->createNamed('loginform')
+		$defaultdata = array('title' => 'foo');
+		$addlinkform = $app['form.factory']->createNamed('addlinkform', 'form', $defaultdata)
 			->add('title', 'text', array(
 				'constraints' => array(new Assert\NotBlank(), new Assert\Length(array('min' => 5)))
 			))
 			->add('url', 'url', array(
-				'constraints' => array(new Assert\NotBlank(), new Assert\Url())
+				'constraints' => array(new Assert\NotBlank(), new Assert\Url()),
+				'label' => 'The URL'
 			));
 
 		// “Add Link” form was submitted: process it
