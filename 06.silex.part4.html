@@ -83,18 +83,18 @@ DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;</code></pre>
 						<h2>UTF-8 and Doctrine</h2>
 						<ul>
 							<li class="fragment">
-								Setting the `charset` to `utf8` not enough.
+								Setting the <code>charset</code> to <code>utf8</code> not enough.
 								<ul>
 									<li class="fragment">
-										One also needs to invoke a preflight `SET NAMES utf8` query to change the way statements are sent to the server.
+										One also needs to invoke a preflight <code>SET NAMES utf8</code> query to change the way statements are sent to the server.
 									</li>
 								</ul>
 							</li>
-							<li class="fragment">
+							<li class="fragment" style="margin-top: 1em;">
 								PDO offers a way to execute a preflight query when connecting to the MySQL server:
 								<ul>
 									<li class="fragment">
-										When constructing the connection, pass in the query via the driver options, using the `PDO::MYSQL_ATTR_INIT_COMMAND` constant.
+										When constructing the connection, pass in the query via the driver options, using the <code>PDO::MYSQL_ATTR_INIT_COMMAND</code> constant.
 									</li>
 								</ul>
 							</li>
@@ -118,7 +118,7 @@ $app-&gt;register(new Silex\Provider\DoctrineServiceProvider(), array(
 		)
 	)
 ));</code></pre></div>
-						<footer class="fragment"><em>Note: `1002` is the value of the constant `PDO::MYSQL_ATTR_INIT_COMMAND`</em></footer>
+						<footer class="fragment"><em>Note: <code>1002</code> is the value of the constant <code>PDO::MYSQL_ATTR_INIT_COMMAND</code></em></footer>
 						<!-- `SET NAMES UTF8; SET CHARACTER SET UTF8; SET character_set_connection=UTF8; SET character_set_client=UTF8;` -->
 					</section>
 				</section>
