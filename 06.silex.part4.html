@@ -1,0 +1,599 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Webscripting2 &mdash; Serverside Webscripting &mdash; 06.silex.part4</title>
+
+		<meta name="description" content="Webscripting2 &mdash; Serverside Webscripting &mdash; 06.silex.part4">
+		<meta name="author" content="Bram(us) Van Damme - ikdoeict.be">
+
+		<link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/main.css" media="screen">
+		<link rel="stylesheet" href="css/print.css" media="print">
+
+		<link rel="stylesheet" href="lib/zenburn.css">
+	</head>
+
+	<body>
+
+		<div id="reveal">
+
+			<div class="slides">
+
+				<!-- Title -->
+				<section>
+					<section>
+						<h3 class="inverted">Serverside Webscripting <small>[JLW323]</small></h3>
+						<h1>06.silex.part4</h1>
+
+						<footer>
+							<em><a href="http://www.ikdoeict.be/">ikdoeict.be</a> &mdash; <a href="mailto:bramus.vandamme@kahosl.be">bramus.vandamme@kahosl.be</a></em>
+						</footer>
+						<script>
+							// Delicously hacky. Look away.
+							if( navigator.userAgent.match( /(iPhone|iPad|iPod|Android)/i ) )
+							document.write( '<p style="color: rgba(0,0,0,0.3); text-shadow: none;">('+'Tap to navigate'+')</p>' );
+						</script>
+					</section>
+				</section>
+
+
+				<!-- MySQL and UTF-8 -->
+				<section>
+					<section>
+						<h2>UTF-8 and Doctrine</h2>
+
+						<p style="margin-top: 3em;"><img src="assets/06/utf8.png" alt="" title="" width="447"></p>
+					</section>
+					<section>
+						<h2>UTF-8</h2>
+						<ul>
+							<li class="fragment">
+								Again<small><a href="http://bramus.github.io/ws1-sws-course-materials/07.databases.html#/7/3">&#9873;</a></small>: Use <code>UTF-8</code>, everywhere.
+								<ol>
+									<li class="fragment">
+										DB Schema and Tables: use <code>utf8_general_ci</code>
+										<pre class="bigger"><code>CREATE DATABASE `mydb`
+DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;</code></pre>
+										<pre class="bigger"><code>CREATE TABLE IF NOT EXISTS `records` (
+	`id` INT(10) NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(255) NOT NULL,
+	PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;</code></pre>
+									</li>
+									<li class="fragment">
+										DB Connection
+										<pre class="bigger"><code class="language-php">$db = new PDO('mysql:host=' . DB_HOST .';dbname=' . DB_NAME_FF . ';charset=utf8', DB_USER, DB_PASS);</code></pre>
+									</li>
+									<li class="fragment">
+										HTML charset
+										<pre class="bigger"><code class="language-html dontrun">&lt;meta charset=&quot;utf-8&quot; /&gt;</code></pre>
+									</li>
+								</ol>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>UTF-8 and Doctrine</h2>
+						<ul>
+							<li class="fragment">
+								Setting the <code>charset</code> to <code>utf8</code> not enough.
+								<ul>
+									<li class="fragment">
+										One also needs to invoke a preflight <code>SET NAMES utf8</code> query to change the way statements are sent to the server.
+									</li>
+								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								PDO offers a way to execute a preflight query when connecting to the MySQL server:
+								<ul>
+									<li class="fragment">
+										When constructing the connection, pass in the query via the driver options, using the <code>PDO::MYSQL_ATTR_INIT_COMMAND</code> constant.
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>UTF-8 and Doctrine: Code</h2>
+						<div class="fragment"><pre class="bigger"><code class="language-php">&lt;?php
+
+$app-&gt;register(new Silex\Provider\DoctrineServiceProvider(), array(
+	'db.options' =&gt; array(
+		'driver' =&gt; 'pdo_mysql',
+		'dbname' =&gt; $app['config']['db']['dbname'],
+		'user' =&gt; $app['config']['db']['user'],
+		'password' =&gt; $app['config']['db']['password'],
+		'host' =&gt; $app['config']['db']['host'],
+		'charset' =&gt; 'utf8',
+		'driverOptions' =&gt; array(
+			1002 =&gt; 'SET NAMES utf8'
+		)
+	)
+));</code></pre></div>
+						<footer class="fragment"><em>Note: <code>1002</code> is the value of the constant <code>PDO::MYSQL_ATTR_INIT_COMMAND</code></em></footer>
+						<!-- `SET NAMES UTF8; SET CHARACTER SET UTF8; SET character_set_connection=UTF8; SET character_set_client=UTF8;` -->
+					</section>
+				</section>
+
+
+				<!-- Pagination -->
+				<section>
+					<section>
+						<h2>Pagination</h2>
+						<p style="margin-top: 2.5em;"><img src="assets/06/pagination.jpg" alt="" title="" width="600" /></p>
+					</section>
+
+					<section>
+						<h2>Pagination?</h2>
+						<ul>
+							<li class="fragment">
+								When having too many items to show, split them into several pages
+								<ul>
+									<li class="fragment">e.g. search results, filter results</li>
+									<li class="fragment">Typically placed beneath the results</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Examples</h2>
+						<ul>
+							<li class="fragment">
+								Good example:
+								<div class="hastooltip" style="width: 550px; margin: 0 auto;">
+									<p style="text-align: center"><img src="assets/06/pagination-good-flickr.png" alt="" title="" width="447" /></p>
+									<div class="tooltip">
+										<div>
+											<ul>
+												<li>Always indicate how many results there are</li>
+												<li>Always indicate how many pages there are</li>
+												<li>
+													Show a reasonable number of pages
+													<ul>
+														<li>The number row automgically adjusts itself based on the current page</li>
+														<li>First two and last two pages always shown</li>
+														<li>All, except the current page, clickable</li>
+													</ul>
+												</li>
+												<li>
+													Always indicate current active page
+													<ul>
+														<li>Don't link it though!</li>
+													</ul>
+												</li>
+												<li>
+													Always show next/previous buttons
+													<ul>
+														<li>Only clickable when necessary</li>
+													</ul>
+												</li>
+												<li>Don't show First/Last links (no direct value)</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</li>
+							<li class="fragment" style="margin-top: 1em">
+								Bad examples:
+								<p style="text-align: center"><img src="assets/06/pagination-bad-2.jpg" alt="" title="" width="447" /><br /><img src="assets/06/pagination-bad-1.png" alt="" title="" width="447" /></p>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Howto: Needed parameters</h2>
+						<ul>
+							<li class="fragment">
+								From <u>database</u>: Total number of items
+								<pre class="bigger"><code class="language-php">$numItems = $db->fetchColumn('SELECT COUNT(*) FROM table');</code></pre>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								From <u>configuration</u>: Number of items to show per page
+								<pre class="bigger"><code class="language-php">$numItemsPerPage = 10;</code></pre>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								From <u>url</u>: current page <em>(default = 1)</em>
+								<pre class="bigger"><code class="language-php">$curPage = max(1, (int) $request->query->get('p'));</code></pre>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								To <u>calculate</u>: number of pages
+								<pre class="bigger"><code class="language-php">$numPages = ceil($numItems / $numItemsPerPage);</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Howto: Selecting subset of items</h2>
+						<ul>
+							<li class="fragment">
+								Pass <code>$curPage</code> and <code>$numitemsPerPage</code> to your repository and add it use it in a <code>LIMIT</code> clause
+								<pre class="bigger"><code class="language-php">public function findAll($curPage = 1, $numItemsPerPage = 10) {
+
+	return $this->db->fetchAll('
+		SELECT * FROM datasets
+		ORDER BY id DESC
+		LIMIT ' . (int) (($curPage - 1) * $numItemsPerPage) . ',' .
+		(int) ($numItemsPerPage)
+	);
+
+}</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Howto: Parameters for Rendering</h2>
+						<ul>
+							<li class="fragment">
+								The current page and number of items
+								<pre class="bigger"><code class="language-php">$curPage; // To indicate the active page
+$numItems; // To indicate the number of items</code></pre>
+							</li>
+							<li class="fragment" style="margin-top: 0.75em;">
+								The current URL
+								<pre class="bigger"><code class="language-php">$baseUrl = 'http://example.dev/news/'; // to prepend to the pagination params</code></pre>
+							</li>
+							<li class="fragment" style="margin-top: 0.75em;">
+								An array with all numbers to show on screen, eg:<br />
+								<pre class="bigger"><code class="language-php">$pagination = array(1,2,'...',6,7,8,9,10); // Subset of pages to show</code></pre>
+								<ul>
+									<li class="fragment">Here, <em><a href="https://github.com/spoon/library/blob/master/spoon/datagrid/paging.php#L126">#lmgtfy</a></em> ;-)</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Howto: Rendering (Twig)</h2>
+						<pre class="bigger"><code style="max-height: 400px; overflow: scroll;">{% set prevPage = curPage - 1 %}
+{% set nextPage = curPage + 1 %}
+
+{% if numPages &gt; 1 %}
+&lt;div class=&quot;pagination pagination-small pagination-centered&quot;&gt;
+	&lt;ul class=&quot;clearfix&quot;&gt;
+
+		{% if curPage &gt; 1 %}
+			&lt;li class=&quot;previousPage&quot;&gt;&lt;a href=&quot;{{ baseUrl }}?p={{ prevPage }}&quot; data-p=&quot;{{ prevPage }}&quot;&gt;&lt; Previous&lt;/a&gt;&lt;/li&gt;
+		{% else %}
+			&lt;li class=&quot;previousPage disabled&quot;&gt;&lt;span&gt;&lt; Previous&lt;/span&gt;&lt;/li&gt;
+		{% endif %}
+
+		{% for page in pagination %}
+		&lt;li {% if page == curPage %} class=&quot;active&quot;{% endif %}{% if page == '...' %} class=&quot;disabled&quot;{% endif %}&gt;
+			{% if page == curPage %}
+				&lt;span&gt;{{ page }}&lt;/span&gt;
+			{% elseif page == '...' %}
+				&lt;span&gt;&hellip;&lt;/span&gt;
+			{% else %}
+				&lt;a href=&quot;{{ baseUrl }}?p={{ page }}&quot; data-p=&quot;{{ page }}&quot;&gt;{{ page }}&lt;/a&gt;
+			{% endif %}
+		&lt;/li&gt;
+		{% endfor %}
+
+		{% if curPage &lt; numPages %}
+			&lt;li class=&quot;nextPage&quot;&gt;&lt;a href=&quot;{{ baseUrl }}?p={{ nextPage }}&quot; data-p=&quot;{{ nextPage }}&quot;&gt;Next &gt;&lt;/a&gt;&lt;/li&gt;
+		{% else %}
+			&lt;li class=&quot;nextPage disabled&quot;&gt;&lt;span&gt;Next &gt;&lt;/span&gt;&lt;/li&gt;
+		{% endif %}
+
+	&lt;/ul&gt;
+
+	&lt;p class=&quot;text-center&quot;&gt;
+		{{ numItems }} items
+	&lt;/p&gt;
+&lt;/div&gt;
+{% endif %}</code></pre>
+					</section>
+
+					<section>
+						<h2>And now?</h2>
+						<ul>
+							<li class="fragment">
+								If you're really smart, create a reusable component (PHP class + template) from it and then assign the rendered HTML into your page template
+								<pre class="bigger"><code style="max-height: 300px; overflow: scroll;">&lt;?php
+
+// Get pagination params
+$numItemsPerPage = 10;
+$curPage = max(1, (int) $request-&gt;query-&gt;get('p'));
+$numPages = ceil($app['datasets']-&gt;numDatasets() / $numItemsPerPage);
+
+
+// Get datasets (for current page)
+$datasets = $app['datasets']-&gt;findAll(
+	$curPage,
+	$numItemsPerPage
+);
+
+// Build pagination
+$pagination = new \Taku\Pagination\Pagination(
+	$app['url_generator']-&gt;generate('datasets.overview'), // = baseUrl
+	$curPage,
+	$numPages
+);
+
+// Render our template
+return $app['twig']-&gt;render('datasets/overview.twig', array(
+	'datasets' =&gt; $datasets,
+	'pagination' =&gt; $pagination-&gt;getHtml()
+));</code></pre>
+							</li>
+						</ul>
+					</section>
+
+				</section>
+
+
+				<!-- Filtering -->
+				<section>
+					<section>
+						<h2>Filtering</h2>
+						<p><img src="assets/06/filter.png" alt="" title="" width="600" class="noborder" /></p>
+					</section>
+
+					<section>
+						<h2>Filtering?</h2>
+						<ul>
+							<li class="fragment">
+								Allow a visitor to refine a set of results
+								<ul>
+									<li class="fragment">A form with checkboxes, dropdowns, etc. per defining property of the resultset</li>
+									<li class="fragment">Typically placed on the left hand side, next to the results</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Filtering scenarios</h2>
+						<ul>
+							<li class="fragment">
+								Filter via <code>$_GET</code> params
+								<ul>
+									<li class="fragment">Pro: links can be shared/bookmarked</li>
+									<li class="fragment">Con: links become cluttered</li>
+									<li class="fragment">Pro: filter not preserved after having navigated away</li>
+								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Filter via <code>$_SESSION</code> params
+								<ul>
+									<li class="fragment">Pro: links don't become cluttered</li>
+									<li class="fragment">Pro: filter preserved after having navigated away</li>
+									<li class="fragment">Con: links can be shared/bookmarked</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>How to: Filter via session (1/3)</h2>
+						<ul>
+							<li class="fragment">
+								Force a default filter being present, with empty values:
+								<pre class="bigger"><code class="language-php">public function forceFilter() {
+	if ($app['session']-&gt;get('filter_products') == null) {
+		$app['session']-&gt;set('filter_products', array(
+			'title' =&gt; '',
+			'type' =&gt; '',
+			'brand' =&gt; ''
+		));
+	}
+}</code></pre>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Provide a function to get the filter
+								<pre class="bigger"><code class="language-php">public function getFilter() {
+	return $app['session']-&gt;get('filter_products');
+}</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>How to: Filter via session (2/3)</h2>
+						<ul>
+							<li class="fragment">
+								Store the filter on filterform submission
+								<pre class="bigger"><code class="language-php">public function setFilter($filter) {
+	$app['session']-&gt;set('filter_products', $filter);
+}
+</code></pre>
+								<pre class="bigger"><code class="language-php">if ('POST' == $app['request']-&gt;getMethod()) {
+	if ($filterForm-&gt;get('apply')->isClicked()) { // new since Symfony 2.3
+		$filterForm-&gt;bindRequest($request);
+		$this-&gt;setFilter($filterForm->getData());
+		return $app-&gt;redirect('...');
+	}
+}
+</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>How to: Filter via session (3/3)</h2>
+						<ul>
+							<li>
+								Pass the filter to the repository
+								<pre class="bigger"><code class="language-php">$products = $app['db.products']->findAll(
+	$this->getFilter(), $curPage, $numItemsPerPage
+);</code></pre>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Adjust the repository to use the filter
+								<pre class="bigger"><code class="language-php">public function findAll($filter, $curPage = 1, $numItemsPerPage = 10) {
+
+	// @TODO: some magic here?!
+
+	return $this->db->fetchAll('
+		SELECT * FROM products
+		WHERE products.deleted = ?
+		ORDER BY id DESC
+		LIMIT ' . (int) (($curPage - 1) * $numItemsPerPage) . ',' .
+		(int) ($numItemsPerPage),
+		array('N')
+	);
+
+}</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>How to: Selecting filtered dataset</h2>
+						<ul>
+							<li class="fragment">
+								A filterparam on can cause two adjustments to the query
+								<ol>
+									<li>Extra <code>where</code> clause part</li>
+									<li>Extra table to <code>join</code> with</li>
+								</ol>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								In code:
+								<pre class="bigger"><code class="language-php" style="max-height: 300px; overflow: scroll;">public function findAll($filter, $curPage = 1, $numItemsPerPage = 10) {
+
+	$extraJoins = '';
+	$extraWhere = '';
+
+	// Title set via Filter
+	if ($filter['title'] != '') {
+		$extraWhere .= ' AND products.title LIKE ' . $this->db->quote('%'.$filter['title'].'%', \PDO::PARAM_STR);
+	}
+
+	// Type set via Filter
+	if ($filter['type'] != '') {
+		$extraJoins .= ' INNER JOIN product_types ON products.type_id = product_types.id';
+		$extraWhere .= ' AND products.type_id = ' . $this->db->quote($filter['type'], \PDO::PARAM_INT);
+	}
+
+	// Brand set via filter
+	if ($filter['brand'] != '') {
+		$extraJoins .= ' INNER JOIN brands ON products.brand_id = brands.id';
+		$extraWhere .= ' AND products.brand_id = ' . $this->db->quote($filter['brand'], \PDO::PARAM_INT);
+	}
+
+	return $this->db->fetchAll('
+		SELECT * FROM products' . $extraJoins . '
+		WHERE products.deleted = ?' . $extraWhere . '
+		ORDER BY id DESC
+		LIMIT ' . (int) (($curPage - 1) * $numItemsPerPage) . ',' .
+		(int) ($numItemsPerPage),
+		array('N')
+	);
+
+}</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Caution!</h2>
+						<ul>
+							<li class="fragment">
+								<strong>!!! BEWARE OF SQL INJECTION !!!</strong>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Don't forget to adjust the pagination
+								<ul>
+									<li><em>(including the query to define <code>$numItems</code>!)</em></li>
+								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Don't autosubmit on change/select <em>(lag)</em> <!-- http://www.machineland.be/webshop -->
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Want more?</h2>
+						<ul>
+							<li class="fragment">
+								Split of the code the create the <code>$extraJoins</code> and <code>$extraWhere</code> parts to make it reusable
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Augment your filter with Ajax
+								<ul>
+									<li class="fragment">Change/select in filter = XHR request to fetch filtered subset</li>
+									<li class="fragment">
+										Response consists of two parts:
+										<ol>
+											<li>Returned rows (as JSON)</li>
+											<li>Pagination (as pre-rendered HTML)</li>
+										</ol>
+									</li>
+								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Add autocomplete to text inputs
+							</li>
+						</ul>
+					</section>
+
+				</section>
+
+				<!-- The END -->
+				<section>
+					<section>
+						<h2>Questions?</h2>
+						<footer>
+							<em><a href="http://www.ikdoeict.be/">ikdoeict.be</a> &mdash; <a href="mailto:bramus.vandamme@kahosl.be">bramus.vandamme@kahosl.be</a></em>
+						</footer>
+					</section>
+				</section>
+
+
+
+				<!-- Sources -->
+				<section id="sources">
+					<section>
+						<h2>Sources</h2>
+						<ul>
+							<li><a href="http://patternry.com/p=search-pagination/">http://patternry.com/p=search-pagination/</a></li>
+						</ul>
+					</section>
+				</section>
+
+			</div>
+
+			<!-- The navigational controls UI -->
+			<aside class="controls">
+				<a class="left" href="#">&#x25C4;</a>
+				<a class="right" href="#">&#x25BA;</a>
+				<a class="up" href="#">&#x25B2;</a>
+				<a class="down" href="#">&#x25BC;</a>
+				<span id="revealIndex">/</span>
+			</aside>
+
+			<!-- Index Link -->
+			<aside class="back">
+				<a href="index.html">&larr; Back to index</a>
+			</aside>
+
+			<!-- ikdoeict.be Link -->
+			<a href="http://www.ikdoeict.be/" title="ikdoeict.be" id="ikdoeict">ikdoeict.be</a>
+
+			<!-- Displays presentation progress, max value changes via JS to reflect # of slides -->
+			<div class="progress"><span></span></div>
+
+		</div>
+
+		<script src="js/reveal.js"></script>
+		<script src="lib/highlight.js"></script>
+		<script src="lib/prefixfree.js"></script>
+		<script src="lib/css-snippets.js"></script>
+		<script src="lib/css-edit.js"></script>
+		<script src="lib/incrementable.js"></script>
+		<script src="js/main.js"></script>
+
+	</body>
+</html>
