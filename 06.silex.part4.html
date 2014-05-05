@@ -336,10 +336,209 @@ return $app['twig']-&gt;render('datasets/overview.twig', array(
 				<section>
 					<section>
 						<h2>Filtering</h2>
-
-						<p><img src="assets/06/x.jpg" alt="" title="" width="447" /></p>
-						<q>...</q>
+						<p><img src="assets/06/filter.png" alt="" title="" width="600" class="noborder" /></p>
 					</section>
+
+					<section>
+						<h2>Filtering?</h2>
+						<ul>
+							<li class="fragment">
+								Allow a visitor to refine a set of results
+								<ul>
+									<li class="fragment">A form with checkboxes, dropdowns, etc. per defining property of the resultset</li>
+									<li class="fragment">Typically placed on the left hand side, next to the results</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Filtering scenarios</h2>
+						<ul>
+							<li class="fragment">
+								Filter via <code>$_GET</code> params
+								<ul>
+									<li class="fragment">Pro: links can be shared/bookmarked</li>
+									<li class="fragment">Con: links become cluttered</li>
+									<li class="fragment">Pro: filter not preserved after having navigated away</li>
+								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Filter via <code>$_SESSION</code> params
+								<ul>
+									<li class="fragment">Pro: links don't become cluttered</li>
+									<li class="fragment">Pro: filter preserved after having navigated away</li>
+									<li class="fragment">Con: links can be shared/bookmarked</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>How to: Filter via session (1/3)</h2>
+						<ul>
+							<li class="fragment">
+								Force a default filter being present, with empty values:
+								<pre class="bigger"><code class="language-php">public function forceFilter() {
+	if ($app['session']-&gt;get('filter_products') == null) {
+		$app['session']-&gt;set('filter_products', array(
+			'title' =&gt; '',
+			'type' =&gt; '',
+			'brand' =&gt; ''
+		));
+	}
+}</code></pre>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Provide a function to get the filter
+								<pre class="bigger"><code class="language-php">public function getFilter() {
+	return $app['session']-&gt;get('filter_products');
+}</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>How to: Filter via session (2/3)</h2>
+						<ul>
+							<li class="fragment">
+								Store the filter on filterform submission
+								<pre class="bigger"><code class="language-php">public function setFilter($filter) {
+	$app['session']-&gt;set('filter_products', $filter);
+}
+</code></pre>
+								<pre class="bigger"><code class="language-php">if ('POST' == $app['request']-&gt;getMethod()) {
+	if ($filterForm-&gt;get('apply')->isClicked()) { // new since Symfony 2.3
+		$filterForm-&gt;bindRequest($request);
+		$this-&gt;setFilter($filterForm->getData());
+		return $app-&gt;redirect('...');
+	}
+}
+</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>How to: Filter via session (3/3)</h2>
+						<ul>
+							<li>
+								Pass the filter to the repository
+								<pre class="bigger"><code class="language-php">$products = $app['db.products']->findAll(
+	$this->getFilter(), $curPage, $numItemsPerPage
+);</code></pre>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Adjust the repository to use the filter
+								<pre class="bigger"><code class="language-php">public function findAll($filter, $curPage = 1, $numItemsPerPage = 10) {
+
+	// @TODO: some magic here?!
+
+	return $this->db->fetchAll('
+		SELECT * FROM products
+		WHERE products.deleted = ?
+		ORDER BY id DESC
+		LIMIT ' . (int) (($curPage - 1) * $numItemsPerPage) . ',' .
+		(int) ($numItemsPerPage),
+		array('N')
+	);
+
+}</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>How to: Selecting filtered dataset</h2>
+						<ul>
+							<li class="fragment">
+								A filterparam on can cause two adjustments to the query
+								<ol>
+									<li>Extra <code>where</code> clause part</li>
+									<li>Extra table to <code>join</code> with</li>
+								</ol>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								In code:
+								<pre class="bigger"><code class="language-php" style="max-height: 300px; overflow: scroll;">public function findAll($filter, $curPage = 1, $numItemsPerPage = 10) {
+
+	$extraJoins = '';
+	$extraWhere = '';
+
+	// Title set via Filter
+	if ($filter['title'] != '') {
+		$extraWhere .= ' AND products.title LIKE ' . $this->db->quote('%'.$filter['title'].'%', \PDO::PARAM_STR);
+	}
+
+	// Type set via Filter
+	if ($filter['type'] != '') {
+		$extraJoins .= ' INNER JOIN product_types ON products.type_id = product_types.id';
+		$extraWhere .= ' AND products.type_id = ' . $this->db->quote($filter['type'], \PDO::PARAM_INT);
+	}
+
+	// Brand set via filter
+	if ($filter['brand'] != '') {
+		$extraJoins .= ' INNER JOIN brands ON products.brand_id = brands.id';
+		$extraWhere .= ' AND products.brand_id = ' . $this->db->quote($filter['brand'], \PDO::PARAM_INT);
+	}
+
+	return $this->db->fetchAll('
+		SELECT * FROM products' . $extraJoins . '
+		WHERE products.deleted = ?' . $extraWhere . '
+		ORDER BY id DESC
+		LIMIT ' . (int) (($curPage - 1) * $numItemsPerPage) . ',' .
+		(int) ($numItemsPerPage),
+		array('N')
+	);
+
+}</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Caution!</h2>
+						<ul>
+							<li class="fragment">
+								<strong>!!! BEWARE OF SQL INJECTION !!!</strong>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Don't forget to adjust the pagination
+								<ul>
+									<li><em>(including the query to define <code>$numItems</code>!)</em></li>
+								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Don't autosubmit on change/select <em>(lag)</em> <!-- http://www.machineland.be/webshop -->
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Want more?</h2>
+						<ul>
+							<li class="fragment">
+								Split of the code the create the <code>$extraJoins</code> and <code>$extraWhere</code> parts to make it reusable
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Augment your filter with Ajax
+								<ul>
+									<li class="fragment">Change/select in filter = XHR request to fetch filtered subset</li>
+									<li class="fragment">
+										Response consists of two parts:
+										<ol>
+											<li>Returned rows (as JSON)</li>
+											<li>Pagination (as pre-rendered HTML)</li>
+										</ol>
+									</li>
+								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Add autocomplete to text inputs
+							</li>
+						</ul>
+					</section>
+
 				</section>
 
 				<!-- The END -->
