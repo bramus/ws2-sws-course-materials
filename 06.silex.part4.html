@@ -360,7 +360,7 @@ return $app['twig']-&gt;render('datasets/overview.twig', array(
 								<ul>
 									<li class="fragment">Pro: links can be shared/bookmarked</li>
 									<li class="fragment">Con: links become cluttered</li>
-									<li class="fragment">Pro: filter not preserved after having navigated away</li>
+									<li class="fragment">Con: filter not preserved after having navigated away</li>
 								</ul>
 							</li>
 							<li class="fragment" style="margin-top: 1em;">
@@ -411,7 +411,7 @@ return $app['twig']-&gt;render('datasets/overview.twig', array(
 	if ($filterForm-&gt;get('apply')->isClicked()) { // new since Symfony 2.3
 		$filterForm-&gt;bindRequest($request);
 		$this-&gt;setFilter($filterForm->getData());
-		return $app-&gt;redirect('...');
+		// return $app-&gt;redirect('...'); // Not required
 	}
 }
 </code></pre>
