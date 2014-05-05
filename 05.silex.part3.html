@@ -734,7 +734,7 @@ if (count($errors) &gt; 0) {
 	-&gt;add('password', 'password');</code></pre>
 							</li>
 							<li class="fragment">
-								It's possible to customize<small><a href="http://symfony.com/doc/current/book/forms.html#rendering-each-field-by-hand">&#9873;</a></small> <a href="http://symfony.com/doc/current/reference/forms/twig_reference.html">&#9873;</a></small> the output of a form
+								It's possible to customize<small><a href="http://symfony.com/doc/current/book/forms.html#rendering-each-field-by-hand">&#9873;</a></small> <small><a href="http://symfony.com/doc/current/reference/forms/twig_reference.html">&#9873;</a></small> the output of a form
 								<pre class="bigger"><code class="language-html dontrun" style="max-height: 240px; overflow: scroll;">&lt;form action=&quot;#&quot; method=&quot;post&quot;  {{ form_enctype(loginform) }}&gt;
 	&lt;dl class=&quot;clearfix&quot;&gt;
 		&lt;dt&gt;
@@ -767,7 +767,11 @@ if (count($errors) &gt; 0) {
 						<ul>
 							<li class="fragment">
 								FormServiceProvider plays nice with ValidatorServiceProvider
-								<pre class="bigger"><code class="language-php" style="max-height: 380px; overflow: scroll;">$loginform = $app['form.factory']-&gt;createNamed('loginform', $data)
+								<pre class="bigger"><code class="language-php" style="max-height: 380px; overflow: scroll;">use Symfony\Component\Validator\Constraints as Assert;
+
+&hellip;
+
+$loginform = $app['form.factory']-&gt;createNamed('loginform', $data)
 	-&gt;add('username', 'text', array(
 		'constraints' =&gt; new Assert\Email()
 	))
