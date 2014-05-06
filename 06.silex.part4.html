@@ -272,8 +272,8 @@ $numItems; // To indicate the number of items</code></pre>
 {% set nextPage = curPage + 1 %}
 
 {% if numPages &gt; 1 %}
-&lt;div class=&quot;pagination pagination-small pagination-centered&quot;&gt;
-	&lt;ul class=&quot;clearfix&quot;&gt;
+&lt;div class=&quot;text-center&quot;&gt;
+	&lt;ul class=&quot;pagination pagination-sm&quot;&gt;
 
 		{% if curPage &gt; 1 %}
 			&lt;li class=&quot;previousPage&quot;&gt;&lt;a href=&quot;{{ baseUrl }}?p={{ prevPage }}&quot; data-p=&quot;{{ prevPage }}&quot;&gt;&lt; Previous&lt;/a&gt;&lt;/li&gt;
