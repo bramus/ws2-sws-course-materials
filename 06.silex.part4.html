@@ -416,19 +416,24 @@ return $app['twig']-&gt;render('datasets/overview.twig', array(
 						<h2>How to: Filter via session (2/3)</h2>
 						<ul>
 							<li class="fragment">
+								Pass filter to the filterform <em>(= persistence)</em>
+								<pre class="bigger"><code class="language-php">$filterform = $app['form.factory']
+	-&gt;createNamed('filterform', 'form', $this->getFilter($app))
+	-&gt;...</code></pre>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
 								Store the filter on filterform submission
 								<pre class="bigger"><code class="language-php">public function setFilter(Application $app, $filter) {
 	$app['session']-&gt;set('filter_products', $filter);
 }
 </code></pre>
 								<pre class="bigger"><code class="language-php">if ('POST' == $app['request']-&gt;getMethod()) {
-	if ($filterForm-&gt;get('apply')->isClicked()) { // new since Symfony 2.3
-		$filterForm-&gt;bindRequest($request);
-		$this-&gt;setFilter($app, $filterForm->getData());
+	$filterform-&gt;handleRequest($app['request']);
+	if ($filterform-&gt;isValid()) {
+		$this-&gt;setFilter($app, $filterform->getData());
 		// return $app-&gt;redirect('...'); // Not required
 	}
-}
-</code></pre>
+}</code></pre>
 							</li>
 						</ul>
 					</section>
