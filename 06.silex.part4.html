@@ -393,7 +393,7 @@ return $app['twig']-&gt;render('datasets/overview.twig', array(
 						<ul>
 							<li class="fragment">
 								Force a default filter being present, with empty values:
-								<pre class="bigger"><code class="language-php">public function forceFilter() {
+								<pre class="bigger"><code class="language-php">public function forceFilter(Application $app) {
 	if ($app['session']-&gt;get('filter_products') == null) {
 		$app['session']-&gt;set('filter_products', array(
 			'title' =&gt; '',
@@ -405,7 +405,7 @@ return $app['twig']-&gt;render('datasets/overview.twig', array(
 							</li>
 							<li class="fragment" style="margin-top: 1em;">
 								Provide a function to get the filter
-								<pre class="bigger"><code class="language-php">public function getFilter() {
+								<pre class="bigger"><code class="language-php">public function getFilter(Application $app) {
 	return $app['session']-&gt;get('filter_products');
 }</code></pre>
 							</li>
@@ -417,14 +417,14 @@ return $app['twig']-&gt;render('datasets/overview.twig', array(
 						<ul>
 							<li class="fragment">
 								Store the filter on filterform submission
-								<pre class="bigger"><code class="language-php">public function setFilter($filter) {
+								<pre class="bigger"><code class="language-php">public function setFilter(Application $app, $filter) {
 	$app['session']-&gt;set('filter_products', $filter);
 }
 </code></pre>
 								<pre class="bigger"><code class="language-php">if ('POST' == $app['request']-&gt;getMethod()) {
 	if ($filterForm-&gt;get('apply')->isClicked()) { // new since Symfony 2.3
 		$filterForm-&gt;bindRequest($request);
-		$this-&gt;setFilter($filterForm->getData());
+		$this-&gt;setFilter($app, $filterForm->getData());
 		// return $app-&gt;redirect('...'); // Not required
 	}
 }
@@ -438,13 +438,13 @@ return $app['twig']-&gt;render('datasets/overview.twig', array(
 						<ul>
 							<li>
 								Pass the filter to the repository
-								<pre class="bigger"><code class="language-php">$products = $app['db.products']->findAll(
-	$this->getFilter(), $curPage, $numItemsPerPage
+								<pre class="bigger"><code class="language-php">$products = $app['db.products']->findFiltered(
+	$this->getFilter($app), $curPage, $numItemsPerPage
 );</code></pre>
 							</li>
 							<li class="fragment" style="margin-top: 1em;">
 								Adjust the repository to use the filter
-								<pre class="bigger"><code class="language-php">public function findAll($filter, $curPage = 1, $numItemsPerPage = 10) {
+								<pre class="bigger"><code class="language-php">public function findFiltered($filter, $curPage = 1, $numItemsPerPage = 10) {
 
 	// @TODO: some magic here?!
 
@@ -474,7 +474,7 @@ return $app['twig']-&gt;render('datasets/overview.twig', array(
 							</li>
 							<li class="fragment" style="margin-top: 1em;">
 								In code:
-								<pre class="bigger"><code class="language-php" style="max-height: 300px; overflow: scroll;">public function findAll($filter, $curPage = 1, $numItemsPerPage = 10) {
+								<pre class="bigger"><code class="language-php" style="max-height: 300px; overflow: scroll;">public function findFiltered($filter, $curPage = 1, $numItemsPerPage = 10) {
 
 	$extraJoins = '';
 	$extraWhere = '';
