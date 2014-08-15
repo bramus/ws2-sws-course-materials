@@ -268,10 +268,10 @@ $numItems; // To indicate the number of items</code></pre>
 		{% endif %}
 
 		{% for page in pagination %}
-		&lt;li {% if page == curPage %} class=&quot;active&quot;{% endif %}{% if page == '...' %} class=&quot;disabled&quot;{% endif %}&gt;
+		&lt;li {% if page == curPage %} class=&quot;active&quot;{% endif %}{% if page == '..' %} class=&quot;disabled&quot;{% endif %}&gt;
 			{% if page == curPage %}
 				&lt;span&gt;{{ page }}&lt;/span&gt;
-			{% elseif page == '...' %}
+			{% elseif page == '..' %}
 				&lt;span&gt;&hellip;&lt;/span&gt;
 			{% else %}
 				&lt;a href=&quot;{{ baseUrl }}?p={{ page }}&quot; data-p=&quot;{{ page }}&quot;&gt;{{ page }}&lt;/a&gt;
