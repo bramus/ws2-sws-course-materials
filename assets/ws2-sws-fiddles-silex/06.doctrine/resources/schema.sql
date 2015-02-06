@@ -24,7 +24,7 @@ CREATE TABLE links (
 );
 
 INSERT INTO links VALUES (1, 'http://www.ikdoeict.be/', 'Website Ikdoeict.be', 3, '2013-02-03');
-INSERT INTO links VALUES (2, 'http://www.hubkaho.be/', 'Website HUB-KAHO', 3, '2013-02-03');
+INSERT INTO links VALUES (2, 'http://www.odisee.be/', 'Website Odisee', 3, '2013-02-03');
 INSERT INTO links VALUES (3, 'http://bramus.github.com/ws1-sws-course-materials/', 'Lesmateriaal Webscripten 1', 1, '2013-02-04');
 INSERT INTO links VALUES (4, 'http://bramus.github.com/ria-course-materials/', 'Lesmateriaal Web & Mobile', 1, '2013-02-04');
 INSERT INTO links VALUES (5, 'http://leercentrum.ikdoeict.be/', 'Leercentrum Ikdoeict', 1, '2013-02-04');
