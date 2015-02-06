@@ -15,7 +15,7 @@ SET time_zone = "+00:00";
 --
 
 DROP DATABASE IF EXISTS todo;
-CREATE DATABASE todo;
+CREATE DATABASE todo DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE todo;
 
 -- --------------------------------------------------------
@@ -31,7 +31,7 @@ CREATE TABLE `todolist` (
   `priority` enum('high','normal','low') NOT NULL,
   `added_on` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `todolist`
@@ -54,13 +54,13 @@ CREATE TABLE `users` (
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `username`, `password`) VALUES
-(1, 'bramus', '548b443423c74becf92a5091bd63a80f058f38fc'),
-(2, 'rogier', '548b443423c74becf92a5091bd63a80f058f38fc'),
-(3, 'davy', '548b443423c74becf92a5091bd63a80f058f38fc');
+(1, 'bramus', '$2y$10$3kDNd/rc2C9z6H9A7M0L..6BcAAH.uU8d5hu2e0NtggNOjHXygSbO'),
+(2, 'rogier', '$2y$10$b9HQ05S1SBGdSBN2HPnxaePba2tHDJ2Mrm4mpumha0BlKAloSXK5a'),
+(3, '💩', '$2y$10$9FwQp3zEVzvY5MYivJBk2eeAJhyRZD7ZV5rXTnr6MRFpDYAN/VPtW');

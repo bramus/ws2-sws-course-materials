@@ -4,7 +4,7 @@
 require_once 'swiftmailer/swift_required.php';
 
 // Create the Transport
-$transport = Swift_SmtpTransport::newInstance('smtp2.kahosl.be', 25);
+$transport = Swift_SmtpTransport::newInstance('relay.odisee.be', 25);
 
 // Create the Mailer using your created Transport
 $mailer = Swift_Mailer::newInstance($transport);

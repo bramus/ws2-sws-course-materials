@@ -41,11 +41,11 @@
 				<!-- Title -->
 				<section>
 					<section>
-						<h3 class="inverted">Serverside Webscripting <small>[JLW323]</small></h3>
+						<h3 class="inverted">Serverside Webscripting <small>[JLW384]</small></h3>
 						<h1>06.silex.part4</h1>
 
 						<footer>
-							<em><a href="http://www.ikdoeict.be/">ikdoeict.be</a> &mdash; <a href="mailto:bramus.vandamme@kahosl.be">bramus.vandamme@kahosl.be</a></em>
+							<em><a href="http://www.ikdoeict.be/">ikdoeict.be</a> &mdash; <a href="mailto:bramus.vandamme@odisee.be">bramus.vandamme@odisee.be</a></em>
 						</footer>
 						<script>
 							// Delicously hacky. Look away.
@@ -126,10 +126,7 @@ $app-&gt;register(new Silex\Provider\DoctrineServiceProvider(), array(
 		'user' =&gt; $app['config']['db']['user'],
 		'password' =&gt; $app['config']['db']['password'],
 		'host' =&gt; $app['config']['db']['host'],
-		'charset' =&gt; 'utf8',
-		'driverOptions' =&gt; array(
-			1002 =&gt; 'SET NAMES utf8'
-		)
+		'charset' =&gt; 'utf8mb4'
 	)
 ));</code></pre></div>
 						<footer class="fragment"><em>Note: <code>1002</code> is the value of the constant <code>PDO::MYSQL_ATTR_INIT_COMMAND</code></em></footer>
@@ -282,10 +279,10 @@ $numItems; // To indicate the number of items</code></pre>
 		{% endif %}
 
 		{% for page in pagination %}
-		&lt;li {% if page == curPage %} class=&quot;active&quot;{% endif %}{% if page == '...' %} class=&quot;disabled&quot;{% endif %}&gt;
+		&lt;li {% if page == curPage %} class=&quot;active&quot;{% endif %}{% if page == '..' %} class=&quot;disabled&quot;{% endif %}&gt;
 			{% if page == curPage %}
 				&lt;span&gt;{{ page }}&lt;/span&gt;
-			{% elseif page == '...' %}
+			{% elseif page == '..' %}
 				&lt;span&gt;&hellip;&lt;/span&gt;
 			{% else %}
 				&lt;a href=&quot;{{ baseUrl }}?p={{ page }}&quot; data-p=&quot;{{ page }}&quot;&gt;{{ page }}&lt;/a&gt;
@@ -565,7 +562,7 @@ return $app['twig']-&gt;render('datasets/overview.twig', array(
 					<section>
 						<h2>Questions?</h2>
 						<footer>
-							<em><a href="http://www.ikdoeict.be/">ikdoeict.be</a> &mdash; <a href="mailto:bramus.vandamme@kahosl.be">bramus.vandamme@kahosl.be</a></em>
+							<em><a href="http://www.ikdoeict.be/">ikdoeict.be</a> &mdash; <a href="mailto:bramus.vandamme@odisee.be">bramus.vandamme@odisee.be</a></em>
 						</footer>
 					</section>
 				</section>

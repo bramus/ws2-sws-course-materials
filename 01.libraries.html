@@ -43,11 +43,11 @@
 				<!-- Title -->
 				<section>
 					<section>
-						<h3 class="inverted">Serverside Webscripting <small>[JLW323]</small></h3>
+						<h3 class="inverted">Serverside Webscripting <small>[JLW384]</small></h3>
 						<h1>01.libraries</h1>
 
 						<footer>
-							<em><a href="http://www.ikdoeict.be/">ikdoeict.be</a> &mdash; <a href="mailto:bramus.vandamme@kahosl.be">bramus.vandamme@kahosl.be</a></em>
+							<em><a href="http://www.ikdoeict.be/">ikdoeict.be</a> &mdash; <a href="mailto:bramus.vandamme@odisee.be">bramus.vandamme@odisee.be</a></em>
 						</footer>
 						<script>
 							// Delicously hacky. Look away.
@@ -74,7 +74,7 @@
 							<li class="fragment">
 								Set of one or more PHP Classes which you can use in your own project
 							</li>
-							<li class="fragment">
+							<li class="fragment" style="margin-top: 1em;">
 								Provide in one or several functionalities
 								<div class="columns fragment">
 									<div class="column column-12">
@@ -114,11 +114,11 @@
 								Optional properties
 								<ul class="twocolled">
 									<li class="fragment">Standalone</li>
-									<li class="fragment">Independent</li>
+									<li class="fragment">Structured</li>
 									<li class="fragment">Documentation provided</li>
-									<li class="fragment">Unit Tests</li>
+									<li class="fragment">Unit Tested</li>
 									<li class="fragment">Extensible</li>
-									<li class="fragment">Structured / PSR-X Compliant<br /><em>(more on that later)</em></li>
+									<li class="fragment">PSR-X Compliant<br /><em>(more on that later)</em></li>
 								</ul>
 							</li>
 						</ul>
@@ -144,7 +144,7 @@
 							<li class="fragment" style="margin-top: 1em;">
 								General Libraries
 								<ul>
-									<li>Spoon Library</li>
+									<li>Spoon Library (RIP)</li>
 									<li>The Symfony Components</li>
 								</ul>
 							</li>
@@ -342,7 +342,7 @@ $graph-&gt;Stroke();</code></pre>
 require_once 'swiftmailer/swift_required.php';
 
 // Create the Transport
-$transport = Swift_SmtpTransport::newInstance('smtp2.kahosl.be', 25);
+$transport = Swift_SmtpTransport::newInstance('relay.odisee.be', 25);
 
 // Create the Mailer using your created Transport
 $mailer = Swift_Mailer::newInstance($transport);
@@ -370,7 +370,7 @@ if(!$mailer-&gt;send($message, $errors)) {
 
 				<section>
 					<section>
-						<h2>Intermezzo:<br />Autoloaders, Namespaces, &amp; PSR-0</h2>
+						<h2>Intermezzo:<br />Autoloaders, Namespaces, &amp; PSR-4</h2>
 						<p><img src="assets/01/splash-namespaces.jpg" width="600" alt="" style="margin-top: 1em;" /></p>
 					</section>
 
@@ -475,45 +475,43 @@ $baz = new Baz('hello-baz'); // = \Ikdoeict\Demo\Baz</code></pre>
 
 						<ul>
 							<li class="fragment">
-								<a href="http://www.php-fig.org/psr/psr-0/">PSR-0</a> is <em>&ldquo;a standard describing mandatore requirements for autoloader interoperability&rdquo;</em>
+								<a href="http://www.php-fig.org/psr/psr-0/">PSR-0</a> is <em>&ldquo;a standard describing mandatory requirements for autoloader interoperability&rdquo;</em>
 								<ul>
 									<li class="fragment">
 										Defines how to namespace your code:<br />
 										<code>\&lt;VendorName&gt;\(&lt;Namespace&gt;\)*&lt;ClassName&gt;</code></li>
 									<li class="fragment">
 										Defines how that namespace translates to an organization on disk<br />
-										<code>/path/to/project/lib/vendor/Vendor/Namespace/ClassName.php</code>
+										<code>/path/to/project/vendor/Vendorname/Namespace/ClassName.php</code>
 									</li>
 								</ul>
 							</li>
 							<li class="fragment" style="margin-top: 1em;">
-								In other words: Adhering to the standard makes your library play nice with <a href="https://gist.github.com/jwage/221634">the PSR-0 autoloader</a>.
+								In other words: Adhering to this folder structure makes your library play nice with <a href="https://gist.github.com/jwage/221634">the PSR-0 autoloader</a>.
 							</li>
 						</ul>
 						<footer class="fragment"><em>Beware: Use the exact casing on disk as some file systems are Case Sensitive!</em></footer>
 					</section>
 
 					<section>
-						<h2>PSR-0 Analyzed</h2>
+						<h2>PSR-4</h2>
 
 						<ul>
 							<li class="fragment">
-								The core of the PSR-0 autoloader
-								<pre class="bigger"><code class="language-php">function autoload($className) {
-	$className = ltrim($className, '\\');
-	$fileName  = '';
-	$namespace = '';
-	if ($lastNsPos = strrpos($className, '\\')) {
-		$namespace = substr($className, 0, $lastNsPos);
-		$className = substr($className, $lastNsPos + 1);
-		$fileName  = str_replace('\\', '/' , $namespace) . '/';
-	}
-	$fileName .= str_replace('_', '/', $className) . '.php';
-	require $fileName;
-}</code></pre>
+								<a href="http://www.php-fig.org/psr/psr-4/">PSR-4</a> is <em>&ldquo;a specification for autoloading classes from file paths&rdquo;</em>
 								<ul>
-									<li class="fragment">Yes, that's it.</li>
+									<li class="fragment">PSR-0 compatible</li>
+									<li class="fragment">
+										Affords a more concise folder structure. <br />E.g. <code>\Vendorname\Namespace\ClassName</code>
+										<ul>
+											<li>PSR-0: <code>/path/to/project/Vendorname/Namespace/ClassName.php</code></li>
+											<li>PSR-4: <code>/path/to/project/ClassName.php</code></li>
+										</ul>
+									</li>
 								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Roughly translated: PSR-4 = PSR-0, redux.
 							</li>
 						</ul>
 					</section>
@@ -541,36 +539,10 @@ $baz = new Baz('hello-baz'); // = \Ikdoeict\Demo\Baz</code></pre>
 							<li class="fragment">
 								Roughly translated: this tool will save you lots of headaches
 								<ul>
-									<li>Just tell composer which package and which version <em>(specific, or &ldquo;the latest&rdquo;)</em> you need and it will install/update it for you</li>
+									<li>Just tell composer which package and which version <em>(specific, or &ldquo;the latest&rdquo;)</em> of a library you need and it will install/update it for you</li>
 								</ul>
 							</li>
 						</ul>
-					</section>
-
-					<section>
-						<h2>Why Composer?</h2>
-
-						<ul>
-							<li class="fragment">
-								Composer is a project specific dependency manager
-								<ul>
-									<li>Packages are installed on a per project basis (<code>vendor</code> subfolder), not system-wide (cfr. PEAR)</li>
-								</ul>
-							</li>
-							<li class="fragment" style="margin-top: 1em;">
-								Composer is clever
-								<ul>
-									<li>Composer finds out which versions of which packages (and which versions of its dependencies) need to be installed, and installs them.</li>
-								</ul>
-							</li>
-							<li class="fragment" style="margin-top: 1em;">
-								Installed packages can be autoloaded
-								<ul>
-									<li>Composer will generate one single autoloader for all dependencies</li>
-								</ul>
-							</li>
-						</ul>
-						<footer class="fragment">Told you: it saves lots of headaches!</footer>
 					</section>
 
 					<section>
@@ -578,15 +550,42 @@ $baz = new Baz('hello-baz'); // = \Ikdoeict\Demo\Baz</code></pre>
 						<ul>
 							<li class="fragment">
 								Composer is worthless without <a href="https://packagist.org/">Packagist</a>:
-								<ul>
-									<li class="fragment">Composer = the command line tool which downloads the packages</li>
-									<li class="fragment">Packagist = a website aggregating all installable packages</li>
+								<ul style="font-size: 75%">
+									<li class="fragment">Composer = command line tool which downloads and installs the packages</li>
+									<li class="fragment">Packagist = website aggregating all installable packages and their versions</li>
 								</ul>
 								<div class="fragment" style="text-align: center;">
 									<figure><img src="assets/01/packagist.png" alt="" title="" width="580" class="noborder" /></figure>
 								</div>
 							</li>
 						</ul>
+					</section>
+
+					<section>
+						<h2>Why Composer and not X?</h2>
+
+						<ul>
+							<li class="fragment">
+								Composer is a <strong>project specific</strong> dependency manager
+								<ul>
+									<li>Packages are installed on a per project basis (<code>vendor</code> subfolder), not system-wide (cfr. PEAR)</li>
+								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Composer is <strong>clever</strong>
+								<ul>
+									<li>Composer finds out which versions of which packages (and which versions of its dependencies) need to be installed, and installs them.</li>
+								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Installed packages can be <strong>autoloaded</strong>
+								<ul>
+									<li>Plays nice with PSR-0 and PSR-4 compliant packages</li>
+									<li>Composer will generate one single autoloader for all dependencies</li>
+								</ul>
+							</li>
+						</ul>
+						<footer class="fragment" style="bottom: 0;"><em>Told you: it saves lots of headaches! ;-)</em></footer>
 					</section>
 
 					<section>
@@ -607,36 +606,67 @@ $ mv composer.phar /usr/local/bin/composer</code></pre>
 					</section>
 
 					<section>
-						<h2>Installing packages using Composer</h2>
+						<h2 style="font-size: 150%">Installing packages using Composer: Automatic</h2>
+						<ul>
+							<li class="fragment">
+								Run <code>composer require vendor/package version</code> on the CLI
+								<ul>
+									<li>e.g. <code>$ composer require swiftmailer/swiftmailer 4.*</code></li>
+								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Composer will:
+								<ol>
+									<li class="fragment">
+										Check with packagist for its existence
+									</li>
+									<li class="fragment">
+										Write down that package requirement in <code>composer.json</code>
+										<div class="fragment"><pre class="bigger"><code class="language-js dontrun">{
+    &quot;require&quot;: {
+        &quot;swiftmailer/swiftmailer&quot;: &quot;4.*&quot;
+    }
+}</code></pre></div>
+									</li>
+									<li class="fragment">Download the package into <code>./vendor/<em>vendorname</em>/<em>packagename</em></code></li>
+									<li class="fragment">Generate an autoloader for all installed packages</li>
+									<li class="fragment">Generate a lock file <code>composer.lock</code></li>
+								</ol>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2 style="font-size: 150%">Installing packages using Composer: Manual</h2>
 						<ul>
 							<li class="fragment">
 								Create a file named <code>composer.json</code> in your project root to declare your dependencies in
-								<pre class="bigger"><code class="language-js dontrun">{
+								<div class="fragment"><pre class="bigger"><code class="language-js dontrun">{
     &quot;require&quot;: {
-    	&quot;monolog/monolog&quot;: &quot;~1.5&quot;,
         &quot;swiftmailer/swiftmailer&quot;: &quot;4.*&quot;
     }
-}</code></pre>
+}</code></pre></div>
 							</li>
 							<li class="fragment" style="margin-top: 1em;">
-								Run <code>composer install</code> to install the dependencies
-								<ul>
+								Run <code>composer install</code> and composer will:
+								<ol>
 									<li class="fragment">
-										Composer will install the packages in a <code>vendor/</code> subfolder
+										Check with packagist for its existence
 									</li>
-									<li class="fragment">
-										Composer will generate one single autoloader for all dependencies
-									</li>
-								</ul>
+									<li class="fragment">Download the package into <code>./vendor/<em>vendorname</em>/<em>packagename</em></code></li>
+									<li class="fragment">Generate an autoloader for all installed packages</li>
+									<li class="fragment">Generate a lock file <code>composer.lock</code></li>
+								</ol>
 							</li>
 						</ul>
+						<footer class="fragment" style="bottom: 0;"><em>(note: this scenario assumes no lock file is present yet)</em></footer>
 					</section>
 
 					<section>
 						<h2>Using the installed packages</h2>
 						<ul>
 							<li class="fragment">
-								Include the Composer autoloader instead of the one from the package or manually including all required filed
+								Include the Composer generated autoloader instead of the one from the package or manually including all required filed
 								<pre class="bigger"><code class="language-php">require_once __DIR__ . '/vendor/autoload.php';</code></pre>
 							</li>
 							<li class="fragment" style="margin-top: 1em;">
@@ -647,7 +677,7 @@ $ mv composer.phar /usr/local/bin/composer</code></pre>
 require_once __DIR__ . '/vendor/autoload.php';
 
 // Create the Transport
-$transport = Swift_SmtpTransport::newInstance('smtp2.kahosl.be', 25);
+$transport = Swift_SmtpTransport::newInstance('relay.odisee.be', 25);
 
 // Create the Mailer using your created Transport
 $mailer = Swift_Mailer::newInstance($transport);
@@ -676,9 +706,71 @@ if(!$mailer-&gt;send($message, $errors)) {
 					</section>
 
 					<section>
+						<h2>About the Lock File</h2>
+						<ul>
+							<li class="fragment">
+								<code>composer.lock</code> has precedence over <code>composer.json</code>.
+								<ul>
+									<li class="fragment">
+										When running <code>composer install</code> it will look for <code>composer.lock</code>.<br />If not found, it will fall back to <code>composer.json</code>.
+									</li>
+								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Put Differently: It locks the project to those specific versions
+								<ul>
+									<li class="fragment">
+										Successive runs of <code>composer install</code> will use the lock file, even if you've changed <code>composer.json</code>
+									</li>
+								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								The lock file ensures all devs/servers use the same dependency versions
+								<ul>
+									<li class="fragment">Just clone the source and run <code>composer install</code></li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Updating packages</h2>
+						<ul>
+							<li class="fragment">
+								Automatic:
+								<ul>
+									<li class="fragment">
+										Run <code>composer require vendor/package newversion</code> on the CLI
+									</li>
+								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Manual:
+								<ul>
+									<li class="fragment">
+										Update <code>composer.json</code>
+									</li>
+									<li class="fragment">
+										Run <code>composer update</code>
+									</li>
+								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								In both cases a new <code>composer.lock</code> file will be generated.
+								<ul>
+									<li class="fragment">When stuff is verified to still work, commit the lock file into version control</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
 						<h2>Specifying Package Versions</h2>
 						<ul>
 							<li class="fragment">
+								Latest commit: <code>&quot;dev-master&quot;</code>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
 								Exact version: <code>&quot;4.2.1&quot;</code>
 							</li>
 							<li class="fragment" style="margin-top: 1em;">
@@ -694,38 +786,8 @@ if(!$mailer-&gt;send($message, $errors)) {
 								Tilde Operator: <code>&quot;~4.1&quot;</code>
 								<ul>
 									<li>= equivalent of <code>&gt;=4.1,&lt;5.0</code></li>
-									<li>Recommended; Useful for projects respecting <a href="http://semver.org/">semantic versioning</a></li>
+									<li>&rarr; Recommended; Useful for projects respecting <a href="http://semver.org/">semantic versioning</a></li>
 								</ul>
-							</li>
-							<li class="fragment" style="margin-top: 1em;">
-								Latest commit: <code>&quot;dev-master&quot;</code>
-							</li>
-						</ul>
-					</section>
-
-
-					<section>
-						<h2>Updating dependencies</h2>
-						<ul>
-							<li class="fragment">
-								Composer will generate a <code>composer.lock</code> file after running the initial <code>composer install</code>
-								<ul>
-									<li class="fragment">The lock file contains info about the installed package versions</li>
-								</ul>
-							</li>
-							<li class="fragment" style="margin-top: 1em;">
-								The lock file has precedence over <code>composer.json</code> when running <code>composer install</code>
-								<ul>
-									<li class="fragment">
-										Successive runs of <code>composer install</code> will use the lock file!
-									</li>
-									<li class="fragment">
-										Put Differently: It locks the project to those specific versions
-									</li>
-								</ul>
-							</li>
-							<li class="fragment" style="margin-top: 1em;">
-								&rarr; Run <code>composer update</code> to skip the lock file and fetch updated versions. A new lock file will be generated.
 							</li>
 						</ul>
 					</section>
@@ -734,10 +796,10 @@ if(!$mailer-&gt;send($message, $errors)) {
 						<h2>Composer vs. Version Control</h2>
 						<ul>
 							<li class="fragment">
-								A few important notes
-									<div class="fragment warning" style="margin-top: 0.25em;">Don't ever change the contents of the <code>vendor/</code> folder!</div>
+								A few important notes:
 									<div class="fragment warning" style="margin-top: 0.25em;">Don't ever add the <code>vendor/</code> folder to version control!</div>
-									<div class="fragment warning" style="margin-top: 0.25em;">Do add the <code>composer.lock</code> to version control</div>
+									<div class="fragment warning" style="margin-top: 0.25em;">Don't ever change the contents of the <code>vendor/</code> folder!</div>
+									<div class="fragment warning" style="margin-top: 0.25em;">Do add the <code>composer.lock</code> to version control!</div>
 							</li>
 						</ul>
 					</section>
@@ -763,12 +825,17 @@ if(!$mailer-&gt;send($message, $errors)) {
 								</ul>
 							</li>
 							<li class="fragment" style="margin-top: 1em;">
-								Install it via Composer using
-								<pre class="bigger"><code class="language-js dontrun">{
-	&quot;require&quot;: {
-		&quot;twig/twig&quot;: &quot;1.*&quot;
-	}
-}</code></pre>
+								Installation:
+								<ul>
+									<li class="fragment">
+										New project, not yet requiring it via Composer:
+										<div class="fragment"><pre class="bigger"><code class="dontrun">composer require twig/twig ~1.0</code></pre></div>
+									</li>
+									<li class="fragment">
+										Existing project, already requiring it via Composer:
+										<div class="fragment"><pre class="bigger"><code class="dontrun">composer install</code></pre></div>
+									</li>
+								</ul>
 							</li>
 						</ul>
 					</section>
@@ -784,7 +851,7 @@ if(!$mailer-&gt;send($message, $errors)) {
 							<div class="tooltip">
 								<div>
 									<ul>
-										<li>Define requirements in <code>composer.json</code></li>
+										<li>Requirements already defined in <code>composer.json</code>/<code>composer.lock</code></li>
 										<li>Run <code>composer install</code></li>
 										<li>Require composer's <code>autoloader.php</code></li>
 										<li>Use Twig as we did before</li>
@@ -816,17 +883,21 @@ if(!$mailer-&gt;send($message, $errors)) {
 									<li>Documentation: <a href="http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/index.html">http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/index.html</a></li>
 								</ul>
 							</li>
-
 							<li class="fragment" style="margin-top: 1em;">
-								Install via Composer using
-								<pre class="bigger"><code class="language-js dontrun">{
-	&quot;require&quot;: {
-		&quot;doctrine/dbal&quot;: &quot;~2.3&quot;
-	}
-}</code></pre>
+								Installation:
+								<ul>
+									<li class="fragment">
+										New project, not yet requiring it via Composer:
+										<pre class="bigger"><code class="dontrun">composer require doctrine/dbal ~2.3</code></pre>
+									</li>
+									<li class="fragment">
+										Existing project, already requiring it via Composer:
+										<pre class="bigger"><code class="dontrun">composer install</code></pre>
+									</li>
+								</ul>
 							</li>
 						</ul>
-						<footer class="fragment">Note: Don't confuse Doctrine DBAL with <a href="http://www.doctrine-project.org/projects/orm.html">Doctrine ORM</a> <em>(which we won't be using)</em></footer>
+						<footer class="fragment"><em>Note: Don't confuse Doctrine DBAL with <a href="http://www.doctrine-project.org/projects/orm.html">Doctrine ORM</a> (which we won't be using)</em></footer>
 					</section>
 
 					<section>
@@ -848,7 +919,7 @@ if(!$mailer-&gt;send($message, $errors)) {
 							<li><a href="http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/data-retrieval-and-manipulation.html#fetchall">Fetching data</a></li>
 						</ul>
 
-						<p class="fragment warning">Don't forget the charset <code>UTF-8</code> on the connection!</p>
+						<p class="fragment warning">Don't forget the <code>utf8mb4</code> charset on the connection!</p>
 
 						<footer class="fragment">&rarr; From now on, we'll be using Doctrine DBAL</footer>
 
@@ -881,7 +952,7 @@ if(!$mailer-&gt;send($message, $errors)) {
 					<section>
 						<h2>Questions?</h2>
 						<footer>
-							<em><a href="http://www.ikdoeict.be/">ikdoeict.be</a> &mdash; <a href="mailto:bramus.vandamme@kahosl.be">bramus.vandamme@kahosl.be</a></em>
+							<em><a href="http://www.ikdoeict.be/">ikdoeict.be</a> &mdash; <a href="mailto:bramus.vandamme@odisee.be">bramus.vandamme@odisee.be</a></em>
 						</footer>
 					</section>
 				</section>

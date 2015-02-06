@@ -11,9 +11,9 @@ CREATE TABLE users (
 	password VARCHAR(255)
 );
 
-INSERT INTO users VALUES (1, 'Bramus', 'Van Damme', 'bramus.vandamme@kahosl.be', 'http://www.bram.us/', 'Vinkt, Belgium', '$1$ikr/pd3F$ioj.iteh09cuxcj/6LClx/');
-INSERT INTO users VALUES (2, 'Davy', 'De Winne', 'davy.dewinne@kahosl.be', 'http://www.davydewinne.be/', 'Schellebelle, Belgium', '$1$Tmppgmf6$treNaN/WSBGJ3OuzrLOd.0');
-INSERT INTO users VALUES (3, 'Kevin', 'Picalausa', 'kevin.picalausa@kahosl.be', NULL, 'Gent, Belgium', '$1$6s4sG.Ol$XNxeu/0kVxhkHQvNBHLpP0');
+INSERT INTO users VALUES (1, 'Bramus', 'Van Damme', 'bramus.vandamme@odisee.be', 'http://www.bram.us/', 'Vinkt, Belgium', '$1$ikr/pd3F$ioj.iteh09cuxcj/6LClx/');
+INSERT INTO users VALUES (2, 'Davy', 'De Winne', 'davy.dewinne@odisee.be', 'http://www.davydewinne.be/', 'Schellebelle, Belgium', '$1$Tmppgmf6$treNaN/WSBGJ3OuzrLOd.0');
+INSERT INTO users VALUES (3, 'Kevin', 'Picalausa', 'kevin.picalausa@odisee.be', NULL, 'Gent, Belgium', '$1$6s4sG.Ol$XNxeu/0kVxhkHQvNBHLpP0');
 
 CREATE TABLE links (
 	id INTEGER PRIMARY KEY,
