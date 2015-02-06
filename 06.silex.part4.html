@@ -112,10 +112,7 @@ $app-&gt;register(new Silex\Provider\DoctrineServiceProvider(), array(
 		'user' =&gt; $app['config']['db']['user'],
 		'password' =&gt; $app['config']['db']['password'],
 		'host' =&gt; $app['config']['db']['host'],
-		'charset' =&gt; 'utf8',
-		'driverOptions' =&gt; array(
-			1002 =&gt; 'SET NAMES utf8'
-		)
+		'charset' =&gt; 'utf8mb4'
 	)
 ));</code></pre></div>
 						<footer class="fragment"><em>Note: <code>1002</code> is the value of the constant <code>PDO::MYSQL_ATTR_INIT_COMMAND</code></em></footer>
