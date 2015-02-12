@@ -102,12 +102,14 @@ title('Doctrine DBAL<a href="http://www.doctrine-project.org/projects/dbal.html"
 
 		title('Insert with <code>$db->insert()</code><a href="https://doctrine-dbal.readthedocs.org/en/latest/reference/data-retrieval-and-manipulation.html#insert">&#9873;</a>', 3);
 			codeblock($db, '06');
-			text('Note: the returned result is NOT the generated AUTO_INCREMENT id! If you want to get that, call <code>$db->lastInsertId()</code>');
+			text('Note: the returned result of <code>$db->insert()</code> is NOT the generated AUTO_INCREMENT id but the number of inserted rows! If you want to get that, call <code>$db->lastInsertId()</code>');
 
 		title('Update with <code>$db->update()</code><a href="https://doctrine-dbal.readthedocs.org/en/latest/reference/data-retrieval-and-manipulation.html#update">&#9873;</a>', 3);
 			codeblock($db, '07');
+			text('Note: the returned result of <code>$db->update()</code> is the number of affected rows. No need to get that manually afterwards.');
 
 		title('Delete with <code>$db->delete()</code><a href="https://doctrine-dbal.readthedocs.org/en/latest/reference/data-retrieval-and-manipulation.html#delete">&#9873;</a>', 3);
 			codeblock($db, '08');
+			text('Note: the returned result of <code>$db->delete()</code> is the number of affected rows. No need to get that manually afterwards.');
 
 // EOF
