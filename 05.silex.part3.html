@@ -896,7 +896,7 @@ $addlinkform = $app['form.factory']-&gt;createNamed('addlinkform', 'form', $data
 		if ($uploadform->isValid()) {
 			$files = $app['request']->files->get($uploadform->getName());
 			$filename = $files['my_upload']->getClientOriginalName();
-			$files['my_upload']->move(__DIR__ . '/../web/uploads/', $filename);
+			$files['my_upload']->move(__DIR__ . '/../public_html/uploads/', $filename);
 
 			return $app['twig']->render('form.twig', array(
 				'message' => 'File was successfully uploaded!',
