@@ -10,8 +10,8 @@
 {% block pageContent %}
 	{% if tweets %}
 	<ul>
-		{% for id, tweet in tweets %}
-		<li><a href="{{ app.request.baseUrl }}/tweets/{{ id|escape('url') }}">&para;</a> {{ tweet.text }}<br />&mdash; by {{ tweet.author }} <i>{{ tweet.created_at|date('d/m/Y H:i:s') }}</i></li>
+		{% for tweet in tweets %}
+		<li><a href="{{ app.request.baseUrl }}/tweets/{{ tweet.id|escape('url') }}">&para;</a> {{ tweet.text }}<br />&mdash; by {{ tweet.author }} <i>{{ tweet.created_at|date('d/m/Y H:i:s') }}</i></li>
 		{% endfor %}
 	</ul>
 	{% else %}
