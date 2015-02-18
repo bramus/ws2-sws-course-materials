@@ -70,6 +70,7 @@ title('Doctrine DBAL<a href="http://www.doctrine-project.org/projects/dbal.html"
 			codeblock($db, '01');
 
 			text('Yes, that is an array you can immediately use!');
+			text('Yes, those values are escaped <em>automagically</em>!');
 
 
 		title('<code>SELECT</code> with <code>$db->executeQuery()</code><a href="https://doctrine-dbal.readthedocs.org/en/latest/reference/data-retrieval-and-manipulation.html#executequery">&#9873;</a>. Retrieve all rows using <code>->fetchAll()</code><a href="https://doctrine-dbal.readthedocs.org/en/latest/reference/data-retrieval-and-manipulation.html#using-prepared-statements">&#9873;</a>', 3);
@@ -86,6 +87,10 @@ title('Doctrine DBAL<a href="http://www.doctrine-project.org/projects/dbal.html"
 		title('<code>INSERT</code>, <code>UPDATE</code>, and <code>DELETE</code> with <code>$db->executeUpdate()</code><a href="https://doctrine-dbal.readthedocs.org/en/latest/reference/data-retrieval-and-manipulation.html#executeupdate">&#9873;</a>. Returned value is the number of affected rows.', 3);
 
 			codeblock($db, '04');
+
+		title('Manually escape values using <code>$db->quote()</code><a href="https://doctrine-dbal.readthedocs.org/en/latest/reference/data-retrieval-and-manipulation.html#quote">&#9873;</a>', 3);
+			codeblock($db, '09');
+			text('Note: Only use manual escaping if there is no other way (viz. if it cannot be done automatically).');
 
 	title('Doctrine DBAL Shorthands', 2);
 
