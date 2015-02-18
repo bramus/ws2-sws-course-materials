@@ -162,7 +162,7 @@ $app->run();</code></pre></div>
 								Basic Silex Project Structure
 								<ul>
 									<li class="fragment">
-										<code>web/</code> &mdash; Public files
+										<code>public_html/</code> &mdash; Public files
 										<ul>
 											<li class="fragment"><code class="special">index.php</code> &mdash; Front Controller</li>
 											<li class="fragment"><code>css/</code> <span style="font-size: 70%">&amp;</span> <code>js/</code> <span style="font-size: 70%">&amp;</span> <code>img/</code> <span style="font-size: 70%">&amp;</span> <code>files/</code> <span style="font-size: 70%">&amp;</span> &hellip;</li>
@@ -185,7 +185,7 @@ $app->run();</code></pre></div>
 								</ul>
 							</li>
 						</ul>
-						<footer class="fragment"><em>Note: Make sure only the contents of <code>web/</code> are accessible over HTTP!</em></footer>
+						<footer class="fragment"><em>Note: Make sure only the contents of <code>public_html/</code> are accessible over HTTP!</em></footer>
 					</section>
 
 					<section>
@@ -201,7 +201,7 @@ $app->run();</code></pre></div>
 						<h2>Example Recap</h2>
 						<ul>
 							<li class="fragment">
-								<code>/web/index.php</code> is the Front Controller
+								<code>/public_html/index.php</code> is the Front Controller
 								<pre class="bigger"><code class="language-php">&lt;?php
 require_once __DIR__ . '/../app/app.php';
 $app->run();</code></pre>

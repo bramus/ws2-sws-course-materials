@@ -19,12 +19,12 @@ Introduces the built-in [TwigServiceProvider](http://silex.sensiolabs.org/doc/pr
 
 ### Using PHP 5.4
 
-- Open a shell, navigate to the project root and run `php -S localhost:8080 -t web web/index.php` to start a PHP web server
+- Open a shell, navigate to the project root and run `php -S localhost:8080 -t public_html public_html/index.php` to start a PHP web server
 - Open `http://localhost:8080/` in your browser
 
 ### Using your favorite webserver
 
-- Create a virtualhost pointing to the web folder
+- Create a virtualhost pointing to the `public_html` folder
 - Make sure you've enabled rewriting
 	- See [http://silex.sensiolabs.org/doc/web_servers.html](http://silex.sensiolabs.org/doc/web_servers.html) for more info
 	- A `.htaccess` for use with Apache is already included
