@@ -460,9 +460,9 @@ $app->post('/feedback', function(Request $request) {
 								Pass extra data to handling functions with <code>use</code><small><a href="http://silex.sensiolabs.org/doc/usage.html#example-get-route">&#9873;</a></small>
 								<pre class="bigger fragment"><code class="language-php">$app->get('/tweets', function(Silex\Application $app) use ($tweets) {
 	$output = '&lt;ul&gt;';
-	foreach ($tweets as $id => $tweet) {
+	foreach ($tweets as $tweet) {
 		$output .= '&lt;li&gt;&lt;a href=&quot;' . $app['request']->getBaseUrl(). '/tweets/'
-				. $app->escape($id) . '&quot;>&amp;para;&lt;/a&gt; '
+				. $app->escape($tweet['id']) . '&quot;>&amp;para;&lt;/a&gt; '
 				. $app->escape($tweet['text']) . '&lt;/li&gt;';
 	}
 	$output .= '&lt;/ul&gt;';
@@ -472,7 +472,7 @@ $app->post('/feedback', function(Request $request) {
 							<li class="fragment">
 								Trigger errors with <code>$app->abort()</code><small><a href="http://silex.sensiolabs.org/doc/usage.html#dynamic-routing">&#9873;</a></small>
 								<pre class="bigger fragment"><code class="language-php">$app->get('/tweets/{id}', function(Silex\Application $app, $id) use ($tweets) {
-	if (!isset($tweets[$id])) {
+	if (!in_array($id, array_column($tweets, 'id'))) {
 		$app->abort(404, "Tweet $id does not exist");
 	}
 	$tweet = $tweets[$id];
