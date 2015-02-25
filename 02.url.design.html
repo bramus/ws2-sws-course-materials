@@ -163,7 +163,7 @@
 						<h2>Supporting nice URLs</h2>
 						<ol>
 							<li class="fragment">
-								Route all requests to <code>index.php</code>
+								Let all requests to inexistent files/folders be processed by <code>index.php</code>
 							</li>
 							<li class="fragment" style="margin-top: 1em;">
 								Build <code>index.php</code> in such a way so that it loads the requested content based upon the URL
@@ -182,7 +182,7 @@
 								</ul>
 							</li>
 							<li class="fragment">
-								Put a file named <code>.htaccess</code> in your root to redirect requests to non-existing files to <code>index.php</code>
+								Put a file named <code>.htaccess</code> in your root to <em>rewrite</em> requests to non-existing files to <code>index.php</code>
 								<pre class="bigger"><code>&lt;IfModule mod_rewrite.c&gt;
 RewriteEngine On
 RewriteBase /
