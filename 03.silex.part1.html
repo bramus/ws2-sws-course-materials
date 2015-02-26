@@ -487,8 +487,7 @@ $app->post('/feedback', function(Request $request) {
 	if (!in_array($id, array_column($tweets, 'id'))) {
 		$app->abort(404, "Tweet $id does not exist");
 	}
-	$tweet = $tweets[$id];
-	return  ...
+	...
 })->assert('id', '\d+');</code></pre>
 							</li>
 						</ul>

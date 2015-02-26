@@ -73,7 +73,8 @@ class TweetsController implements ControllerProviderInterface {
 		}
 
 		// Extract the tweet by filtering the tweets array based on the value of the id key
-		$tweet = array_pop(array_filter($this->data, function($tweet) use ($id) { return $tweet['id'] == $id; }));
+		$tweets = array_filter($this->data, function($tweet) use ($id) { return $tweet['id'] == $id; });
+		$tweet = array_pop($tweets);
 
 		// Build and return the HTML representing the tweet
 		$output = '<p>On ' . $tweet['created_at'] . ' ' . $app->escape($tweet['author']) . ' tweeted:</p><blockquote>' . $app->escape($tweet['text']) . '</blockquote><p><a href="' . $app['request']->getBaseUrl(). '/tweets">&larr; Back to overview</a></p>';
