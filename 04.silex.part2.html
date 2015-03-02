@@ -78,13 +78,12 @@
 							<li class="fragment" style="margin-top: 1em;">
 								Injection possible via
 								<ul>
-									<li>The constructor</li>
-									<li>A setter function</li>
-									<li>A property</li>
+									<li>The constructor <em>(most used)</em></li>
+									<li>A (public) property or mutator function <em>(protected or private property)</em></li>
 								</ul>
 							</li>
 							<li class="fragment" style="margin-top: 1em;">
-								Better code
+								DI results in better code
 								<ul>
 									<li class="fragment">Easier to test</li>
 									<li class="fragment">Inversion of Control <em>(see further)</em></li>
@@ -162,7 +161,13 @@ var_dump($router);</code></pre>
 							<li class="fragment" style="margin-top: 1em">
 								But &hellip; why?
 								<ul>
-									<li class="fragment">You have control over the dependecies: if you rather use Logger X instead of Logger Y, just inject that one onto the class requiring it</li>
+									<li class="fragment">
+										You have control over the dependecies: if you rather use SwiftMailer instead of PHPMailer, just inject that one onto the class requiring it
+										<ul>
+											<li class="fragment">Note: the APIs of those libraries <strong>must</strong> be the same!</li>
+											<li class="fragment">To afford this, a few PSRs exist; e.g. <a href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-3-logger-interface.md">PSR-3</a></li>
+										</ul>
+									</li>
 								</ul>
 							</li>
 						</ul>
@@ -359,7 +364,7 @@ $router = new Router($sl, '/hello');</code></pre>
 						<h2>Pimple</h2>
 						<ul>
 							<li class="fragment">
-								As said before: Silex is built on top of <a href="http://pimple.sensiolabs.org/">Pimple</a>
+								As said before: Silex is built on top of <a href="http://pimple.sensiolabs.org/">Pimple</a> ~1.0
 								<div class="fragment"><pre class="bigger"><code class="language-php">&lt;?php
 
 namespace Silex;
@@ -382,6 +387,7 @@ class Application extends \Pimple implements &hellip; {
 								</ul>
 							</li>
 						</ul>
+						<footer class="fragment">Note: Silex uses Pimple ~1.0. It differs a lot from the latest Pimple version (3.x)</footer>
 					</section>
 
 					<section>
@@ -422,7 +428,8 @@ $app = new Silex\Application();</code></pre>
 
 					<section>
 						<h2>Service Definitions</h2>
-						<ul>
+						<blockquote class="fragment" style="width: 100%">A service is an object that does something as part of a larger system. [&hellip;] Almost any global object can be a service.</blockquote>
+						<ul style="margin-top: 1em;">
 							<li class="fragment">
 								Defining a service:
 								<pre class="bigger"><code class="language-php">$app['some_service'] = function () {
@@ -441,6 +448,7 @@ $app = new Silex\Application();</code></pre>
 
 					<section>
 						<h2>Shared Services</h2>
+						<blockquote class="fragment" style="width: 100%">By default, each time you get a service, Pimple returns a new instance of it. If you want the same instance to be returned for all calls, use a shared service.</blockquote>
 						<ul>
 							<li class="fragment">
 								Defining a shared service:
@@ -488,7 +496,7 @@ $user = $facebook-&gt;getUser();</code></pre>
 								<pre class="bigger"><code class="language-php">$app['facebook.app_id'] = 'YOUR_APP_ID';
 $app['facebook.secret'] = 'YOUR_APP_SECRET';
 
-$app['facebook'] = $app-&gt;share(function() use ($app) {
+$app['facebook'] = $app-&gt;share(function($app) {
 	return new \Facebook(array(
 		'appId' =&gt; $app['facebook.app_id'],
 		'secret' =&gt; $app['facebook.secret']
@@ -556,7 +564,7 @@ use Silex\ServiceProviderInterface;
 class WhateverServiceProvider implements ServiceProviderInterface {
 
 	public function register(Application $app) {
-		// Inject the dependency here
+		// Store the service on Pimple
 		$app['whatever'] = &gt;share(function() {
 			return new Whatever();
 		}
@@ -576,10 +584,10 @@ class WhateverServiceProvider implements ServiceProviderInterface {
 					</section>
 
 					<section>
-						<h2>Revised Example (1)</h2>
-						<ul>
+						<h2>Revised Example (1/2)</h2>
+						<ol>
 							<li class="fragment">
-								In <code>FacebookServiceProvider.php</code>
+								Create the service (<code>FacebookServiceProvider.php</code>)
 								<pre class="bigger"><code class="language-php">&lt;?php
 
 namespace Ikdoeict\Provider\Service;
@@ -602,27 +610,27 @@ class FacebookServiceProvider implements ServiceProviderInterface {
 
 }</code></pre>
 							</li>
-						</ul>
+						</ol>
 					</section>
 
 					<section>
-						<h2>Revised Example (2)</h2>
-						<ul>
+						<h2>Revised Example (2/2)</h2>
+						<ol staart="2">
 							<li class="fragment">
-								In <code>bootstrap.php</code>
+								Register the service (<code>bootstrap.php</code>)
 								<pre class="bigger"><code class="language-php">$app-&gt;register(new Ikdoeict\Provider\Service\FacebookServerProvider(), array(
 	'facebook.app_id' =&gt; 'YOUR_APP_ID',
 	'facebook.secret' =&gt; 'YOUR_APP_SECRET'
 ));</code></pre>
 							</li>
 							<li class="fragment" style="margin-top: 1em;">
-								In <code>app.php</code>
+								Use the service (<code>app.php</code>)
 								<pre class="bigger"><code class="language-php">$app-&gt;get('/', function(Silex\Application $app) {
 	$user = $app['facebook']->getUser();
 	return $app-&gt;json($user);
 });</code></pre>
 							</li>
-						</ul>
+						</ol>
 					</section>
 
 					<section>
@@ -661,10 +669,8 @@ class FacebookServiceProvider implements ServiceProviderInterface {
 						<h2>Inclusion &amp; Usage</h2>
 						<ul>
 							<li class="fragment">
-								Require twig in <code>composer.json</code>
-								<pre class="bigger"><code>&quot;require&quot;: {
-	&quot;twig/twig&quot;: &quot;&gt;=1.8,&lt;2.0-dev&quot;
-}</code></pre>
+								Require Twig via Composer
+								<pre class="bigger"><code>$ composer require twig/twig:~1.8</code></pre>
 							</li>
 							<li class="fragment" style="margin-top: 1em;">
 								Register the service in <code>bootstrap.php</code>
@@ -740,10 +746,8 @@ class FacebookServiceProvider implements ServiceProviderInterface {
 						<h2>Inclusion</h2>
 						<ul>
 							<li class="fragment">
-								Require swiftmailer in <code>composer.json</code>
-								<pre class="bigger"><code>&quot;require&quot;: {
-	&quot;swiftmailer/swiftmailer&quot;: &quot;&gt;=4.1.2,&lt;4.2-dev&quot;
-}</code></pre>
+								Require SwiftMailer via Composer
+								<pre class="bigger"><code>$ composer require swiftmailer/swiftmailer:~5.0</code></pre>
 							</li>
 							<li class="fragment" style="margin-top: 1em;">
 								Register the service in <code>bootstrap.php</code>
@@ -805,10 +809,8 @@ class FacebookServiceProvider implements ServiceProviderInterface {
 						<h2>Inclusion</h2>
 						<ul>
 							<li class="fragment">
-								Require doctrine DBAL in <code>composer.json</code>
-								<pre class="bigger"><code>&quot;require&quot;: {
-	&quot;doctrine/dbal&quot;: &quot;&gt;=2.2.*&quot;
-}</code></pre>
+								Require Doctrine DBAL using Composer
+								<pre class="bigger"><code>$ composer require doctrine/dbal:~2.2</code></pre>
 							</li>
 							<li class="fragment" style="margin-top: 1em;">
 								Register the service in <code>bootstrap.php</code>
@@ -834,8 +836,8 @@ class FacebookServiceProvider implements ServiceProviderInterface {
 	$sql = 'SELECT * FROM posts WHERE id = ?';
 	$post = $app['db']-&gt;fetchAssoc($sql, array($id));
 
-	return  '&lt;h1&gt;' . $post['title'] . '&lt;/h1&gt;'.
-			'&lt;p&gt;' . $post['body'] . '&lt;/p&gt;';
+	return  '&lt;h1&gt;' . $app-&gt;escape($post['title']) . '&lt;/h1&gt;'.
+			'&lt;p&gt;' . $app-&gt;escape($post['body']) . '&lt;/p&gt;';
 })-&gt;assert('id', '\d+');</code></pre>
 							</li>
 						</ul>
