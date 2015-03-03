@@ -1559,18 +1559,34 @@ $ </span></code></pre>
 					</section>
 
 					<section>
-						<h2>Github</h2>
+						<h2>Github is &hellip;</h2>
 
-						<ul>
+						<ol>
 							<li class="fragment">
-								Remote Git server with nifty web interface
+								A website to browse Git repos
 								<ul>
 									<li>Browse branches</li>
 									<li>Inspect commmits (<a href="https://github.com/bramus/ws2-sws-course-materials/commit/01a54d00633ca8627c717bdec442d322e45e67e8">example</a>)</li>
+									<li>Issues</li>
+									<li>Pull Requests</li>
+									<li>&hellip;</li>
 								</ul>
 							</li>
 							<li class="fragment" style="margin-top: 1em;">
-								Repositories
+								A graphical Git client
+								<ul>
+									<li>Both <a href="http://mac.github.com/">Mac</a> &amp; <a href="http://windows.github.com/">Windows</a></li>
+									<li>Personal opinion: not recommended</li>
+								</ul>
+							</li>
+						</ol>
+					</section>
+
+					<section>
+						<h2>Github is &hellip;</h2>
+						<ol start="3">
+							<li class="fragment">
+								A remote to push your repositories to
 								<ul>
 									<li>Public / Private (paid account)</li>
 								</ul>
@@ -1578,15 +1594,9 @@ $ </span></code></pre>
 							<li class="fragment" style="margin-top: 1em;">
 								Embraced by the open-source community
 							</li>
-							<li class="fragment" style="margin-top: 1em;">
-								Graphical client (limited to one remote)
-								<ul>
-									<li>Both <a href="http://mac.github.com/">Mac</a> &amp; <a href="http://windows.github.com/">Windows</a></li>
-									<li>No graphical way to rebase though</li>
-								</ul>
-							</li>
-						</ul>
-
+						</ol>
+						<div class="fragment warning" style="margin-top: 2em"><p>PLEASE NOTE: GITHUB IS NOT GIT!</p></div>
+						<div class="fragment warning" style="margin-top: 0.5em"><p>AGAIN: GITHUB IS NOT GIT!</p></div>
 					</section>
 
 					<section>
@@ -1632,14 +1642,11 @@ $ </span></code></pre>
 <span class="fragment dontunfragment"># 7. Rinse. Repeat.
 <span style="opacity: 0.75;">     Make sure your master is in sync with the original master one!
      (add the original repo as remote and `git fetch` and `git rebase original/master`)</span></span></code></pre>
+     						<footer class="fragment"><em>Or, alternatively, <a href="https://help.github.com/articles/using-pull-requests/#sending-the-pull-request">do it via the Github website</a> ;-)</em></footer>
 					</section>
 
 					<section>
 						<h2>Merging Pull Requests</h2>
-						<ul>
-							<li class="fragment">Via the Github interface it's possitle to merge pull requests automatically</li>
-							<li class="fragment">Manual process</li>
-						</ul>
 						<pre class="bigger fragment"><code class="no-highlight" style="max-height: 380px; overflow: scroll;"><span class="fragment dontunfragment"># 1. Checkout your master branch
 <span style="opacity: 0.75;">     $ git checkout master</span></span>
 
@@ -1654,6 +1661,7 @@ $ </span></code></pre>
 
 <span class="fragment dontunfragment"># 5. Push your newly-merged branch back to GitHub
 <span style="opacity: 0.75;">     $ git push origin master</span></span></code></pre>
+     					<footer class="fragment"><em>Or, alternatively, <a href="https://help.github.com/articles/merging-a-pull-request/">do it via the Github website</a> ;-)</em></footer>
 					</section>
 
 					<section>
@@ -1663,7 +1671,7 @@ $ </span></code></pre>
 								&ldquo;Our own private Github&rdquo;, powered by GitLab
 								<ul>
 									<li>
-										Log on to <a href="https://git.ikdoeict.be">the web interface</a> using <a href="http://helpdesk.ikdoeict.be/index.php?/Knowledgebase/Article/View/2/7/info-kaho-account">your KaHo Account</a>
+										Log on to <a href="https://git.ikdoeict.be">the web interface</a> using <a href="http://helpdesk.ikdoeict.be/index.php?/Knowledgebase/Article/View/2/7/info-kaho-account">your Odisee Account</a>
 									</li>
 									<li>
 										Note: push/pull possible via <code>https://</code>, or <code>git://</code>
@@ -1721,6 +1729,7 @@ config.php</code></pre>
 								Add <code>config.php</code> to <code>.gitignore</code> and provide a <code>config.sample.php</code> instead
 							</li>
 						</ul>
+						<footer class="fragment"><em>Don't believe me? Check <a href="https://www.bram.us/2015/01/04/the-2375-amazon-aws-mistake/">The $2375 Amazon AWS mistake</a>.</em></footer>
 					</section>
 
 					<section>
