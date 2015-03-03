@@ -575,7 +575,7 @@ class WhateverServiceProvider implements ServiceProviderInterface {
 }</code></pre>
 							</li>
 							<li class="fragment" style="margin-top: 1em">
-								Place your class in <code>/src/namespace/provider/service</code>
+								Place your class in <code>/src/MyNamespace/Provider/Service</code>
 							</li>
 							<li class="fragment">
 								Register your class with Silex' <code>$app</code> using
@@ -1026,13 +1026,13 @@ class TweetsRepository extends \Knp\Repository {
 								Create a Repository class per entity of your app
 								<ul>
 									<li class="fragment">
-										Place your classses in <code>/src/<em>namespace</em>/repository</code>
+										Place your classses in <code>/src/<em>Namespace</em>/Repository</code>
 									</li>
 									<li class="fragment">
 										Name of class can be chosen freely, though something like <code>TweetsRepository</code> recommended
 									</li>
 									<li class="fragment">
-										Classes must extend <code>Knp\Provider</code>
+										Classes must extend <code>\Knp\Provider</code>
 									</li>
 									<li class="fragment">
 										The <code>getTableName</code> function must return the DB table name
