@@ -260,10 +260,9 @@ $ </span><span class="fragment dontunfragment">git commit -m 'Start tracking tes
 $ </span></code></pre>
 							</li>
 							<li class="fragment">
-								The current state of <code>test.txt</code> is stored in the repository
+								The current state <em>(actually: a delta)</em> of <code>test.txt</code> is stored in the repository
 								<ul>
 									<li class="fragment">The commit is identified as <code>9c43f96</code></li>
-									<li class="fragment">From now on it's possible to go back to this version</li>
 								</ul>
 							</li>
 						</ul>
@@ -688,7 +687,7 @@ $ </span></code></pre>
 						<h2>HEAD</h2>
 						<ul>
 							<li class="fragment">
-								The <strong>HEAD</strong> is a pointer pointing towards the current checked out <em>(active)</em> commit
+								The <strong>HEAD</strong> is a pointer pointing towards the currently checked out <em style="font-size: 75%">(= active)</em> <strong>revision</strong> <em style="font-size: 75%">(= commit)</em>
 							</li>
 						</ul>
 						<figure class="fragment">
@@ -700,7 +699,7 @@ $ </span></code></pre>
 						<h2>Moving the HEAD</h2>
 						<ul>
 							<li class="fragment">
-								The <strong>HEAD</strong> can be moved by <strong>checking out</strong> a commit
+								The <strong>HEAD</strong> can be moved by <strong>checking out</strong> a <em>revision</em>
 								<pre class="bigger fragment"><code class="no-highlight" style="max-height: 380px; overflow: scroll;"><span style="opacity: 0.75;">bramus in ~/ikdoeict/git-demo on master</span>
 $ <span class="fragment dontunfragment" style="white-space: nowrap;">git lg</span>
 <span class="fragment dontunfragment">* <span style="color: #F55;">c53f9b6</span> - <span style="color: #AA3;">(HEAD, master)</span> Hello <span style="color: #5F5;">(15 hours ago)</span> <span style="color: #55F;">&lt;Bramus&gt;</span>
@@ -750,7 +749,7 @@ $ <span class="fragment dontunfragment" style="white-space: nowrap;">git lg</spa
 $ </span></span></code></pre>
 								<ul>
 									<li class="fragment">
-										When checking out a commit the files in your working directory change to the state of the selected commit
+										When checking out a revision the files in your working directory change to the state of the selected revision
 									</li>
 								</ul>
 							</li>
