@@ -1081,10 +1081,7 @@ $loginform = $app['form.factory']-&gt;createNamed('loginform', 'form', $data)
 		&quot;password&quot;: &quot;Azerty123&quot;,
 		&quot;host&quot;: &quot;localhost&quot;,
 		&quot;driver&quot;: &quot;pdo_mysql&quot;,
-		&quot;charset&quot;: &quot;utf8&quot;,
-		&quot;driverOptions&quot;: {
-			1002: &quot;SET NAMES utf8&quot;
-		}
+		&quot;charset&quot;: &quot;utf8mb4&quot;
 	},
 	&quot;myproject.test&quot;: {
 		&quot;param2&quot;: &quot;456&quot;,
@@ -1111,9 +1108,7 @@ $loginform = $app['form.factory']-&gt;createNamed('loginform', 'form', $data)
     password: "Azerty123"
     host: "localhost"
     driver: "pdo_mysql"
-    charset: "utf8"
-    driverOptions:
-      1002: "SET NAMES utf8"
+    charset: "utf8mb4"
   myproject.test:
     param2: "456"
     param3:
