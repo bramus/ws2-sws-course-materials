@@ -725,7 +725,19 @@ if (count($errors) &gt; 0) {
 					</section>
 
 					<section>
-						<h2>Customizing forms</h2>
+						<h2>Security Alert</h2>
+						<ul>
+							<li class="fragment">CSRF = Cross-Site Request Forgery</li>
+							<li class="fragment">CSRF = A serious type of attack <em>(<a href="https://www.owasp.org/index.php/Top_10_2.33-Top_10">OWASP Top 10!</a>)</em></li>
+						</ul>
+						<blockquote style="width: 100%; margin-top: 1em;" class="fragment">A CSRF attack forces a logged-on victim’s browser to send a forged HTTP request, including the victim’s session cookie and any other automatically included authentication information, to a vulnerable web application. This allows the attacker to force the victim’s browser to generate requests the vulnerable application thinks are legitimate requests from the victim.</blockquote>
+						<ul>
+							<li class="fragment" style="margin-top: 1em;">FIX: Generate a CSRF token on each form load <em>(and limit that token to that form only)</em> and validate it too.</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Customizing forms (1/2)</h2>
 						<ul>
 							<li class="fragment">
 								To create a named form use an alternate syntax
