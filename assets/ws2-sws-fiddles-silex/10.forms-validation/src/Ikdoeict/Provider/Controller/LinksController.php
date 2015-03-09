@@ -30,20 +30,20 @@ class LinksController implements ControllerProviderInterface {
 			));
 
 		// “Add Link” form was submitted: process it
-		if ('POST' == $app['request']->getMethod()) {
-			$addlinkform->bind($app['request']);
+		$addlinkform->handleRequest($app['request']);
 
-			if ($addlinkform->isValid()) {
-				$data = $addlinkform->getData();
+		if ($addlinkform->isValid()) {
 
-				// inject extra fields needed for database
-				$data['added_by'] = '1'; // @todo: fetch this from the session
-				$data['added_on'] = date('Y-m-d');
+			// Extract data
+			$data = $addlinkform->getData();
 
-				$app['db.links']->insert($data);
+			// inject extra fields needed for database
+			$data['added_by'] = '1'; // @todo: fetch this from the session
+			$data['added_on'] = date('Y-m-d');
 
-				return $app->redirect($app['url_generator']->generate('links') . '?added');
-			}
+			$app['db.links']->insert($data);
+
+			return $app->redirect($app['url_generator']->generate('links') . '?added');
 		}
 
 		$links = $app['db.links']->findAll();

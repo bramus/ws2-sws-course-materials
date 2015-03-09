@@ -2,11 +2,11 @@
 	"require": {
 		"silex/silex": "~1.1",
 		"twig/twig": "~1.2",
-		"symfony/twig-bridge": "~2.1",
-		"symfony/form": "~2.1",
-		"symfony/validator": "~2.1",
-        "symfony/config": "~2.1",
-        "symfony/translation": "~2.1"
+		"symfony/twig-bridge": "~2.3",
+		"symfony/form": "~2.3",
+		"symfony/validator": "~2.3",
+        "symfony/config": "~2.3",
+        "symfony/translation": "~2.3"
 	},
 	"autoload": {
 		"psr-0": {
