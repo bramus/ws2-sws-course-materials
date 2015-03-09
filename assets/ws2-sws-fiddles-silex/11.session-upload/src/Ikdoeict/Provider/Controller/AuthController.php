@@ -39,25 +39,24 @@ class AuthController implements ControllerProviderInterface {
 				'constraints' => array(new Assert\NotBlank(), new Assert\Length(array('min' => 5)))
 			));
 
-		// Form was submitted: process it
-		if ('POST' == $app['request']->getMethod()) {
-			$loginform->bind($app['request']);
+		// Form was submitted? Process it and start validation
+		$loginform->handleRequest($app['request']);
 
-			if ($loginform->isValid()) {
-				$data = $loginform->getData();
+		// Form was valid
+		if ($loginform->isValid()) {
+			$data = $loginform->getData();
 
-				if ($data['username'] == strrev($data['password'])) { // Oh no, he didn't?!
+			if ($data['username'] == strrev($data['password'])) { // Oh no, he didn't?!
 
-					$app['session']->set('user', array(
-						'id' => 666,
-						'username' => $data['username']
-					));
+				$app['session']->set('user', array(
+					'id' => 666,
+					'username' => $data['username']
+				));
 
-					return $app->redirect($app['url_generator']->generate('home'));
+				return $app->redirect($app['url_generator']->generate('home'));
 
-				} else {
-					$loginform->get('password')->addError(new \Symfony\Component\Form\FormError('Invalid password'));
-				}
+			} else {
+				$loginform->get('password')->addError(new \Symfony\Component\Form\FormError('Invalid password'));
 			}
 		}
 
