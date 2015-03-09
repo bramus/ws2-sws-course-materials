@@ -636,23 +636,28 @@ if (count($errors) &gt; 0) {
 		'message' =&gt; 'Your message'
 	);
 
-	$form = $app['form.factory']-&gt;createBuilder('form', $data)
+	// Get the form
+	$form = $app['form.factory']-&gt;create('form', $data)
 		-&gt;add('name', 'text')
 		-&gt;add('email', 'email')
 		-&gt;add('message', 'textarea')
 		-&gt;getForm();
 
-	if ('POST' == $request-&gt;getMethod()) {
-		$form-&gt;bind($request);
+	// Inspects the given request to see if the form was submitted or not
+	// If so it will transform and validate the data
+	$form-&gt;handleRequest($request);
 
-		if ($form-&gt;isValid()) {
-			$data = $form-&gt;getData();
+	// The form was submitted and is valid!
+	if ($form-&gt;isValid()) {
 
-			// do something with the data
+		// Get the data
+		$data = $form-&gt;getData();
 
-			// redirect somewhere
-			return $app-&gt;redirect('...');
-		}
+		// Do something with the data
+		// &hellip;
+
+		// redirect somewhere
+		return $app-&gt;redirect('...');
 	}
 
 	// display the form
@@ -740,14 +745,28 @@ if (count($errors) &gt; 0) {
 						<h2>Customizing forms (1/2)</h2>
 						<ul>
 							<li class="fragment">
-								To create a named form use an alternate syntax
+								To create a named form use an alternative function
 								<pre class="bigger"><code class="language-php" style="max-height: 180px; overflow: scroll;">$loginform = $app['form.factory']-&gt;createNamed('loginform')
 	-&gt;add('username', 'text')
 	-&gt;add('password', 'password');</code></pre>
 							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								To pass in default data with named forms, pass it in as the 3rd parameter
+								<pre class="bigger"><code class="language-php" style="max-height: 180px; overflow: scroll;">$data = array('username' => 'root', 'password' => 'Azerty123');
+
+$loginform = $app['form.factory']-&gt;createNamed('loginform', 'form', $data)
+	-&gt;add('username', 'text')
+	-&gt;add('password', 'password');</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Customizing forms (2/2)</h2>
+						<ul>
 							<li class="fragment">
 								It's possible to customize<small><a href="http://symfony.com/doc/current/book/forms.html#rendering-each-field-by-hand">&#9873;</a></small> <small><a href="http://symfony.com/doc/current/reference/forms/twig_reference.html">&#9873;</a></small> the output of a form
-								<pre class="bigger"><code class="language-html dontrun" style="max-height: 240px; overflow: scroll;">&lt;form action=&quot;#&quot; method=&quot;post&quot;  {{ form_enctype(loginform) }}&gt;
+								<pre class="bigger"><code class="language-html dontrun" style="max-height: 400px; overflow: scroll;">&lt;form action=&quot;#&quot; method=&quot;post&quot; {{ form_enctype(loginform) }}&gt;
 	&lt;dl class=&quot;clearfix&quot;&gt;
 		&lt;dt&gt;
 			{{ form_label(loginform.username) }}
@@ -767,8 +786,7 @@ if (count($errors) &gt; 0) {
 	{{ form_widget(loginform._token) }}
 	&lt;input type=&quot;submit&quot; name=&quot;submit&quot; value=&quot;Log In&quot; /&gt;
 &lt;/form&gt;</code></pre>
-								<ul>
-									<li>Don't forget the CSRF token!!</li>
+								<footer class="fragment"><em>Note: Don't forget the CSRF token!!</em></footer>
 								</ul>
 							</li>
 						</ul>
@@ -783,7 +801,7 @@ if (count($errors) &gt; 0) {
 
 &hellip;
 
-$loginform = $app['form.factory']-&gt;createNamed('loginform', $data)
+$loginform = $app['form.factory']-&gt;createNamed('loginform', 'form', $data)
 	-&gt;add('username', 'text', array(
 		'constraints' =&gt; new Assert\Email()
 	))
@@ -832,11 +850,6 @@ $loginform = $app['form.factory']-&gt;createNamed('loginform', $data)
 						<ul>
 							<li class="fragment">
 								Add <code>novalidate=&quot;novalidate&quot;</code> to the form to prevent HTML5 formchecking.
-							</li>
-							<li class="fragment" style="margin-top: 1em;">
-								Default data is passed to named forms using a 3rd parameter on creation
-								<pre class="bigger"><code>$data = array('title' =&gt; 'foo');
-$addlinkform = $app['form.factory']-&gt;createNamed('addlinkform', 'form', $data);</code></pre>
 							</li>
 							<li class="fragment" style="margin-top: 1em;">
 								Labels default to the name of the input. Change it via <code>label</code> or from within Twig
