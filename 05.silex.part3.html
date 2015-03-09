@@ -600,7 +600,7 @@ if (count($errors) &gt; 0) {
 					<section>
 						<h2>FormServiceProvider</h2>
 						<ul>
-							<li class="fragment">The FormServiceProvider<small><a href="http://silex.sensiolabs.org/doc/providers/form.html">&#9873;</a></small> provides a service for building forms in your application with the Symfony2 Form component</li>
+							<li class="fragment">The FormServiceProvider<small><a href="http://silex.sensiolabs.org/doc/providers/form.html">&#9873;</a></small> provides a service for building forms in your application with <a href="http://symfony.com/doc/current/book/forms.html">the Symfony2 Form component</a></li>
 						</ul>
 
 					</section>
@@ -627,7 +627,7 @@ if (count($errors) &gt; 0) {
 
 						<ul>
 							<li class="fragment">
-								Use <code style="font-size: 70%;">$app['form.factory']</code> to Symfony's Form Component
+								Use <code style="font-size: 70%;">$app['form.factory']</code> to get an instance of <a href="http://api.symfony.com/master/Symfony/Component/Form/FormFactory.html">Symfony's FormFactory</a>
 								<pre class="bigger fragment"><code class="language-php" style="max-height: 380px; overflow: scroll;">$app->match('/form', function (Request $request) use ($app) {
 	// some default data for when the form is displayed the first time
 	$data = array(
