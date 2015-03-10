@@ -651,7 +651,7 @@ if (count($errors) &gt; 0) {
 	);
 
 	// Get the form
-	$form = $app['form.factory']-&gt;create('form', $data)
+	$form = $app['form.factory']-&gt;createFormBuilder('form', $data)
 		-&gt;add('name', 'text')
 		-&gt;add('email', 'email')
 		-&gt;add('message', 'textarea')
@@ -929,19 +929,17 @@ $loginform = $app['form.factory']-&gt;createNamed('loginform', 'form', $data)
 			'constraints' =&gt; new Assert\NotBlank()
 		));
 
-	if ('POST' == $app['request']->getMethod()) {
-		$uploadform->bindRequest($app['request']);
+	$uploadform->handleRequest($app['request']);
 
-		if ($uploadform->isValid()) {
-			$files = $app['request']->files->get($uploadform->getName());
-			$filename = $files['my_upload']->getClientOriginalName();
-			$files['my_upload']->move(__DIR__ . '/../public_html/uploads/', $filename);
+	if ($uploadform->isValid()) {
+		$files = $app['request']->files->get($uploadform->getName());
+		$filename = $files['my_upload']->getClientOriginalName();
+		$files['my_upload']->move(__DIR__ . '/../public_html/uploads/', $filename);
 
-			return $app['twig']->render('form.twig', array(
-				'message' => 'File was successfully uploaded!',
-				'uploadform' => $uploadform->createView()
-			));
-		}
+		return $app['twig']->render('form.twig', array(
+			'message' => 'File was successfully uploaded!',
+			'uploadform' => $uploadform->createView()
+		));
 	}
 
 	return $app['twig']->render('form.twig', array(
