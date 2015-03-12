@@ -637,7 +637,7 @@ if (count($errors) &gt; 0) {
 	);
 
 	// Get the form
-	$form = $app['form.factory']-&gt;createFormBuilder('form', $data)
+	$form = $app['form.factory']-&gt;createBuilder('form', $data)
 		-&gt;add('name', 'text')
 		-&gt;add('email', 'email')
 		-&gt;add('message', 'textarea')
