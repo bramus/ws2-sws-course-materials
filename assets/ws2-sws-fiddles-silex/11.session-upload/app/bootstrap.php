@@ -9,6 +9,10 @@ $app = new Silex\Application();
 // App Configuration
 $app['debug'] = true;
 
+// Path & URL Configuration
+$app['photolog.base_url'] = '/files/images';
+$app['photolog.base_path'] = __DIR__ . '/../public_html' . $app['photolog.base_url'];
+
 // Use Twig — @note: Be sure to install Twig via Composer first!
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
 	'twig.path' => __DIR__ .  DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'views'
