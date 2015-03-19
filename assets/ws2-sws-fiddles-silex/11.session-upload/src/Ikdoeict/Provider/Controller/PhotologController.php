@@ -55,29 +55,31 @@ class PhotologController implements ControllerProviderInterface {
 		// Form was submitted? Process it and start validation
 		$uploadform->handleRequest($app['request']);
 
+		// Check file extension. If it's invalid, we'll manually add an error the form so that isValid() ends up returning false later one
+		$files = $app['request']->files->get($uploadform->getName());
+		if (isset($files['photo']) && ('.jpg' !== substr($files['photo']->getClientOriginalName(), -4))) {
+			$uploadform->get('photo')->addError(new \Symfony\Component\Form\FormError('Only .jpg allowed'));
+		}
+
+		// Form is valid
 		if ($uploadform->isValid()) {
+
+			// Extract form data (not really needed here as we don't do anything with it)
 			$data = $uploadform->getData();
-			$files = $app['request']->files->get($uploadform->getName());
 
-			// Uploaded file must be `.jpg`!
-			if (isset($files['photo']) && ('.jpg' == substr($files['photo']->getClientOriginalName(), -4))) {
-
-				// Define the new name (files are named sequentially)
-				$nextAvailableNumberInBasePath = 1;
-				$di = new \DirectoryIterator($app['photolog.base_path']);
-				foreach ($di as $file) {
-					if ($file->getExtension() == 'jpg') $nextAvailableNumberInBasePath++;
-				}
-
-				// Move it to its new location
-				$files['photo']->move($app['photolog.base_path'], $nextAvailableNumberInBasePath . '.jpg');
-
-				// Redirec to the overview
-				return $app->redirect($app['url_generator']->generate('photolog.browse'));
-
-			} else {
-				$uploadform->get('photo')->addError(new \Symfony\Component\Form\FormError('Only .jpg allowed'));
+			// Define the new name for the file (in this example, files are named sequentially)
+			$nextAvailableNumberInBasePath = 1;
+			$di = new \DirectoryIterator($app['photolog.base_path']);
+			foreach ($di as $file) {
+				if ($file->getExtension() == 'jpg') $nextAvailableNumberInBasePath++;
 			}
+
+			// Move it to its new location
+			$files['photo']->move($app['photolog.base_path'], $nextAvailableNumberInBasePath . '.jpg');
+
+			// Redirec to the overview
+			return $app->redirect($app['url_generator']->generate('photolog.browse'));
+
 		}
 
 		return $app['twig']->render('photolog/form.twig', array('uploadform' => $uploadform->createView()));
