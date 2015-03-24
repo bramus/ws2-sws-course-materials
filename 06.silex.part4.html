@@ -56,85 +56,6 @@
 				</section>
 
 
-				<!-- MySQL and UTF-8 -->
-				<section>
-					<section>
-						<h2>UTF-8 and Doctrine</h2>
-
-						<p style="margin-top: 3em;"><img src="assets/06/utf8.png" alt="" title="" width="447"></p>
-					</section>
-					<section>
-						<h2>UTF-8</h2>
-						<ul>
-							<li class="fragment">
-								Again<small><a href="http://bramus.github.io/ws1-sws-course-materials/07.databases.html#/7/3">&#9873;</a></small>: Use <code>UTF-8</code>, everywhere.
-								<ol>
-									<li class="fragment">
-										DB Schema and Tables: use <code>utf8_general_ci</code>
-										<pre class="bigger"><code>CREATE DATABASE `mydb`
-DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;</code></pre>
-										<pre class="bigger"><code>CREATE TABLE IF NOT EXISTS `records` (
-	`id` INT(10) NOT NULL AUTO_INCREMENT,
-	`name` VARCHAR(255) NOT NULL,
-	PRIMARY KEY (`id`)
-) ENGINE = InnoDB
-DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;</code></pre>
-									</li>
-									<li class="fragment">
-										DB Connection
-										<pre class="bigger"><code class="language-php">$db = new PDO('mysql:host=' . DB_HOST .';dbname=' . DB_NAME_FF . ';charset=utf8', DB_USER, DB_PASS);</code></pre>
-									</li>
-									<li class="fragment">
-										HTML charset
-										<pre class="bigger"><code class="language-html dontrun">&lt;meta charset=&quot;utf-8&quot; /&gt;</code></pre>
-									</li>
-								</ol>
-							</li>
-						</ul>
-					</section>
-
-					<section>
-						<h2>UTF-8 and Doctrine</h2>
-						<ul>
-							<li class="fragment">
-								Setting the <code>charset</code> to <code>utf8</code> not enough.
-								<ul>
-									<li class="fragment">
-										One also needs to invoke a preflight <code>SET NAMES utf8</code> query to change the way statements are sent to the server.
-									</li>
-								</ul>
-							</li>
-							<li class="fragment" style="margin-top: 1em;">
-								PDO offers a way to execute a preflight query when connecting to the MySQL server:
-								<ul>
-									<li class="fragment">
-										When constructing the connection, pass in the query via the driver options, using the <code>PDO::MYSQL_ATTR_INIT_COMMAND</code> constant.
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</section>
-
-					<section>
-						<h2>UTF-8 and Doctrine: Code</h2>
-						<div class="fragment"><pre class="bigger"><code class="language-php">&lt;?php
-
-$app-&gt;register(new Silex\Provider\DoctrineServiceProvider(), array(
-	'db.options' =&gt; array(
-		'driver' =&gt; 'pdo_mysql',
-		'dbname' =&gt; $app['config']['db']['dbname'],
-		'user' =&gt; $app['config']['db']['user'],
-		'password' =&gt; $app['config']['db']['password'],
-		'host' =&gt; $app['config']['db']['host'],
-		'charset' =&gt; 'utf8mb4'
-	)
-));</code></pre></div>
-						<footer class="fragment"><em>Note: <code>1002</code> is the value of the constant <code>PDO::MYSQL_ATTR_INIT_COMMAND</code></em></footer>
-						<!-- `SET NAMES UTF8; SET CHARACTER SET UTF8; SET character_set_connection=UTF8; SET character_set_client=UTF8;` -->
-					</section>
-				</section>
-
-
 				<!-- Pagination -->
 				<section>
 					<section>
@@ -158,6 +79,10 @@ $app-&gt;register(new Silex\Provider\DoctrineServiceProvider(), array(
 					<section>
 						<h2>Examples</h2>
 						<ul>
+							<li class="fragment" style="margin-top: 1em">
+								Bad examples:
+								<p style="text-align: center"><img src="assets/06/pagination-bad-2.jpg" alt="" title="" width="447" /><br /><img src="assets/06/pagination-bad-1.png" alt="" title="" width="447" /></p>
+							</li>
 							<li class="fragment">
 								Good example:
 								<div class="hastooltip" style="width: 550px; margin: 0 auto;">
@@ -192,10 +117,6 @@ $app-&gt;register(new Silex\Provider\DoctrineServiceProvider(), array(
 										</div>
 									</div>
 								</div>
-							</li>
-							<li class="fragment" style="margin-top: 1em">
-								Bad examples:
-								<p style="text-align: center"><img src="assets/06/pagination-bad-2.jpg" alt="" title="" width="447" /><br /><img src="assets/06/pagination-bad-1.png" alt="" title="" width="447" /></p>
 							</li>
 						</ul>
 					</section>
