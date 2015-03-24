@@ -114,7 +114,7 @@
 									<li class="fragment">You cannot connect to a MySQL server from within JavaScript</li>
 								</ul>
 							</li>
-							<li class="fragment">
+							<li class="fragment" style="margin-top: 1em;">
 								Security Issues
 								<ul>
 									<li class="fragment">It is not smart to connect to a MySQL server from an iOS app you made</li>
@@ -172,7 +172,7 @@
 									</li>
 								</ul>
 							</li>
-							<li class="fragment">
+							<li class="fragment" style="margin-top: 1em;">
 								REST constraints
 								<ol>
 									<li class="fragment">Client-server</li>
@@ -242,7 +242,7 @@
 							<li class="fragment">
 								Model that breaks down the principal elements of a REST approach in a few steps
 							</li>
-							<li class="fragment">
+							<li class="fragment" style="margin-top: 1em;">
 								The model embraces 4 levels
 								<ol start="0">
 									<li class="fragment">Level 0: The Swamp of POX</li>
@@ -742,9 +742,9 @@
 									<li><a href="https://github.com/kevinswiber/siren">Siren</a></li>
 									<li><a href="http://stateless.co/hal_specification.html">HAL</a></li>
 									<li><a href="http://json-ld.org/">JSON-LD</a></li>
+									<li>&hellip;</li>
 								</ul>
 							</li>
-							<li class="fragment">Collection+JSON looks very promising</li>
 						</ul>
 					</section>
 
@@ -922,6 +922,7 @@
 											<li class="fragment">API Version in URL</li>
 											<li class="fragment">Operation <code>show</code> included in URL</li>
 											<li class="fragment"><code>id</code> not a child of <code>statuses</code></li>
+											<li class="fragment">Content Negotiation via the URL (<code>.format</code> at the end)</li>
 										</ul>
 									</li>
 									<li class="fragment">
@@ -944,7 +945,7 @@
 									<li class="fragment">
 										Endpoint
 										<ul>
-											<li><code>POST api.twitter.com/1/statuses/update/id.format</code></li>
+											<li><code>POST api.twitter.com/1/statuses/update.format</code></li>
 										</ul>
 									</li>
 									<li class="fragment">
@@ -952,74 +953,13 @@
 										<ul>
 											<li class="fragment">API Version in URL</li>
 											<li class="fragment">Operation <code>update</code> included in URL</li>
-											<li class="fragment">Uses authenticated user implicitly</li>
+											<li class="fragment">Content Negotiation via the URL (<code>.format</code> at the end)</li>
 										</ul>
 									</li>
 									<li class="fragment">
 										Better
 										<ul>
-											<li class="fragment"><code>POST api.twitter.com/users/{id}/statuses</code></li>
-										</ul>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</section>
-
-					<section>
-						<h2>Twitter API (3)</h2>
-						<ul>
-							<li class="fragment">
-								Remove a status udpate
-								<ul>
-									<li class="fragment">
-										Endpoint
-										<ul>
-											<li><code>POST api.twitter.com/1/statuses/destroy/id.format</code></li>
-										</ul>
-									</li>
-									<li class="fragment">
-										Problems
-										<ul>
-											<li class="fragment">API Version in URL</li>
-											<li class="fragment">Operation <code>destroy</code> included in URL</li>
-											<li class="fragment">Uses authenticated user implicitly</li>
-										</ul>
-									</li>
-									<li class="fragment">
-										Better
-										<ul>
-											<li class="fragment"><code>DELETE api.twitter.com/users/{id}/statuses/{id}</code></li>
-										</ul>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</section>
-
-					<section>
-						<h2>Twitter API (4)</h2>
-						<ul>
-							<li class="fragment">
-								Get retweets of a status
-								<ul>
-									<li class="fragment">
-										Endpoint
-										<ul>
-											<li><code>GET api.twitter.com/1/statuses/retweets/id.format</code></li>
-										</ul>
-									</li>
-									<li class="fragment">
-										Problems
-										<ul>
-											<li class="fragment">API Version in URL</li>
-											<li class="fragment">Hierarchy is wrong</li>
-										</ul>
-									</li>
-									<li class="fragment">
-										Better
-										<ul>
-											<li class="fragment"><code>GET api.twitter.com/statuses/{id}/retweets</code></li>
+											<li class="fragment"><code>POST api.twitter.com/statuses</code></li>
 										</ul>
 									</li>
 								</ul>
@@ -1046,7 +986,7 @@
 								</ul>
 							</li>
 							<li class="fragment" style="margin-top: 1em;">
-								Recommened tool: <a href="https://chrome.google.com/webstore/detail/postman-rest-client/fdmmgilgnpjigdojojpjoooidkmcomcm?hl=en">Chrome Postman plugin</a>
+								Recommended tool: <a href="https://chrome.google.com/webstore/detail/postman-rest-client/fdmmgilgnpjigdojojpjoooidkmcomcm?hl=en">Chrome Postman plugin</a>
 								<div style="width: 350px; margin: 0.4em auto 0;"><iframe width="350" height="263" src="http://www.youtube.com/embed/VPLlkhhRMvQ" frameborder="0" allowfullscreen></iframe></div>
 							</li>
 						</ul>
@@ -1067,7 +1007,7 @@
 					</section>
 
 					<section>
-						<h2>It's all about the routes (1)</h2>
+						<h2>It's all about the routes</h2>
 						<ul>
 							<li class="fragment">
 								What we essentially need is a router of some sorts that takes the URL and the HTTP method into account
