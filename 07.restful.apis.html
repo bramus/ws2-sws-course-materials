@@ -1,0 +1,1603 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Web &amp; Mobile Development &mdash; 07.RESTful.APIs</title>
+
+		<meta name="description" content="Web &amp; Mobile Development &mdash; 07.RESTful.APIs">
+		<meta name="author" content="Bram(us) Van Damme - ikdoeict.be">
+
+		<link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/main.css" media="screen">
+		<link rel="stylesheet" href="css/print.css" media="print">
+		<!-- <link rel="stylesheet" href="assets/07/examples.css"> -->
+
+		<link rel="stylesheet" href="lib/zenburn.css">
+	</head>
+
+	<body>
+
+		<div id="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+
+
+				<!-- 0 : Title -->
+				<section>
+					<section>
+						<h3 class="inverted">Web &amp; Mobile Development <small>JLW288</small></h3>
+						<h1>07.RESTful.APIs</h1>
+
+						<footer>
+							<em><a href="http://www.ikdoeict.be/">ikdoeict.be</a> &mdash; <a href="mailto:bramus.vandamme@kahosl.be">bramus.vandamme@kahosl.be</a></em>
+						</footer>
+						<script>
+							// Delicously hacky. Look away.
+							if(navigator.userAgent.match(/(iPhone|iPad|iPod|Android)/i))
+							document.write('<p style="color: rgba(0,0,0,0.3); text-shadow: none;">('+'Tap to navigate'+')</p>');
+						</script>
+					</section>
+				</section>
+
+
+				<!-- 1 : REST Intro -->
+				<section>
+
+					<section>
+						<h2>RESTful APIs</h2>
+						<p><img src="assets/07/resting.png" alt="" title="" height="375" width="500" /></p>
+						<q>The key to victory is discipline,<br />and that means a well made bed.</q>
+					</section>
+
+					<section>
+						<h2>RESTful API?</h2>
+						<ul>
+							<li class="fragment">
+								An API that is REST compliant
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>SRSLY?</h2>
+						<p><img src="assets/07/notsureif.png" alt="Not Sure If ..." title="Not Sure If ..." width="480" height="360" /></p>
+						<p><em>Not sure if trolling or just &ldquo;technically correct&rdquo;</em></p>
+					</section>
+
+					<section>
+						<h2>API</h2>
+						<ul>
+							<li class="fragment">
+								Application Programming Interface
+								<ul>
+									<li class="fragment">Abstract Interface to allow communication between software components</li>
+									<li class="fragment">eg. Photoshop has a JS based API to remotely control Photoshop</li>
+									<li class="fragment">eg. Browsers have an API that allow creation of extensions</li>
+									<li class="fragment">eg. Browsers have a Device API that give JS devvers access to device features such as geolocation, camera, vibration, etc.</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Web API</h2>
+						<ul>
+							<li class="fragment">
+								Websites can also offer an API
+								<ul>
+									<li class="fragment">Allow you to push/pull data to/from a web site</li>
+									<li class="fragment">Scripting language independent (PHP, ASP, RoR, ..)</li>
+									<li class="fragment">Sometimes referred to as a &ldquo;Web Service&rdquo; <em>(blame Microsoft)</em></li>
+									<li class="fragment">Implemented via JavaScript, XML-RPC, SOAP, REST, &hellip;</li>
+									<li class="fragment">Return formats JS, XML, HTML, plaintext, JSON(P), &hellip;</li>
+								</ul>
+							</li>
+						</ul>
+						<footer class="fragment">
+							<em>You've already implemented a SOAP-based one in the course Webprogrammatie</em>
+						</footer>
+					</section>
+
+					<section>
+						<h2>Why provide an API? (1)</h2>
+						<ul>
+							<li class="fragment">
+								Technical Limitations
+								<ul>
+									<li class="fragment">You cannot connect to a MySQL server from an iOS app you made</li>
+									<li class="fragment">You cannot connect to a MySQL server from within JavaScript</li>
+								</ul>
+							</li>
+							<li class="fragment">
+								Security Issues
+								<ul>
+									<li class="fragment">It is not smart to connect to a MySQL server from an iOS app you made</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Why provide an API? (2)</h2>
+						<ul>
+							<li class="fragment">
+								See cool stuff built on top of your technology platform
+								<div style="text-align: center; margin-top: 30px;">
+									<figure class="fragment">
+										<img src="assets/07/BotanicallsSparkfunKit_jade1_800.jpg" alt="" title="" height="300" width="400" />
+										<figcaption>Let your plants tell you via Twitter that they're thirsty with <a href="http://www.botanicalls.com/kits/">botanicalls</a></figcaption>
+									</figure>
+									<figure class="fragment">
+										<img src="assets/07/kickbee.jpg" alt="" title="" height="250" width="400" />
+										<figcaption>Know when your baby kicked via Twitter with <a href="http://www.botanicalls.com/kits/">http://kickbee.net/</a></figcaption>
+									</figure>
+								</div>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Why provide an API? (3)</h2>
+						<ul>
+							<li class="fragment">
+								See cool stuff built using your data
+								<div style="text-align: center; margin-top: 30px;">
+									<figure class="fragment">
+										<img src="assets/07/gowallaheat.jpg" alt="" title="" height="300" width="400" />
+										<figcaption>Visualize your Gowalla (RIP) checkins with <a href="http://gowallaheat.bram.us/">GowallaHEAT</a></figcaption>
+									</figure>
+									<figure class="fragment">
+										<img src="assets/07/tweetie.jpg" alt="" title="" height="300" width="410" />
+										<figcaption>Write your own Twitter Client (and eventually <a href="http://mashable.com/2010/04/09/breaking-twitter-acquires-tweetie-iphone-app/">get bought by Twitter</a>)</figcaption>
+									</figure>
+								</div>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>REST</h2>
+						<ul>
+							<li class="fragment">
+								REST = REpresentational State Transfer
+								<ul>
+									<li class="fragment">
+										Architectural style for distributed hypermedia systems <a href="http://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm">described</a> by Roy Fielding, in 2000
+									</li>
+								</ul>
+							</li>
+							<li class="fragment">
+								REST constraints
+								<ol>
+									<li class="fragment">Client-server</li>
+									<li class="fragment">Stateless Server</li>
+									<li class="fragment">Cacheable</li>
+									<li class="fragment">
+										Uniform interface
+										<ol>
+											<li>Identification of resources <em>(URI)</em></li>
+											<li>Manipulation of resources through representations <em>(modify/delete)</em></li>
+											<li>Self-descriptive messages <em>(message and meta-data)</em></li>
+											<li>Hypermedia As The Engine Of Application State <em>(state transitions)</em></li>
+										</ol>
+									</li>
+									<li class="fragment">Layered System</li>
+									<li class="fragment">Code-On-Demand <em>(optional)</em></li>
+								</ol>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>REST API</h2>
+						<ul>
+							<li class="fragment">
+								API that follows the REST constraints
+							</li>
+							<li class="fragment">
+								Constraint #4 (Uniform interface) is the tricky one
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Why choose REST?</h2>
+						<ul>
+							<li class="fragment">As a consumer, it's easy to work with</li>
+							<li class="fragment">As a developer, it's (fairly) easy to implement</li>
+							<li class="fragment">It's well structured</li>
+							<li class="fragment">
+								It's popular
+								<div style="text-align: center; margin-top: 10px;">
+									<figure>
+										<img src="assets/07/rest_winning.png" alt="" title="" height="299" width="707" />
+										<figcaption>Figure by <a href="http://www.slideshare.net/jmusser/pw-glue-conmay2010">jmusser</a></figcaption>
+									</figure>
+								</div>
+							</li>
+						</ul>
+					</section>
+
+				</section>
+
+
+				<!-- 1 : REST URL Design -->
+				<section>
+
+					<section>
+						<h2>Richardson Maturity Model</h2>
+						<p><img src="assets/07/globetrotters.png" alt="" title="" height="375" width="500" /></p>
+						<q>This chronological wang-dang-doodle<br />could destroy the very matrix of reality.</q>
+					</section>
+
+					<section>
+						<h2>Richardson Maturity Model</h2>
+						<ul>
+							<li class="fragment">
+								Model that breaks down the principal elements of a REST approach in a few steps
+							</li>
+							<li class="fragment">
+								The model embraces 4 levels
+								<ol start="0">
+									<li class="fragment">Level 0: The Swamp of POX</li>
+									<li class="fragment">Level 1: Identify and organize resources in a hierarchy</li>
+									<li class="fragment">Level 2: Use HTTP verbs for operations</li>
+									<li class="fragment">Level 3: <acronym title="Hypertext As The Engine Of Application State">HATEOAS</acronym></li>
+								</ol>
+							</li>
+						</ul>
+						<footer class="fragment"><em>Most self-proclaimed &ldquo;RESTful APIs&rdquo; out there aren't even level 1 compliant</em></footer>
+					</section>
+
+					<section>
+						<h2>0. The Swamp of POX</h2>
+						<p><img src="assets/07/rmm-0.png" alt="Richardson Maturity Model Level 0" title="Richardson Maturity Model Level 0" /></p>
+					</section>
+
+					<section>
+						<h2>What?</h2>
+
+						<ul>
+							<li class="fragment">
+								Use HTTP as a transport mechanism
+								<ul>
+									<li class="fragment">
+										Mostly one URI (<code>/api</code>) and one METHOD (<code>POST</code>)
+									</li>
+									<li class="fragment">
+										Based on the sent-in data (in <code>$_POST</code>) you get back some data
+									</li>
+								</ul>
+							</li>
+							<li class="fragment">
+								POX = Plain Old XML
+								<ul>
+									<li class="fragment">
+										Of course you can use a different format if you like
+										<ul>
+											<li class="fragment">Plaintext is just ... plain</li>
+											<li class="fragment">JSON is concise and quite readable too</li>
+											<li class="fragment">JSONP does not allow custom headers and only works with <code>GET</code></li>
+										</ul>
+									</li>
+									<li class="fragment">
+										&rarr; We'll go for JSON
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>API Call Example</h2>
+						<ul>
+							<li class="fragment">
+								Do a <code>POST</code> request to <code>/api</code> with <code>$_POST['action']</code> set to <code>getLecturers</code> and get back a list of lecturers as the actual content
+								<pre class="bigger"><code class="language-javascript dontrun" style="max-height: 380px; overflow: scroll;">{
+	&quot;lecturers&quot;:
+	[
+		{
+			&quot;id&quot;: 1,
+			&quot;name&quot;: &quot;Davy De Winne&quot;
+		},
+		{
+			&quot;id&quot;: 2,
+			&quot;name&quot;: &quot;Bramus Van Damme&quot;
+		}
+	]
+}</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>1. Resources</h2>
+						<p><img src="assets/07/rmm-1.png" alt="Richardson Maturity Model Level 1" title="Richardson Maturity Model Level 1" /></p>
+					</section>
+
+					<section>
+						<h2 style="font-size: 200%">Resource Identification &amp; Hierarchy</h2>
+						<ul>
+							<li class="fragment">
+								Basic naming conventions
+								<ul>
+									<li class="fragment">Verbs are bad, nouns are good</li>
+									<li class="fragment">Use plurals</li>
+									<li class="fragment">Respect the Hierarchy</li>
+								</ul>
+							</li>
+							<li class="fragment">
+								Examples
+								<ul>
+									<li class="fragment"><del><code>/product</code></del> &rarr; <ins><code>/products</code></ins></li>
+									<li class="fragment"><del><code>/product/1234</code></del> &rarr; <ins><code>/products/1234</code></ins></li>
+									<li class="fragment"><del><code>/photos/product/1234</code></del> &rarr; <ins><code>/products/1234/photos</code></ins></li>
+									<li class="fragment"><del><code>/photos/product/1234/5678</code></del> &rarr; <ins><code>/products/1234/photos/5678</code></ins></li>
+								</ul>
+							</li>
+						</ul>
+						<footer class="fragment"><em>Note: This doesn't apply for &ldquo;normal pages&rdquo; of your site</em></footer>
+					</section>
+
+					<section>
+						<h2>Identification &amp; Hierarchy bis</h2>
+						<ul>
+							<li class="fragment">
+								Use concrete naming, yet don't be too specific
+								<ul>
+									<li class="fragment"><del><code>/things</code></del></li>
+									<li class="fragment"><del><code>/animals</code></del></li>
+									<li class="fragment"><code class="ok">/dogs</code></li>
+									<li class="fragment"><del><code>/beagles</code></del></li>
+								</ul>
+							</li>
+							<li class="fragment">
+								Some cases will require a verb instead of a noun, yet consider these exceptions
+								<ul>
+									<li class="fragment"><code>/search?course=WMD</code></li>
+									<li class="fragment"><code>/convert?from=EUR&amp;to=USD&amp;amount=100</code></li>
+								</ul>
+							</li>
+						</ul>
+
+					</section>
+
+					<section>
+						<h2>URL Structure Example</h2>
+
+						<ul class="fragment">
+							<li><code>/</code></li>
+							<li><code>/movies</code></li>
+							<li><code>/movies/<em>{id}</em></code></li>
+							<li><code>/movies/<em>{id}</em>/photos</code></li>
+							<li><code>/actors</code></li>
+							<li><code>/actors/<em>{id}</em></code></li>
+							<li><code>/actors/<em>{id}</em>/movies</code></li>
+							<li><code>/about</code></li>
+							<li><code>/contact</code></li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>API Call Example</h2>
+						<ul>
+							<li class="fragment">
+								Do a <code>POST</code> request to <code>/api/lecturers</code> and get back a list of lecturers as the actual content
+								<pre class="bigger"><code class="language-javascript dontrun" style="max-height: 380px; overflow: scroll;">{
+	&quot;lecturers&quot;:
+	[
+		{
+			&quot;id&quot;: 1,
+			&quot;name&quot;: &quot;Davy De Winne&quot;
+		},
+		{
+			&quot;id&quot;: 2,
+			&quot;name&quot;: &quot;Bramus Van Damme&quot;
+		}
+	]
+}</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>URL Design Sidenotes (1)</h2>
+						<ul>
+							<li class="fragment">
+								API Versioning
+								<ul>
+									<li class="fragment">
+										Don't place it in the URL (e.g. <code>api.twitter.com/v1/&hellip;</code> is wrong)
+									</li>
+									<li class="fragment">
+										Solution: see further
+									</li>
+								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 1em">
+								Filtering &amp; Sorting
+								<ul>
+									<li class="fragment">Use URL params <code>?filter=foo&amp;sort=asc</code></li>
+								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 1em">
+								Limiting fields
+								<ul>
+									<li class="fragment">Use an URL param <code>?fields=firstname,lastname,age</code></li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>URL Design Sidenotes (2)</h2>
+						<ul>
+							<li class="fragment">
+								Pagination
+								<ul>
+									<li class="fragment">Mandatory for huge resources</li>
+									<li class="fragment">
+										Use <code>limit</code> and <code>offset</code> URL params
+										<ul>
+											<li>Defaulting to <code>?limit=10&amp;offset=&lt;max_id&gt;</code></li>
+											<li>Avoid using numbers for <code>offset</code>, opt for id-constraint based on sorting method; this avoids doubles when paginating over a frequently updated result set.</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>2. HTTP Verbs</h2>
+						<p><img src="assets/07/rmm-2.png" alt="Richardson Maturity Model Level 2" title="Richardson Maturity Model Level 2" /></p>
+					</section>
+
+
+					<section>
+						<h2>HTTP Verbs</h2>
+						<ul>
+							<li class="fragment">
+								HTTP Verbs = CRUD = Queries
+								<ol>
+									<li class="fragment"><code>POST</code> = Create = <code>INSERT</code></li>
+									<li class="fragment"><code>GET</code> = Read = <code>SELECT</code></li>
+									<li class="fragment"><code>PUT</code> = Update = <code>UPDATE</code></li>
+									<li class="fragment"><code>DELETE</code> = Delete = <code>DELETE</code></li>
+								</ol>
+							</li>
+							<li class="fragment">
+								Examples
+								<ol>
+									<li class="fragment"><code>POST /products</code> <em>(data via <code>$_POST</code>)</em></li>
+									<li class="fragment"><code>GET /products</code> or <code>GET /products/1234</code></li>
+									<li class="fragment"><code>PUT /products/1234</code> <em>(data via &ldquo;<code>$_PUT</code>&rdquo;)</em></li>
+									<li class="fragment"><code>DELETE /products/1234</code></li>
+								</ol>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>HTTP Status Codes (1)</h2>
+						<ul>
+							<li class="fragment">
+								When accessing a resource, you'll get back the data, along with <a href="http://httpstatus.es/">an HTTP status code</a>
+							</li>
+							<li class="fragment">
+								General Codes (applicable to all verbs/resources)
+								<ul>
+									<li class="fragment"><code>401 &mdash; Not Authorized</code> <em>(e.g. No API Key given)</em></li>
+									<li class="fragment"><code>405 &mdash; Method Not Allowed</code> <em>(e.g. wrong verb for resource)</em></li>
+									<li class="fragment"><code>500 &mdash; Internal Server Error</code> <em>(Developer screwed up ;))</em></li>
+								</ul>
+							</li>
+							<li class="fragment">
+								<code>GET</code> <small style="vertical-align: baseline;">(SQL SELECT)</small>
+								<ul>
+									<li class="fragment"><code>200 &mdash; OK</code> <em>(requested data sent via response body)</em></li>
+									<li class="fragment"><code>404 &mdash; Not Found</code> <em>(resource not found, not &ldquo;API not found&rdquo;)</em></li>
+								</ul>
+							</li>
+							<li class="fragment">
+								<code>POST</code> <small style="vertical-align: baseline;">(SQL INSERT)</small>
+								<ul>
+									<li class="fragment"><code>201 &mdash; Created</code> <em>(=OK)</em></li>
+									<li class="fragment"><code>400 &mdash; Bad Request</code> <em>(Missing Parameters)</em></li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>HTTP Status Codes (2)</h2>
+						<ul>
+							<li class="fragment">
+								<code>PUT</code> <small style="vertical-align: baseline;">(SQL UPDATE)</small>
+								<ul>
+									<li class="fragment"><code>200 &mdash; OK</code> <em>(requested data sent via response body)</em></li>
+									<li class="fragment"><code>400 &mdash; Bad Request</code> <em>(Missing Parameters)</em></li>
+									<li class="fragment"><code>404 &mdash; Not Found</code></li>
+								</ul>
+							</li>
+							<li class="fragment">
+								<code>DELETE</code> <small style="vertical-align: baseline;">(SQL DELETE)</small>
+								<ul>
+									<li class="fragment"><code>204 &mdash; No Content</code> <em>(=OK &mdash; Note: <strong>no</strong> response body sent!)</em></li>
+									<li class="fragment"><code>404 &mdash; Not Found</code></li>
+								</ul>
+							</li>
+							<li class="fragment">
+								Warning!
+								<ul><li>HTTP Statuses 4XX and 5XX will invoke <code>$.ajax().error()</code> in jQuery!</li></ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>API Call Example (1)</h2>
+						<ul>
+							<li class="fragment">
+								Do a <code>GET</code> request to <code>/api/lecturers</code> and get back an HTTP <code>200</code> status code and a list of lecturers as the content
+								<pre class="bigger"><code class="language-javascript dontrun" style="max-height: 380px; overflow: scroll;">{
+	&quot;lecturers&quot;:
+	[
+		{
+			&quot;id&quot;: 1,
+			&quot;name&quot;: &quot;Davy De Winne&quot;
+		},
+		{
+			&quot;id&quot;: 2,
+			&quot;name&quot;: &quot;Bramus Van Damme&quot;
+		}
+	]
+}</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>API Call Example (2)</h2>
+						<ul>
+							<li class="fragment">
+								Do a <code>POST</code> request to <code>/api/lecturers</code> with some data in <code>$_POST</code> to insert a new lecturer
+								<ul>
+									<li class="fragment">Get back <code>201 &mdash; Created</code> if all OK</li>
+									<li class="fragment">Get back <code>400 &mdash; Bad Request</code> if parameters are missing</li>
+								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 0.8em;">
+								Do a <code>PUT</code> request to <code>/api/lecturers/2</code> with some data in <code>$_PUT</code> to update a lecturer
+								<ul>
+									<li class="fragment">Get back <code>200 &mdash; OK</code> if all OK</li>
+									<li class="fragment">Get back <code>400 &mdash; Bad Request</code> if parameters are missing</li>
+									<li class="fragment">Get back <code>404 &mdash; Not Found</code> if the lecturer does not exist</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>3. Hypermedia Controls</h2>
+						<p><img src="assets/07/rmm-3.png" alt="Richardson Maturity Model Level 3" title="Richardson Maturity Model Level 3" /></p>
+					</section>
+
+					<section>
+						<h2>HATEOAS (1)</h2>
+
+						<ul>
+							<li class="fragment">
+								Hypermedia as the Engine of Application State
+								<ul>
+									<li class="fragment">Application State = Where the user is in the process of completing a task <em>(e.g. a page of the application)</em></li>
+									<li class="fragment">Hypermedia = <q>The simultaneous presentation of information and controls such that the information becomes the <abbr title="A quality of an object, or an environment, which allows an individual to perform an action">affordance</abbr> through which the user obtains choices and selects actions</q> <small><a href="http://roy.gbiv.com/untangled/2008/rest-apis-must-be-hypertext-driven#comment-718">&#9873;</a></small></li>
+								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Roughly translated
+								<ul>
+									<li>
+										The response must be hypertext and include links so that the user/automation can transition to other pages of the application
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>HATEOAS (2)</h2>
+
+						<ul>
+							<li class="fragment">
+								Essentially, an API consumer should only know
+								<ol>
+									<li>
+										The URI starting point
+									</li>
+									<li>
+										How to parse the response <em>(viz. what media type it is)</em>
+									</li>
+								</ol>
+							</li>
+							<li class="fragment">With this, the consumer has enough info to parse out the links and transition to other states when needed</li>
+							<li class="fragment" style="margin-top: 1em;">
+								When an API embraces HATEOAS, we can call it a <strong>Hypermedia API</strong>
+							</li>
+						</ul>
+
+					</section>
+
+					<section>
+						<h2>Response Media Types (1)</h2>
+
+						<ul>
+							<li class="fragment">
+								Responses <strong>must</strong><small><a href="http://roy.gbiv.com/untangled/2008/rest-apis-must-be-hypertext-driven">&#9873;</a></small> be hypertext to be RESTful
+								<ul>
+									<li class="fragment">
+										XML and JSON are not hypermedia types; they only define a syntax
+									</li>
+									<li class="fragment">
+										(X)HTML, ATOM, RDF/XML, etc. are hypermedia types
+										<ul>
+											<li>These are all <a href="http://amundsen.com/hypermedia/">specified</a></li>
+											<li>Each has their own MIME Type, e.g. <code>application/atom+xml</code></li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								JSON based hypermedia types are in the making
+								<ul>
+									<li><a href="https://github.com/collection-json/spec">Collection+JSON</a></li>
+									<li><a href="https://github.com/kevinswiber/siren">Siren</a></li>
+									<li><a href="http://stateless.co/hal_specification.html">HAL</a></li>
+									<li><a href="http://json-ld.org/">JSON-LD</a></li>
+								</ul>
+							</li>
+							<li class="fragment">Collection+JSON looks very promising</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Response Media Types (2)</h2>
+
+						<ul>
+							<li class="fragment">
+								It's perfectly possible to roll your own hypermedia type
+								<ul>
+									<li>e.g. <code>application/vnd.ikdoeict.whatever</code></li>
+									<li>General consensus amongst hypermedia gurus: don't</li>
+								</ul>
+							</li>
+
+							<li class="fragment" style="margin-top: 1em">
+								An API can support multiple hypermedia types
+								<ul>
+									<li class="fragment">
+										The client indicates in an <code>accept</code> header which
+										<ul>
+											<li>e.g <code>Accept: application/collection+json</code></li>
+										</ul>
+									</li>
+									<li class="fragment">
+										Content negotiation:
+										<ul>
+											<li>e.g. <code>Accept: application/xml; q=0.8, application/json</code></li>
+										</ul>
+									</li>
+									<li class="fragment">
+										Also use this header for versioning
+										<ul>
+											<li>e.g. <code>Accept: application/vnd.ikdoeict.whatever-v2+json</code><br/>or <code>Accept: application/collection+json;v=2</code></li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>What will we do?</h2>
+						<ul>
+							<li class="fragment">
+								We're going to break the rules and use our own format
+								<ul>
+									<li class="fragment">
+										JSON based
+									</li>
+									<li class="fragment">
+										Served as plain <code>application/json</code> <em>(Sorry Roy, gotta <a href="http://www.w3.org/TR/html-design-principles/#pave-the-cowpaths">pave the cowpaths</a>)</em>
+									</li>
+									<li class="fragment">
+										The returned HTTP status code will also be part of the response<br />
+										<em>(but we'll also send it via the response headers as RMM Level 2 requires)</em>
+										<ul>
+											<li>The response is split out in a <code>status</code> and <code>content</code> object</li>
+										</ul>
+									</li>
+									<li class="fragment">
+										When links are needed, inject a <code>links</code> array holding the links
+										<ul>
+											<li class="fragment">
+												Links have a <code>rel</code> and <code>href</code> property
+											</li>
+											<li class="fragment">
+												<code>rel</code> values are based on <a href="http://www.iana.org/assignments/link-relations/link-relations.xml">RFC5988</a>
+												<ul>
+													<li><code>self</code>, <code>up</code>, <code>index</code>, <code>next</code>, <code>prev</code>, ...</li>
+													<li>When no value can be found in the RFC, pick your own (e.g. <code>photos</code>)</li>
+												</ul>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>API Call Example</h2>
+						<ul>
+							<li class="fragment"  style="font-size: 90%">
+								Do a <code>GET</code> request to <code>/lecturers</code> and get back a custom JSON response with HTTP status code <code>200</code> containing a list of lecturers (with resource links) as the response content
+								<pre class="bigger"><code class="language-javascript dontrun" style="max-height: 260px; overflow: scroll;">{
+	&quot;status&quot;:
+	{
+	   &quot;code&quot;: 200,
+	   &quot;text&quot;: &quot;OK&quot;
+	},
+	&quot;content&quot;:
+	{
+		&quot;size&quot;: 2,
+		&quot;lecturers&quot;:
+		[
+			{
+				&quot;id&quot;: 1,
+				&quot;name&quot;: &quot;Davy De Winne&quot;,
+				&quot;links&quot;: [
+					{
+						&quot;rel&quot;: &quot;self&quot;,
+						&quot;href&quot;: &quot;/users/1&quot;
+					}
+				]
+			},
+			{
+				&quot;id&quot;: 2,
+				&quot;name&quot;: &quot;Bramus Van Damme&quot;,
+				&quot;links&quot;: [
+					{
+						&quot;rel&quot;: &quot;self&quot;,
+						&quot;href&quot;: &quot;/users/2&quot;
+					}
+				]
+			}
+		]
+	}
+}</code></pre>
+							</li>
+						</ul>
+						<footer class="fragment"><em>Note: we've broken the rules here ... this ain't a genuine Hypermedia API!</em></footer>
+					</section>
+
+
+					<section>
+						<h2>Summary</h2>
+						<ul>
+							<li class="fragment">
+								Real RESTful APIs or Hypermedia APIs are APIs that consist of two things
+								<ol>
+									<li class="fragment">Usage of HTTP to its fullest <em>(RMM Levels 0 - 2)</em></li>
+									<li class="fragment">Responses are served as hypermedia that manages application state <em>(RMM Level 3)</em></li>
+								</ol>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								We'll be RMM level 3 <em>compliant-ish</em> and use our own (simple) hypermedia format but serve it as <code>application/json</code> &mdash; It cuts the mustard
+							</li>
+						</ul>
+					</section>
+
+				</section>
+
+
+				<!-- 4 : API Case Study -->
+				<section>
+
+					<section>
+						<h2>RESTful API Case Study</h2>
+						<p><img src="assets/07/ascent-of-bot.png" alt="" title="" height="371" width="684"></p>
+						<q>Hey, look! I found a robot fossil!</q>
+					</section>
+
+					<section>
+						<h2>Twitter API (1)</h2>
+						<ul>
+							<li class="fragment">
+								One of the first RESTful APIs, suffering from historically grown bloat.
+								<ul>
+									<li class="fragment">Spoiler: it's not RESTful at all!</li>
+								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Get a status
+								<ul>
+									<li class="fragment">
+										Endpoint
+										<ul>
+											<li><code>GET api.twitter.com/1/statuses/show/id.format</code></li>
+										</ul>
+									</li>
+									<li class="fragment">
+										Problems
+										<ul>
+											<li class="fragment">API Version in URL</li>
+											<li class="fragment">Operation <code>show</code> included in URL</li>
+											<li class="fragment"><code>id</code> not a child of <code>statuses</code></li>
+										</ul>
+									</li>
+									<li class="fragment">
+										Better
+										<ul>
+											<li class="fragment"><code>GET api.twitter.com/statuses/{id}</code></li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Twitter API (2)</h2>
+						<ul>
+							<li class="fragment">
+								Set (update) your status
+								<ul>
+									<li class="fragment">
+										Endpoint
+										<ul>
+											<li><code>POST api.twitter.com/1/statuses/update/id.format</code></li>
+										</ul>
+									</li>
+									<li class="fragment">
+										Problems
+										<ul>
+											<li class="fragment">API Version in URL</li>
+											<li class="fragment">Operation <code>update</code> included in URL</li>
+											<li class="fragment">Uses authenticated user implicitly</li>
+										</ul>
+									</li>
+									<li class="fragment">
+										Better
+										<ul>
+											<li class="fragment"><code>POST api.twitter.com/users/{id}/statuses</code></li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Twitter API (3)</h2>
+						<ul>
+							<li class="fragment">
+								Remove a status udpate
+								<ul>
+									<li class="fragment">
+										Endpoint
+										<ul>
+											<li><code>POST api.twitter.com/1/statuses/destroy/id.format</code></li>
+										</ul>
+									</li>
+									<li class="fragment">
+										Problems
+										<ul>
+											<li class="fragment">API Version in URL</li>
+											<li class="fragment">Operation <code>destroy</code> included in URL</li>
+											<li class="fragment">Uses authenticated user implicitly</li>
+										</ul>
+									</li>
+									<li class="fragment">
+										Better
+										<ul>
+											<li class="fragment"><code>DELETE api.twitter.com/users/{id}/statuses/{id}</code></li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Twitter API (4)</h2>
+						<ul>
+							<li class="fragment">
+								Get retweets of a status
+								<ul>
+									<li class="fragment">
+										Endpoint
+										<ul>
+											<li><code>GET api.twitter.com/1/statuses/retweets/id.format</code></li>
+										</ul>
+									</li>
+									<li class="fragment">
+										Problems
+										<ul>
+											<li class="fragment">API Version in URL</li>
+											<li class="fragment">Hierarchy is wrong</li>
+										</ul>
+									</li>
+									<li class="fragment">
+										Better
+										<ul>
+											<li class="fragment"><code>GET api.twitter.com/statuses/{id}/retweets</code></li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>MoviesDB (1)</h2>
+						<p style="text-align: center;" class="fragment"><a href="http://bramus.github.com/simple-rest-api-explorer/"><img src="assets/07/moviesdb.png" width="600" height="487" alt="" title="" style="background: transparent; border: 0; -webkit-box-shadow: none; -moz-box-shadow: none; -ms-box-shadow: none; -o-box-shadow: none; box-shadow: none;" /></a><p>
+						<footer class="fragment">(click image to launch)</footer>
+					</section>
+
+					<section>
+						<h2>MoviesDB (2)</h2>
+						<ul>
+							<li class="fragment">
+								Example API
+							</li>
+							<li class="fragment">
+								Play around with the API Explorer to check it out
+								<ul>
+									<li class="fragment">FYI: You can <a href="http://bramus.github.com/simple-rest-api-explorer/">Fork the API Explorer</a></li>
+								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Recommened tool: <a href="https://chrome.google.com/webstore/detail/postman-rest-client/fdmmgilgnpjigdojojpjoooidkmcomcm?hl=en">Chrome Postman plugin</a>
+								<div style="width: 350px; margin: 0.4em auto 0;"><iframe width="350" height="263" src="http://www.youtube.com/embed/VPLlkhhRMvQ" frameborder="0" allowfullscreen></iframe></div>
+							</li>
+						</ul>
+					</section>
+
+				</section>
+
+
+
+
+				<!-- 3 : REST in PHP -->
+				<section>
+
+					<section>
+						<h2>RESTful APIs in PHP</h2>
+						<p><img src="assets/07/groin.png" alt="" title="" height="338" width="600" /></p>
+						<q>Would it cheer you up if I punch Fry in the groin?<br />Cause I'll do it, regardless.</q>
+					</section>
+
+					<section>
+						<h2>Prerequisite: Supporting nice URLs</h2>
+						<ul>
+							<li class="fragment">
+								Route all requests to non-existing files/folders to <code>index.php</code>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Build <code>index.php</code> in such a way that it decides what to do based on the URL (found in <code>$_SERVER['REQUEST_URI']</code>)
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Nice URLs in Apache</h2>
+						<ul>
+							<li class="fragment">
+								Possible using the <code>mod_rewrite</code> Apache Module
+								<ul>
+									<li>Wampserver: not enabled by default (<a href="assets/07/wamp_url_rewrite.png">instructions</a>)</li>
+									<li>MAMP Pro: enabled by default</li>
+								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Put a file named <code>.htaccess</code> in your root to redirect requests to non-existing files to <code>index.php</code>
+								<pre class="bigger"><code>&lt;IfModule mod_rewrite.c&gt;
+Options -MultiViews
+RewriteEngine On
+# RewriteBase /
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule &circ; /index.php [L]
+&lt;/IfModule&gt;</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Nice URLs in IIS</h2>
+						<ul>
+							<li class="fragment">
+								Possible using the <a href="http://www.iis.net/downloads/microsoft/url-rewrite">IIS Rewrite Module</a>
+							</li>
+							<li class="fragment">
+								Put a file named <code>web.config</code> in your root to redirect requests to non-existing files to <code>index.php</code>
+								<pre class="bigger"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;configuration&gt;
+	&lt;system.webServer&gt;
+		&lt;rewrite&gt;
+			&lt;rules&gt;
+				&lt;rule name=&quot;Main Rule&quot; stopProcessing=&quot;true&quot;&gt;
+					&lt;match url=&quot;.*&quot; /&gt;
+					&lt;conditions logicalGrouping=&quot;MatchAll&quot;&gt;
+						&lt;add input=&quot;{REQUEST_FILENAME}&quot; matchType=&quot;IsFile&quot; negate=&quot;true&quot; /&gt;
+						&lt;add input=&quot;{REQUEST_FILENAME}&quot; matchType=&quot;IsDirectory&quot; negate=&quot;true&quot; /&gt;
+					&lt;/conditions&gt;
+					&lt;action type=&quot;Rewrite&quot; url=&quot;index.php&quot; /&gt;
+				&lt;/rule&gt;
+			&lt;/rules&gt;
+		&lt;/rewrite&gt;
+	&lt;/system.webServer&gt;
+&lt;/configuration&gt;</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Nice URLs in the PHP 5.4 server</h2>
+						<ul>
+							<li class="fragment">
+								<strong>All</strong> requests route to <code>index.php</code> by default
+								<ul>
+									<li class="fragment">You'll need to add some extra PHP code to <code>index.php</code> to force non-404 requests route to the correct file 
+									</li>
+								</ul>
+								<div class="fragment"><pre class="bigger"><code>&lt;?php
+
+$filename = __DIR__ . preg_replace('#(\?.*)$#', '', $_SERVER['REQUEST_URI']);
+if (php_sapi_name() === 'cli-server' &amp;&amp; is_file($filename)) {
+	return false;
+}
+
+// rest of your code here</code></pre></div>
+							</li>
+						</ul>
+						<footer class="fragment"><em>Note: You can start a server by running <code>php -S localhost:8080</code> in your project www-root</em></footer>
+					</section>
+
+					<section>
+						<h2>It's all about the routes</h2>
+						<ul>
+							<li class="fragment">
+								What we essentially need is a router of some sorts that takes the URL and the HTTP method into account
+								<ul>
+									<li class="fragment">If you do a <code>GET</code> request to <code>/movies</code>, show a list of movies</li>
+									<li class="fragment">If you do a <code>GET</code> request to <code>/movies/{id}</code>, show the one specific movie</li>
+									<li class="fragment">If you do a <code>POST</code> request to <code>/movies</code>, insert it</li>
+									<li class="fragment">&hellip;</li>
+								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Codewise, it should be something like this
+								<pre class="bigger"><code class="language-php">$router = new Router();
+
+$router-&gt;get('/', function() { &hellip; });
+$router-&gt;get('/movies', function() { &hellip; });
+$router-&gt;get('/movies/\d+', function() { &hellip; });
+$router-&gt;post('/movies', function() { &hellip; });
+
+$router->run();</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Router Demo</h2>
+
+						<figure><img src="assets/07/example-router.png" alt="" title="" width="580" class="noborder" /></figure>
+
+						<p style="font-size: 75%">Let's take a look at <code>assets/07/examples/router/</code> <a href="assets/07/examples/router/">&rarr;</a></p>
+
+					</section>
+
+					<section>
+						<h2>Router Recap (1)</h2>
+						<ul>
+							<li class="fragment">
+								Definitions
+								<ul>
+									<li class="fragment">A route is a combination of a <strong>pattern</strong> and an <strong>HTTP method</strong></li>
+									<li class="fragment">A route is handled by a <strong>handling function</strong> which returns/does x/y</li>
+								</ul>
+							</li>
+
+							<li class="fragment" style="margin-top: 1em;">
+								Hook routes using <code>match()</code>
+								<pre class="bigger"><code class="language-php">$router->match('GET|POST', '<em>pattern</em>', function() { &hellip; });</code></pre>
+							</li>
+
+							<li class="fragment">
+								Or use a shorthand
+								<pre class="bigger"><code class="language-php">$router->get('<em>pattern</em>', function() { &hellip; });</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Router Recap (2)</h2>
+						<ul>
+							<li class="fragment">
+								Route patterns can be static or dynamic
+								<ul>
+									<li class="fragment">The dynamic parts of the pattern <em>(<code>\d+</code>, <code>\w+</code>, <code>.*</code>, or <code>.+</code>)</em> will be converted to <strong>route variables</strong> which you pass into the handling function</li>
+								</ul>
+								<pre class="bigger fragment"><code class="language-php">$router->get('/movies/\d+', function($movieId) {
+	echo 'Movie #' . $movieId . ' detail';
+});</code></pre>
+								<pre class="bigger fragment"><code class="language-php">$router->get('/movies/\d+/photos/\d+', function($movieId, $photoId) {
+	echo 'Movie #' . $movieId . ' photo #' . $photoId);
+});</code></pre>
+							</li>
+
+							<li class="fragment" style="margin-top: 1em;">
+								Only the first route matched will be handled
+							</li>
+							<li class="fragment">
+								When no matching route is found, a 404 will be returned
+								<ul>
+									<li class="fragment">Override the default 404 handler using <code>$router->set404(<em>function</em>);</code></li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Router Recap (3)</h2>
+						<ul>
+							<li class="fragment">
+								Connect middleware before the routes are handled
+								<pre class="bigger fragment"><code class="language-php">$router->before('GET|POST', '<em>pattern</em>', function() {
+	// ...
+});</code></pre>
+							</li>
+							<li class="fragment">
+								Unlike regular routes it's possible to hook several middlewares to one and the same route
+								<pre class="bigger fragment"><code class="language-php">$router->before('GET|POST', '/admin/.*', function() {
+	if (!isset($_SESSION['userId'])) { &hellip; }
+});</code></pre>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Possible to run one middleware after a route was handled
+								<ul>
+									<li class="fragment">Pass it along the <code>run</code> function</li>
+								</ul>
+								<pre class="bigger fragment"><code class="language-php">$router->run(function() { &hellip; });</code></pre>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>It's all about the responses (1)</h2>
+						<ul>
+							<li class="fragment">
+								To easily work with the hypermedia format we've described, let's introduce a <code>Response</code> class
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Class requirements
+								<ul>
+									<li class="fragment">Provide <code>$status</code> and <code>$content</code> datamembers + mutators</li>
+									<li class="fragment">Keep list of allowed HTTP Status Codes</li>
+									<li class="fragment">By default, set status to <code>200</code></li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+
+					<section>
+						<h2>It's all about the responses (2)</h2>
+						<div class="fragment">
+							<pre class="bigger"><code class="language-php" style="max-height: 400px; overflow: scroll;">&lt;?php
+namespace Ikdoeict\Rest;
+
+class Response {
+
+	private $status, $content;
+
+	public function __construct() {
+		$this->setStatus(200);
+		$this->setContent('');
+	}
+
+	final public function setStatus($statusCode) {
+		$codes = array(
+			200 =&gt; 'OK',
+			// ... List of statuscode with status texts
+		);
+		$this->status = array(
+			'code' =&gt; $statusCode,
+			'text' =&gt; $codes[$statusCode]
+		);
+		<span style="white-space: nowrap;">header('HTTP/1.1 ' . $this-&gt;status['code'] . ' ' . $this-&gt;status['text']);</span>
+	}
+
+	final public function setContent($content) {
+		$this->content = $content;
+	}
+
+	public function finish() {
+
+		$json = json_encode(
+			array(
+				'status' =&gt; $this->status,
+				'content' =&gt; $this->content
+			)
+		);
+
+		header('Cache-Control: no-cache, must-revalidate');
+		header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+		header('Content-type: application/json');
+		echo $json;
+
+		exit();
+	}
+
+}
+// EOF</code></pre>
+						</div>
+						<footer class="fragment">Call <code>$response-&gt;finish();</code> to let it show your response in the format we agreed upon</footer>
+					</section>
+
+					<section>
+						<h2>It's all about the responses (4)</h2>
+						<ul>
+							<li class="fragment">Supporting JSONP is also fairly easy: pass <code>$_GET['callback']</code> to the <code>finish</code> function</li>
+						</ul>
+						<div class="fragment">
+							<pre class="bigger"><code class="language-php" style="max-height: 400px; overflow: scroll;">public function finish($jsonp = null) {
+
+	$json = &hellip;
+
+	header('Cache-Control: no-cache, must-revalidate');
+	header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+
+	if ($jsonp) {
+		header('Content-type: application/javascript');
+		echo $jsonp . '(' . $json . ');';
+	} else {
+		header('Content-type: application/json');
+		echo $json;
+	}
+
+	exit();
+
+}</code></pre>
+						</div>
+					</section>
+
+					<section>
+						<h2>Response Demo</h2>
+
+						<figure><img src="assets/07/example-response.png" alt="" title="" width="580" class="noborder" /></figure>
+
+						<p style="font-size: 75%">Let's take a look at <code>assets/07/examples/response/</code> <a href="assets/07/examples/response/">&rarr;</a></p>
+
+					</section>
+
+					<section>
+						<h2>And now, Router &amp; Response together</h2>
+						<div class="fragment">
+							<pre class="bigger"><code class="language-php">&lt;?php
+
+$router = new Ikdoeict\Routing\Router();
+$response = new Ikdoeict\Rest\Response();
+
+// Override the standard router 404
+$router->set404(function() use ($response) {
+	$response-&gt;setStatus('404');
+	$response-&gt;setContent('Invalid resource');
+	$response-&gt;finish();
+});
+
+// Define our routes
+$router-&gt;get('', function() use ($response) {
+	$response-&gt;setContent('Welcome!');
+});
+
+// &hellip; (more routes here)
+
+// Run the router
+$router->run(function() use ($response) {
+	$response-&gt;finish(isset($_GET['callback']) ? $_GET['callback'] : null);
+});
+
+// EOF</code></pre>
+						</div>
+					</section>
+
+					<section>
+						<h2>One more thing</h2>
+						<ul>
+							<li class="fragment">There's no such thing as <code>$_PUT</code>, you'll need to fake it</li>
+						</ul>
+						<div class="fragment">
+							<pre class="bigger"><code class="language-php">&lt;?php
+
+//&hellip;
+
+$router-&gt;put('/movies/\d+', function() {
+
+	// Fake $_PUT
+	$_PUT  = array();
+	parse_str(file_get_contents('php://input'), $_PUT);
+
+	// &hellip;
+
+});
+
+//&hellip;</code></pre>
+						</div>
+					</section>
+
+				</section>
+
+				<!-- 5 : RESTful APIs in jQuery -->
+				<section>
+					<section>
+						<h2>RESTful APIs in jQuery</h2>
+						<p><img src="assets/07/futurama_helmet.jpg" alt="" title="" width="446" height="309"></p>
+						<q>To the flying machine!</q>
+					</section>
+
+					<section>
+						<h2>RESTful APIs in jQuery</h2>
+						<ul>
+							<li class="fragment">
+								Since the API returns both OK and errorous HTTP status codes, you need to hook both <code>success</code> and <code>error</code> functions
+								<div class="fragment"><pre class="bigger"><code class="language-javascript dontrun">$.ajax({
+	url : 'http://api.myapp.tld/',
+	type: 'get|post|put|delete',
+	dataType : 'json',
+	data: 'foo=bar'
+})
+.success(function(data, textStatus, jqXHR) {
+	if (data) {
+		// All OK and data returned (200, 201)
+	} else {
+		// All OK but no data returned (e.g. 204 after a DELETE)
+	}
+})
+.error(function(jqXHR, textStatus, errorThrown) {
+	var data = jqXHR.responseText ? JSON.parse(jqXHR.responseText) : {};
+	// Got a 400 (params), 401, 404, 405 (method), 500, or 501 (not impl)
+});</code></pre></div>
+							</li>
+						</ul>
+						<footer class="fragment"><em>TIP: Since we include the status in the response, you can easily check it via </em><code>data.status.code</code></footer>
+					</section>
+
+				</section>
+
+
+
+
+				<!-- 4 : API Authentication -->
+				<section>
+					<section>
+						<h2>API Authentication</h2>
+						<p><img src="assets/07/grunkalunkas.png" alt="" title="" height="378" width="500" /></p>
+						<q>Who are those horrible orange creatures over there? &mdash; Grunka-Lunkas. &mdash; Tell them I hate them!</q>
+					</section>
+
+					<section>
+						<h2>API Authentication</h2>
+						<ul>
+							<li class="fragment">
+								Two needs for authentication
+								<ol>
+									<li class="fragment">API Consumers <em>(apps using your API)</em></li>
+									<li class="fragment">User Authentication <em>(allowing apps using your API to act on behalf of a user)</em></li>
+								</ol>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>1. API Consumers (1)</h2>
+						<ul>
+							<li class="fragment">
+								Make use of API-Keys
+								<ul>
+									<li class="fragment">Require API-Key to be sent in via a header</li>
+									<li class="fragment">Check API-Key as a before middleware on all routes</li>
+								</ul>
+								<div class="fragment">
+									<pre class="bigger language-php"><code>$router->before('GET|POST|PUT|DELETE', '.*', function() use ($response) {
+	$headers = apache_request_headers();
+	if(!isset($headers['X-Api-Key']) || !ApiDB::isValidApiKey($headers['X-Api-Key'])) {
+		$response-&gt;setStatus(401);
+		$response-&gt;setContent('Missing or invalid API Key.');
+		$response-&gt;finish();
+	}
+});</code></pre>
+								</div>
+							</li>
+							<li class="fragment">
+								Note: Custom headers <strong>must</strong> start with <code>X</code> and all words must be ucfirst'd and separated with <code>-</code>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>1. API Consumers (2)</h2>
+						<ul>
+							<li class="fragment">
+								Note: <code>apache_request_headers()</code> not always available (IIS)!
+									<ul>
+										<li class="fragment">Paste in the code below to always have it available</li>
+									</ul>
+								<div class="fragment">
+									<pre class="bigger language-php"><code>if (!function_exists('apache_request_headers')) {
+	eval('
+		function apache_request_headers() {
+			foreach($_SERVER as $key=>$value) {
+				if (substr($key,0,5)==&quot;HTTP_&quot;) {
+					$key=str_replace(&quot; &quot;,&quot;-&quot;,ucwords(strtolower(str_replace(&quot;_&quot;,&quot; &quot;,substr($key,5)))));
+					$out[$key]=$value;
+				}
+			}
+			return $out;
+		}
+	');
+}</code></pre>
+								</div>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>2. User Authentication (1)</h2>
+						<ul>
+							<li class="fragment">
+								API Consumers should <strong>never</strong> ask the user his/her username/password <em>(password anti-pattern!)</em> but should use OAuth2 which works with time-limited access tokens to accessing user data
+
+								<p style="text-align: center;"><img src="assets/07/oauth2.png" width="300" height="300" alt="" title="" style="background: transparent; border: 0; -webkit-box-shadow: none; -moz-box-shadow: none; -ms-box-shadow: none; -o-box-shadow: none; box-shadow: none;" /><p>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>2. User Authentication (2)</h2>
+						<ul>
+							<li class="fragment">
+								OAuth2, schematic
+								<p style="text-align: center;"><img src="assets/07/oauth2_flow.png" width="555" height="420" alt="" title="" /><p>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>2. User Authentication (3)</h2>
+						<ul>
+							<li class="fragment">
+								OAuth2 in words
+								<ol style="font-size: 70%">
+									<li class="fragment">User is sent to the OAuth provider (along the consumer app's API-Key (<code>client_id</code>) for identification), asking if consumer app may access user data at a certain <code>scope</code> <em>(read/write)</em></li>
+									<li class="fragment">If user accepts the OAuth provider will redirect back to the consumer app's <code>redirect_uri</code> with an <code>authorization_code</code></li>
+									<li class="fragment">In the background, the consumer app must make a request to the OAuth provider with that <code>authorization_code</code>, along with its API-Key (<code>client_id</code>) and secret key (<code>client_secret</code>)</li>
+									<li class="fragment">The OAuth provider will issue an <code>access_token</code> and <code>refresh_token</code></li>
+									<li class="fragment">The <code>access_token</code> must passed with all calls made and is valid for a limited time</li>
+									<li class="fragment">
+										When the <code>access_token</code> has expired, the consumer app needs to do a call to the OAuth Prodider with the <code>refresh_token</code> to get a new pair <code>access_token</code> &amp; <code>refresh_token</code>
+									</li>
+								</ol>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>API Authentication</h2>
+						<ul>
+							<li class="fragment">
+								API-Keys are easily implemented, both consumer and provider side
+							</li>
+							<li class="fragment">
+								Once you get the gist of it, OAuth2 is fairly easy &hellip;
+								<ul>
+									<li class="fragment">Roll your own implementation, or use a prefab solution <em>(#lmgtfy)</em></li>
+									<li class="fragment">Remark: <a href="http://stackoverflow.com/questions/1878830/securly-storing-openid-identifiers-and-oauth-tokens">Treat OAuth tokens as passwords</a> and encrypt them!</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+				</section>
+
+
+				<!-- The END -->
+				<section>
+					<section>
+						<h2>Questions?</h2>
+						<footer>
+							<em><a href="http://www.ikdoeict.be/">ikdoeict.be</a> &mdash; <a href="mailto:bramus.vandamme@kahosl.be">bramus.vandamme@kahosl.be</a></em>
+						</footer>
+					</section>
+				</section>
+
+
+
+				<!-- Sources -->
+				<section id="sources">
+					<section>
+						<h2>Sources</h2>
+						<ul>
+							<!-- REST Intro -->
+							<li><a href="http://en.wikipedia.org/wiki/Representational_state_transfer">http://en.wikipedia.org/wiki/Representational_state_transfer</a></li>
+							<li><a href="http://www.slideshare.net/jmusser/pw-glue-conmay2010">http://www.slideshare.net/jmusser/pw-glue-conmay2010</a></li>
+							<li><a href="http://www.slideshare.net/al3x/the-interaction-design-of-apis">http://www.slideshare.net/al3x/the-interaction-design-of-apis</a></li>
+
+							<!-- REST URL Design -->
+							<li><a href="http://www.slideshare.net/Wombert/phpjp-urls-rest">http://www.slideshare.net/Wombert/phpjp-urls-rest</a></li>
+							<li><a href="http://www.slideshare.net/apigee/restful-api-design-second-edition">http://www.slideshare.net/apigee/restful-api-design-second-edition</a></li>
+							<li><a href="http://restpatterns.org/HTTP_Status_Codes">http://restpatterns.org/HTTP_Status_Codes</a></li>
+							<li><a href="http://httpstatus.es/">http://httpstatus.es/</a></li>
+							<li><a href="http://restcookbook.com/">http://restcookbook.com/</a></li>
+							<li><a href="http://barelyenough.org/blog/2008/05/versioning-rest-web-services/">http://barelyenough.org/blog/2008/05/versioning-rest-web-services/</a></li>
+
+							<!-- HATEOAS -->
+							<li><a href="http://en.wikipedia.org/wiki/HATEOAS">http://en.wikipedia.org/wiki/HATEOAS</a></li>
+							<li><a href="http://martinfowler.com/articles/richardsonMaturityModel.html">http://martinfowler.com/articles/richardsonMaturityModel.html</a></li>
+							<li><a href="http://www.smartjava.org/content/presentation-rest-hateoas">http://www.smartjava.org/content/presentation-rest-hateoas</a></li>
+							<li><a href="http://www.infoq.com/articles/mark-baker-hypermedia">http://www.infoq.com/articles/mark-baker-hypermedia</a></li>
+
+							<!-- REST in PHP -->
+							<li><a href="http://www.recessframework.org/page/towards-restful-php-5-basic-tips">http://www.recessframework.org/page/towards-restful-php-5-basic-tips</a></li>
+							<li><a href="http://www.gen-x-design.com/archives/create-a-rest-api-with-php/">http://www.gen-x-design.com/archives/create-a-rest-api-with-php/</a></li>
+
+							<!-- Authentication -->
+							<li><a href="http://en.wikipedia.org/wiki/Oauth">http://en.wikipedia.org/wiki/Oauth</a></li>
+							<li><a href="http://www.slideshare.net/leahculver/oauth-open-api-authentication">http://www.slideshare.net/leahculver/oauth-open-api-authentication</a></li>
+
+						</ul>
+					</section>
+				</section>
+
+			</div>
+
+			<!-- The navigational controls UI -->
+			<aside class="controls">
+				<a class="left" href="#">&#x25C4;</a>
+				<a class="right" href="#">&#x25BA;</a>
+				<a class="up" href="#">&#x25B2;</a>
+				<a class="down" href="#">&#x25BC;</a>
+				<span id="revealIndex">/</span>
+			</aside>
+
+			<!-- Index Link -->
+			<aside class="back">
+				<a href="index.html">&larr; Back to index</a>
+			</aside>
+
+			<!-- ikdoeict.be Link -->
+			<a href="http://www.ikdoeict.be/" title="ikdoeict.be" id="ikdoeict">ikdoeict.be</a>
+
+			<!-- Displays presentation progress, max value changes via JS to reflect # of slides -->
+			<div class="progress"><span></span></div>
+
+		</div>
+
+		<script src="js/reveal.js"></script>
+		<script src="lib/highlight.js"></script>
+		<script src="lib/prefixfree.js"></script>
+		<script src="lib/css-snippets.js"></script>
+		<script src="lib/css-edit.js"></script>
+		<script src="lib/incrementable.js"></script>
+		<script src="js/main.js"></script>
+
+	</body>
+</html>
