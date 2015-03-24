@@ -275,7 +275,7 @@
 									</li>
 								</ul>
 							</li>
-							<li class="fragment">
+							<li class="fragment" style="margin-top: 1em;">
 								POX = Plain Old XML
 								<ul>
 									<li class="fragment">
@@ -322,6 +322,23 @@
 					</section>
 
 					<section>
+						<h2>What?</h2>
+						<ul>
+							<li class="fragment">
+								Interact with individual resources, instead of a singular resource endpoint.
+								<ul>
+									<li class="fragment">
+										Resources are identified by a URI
+									</li>
+									<li class="fragment">
+										Subordinate resources are ordered in a hierarchy
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
 						<h2 style="font-size: 200%">Resource Identification &amp; Hierarchy</h2>
 						<ul>
 							<li class="fragment">
@@ -332,7 +349,7 @@
 									<li class="fragment">Respect the Hierarchy</li>
 								</ul>
 							</li>
-							<li class="fragment">
+							<li class="fragment" style="margin-top: 1em;">
 								Examples
 								<ul>
 									<li class="fragment"><del><code>/product</code></del> &rarr; <ins><code>/products</code></ins></li>
@@ -357,7 +374,7 @@
 									<li class="fragment"><del><code>/beagles</code></del></li>
 								</ul>
 							</li>
-							<li class="fragment">
+							<li class="fragment" style="margin-top: 1em;">
 								Some cases will require a verb instead of a noun, yet consider these exceptions
 								<ul>
 									<li class="fragment"><code>/search?course=WMD</code></li>
@@ -455,8 +472,30 @@
 					</section>
 
 					<section>
-						<h2>2. HTTP Verbs</h2>
+						<h2>2. HTTP Verbs &amp; HTTP Response Codes</h2>
 						<p><img src="assets/07/rmm-2.png" alt="Richardson Maturity Model Level 2" title="Richardson Maturity Model Level 2" /></p>
+					</section>
+
+					<section>
+						<h2>What?</h2>
+						<ul>
+							<li class="fragment">
+								Don't limit yourself to <code>POST</code>, but use all HTTP verbs
+								<ul>
+									<li class="fragment">e.g. <code>POST</code>, <code>GET</code>, <code>PUT</code>, <code>PATCH</code>, <code>DELETE</code>, &hellip;</li>
+									<li class="fragment">
+										Depending on the HTTP verb used, a specific action will be taken
+									</li>
+								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								When an action has been taken, correctly use the HTTP response codes
+								<ul>
+									<li class="fragment">e.g. <code>404</code>, <code>500</code>, &hellip;</li>
+								</ul>
+							</li>
+						</ul>
+						<footer class="fragment">&rarr; In short: use HTTP to the fullest.</footer>
 					</section>
 
 
@@ -465,23 +504,51 @@
 						<ul>
 							<li class="fragment">
 								HTTP Verbs = CRUD = Queries
-								<ol>
+								<ul>
 									<li class="fragment"><code>POST</code> = Create = <code>INSERT</code></li>
 									<li class="fragment"><code>GET</code> = Read = <code>SELECT</code></li>
 									<li class="fragment"><code>PUT</code> = Update = <code>UPDATE</code></li>
+									<li class="fragment"><code>PATCH</code> = Update = <code>UPDATE</code></li>
 									<li class="fragment"><code>DELETE</code> = Delete = <code>DELETE</code></li>
-								</ol>
+								</ul>
 							</li>
-							<li class="fragment">
+							<li class="fragment" style="margin-top: 1em;">
 								Examples
-								<ol>
+								<ul>
 									<li class="fragment"><code>POST /products</code> <em>(data via <code>$_POST</code>)</em></li>
 									<li class="fragment"><code>GET /products</code> or <code>GET /products/1234</code></li>
 									<li class="fragment"><code>PUT /products/1234</code> <em>(data via &ldquo;<code>$_PUT</code>&rdquo;)</em></li>
 									<li class="fragment"><code>DELETE /products/1234</code></li>
-								</ol>
+								</ul>
 							</li>
 						</ul>
+					</section>
+
+
+					<section>
+						<h2>HTTP Verbs Sidenote: PATCH vs. PUT</h2>
+
+						<ul>
+							<li class="fragment">
+								What's the difference?
+								<ul>
+									<li class="fragment">
+										<code>PUT</code> = replace a resource entirely
+									</li>
+									<li class="fragment">
+										<code>PATCH</code> = partially replace a resource
+									</li>
+								</ul>
+							</li>
+							<li style="margin-top: 1em" class="fragment">
+								But ...
+								<div class="fragment">
+									<blockquote style="width: 100%">The <code>PATCH</code> method applies <strong>a delta (diff)</strong> rather than replacing the entire resource. The request entity to <code>PATCH</code> is of a different content-type that the resource that is being modified. Instead of being an entire resource representation, it is a resource that describes changes to apply on a resource.</blockquote>
+									<p style="text-align: right; font-size: 50%;"><em>Source: <a href="http://williamdurand.fr/2014/02/14/please-do-not-patch-like-an-idiot/">Please don't patch like an idiot</a></em></p>
+								</div>
+							</li>
+						</ul>
+
 					</section>
 
 					<section>
@@ -490,14 +557,25 @@
 							<li class="fragment">
 								When accessing a resource, you'll get back the data, along with <a href="http://httpstatus.es/">an HTTP status code</a>
 							</li>
-							<li class="fragment">
+							<li class="fragment" style="margin-top: 1em;">
 								General Codes (applicable to all verbs/resources)
 								<ul>
+									<li class="fragment"><code>400 &mdash; Bad Request</code> <em>(e.g. Request Body is malformed / not parseable)</em></li>
 									<li class="fragment"><code>401 &mdash; Not Authorized</code> <em>(e.g. No API Key given)</em></li>
 									<li class="fragment"><code>405 &mdash; Method Not Allowed</code> <em>(e.g. wrong verb for resource)</em></li>
+									<li class="fragment"><code>415 &mdash; Unsupported Media Type</code></li>
+									<li class="fragment"><code>422 — Unprocessable Entity</code> (Validation Errors)</li>
+									<li class="fragment"><code>429 — Too Many Requests</code> (Rate Limiting)</li>
 									<li class="fragment"><code>500 &mdash; Internal Server Error</code> <em>(Developer screwed up ;))</em></li>
 								</ul>
 							</li>
+						</ul>
+
+					</section>
+
+					<section>
+						<h2>HTTP Status Codes (2)</h2>
+						<ul>
 							<li class="fragment">
 								<code>GET</code> <small style="vertical-align: baseline;">(SQL SELECT)</small>
 								<ul>
@@ -505,7 +583,7 @@
 									<li class="fragment"><code>404 &mdash; Not Found</code> <em>(resource not found, not &ldquo;API not found&rdquo;)</em></li>
 								</ul>
 							</li>
-							<li class="fragment">
+							<li class="fragment" style="margin-top: 1em;">
 								<code>POST</code> <small style="vertical-align: baseline;">(SQL INSERT)</small>
 								<ul>
 									<li class="fragment"><code>201 &mdash; Created</code> <em>(=OK)</em></li>
@@ -516,7 +594,7 @@
 					</section>
 
 					<section>
-						<h2>HTTP Status Codes (2)</h2>
+						<h2>HTTP Status Codes (3)</h2>
 						<ul>
 							<li class="fragment">
 								<code>PUT</code> <small style="vertical-align: baseline;">(SQL UPDATE)</small>
@@ -526,14 +604,14 @@
 									<li class="fragment"><code>404 &mdash; Not Found</code></li>
 								</ul>
 							</li>
-							<li class="fragment">
+							<li class="fragment" style="margin-top: 1em;">
 								<code>DELETE</code> <small style="vertical-align: baseline;">(SQL DELETE)</small>
 								<ul>
 									<li class="fragment"><code>204 &mdash; No Content</code> <em>(=OK &mdash; Note: <strong>no</strong> response body sent!)</em></li>
 									<li class="fragment"><code>404 &mdash; Not Found</code></li>
 								</ul>
 							</li>
-							<li class="fragment">
+							<li class="fragment" style="margin-top: 1em;">
 								Warning!
 								<ul><li>HTTP Statuses 4XX and 5XX will invoke <code>$.ajax().error()</code> in jQuery!</li></ul>
 							</li>
@@ -589,18 +667,23 @@
 					</section>
 
 					<section>
-						<h2>HATEOAS (1)</h2>
-
+						<h2>What?</h2>
 						<ul>
 							<li class="fragment">
-								Hypermedia as the Engine of Application State
+								Represent resources using a Hypermedia Format.
 								<ul>
-									<li class="fragment">Application State = Where the user is in the process of completing a task <em>(e.g. a page of the application)</em></li>
 									<li class="fragment">Hypermedia = <q>The simultaneous presentation of information and controls such that the information becomes the <abbr title="A quality of an object, or an environment, which allows an individual to perform an action">affordance</abbr> through which the user obtains choices and selects actions</q> <small><a href="http://roy.gbiv.com/untangled/2008/rest-apis-must-be-hypertext-driven#comment-718">&#9873;</a></small></li>
 								</ul>
 							</li>
 							<li class="fragment" style="margin-top: 1em;">
-								Roughly translated
+								Consequence: <abbr title="Hypermedia as the Engine of Application State">HATEOAS</abbr>
+								<ul>
+									<li class="fragment">HATEOAS = Hypermedia as the Engine of Application State</li>
+									<li class="fragment">Application State = Where the user is in the process of completing a task <em>(e.g. a page of the application)</em></li>
+								</ul>
+							</li>
+							<li class="fragment" style="margin-top: 1em;">
+								Roughly translated:
 								<ul>
 									<li>
 										The response must be hypertext and include links so that the user/automation can transition to other pages of the application
@@ -625,7 +708,7 @@
 									</li>
 								</ol>
 							</li>
-							<li class="fragment">With this, the consumer has enough info to parse out the links and transition to other states when needed</li>
+							<li class="fragment" style="margin-top: 1em;">With this, the consumer has enough info to parse out the links and transition to other states when needed</li>
 							<li class="fragment" style="margin-top: 1em;">
 								When an API embraces HATEOAS, we can call it a <strong>Hypermedia API</strong>
 							</li>
@@ -984,94 +1067,7 @@
 					</section>
 
 					<section>
-						<h2>Prerequisite: Supporting nice URLs</h2>
-						<ul>
-							<li class="fragment">
-								Route all requests to non-existing files/folders to <code>index.php</code>
-							</li>
-							<li class="fragment" style="margin-top: 1em;">
-								Build <code>index.php</code> in such a way that it decides what to do based on the URL (found in <code>$_SERVER['REQUEST_URI']</code>)
-							</li>
-						</ul>
-					</section>
-
-					<section>
-						<h2>Nice URLs in Apache</h2>
-						<ul>
-							<li class="fragment">
-								Possible using the <code>mod_rewrite</code> Apache Module
-								<ul>
-									<li>Wampserver: not enabled by default (<a href="assets/07/wamp_url_rewrite.png">instructions</a>)</li>
-									<li>MAMP Pro: enabled by default</li>
-								</ul>
-							</li>
-							<li class="fragment" style="margin-top: 1em;">
-								Put a file named <code>.htaccess</code> in your root to redirect requests to non-existing files to <code>index.php</code>
-								<pre class="bigger"><code>&lt;IfModule mod_rewrite.c&gt;
-Options -MultiViews
-RewriteEngine On
-# RewriteBase /
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule &circ; /index.php [L]
-&lt;/IfModule&gt;</code></pre>
-							</li>
-						</ul>
-					</section>
-
-					<section>
-						<h2>Nice URLs in IIS</h2>
-						<ul>
-							<li class="fragment">
-								Possible using the <a href="http://www.iis.net/downloads/microsoft/url-rewrite">IIS Rewrite Module</a>
-							</li>
-							<li class="fragment">
-								Put a file named <code>web.config</code> in your root to redirect requests to non-existing files to <code>index.php</code>
-								<pre class="bigger"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;configuration&gt;
-	&lt;system.webServer&gt;
-		&lt;rewrite&gt;
-			&lt;rules&gt;
-				&lt;rule name=&quot;Main Rule&quot; stopProcessing=&quot;true&quot;&gt;
-					&lt;match url=&quot;.*&quot; /&gt;
-					&lt;conditions logicalGrouping=&quot;MatchAll&quot;&gt;
-						&lt;add input=&quot;{REQUEST_FILENAME}&quot; matchType=&quot;IsFile&quot; negate=&quot;true&quot; /&gt;
-						&lt;add input=&quot;{REQUEST_FILENAME}&quot; matchType=&quot;IsDirectory&quot; negate=&quot;true&quot; /&gt;
-					&lt;/conditions&gt;
-					&lt;action type=&quot;Rewrite&quot; url=&quot;index.php&quot; /&gt;
-				&lt;/rule&gt;
-			&lt;/rules&gt;
-		&lt;/rewrite&gt;
-	&lt;/system.webServer&gt;
-&lt;/configuration&gt;</code></pre>
-							</li>
-						</ul>
-					</section>
-
-					<section>
-						<h2>Nice URLs in the PHP 5.4 server</h2>
-						<ul>
-							<li class="fragment">
-								<strong>All</strong> requests route to <code>index.php</code> by default
-								<ul>
-									<li class="fragment">You'll need to add some extra PHP code to <code>index.php</code> to force non-404 requests route to the correct file
-									</li>
-								</ul>
-								<div class="fragment"><pre class="bigger"><code>&lt;?php
-
-$filename = __DIR__ . preg_replace('#(\?.*)$#', '', $_SERVER['REQUEST_URI']);
-if (php_sapi_name() === 'cli-server' &amp;&amp; is_file($filename)) {
-	return false;
-}
-
-// rest of your code here</code></pre></div>
-							</li>
-						</ul>
-						<footer class="fragment"><em>Note: You can start a server by running <code>php -S localhost:8080</code> in your project www-root</em></footer>
-					</section>
-
-					<section>
-						<h2>It's all about the routes</h2>
+						<h2>It's all about the routes (1)</h2>
 						<ul>
 							<li class="fragment">
 								What we essentially need is a router of some sorts that takes the URL and the HTTP method into account
@@ -1097,95 +1093,10 @@ $router->run();</code></pre>
 					</section>
 
 					<section>
-						<h2>Router Demo</h2>
-
-						<figure><img src="assets/07/example-router.png" alt="" title="" width="580" class="noborder" /></figure>
-
-						<p style="font-size: 75%">Let's take a look at <code>assets/07/examples/router/</code> <a href="assets/07/examples/router/">&rarr;</a></p>
-
-					</section>
-
-					<section>
-						<h2>Router Recap (1)</h2>
+						<h2>It's all about the responses</h2>
 						<ul>
 							<li class="fragment">
-								Definitions
-								<ul>
-									<li class="fragment">A route is a combination of a <strong>pattern</strong> and an <strong>HTTP method</strong></li>
-									<li class="fragment">A route is handled by a <strong>handling function</strong> which returns/does x/y</li>
-								</ul>
-							</li>
-
-							<li class="fragment" style="margin-top: 1em;">
-								Hook routes using <code>match()</code>
-								<pre class="bigger"><code class="language-php">$router->match('GET|POST', '<em>pattern</em>', function() { &hellip; });</code></pre>
-							</li>
-
-							<li class="fragment">
-								Or use a shorthand
-								<pre class="bigger"><code class="language-php">$router->get('<em>pattern</em>', function() { &hellip; });</code></pre>
-							</li>
-						</ul>
-					</section>
-
-					<section>
-						<h2>Router Recap (2)</h2>
-						<ul>
-							<li class="fragment">
-								Route patterns can be static or dynamic
-								<ul>
-									<li class="fragment">The dynamic parts of the pattern <em>(<code>\d+</code>, <code>\w+</code>, <code>.*</code>, or <code>.+</code>)</em> will be converted to <strong>route variables</strong> which you pass into the handling function</li>
-								</ul>
-								<pre class="bigger fragment"><code class="language-php">$router->get('/movies/\d+', function($movieId) {
-	echo 'Movie #' . $movieId . ' detail';
-});</code></pre>
-								<pre class="bigger fragment"><code class="language-php">$router->get('/movies/\d+/photos/\d+', function($movieId, $photoId) {
-	echo 'Movie #' . $movieId . ' photo #' . $photoId);
-});</code></pre>
-							</li>
-
-							<li class="fragment" style="margin-top: 1em;">
-								Only the first route matched will be handled
-							</li>
-							<li class="fragment">
-								When no matching route is found, a 404 will be returned
-								<ul>
-									<li class="fragment">Override the default 404 handler using <code>$router->set404(<em>function</em>);</code></li>
-								</ul>
-							</li>
-						</ul>
-					</section>
-
-					<section>
-						<h2>Router Recap (3)</h2>
-						<ul>
-							<li class="fragment">
-								Connect middleware before the routes are handled
-								<pre class="bigger fragment"><code class="language-php">$router->before('GET|POST', '<em>pattern</em>', function() {
-	// ...
-});</code></pre>
-							</li>
-							<li class="fragment">
-								Unlike regular routes it's possible to hook several middlewares to one and the same route
-								<pre class="bigger fragment"><code class="language-php">$router->before('GET|POST', '/admin/.*', function() {
-	if (!isset($_SESSION['userId'])) { &hellip; }
-});</code></pre>
-							</li>
-							<li class="fragment" style="margin-top: 1em;">
-								Possible to run one middleware after a route was handled
-								<ul>
-									<li class="fragment">Pass it along the <code>run</code> function</li>
-								</ul>
-								<pre class="bigger fragment"><code class="language-php">$router->run(function() { &hellip; });</code></pre>
-							</li>
-						</ul>
-					</section>
-
-					<section>
-						<h2>It's all about the responses (1)</h2>
-						<ul>
-							<li class="fragment">
-								To easily work with the hypermedia format we've described, let's introduce a <code>Response</code> class
+								To easily work with the <em>(semi-)</em>hypermedia format we've described, let's introduce a <code>Response</code> class
 							</li>
 							<li class="fragment" style="margin-top: 1em;">
 								Class requirements
@@ -1200,124 +1111,23 @@ $router->run();</code></pre>
 
 
 					<section>
-						<h2>It's all about the responses (2)</h2>
-						<div class="fragment">
-							<pre class="bigger"><code class="language-php" style="max-height: 400px; overflow: scroll;">&lt;?php
-namespace Ikdoeict\Rest;
+						<h2>All together now</h2>
 
-class Response {
+						<ol>
+							<li class="fragment">Routes?<br /><span class="fragment">&rarr; Silex does this!</span></li>
+							<li class="fragment" style="margin-top: 1em;">
+								Response?<br /><span class="fragment">&rarr; Silex uses <code style="font-size: 80%;">\Symfony\Component\HttpFoundation\Response</code>!<small><a href="http://api.symfony.com/2.0/Symfony/Component/HttpFoundation/Response.html">&#9873;</a></small></span>
+								<ul>
+									<li class="fragment"><em>Just</em> extend this class and:
+									<ul>
+										<li>Override <code>getContent()</code> to transform the content to the format we need
+										</li>
+										<li>Force sending of the <code>Content-Type: application/json</code> header</li>
+									</ul>
+								</ul>
+							</li>
+						</ol>
 
-	private $status, $content;
-
-	public function __construct() {
-		$this->setStatus(200);
-		$this->setContent('');
-	}
-
-	final public function setStatus($statusCode) {
-		$codes = array(
-			200 =&gt; 'OK',
-			// ... List of statuscode with status texts
-		);
-		$this->status = array(
-			'code' =&gt; $statusCode,
-			'text' =&gt; $codes[$statusCode]
-		);
-		<span style="white-space: nowrap;">header('HTTP/1.1 ' . $this-&gt;status['code'] . ' ' . $this-&gt;status['text']);</span>
-	}
-
-	final public function setContent($content) {
-		$this->content = $content;
-	}
-
-	public function finish() {
-
-		$json = json_encode(
-			array(
-				'status' =&gt; $this->status,
-				'content' =&gt; $this->content
-			)
-		);
-
-		header('Cache-Control: no-cache, must-revalidate');
-		header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-		header('Content-type: application/json');
-		echo $json;
-
-		exit();
-	}
-
-}
-// EOF</code></pre>
-						</div>
-						<footer class="fragment">Call <code>$response-&gt;finish();</code> to let it show your response in the format we agreed upon</footer>
-					</section>
-
-					<section>
-						<h2>It's all about the responses (4)</h2>
-						<ul>
-							<li class="fragment">Supporting JSONP is also fairly easy: pass <code>$_GET['callback']</code> to the <code>finish</code> function</li>
-						</ul>
-						<div class="fragment">
-							<pre class="bigger"><code class="language-php" style="max-height: 400px; overflow: scroll;">public function finish($jsonp = null) {
-
-	$json = &hellip;
-
-	header('Cache-Control: no-cache, must-revalidate');
-	header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-
-	if ($jsonp) {
-		header('Content-type: application/javascript');
-		echo $jsonp . '(' . $json . ');';
-	} else {
-		header('Content-type: application/json');
-		echo $json;
-	}
-
-	exit();
-
-}</code></pre>
-						</div>
-					</section>
-
-					<section>
-						<h2>Response Demo</h2>
-
-						<figure><img src="assets/07/example-response.png" alt="" title="" width="580" class="noborder" /></figure>
-
-						<p style="font-size: 75%">Let's take a look at <code>assets/07/examples/response/</code> <a href="assets/07/examples/response/">&rarr;</a></p>
-
-					</section>
-
-					<section>
-						<h2>And now, Router &amp; Response together</h2>
-						<div class="fragment">
-							<pre class="bigger"><code class="language-php">&lt;?php
-
-$router = new Ikdoeict\Routing\Router();
-$response = new Ikdoeict\Rest\Response();
-
-// Override the standard router 404
-$router->set404(function() use ($response) {
-	$response-&gt;setStatus('404');
-	$response-&gt;setContent('Invalid resource');
-	$response-&gt;finish();
-});
-
-// Define our routes
-$router-&gt;get('', function() use ($response) {
-	$response-&gt;setContent('Welcome!');
-});
-
-// &hellip; (more routes here)
-
-// Run the router
-$router->run(function() use ($response) {
-	$response-&gt;finish(isset($_GET['callback']) ? $_GET['callback'] : null);
-});
-
-// EOF</code></pre>
-						</div>
 					</section>
 
 					<section>
@@ -1349,7 +1159,7 @@ $router-&gt;put('/movies/\d+', function() {
 				<!-- 5 : RESTful APIs in jQuery -->
 				<section>
 					<section>
-						<h2>RESTful APIs in jQuery</h2>
+						<h2>RESTful APIs in JavaScript</h2>
 						<p><img src="assets/07/futurama_helmet.jpg" alt="" title="" width="446" height="309"></p>
 						<q>To the flying machine!</q>
 					</section>
@@ -1379,6 +1189,13 @@ $router-&gt;put('/movies/\d+', function() {
 							</li>
 						</ul>
 						<footer class="fragment"><em>TIP: Since we include the status in the response, you can easily check it via </em><code>data.status.code</code></footer>
+					</section>
+
+					<section>
+						<h2>CORS</h2>
+						<ul>
+
+						</ul>
 					</section>
 
 				</section>
@@ -1524,7 +1341,7 @@ $router-&gt;put('/movies/\d+', function() {
 					<section>
 						<h2>Questions?</h2>
 						<footer>
-							<em><a href="http://www.ikdoeict.be/">ikdoeict.be</a> &mdash; <a href="mailto:bramus.vandamme@kahosl.be">bramus.vandamme@kahosl.be</a></em>
+							<em><a href="http://www.ikdoeict.be/">ikdoeict.be</a> &mdash; <a href="mailto:bramus.vandamme@odisee.be">bramus.vandamme@odisee.be</a></em>
 						</footer>
 					</section>
 				</section>
